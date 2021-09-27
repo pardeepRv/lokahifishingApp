@@ -73,7 +73,6 @@ const fonts = Platform.select({
     }
 });
 
-
 export {
     fonts,
     icons

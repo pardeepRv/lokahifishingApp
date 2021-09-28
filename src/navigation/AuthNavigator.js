@@ -2,7 +2,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-import Login from '../screens/AuthScreens/Login';
+import Signin from '../screens/AuthScreens/Signin/Signin';
 
 const AuthStack = createNativeStackNavigator();
 
@@ -15,8 +15,8 @@ const authScreenOptions = {
     return (
       <AuthStack.Navigator screenOptions={authScreenOptions}>
         <AuthStack.Screen
-          name="Login"
-          component={Login}
+          name="Signin"
+          component={Signin}
           options={{headerShown: false}}
         />
       </AuthStack.Navigator>

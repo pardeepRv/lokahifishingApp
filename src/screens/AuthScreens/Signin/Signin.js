@@ -10,21 +10,22 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
+import styles from "./styles";
 
 //3rd party packages
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {moderateScale} from 'react-native-size-matters';
-import {colors, screenNames} from '../../utilities/constants';
-import {layout} from '../../utilities/layout';
-import {fonts, icons} from '../../../assets';
-import {Button} from '../../components/common/Button';
-import TextInputComp from '../../components/common/TextInputComp';
-import { strings } from '../../localization';
+import {colors, screenNames} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
+import {fonts, icons} from '../../../../assets';
+import {Button} from '../../../components/common/Button';
+import TextInputComp from '../../../components/common/TextInputComp';
+import { strings } from '../../../localization';
 
 const Signin = ({navigation}) => {
   const [state, setState] = useState({
-    email: '',
+    email: 'test@yopmail.com',
     password: '',
     isLoading: false,
   });
@@ -104,7 +105,7 @@ const Signin = ({navigation}) => {
             </View>
 
             <TouchableOpacity
-            //   onPress={() => navigation.navigate(screenNames.ForgotPassword)}
+              onPress={() => navigation.navigate(screenNames.Signup)}
               >
               <Text
                 style={{
@@ -123,46 +124,5 @@ const Signin = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.white1,
-  },
-  subContainer: {
-    paddingHorizontal: moderateScale(15),
-    marginLeft: 15,
-  },
-  subContentContainer: {
-    paddingBottom: moderateScale(40),
-  },
-  textInputStyles: {
-    height: 50,
-    borderRadius: 25,
-    paddingHorizontal: moderateScale(30),
-    borderWidth: 0.5,
-    borderColor: 'lightgrey',
-    color: colors.white1,
-    fontFamily: fonts.semiBold,
-  },
-  signInBtn: {
-    height: 44,
-    width: layout.size.width - 80,
-    backgroundColor: colors.primary,
-    borderRadius: moderateScale(20),
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    marginTop: moderateScale(20),
-  },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    height: '100%',
-  },
-  labelTextStyle: {
-    fontFamily: fonts.semiBold,
-    fontSize: moderateScale(16),
-    color: colors.white1,
-  },
-});
+
 export default Signin;

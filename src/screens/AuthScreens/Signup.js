@@ -1,129 +1,170 @@
-import React, { PureComponent } from 'react';
+
+//import liraries
+import React, {useState} from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
 } from 'react-native';
 
-import {
-    moderateScale,
-    verticalScale
-} from 'react-native-size-matters';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+//3rd party packages
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {moderateScale} from 'react-native-size-matters';
+import {colors, screenNames} from '../../utilities/constants';
+import {layout} from '../../utilities/layout';
+import {fonts, icons} from '../../../assets';
+import {Button} from '../../components/common/Button';
+import TextInputComp from '../../components/common/TextInputComp';
+import { strings } from '../../localization';
 
-import { colors } from '../../utilities/constants';
-import { fonts } from '../../../assets';
-import { layout } from '../../utilities/layout';
+const Signup = ({navigation}) => {
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+    isLoading: false,
+  });
 
-class Signup extends PureComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
+  const {email, password, isLoading} = state;
 
-        };
-    }
-    componentDidMount() {
+  const _onChangeText = key => val => {
+    setState({...state, [key]: val});
+  };
 
-    }
+  return (
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
+      <View
+        style={{
+          flex: 1,
+        }}>
+        <ImageBackground source={icons.ic_signin_bg} style={styles.image}>
+          <ScrollView
+            style={styles.subContainer}
+            contentContainerStyle={styles.subContentContainer}
+            keyboardShouldPersistTaps={'always'}
+            showsVerticalScrollIndicator={false}>
+            <View
+              style={{
+                marginTop: layout.size.width / 2,
+              }}></View>
 
+            <View
+              style={{
+                marginTop: moderateScale(40),
+              }}>
+              <TextInputComp
+                label={strings.email}
+                value={email}
+                placeholder={strings.enterEmail}
+                labelTextStyle={styles.labelTextStyle}
+                onChangeText={_onChangeText('email')}
+              />
 
-    render() {
-        return (
-            <View style={{
-                flex: 1
-            }}>
-
-                <KeyboardAwareScrollView
-                    style={styles.subContainer}
-                    contentContainerStyle={styles.subContentContainer}
-                    // bounces={false}
-                    // contentInset={{ bottom: moderateScale(200) }}
-                    keyboardShouldPersistTaps={'always'}
-                    showsVerticalScrollIndicator={false}
-                >
-
-                    <Text onPress={() => this.props.navigation.goBack()} style={{
-                        marginTop: 40
-                    }}>
-                        Signup comoponnet
-                </Text>
-                </KeyboardAwareScrollView>
+              <TextInputComp
+                label={strings.Password}
+                value={password}
+                secureTextEntry
+                placeholder={strings.enterPassword}
+                labelTextStyle={styles.labelTextStyle}
+                onChangeText={_onChangeText('password')}
+              />
             </View>
-        );
-    }
-}
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate(screenNames.ForgotPassword)}>
+              <Text
+                style={{
+                  alignSelf: 'flex-end',
+                  fontFamily: fonts.semiBold,
+                  marginTop: moderateScale(5),
+                  color: colors.white1,
+                }}>
+                {strings.forgotpassword}
+              </Text>
+            </TouchableOpacity>
+
+            <View
+              style={{
+                marginTop: moderateScale(50),
+              }}>
+              <Button
+                style={{
+                  backgroundColor: colors.primary,
+                  borderRadius: 20,
+                  width: layout.size.width - 50,
+                  alignSelf: 'center',
+                }}
+                label={strings.login}
+                onPress={() => alert('jviu')}
+              />
+            </View>
+
+            <TouchableOpacity
+            //   onPress={() => navigation.navigate(screenNames.ForgotPassword)}
+              >
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  fontFamily: fonts.semiBold,
+                  marginTop: moderateScale(5),
+                  color: colors.white1,
+                }}>
+                {strings.createAccount}
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </ImageBackground>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: colors.white1,
-    },
-    subContainer: {
-        paddingHorizontal: moderateScale(15),
-        marginLeft: 15
-    },
-    subContentContainer: {
-        paddingBottom: moderateScale(40),
-    },
-    firstnameContainer: {
-        marginTop: moderateScale(20),
-        width: moderateScale(140)
-    },
-    loginText: {
-        fontSize: moderateScale(24),
-        fontFamily: fonts.regular,
-        color: colors.black2
-    },
-    underlined: {
-        backgroundColor: colors.primary,
-        height: moderateScale(4),
-        width: moderateScale(27),
-        marginTop: moderateScale(5)
-    },
-    borderBottomStyle: {
-        borderBottomColor: colors.black2,
-        borderBottomWidth: 1
-    },
-    textStyle: {
-        color: colors.black1,
-        fontFamily: fonts.regular
-    },
-    buttonStyle: {
-        backgroundColor: colors.black2,
-        width: moderateScale(120),
-        borderRadius: 15,
-        height: moderateScale(50)
-    },
-    dateView: {
-        paddingRight: moderateScale(4),
-        width: layout.size.width - 60,
-        height: moderateScale(16),
-        alignSelf: 'center',
-        marginTop: -10
-    },
-    dateText: {
-        fontSize: moderateScale(16),
-        lineHeight: moderateScale(19),
-        color: colors.black,
-        opacity: 0.80,
-        fontFamily: fonts.regularFont,
-    },
-    dateIcon: {
-        position: 'absolute',
-        right: 0,
-        marginLeft: 0,
-    },
-    dateInput: {
-        borderWidth: 0,
-        alignItems: 'flex-start',
-        marginTop: moderateScale(6),
-        justifyContent: 'center'
-    },
-    pickerStyle: {
-        borderBottomColor: 'transparent',
-        borderWidth: 0,
-        width: 200
-    },
-
-
+  container: {
+    backgroundColor: colors.white1,
+  },
+  subContainer: {
+    paddingHorizontal: moderateScale(15),
+    marginLeft: 15,
+  },
+  subContentContainer: {
+    paddingBottom: moderateScale(40),
+  },
+  textInputStyles: {
+    height: 50,
+    borderRadius: 25,
+    paddingHorizontal: moderateScale(30),
+    borderWidth: 0.5,
+    borderColor: 'lightgrey',
+    color: colors.white1,
+    fontFamily: fonts.semiBold,
+  },
+  signInBtn: {
+    height: 44,
+    width: layout.size.width - 80,
+    backgroundColor: colors.primary,
+    borderRadius: moderateScale(20),
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: moderateScale(20),
+  },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  labelTextStyle: {
+    fontFamily: fonts.semiBold,
+    fontSize: moderateScale(16),
+    color: colors.white1,
+  },
 });
 export default Signup;
+

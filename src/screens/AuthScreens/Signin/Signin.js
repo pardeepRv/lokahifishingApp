@@ -25,7 +25,7 @@ import { strings } from '../../../localization';
 
 const Signin = ({navigation}) => {
   const [state, setState] = useState({
-    email: 'test@yopmail.com',
+    email: '',
     password: '',
     isLoading: false,
   });
@@ -115,6 +115,15 @@ const Signin = ({navigation}) => {
                   color: colors.white1,
                 }}>
                 {strings.createAccount}
+                <Text
+                style={{
+                  alignSelf: 'center',
+                  fontFamily: fonts.extraBold,
+                  marginTop: moderateScale(5),
+                  color: colors.primary,
+                }}>
+                {strings.signup}
+              </Text>
               </Text>
             </TouchableOpacity>
           </ScrollView>

@@ -4,11 +4,11 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 /************ Screens *************** */
 //authScreen
-import Signup from '../screens/AuthScreens/Signup';
+import Signup from '../screens/AuthScreens/Signup/Signup';
 import Signin from '../screens/AuthScreens/Signin/Signin'
 
 //navigation screens
-import ForgotPassword from '../screens/AuthScreens/ForgotPassword';
+import ForgotPassword from '../screens/AuthScreens/ForgotPassword/ForgotPassword';
 import {navigationRef} from '../store/NavigationService';
 
 const Stack = createNativeStackNavigator();

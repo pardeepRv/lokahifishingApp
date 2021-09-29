@@ -25,7 +25,40 @@ export default {
 
     //ForgotPassword
     send: 'Send',
-    forgot:'Forgot Password'
+    forgot:'Forgot Password',
+
+    // Drawer menu
+    pending_lcr:'Pending LCR',
+    lcr_list:'LCR list',
+    Tournament_rules:'Tournament rules',
+    Tag:'Tag and release list',
+    Video_tips:'Video tips',
+    LCR_filter:'LCR filter',
+    Catch_report:'Catch report locations',
+    Friend_requests:'Friend requests',
+    Survey:'Survey',
+    Important_links:'Important links',
+    Members:'Members',
+    Friends:'Friends',
+    Gallery:'Gallery',
+    My_Profile:'My Profile',
+    About:'About',
+    Privacy:'Privacy Policy',
+    Terms:'Terms and conditions',
+    Contact:'Contact us',
+    Settings:'Settings',
+    Logout:'Logout',
+
+
+
+
+
+
+
+    
+    
+    
+
 
  
 };

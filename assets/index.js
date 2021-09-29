@@ -19,10 +19,59 @@ import ic_female from './icons/inactive-female.png';
 import ic_signup_bg from './icons/signup_bg.png';
 import ic_signin_bg from './icons/signin_bg.png';
 
+//drawer
+import ic_pending_lcr from './icons/drawer/Data-Feeds.png';
+import ic_lcr_list from './icons/drawer/menu.png';
+import ic_Events from './icons/drawer/Events.png';
+import ic_Friends from './icons/drawer/Friends.png';
+import ic_Gallery from './icons/drawer/Gallery.png';
+import ic_Important from './icons/drawer/Important-Links.png';
+import ic_LCR from './icons/drawer/LCR-List.png';
+import ic_logout from './icons/drawer/logout.png';
+import ic_map from './icons/drawer/map-pin-silhouette-1.png';
+import ic_Mayday from './icons/drawer/Mayday.png';
+import ic_profile from './icons/drawer/My-Profile.png';
+import ic_Notifications from './icons/drawer/Notifications.png';
+import ic_search_icon from './icons/drawer/search_icon.png';
+import ic_Surveys from './icons/drawer/Surveys.png';
+import ic_timeline1x from './icons/drawer/timeline1x.png';
+import ic_Users from './icons/drawer/Users.png';
+import ic_Videos from './icons/drawer/Videos.png';
+import ic_filter from './icons/drawer/filter-1.png';
+import ic_fisherman from './icons/drawer/fisherman-1.png';
+import ic_Leader from './icons/drawer/Leader-BoardIcon.png';
+import ic_trophyicon from './icons/drawer/trophyicon-1.png';
+import ic_videoTips from './icons/drawer/videoTips-1.png';
+import ic_About from './icons/drawer/About.png';
+import ic_settings from './icons/drawer/settings.png';
 
 
 
 const icons = {
+    ic_About,
+    ic_settings,
+    ic_pending_lcr,
+    ic_lcr_list,
+    ic_Events,
+    ic_Friends,
+    ic_Gallery,
+    ic_Important,
+    ic_LCR,
+    ic_logout,
+    ic_map,
+    ic_Mayday,
+    ic_profile,
+    ic_Notifications,
+    ic_search_icon,
+    ic_Surveys,
+    ic_timeline1x,
+    ic_Videos,
+    ic_filter,
+    ic_fisherman,
+    ic_Leader,
+    ic_Users,
+    ic_trophyicon,
+    ic_videoTips,
     ic_male,
     ic_female,
     ic_lock,

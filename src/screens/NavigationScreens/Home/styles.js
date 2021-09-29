@@ -15,6 +15,15 @@ export default StyleSheet.create({
     width: layout.size.width / 2 - 20,
     height: layout.size.height / 4 + 20,
     justifyContent: 'center',
+    shadowColor: colors.primary,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+    
+    elevation: 10,
   },
   imageStyle: {
     alignSelf: 'center',

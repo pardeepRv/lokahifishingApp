@@ -1,27 +1,36 @@
 //import liraries
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
-  ImageBackground, Keyboard,
+  ImageBackground,
+  Keyboard,
   SafeAreaView,
-  ScrollView, Text,
-  TouchableOpacity, View
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import { useDispatch } from 'react-redux';
-import { fonts, icons } from '../../../../assets';
-import { Button } from '../../../components/common/Button';
+import {moderateScale} from 'react-native-size-matters';
+import {useDispatch} from 'react-redux';
+import {fonts, icons} from '../../../../assets';
+import {Button} from '../../../components/common/Button';
 import TextInputComp from '../../../components/common/TextInputComp';
-import { strings } from '../../../localization';
+import {strings} from '../../../localization';
 //intrnal libraries
-import { colors, screenNames } from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
+import {colors, screenNames} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
 import styles from './styles';
 
 const Signin = ({navigation}) => {
   let passwordTextInput = useRef(null);
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [state, setState] = useState({
+    email: '',
+    password: '',
+  });
+  const {email, password} = state;
+  const _onChangeText = key => val => {
+    setState({...state, [key]: val});
+  };
 
   const [errors, setErrors] = useState({
     email: '',
@@ -34,7 +43,6 @@ const Signin = ({navigation}) => {
   ];
 
   function Done() {
-    navigation.navigate('HomeStack');
     Keyboard.dismiss();
     let err = {};
     //email error
@@ -59,12 +67,9 @@ const Signin = ({navigation}) => {
       formData.append('password', password);
       // dispatch({type:REGISTER,payloads:formData});
     }
+    navigation.navigate('HomeStack');
+
   }
-
-   const _onChangeText = key => val => {
-    setState({...state, [key]: val});
-  };
-
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
@@ -99,7 +104,7 @@ const Signin = ({navigation}) => {
                       email: '',
                     })
                   }
-                  onChangeText={email => setEmail(email)}
+                  onChangeText={_onChangeText('email')}
                 />
                 {errors.email ? (
                   <Text
@@ -113,9 +118,10 @@ const Signin = ({navigation}) => {
                 <TextInputComp
                   label={strings.Password}
                   value={password}
+                  secureTextEntry
                   placeholder={strings.enterPassword}
                   labelTextStyle={styles.labelTextStyle}
-                  onChangeText={password => setPassword(password)}
+                  onChangeText={_onChangeText('password')}
                   onFocus={() =>
                     setErrors({
                       ...errors,
@@ -135,15 +141,7 @@ const Signin = ({navigation}) => {
 
             <TouchableOpacity
               onPress={() => navigation.navigate(screenNames.ForgotPassword)}>
-              <Text
-                style={{
-                  alignSelf: 'flex-end',
-                  fontFamily: fonts.semiBold,
-                  marginTop: moderateScale(5),
-                  color: colors.white1,
-                }}>
-                {strings.forgotpassword}
-              </Text>
+              <Text style={styles.forgotStyle}>{strings.forgotpassword}</Text>
             </TouchableOpacity>
 
             <View
@@ -151,12 +149,7 @@ const Signin = ({navigation}) => {
                 marginTop: moderateScale(50),
               }}>
               <Button
-                style={{
-                  backgroundColor: colors.primary,
-                  borderRadius: 20,
-                  width: layout.size.width - 50,
-                  alignSelf: 'center',
-                }}
+                style={styles.btnStyles}
                 label={strings.login}
                 onPress={() => Done()}
               />
@@ -164,23 +157,9 @@ const Signin = ({navigation}) => {
 
             <TouchableOpacity
               onPress={() => navigation.navigate(screenNames.Signup)}>
-              <Text
-                style={{
-                  alignSelf: 'center',
-                  fontFamily: fonts.semiBold,
-                  marginTop: moderateScale(5),
-                  color: colors.white1,
-                }}>
+              <Text style={styles.createAccount}>
                 {strings.createAccount}
-                <Text
-                  style={{
-                    alignSelf: 'center',
-                    fontFamily: fonts.extraBold,
-                    marginTop: moderateScale(5),
-                    color: colors.primary,
-                  }}>
-                  {strings.signup}
-                </Text>
+                <Text style={styles.signuptext}>{strings.signup}</Text>
               </Text>
             </TouchableOpacity>
           </ScrollView>

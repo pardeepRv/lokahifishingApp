@@ -1,16 +1,18 @@
+import {CommonActions} from '@react-navigation/routers';
 import React from 'react';
 import {
-    Dimensions,
-    Image,
-    ImageBackground,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity
+  Dimensions,
+  Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import { fonts, icons } from '../../../../assets';
-import { colors, data } from '../../../utilities/constants';
+import {moderateScale} from 'react-native-size-matters';
+import {fonts, icons} from '../../../../assets';
+import {strings} from '../../../localization';
+import {colors, data} from '../../../utilities/constants';
 
 const {width, height} = Dimensions.get('window');
 
@@ -29,6 +31,14 @@ const DrawerComp = ({navigation, ...props}) => {
   //     store.dispatch(logoutUser())
   // }
 
+  const reset = () => {
+    return navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: 'authStack'}],
+      }),
+    );
+  };
   return (
     <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
       <Image source={{uri: dummyImg}} style={styles.bgImg} />
@@ -42,7 +52,7 @@ const DrawerComp = ({navigation, ...props}) => {
                 flexDirection: 'row',
                 margin: 10,
               }}
-              onPress={() => console.log(index)}>
+              onPress={() => (strings.Logout ? reset() : console.log(index))}>
               <Image source={val.img} style={styles.imgStyle} />
               <Text style={styles.nameStyle}>{val.name}</Text>
             </TouchableOpacity>

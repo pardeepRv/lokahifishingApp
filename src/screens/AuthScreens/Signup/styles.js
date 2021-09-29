@@ -55,5 +55,12 @@ export default StyleSheet.create({
     marginTop: moderateScale(15),
     color: colors.white1,
   },
+  textStyle:{
+    fontFamily: fonts.semiBold,
+    fontSize: moderateScale(16),
+    color: colors.white1,
+    paddingHorizontal: moderateScale(5),
+    alignSelf: 'center',
+  },
 
 })

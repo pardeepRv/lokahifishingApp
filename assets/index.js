@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import ic_active_activity from './icons/active-activity.png';
 import ic_active_explore from './icons/active-explore.png';
 import ic_active_female from './icons/active-female.png';
@@ -20,6 +20,8 @@ import ic_signup_bg from './icons/signup_bg.png';
 import ic_signin_bg from './icons/signin_bg.png';
 import ic_logo_grayscale_cr from './icons/logo_grayscale_cr.9.png';
 import signin_bg_ic from './icons/signin_bg_ic.png';
+import ic_radio_btn_on from './icons/ic_radio_btn_on.png';
+import ic_radio_btn_off from './icons/ic_radio_btn_off.png';
 
 //drawer
 import ic_pending_lcr from './icons/drawer/Data-Feeds.png';
@@ -47,53 +49,72 @@ import ic_videoTips from './icons/drawer/videoTips-1.png';
 import ic_About from './icons/drawer/About.png';
 import ic_settings from './icons/drawer/settings.png';
 
+//home page icons
+import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
+import ic_Fish02 from './icons/dashbaordImages/Fish02.png';
+import ic_Fish03 from './icons/dashbaordImages/Fish03.png';
+import ic_Fish04 from './icons/dashbaordImages/Fish04.png';
+import ic_Fish05 from './icons/dashbaordImages/Fish05.png';
+import ic_Fish06 from './icons/dashbaordImages/Fish06.png';
+import ic_Fish07 from './icons/dashbaordImages/Fish07.png';
+import ic_Fish08 from './icons/dashbaordImages/Fish08.png';
 
 const icons = {
-    signin_bg_ic,
-    ic_logo_grayscale_cr,
-    ic_About,
-    ic_settings,
-    ic_pending_lcr,
-    ic_lcr_list,
-    ic_Events,
-    ic_Friends,
-    ic_Gallery,
-    ic_Important,
-    ic_LCR,
-    ic_logout,
-    ic_map,
-    ic_Mayday,
-    ic_profile,
-    ic_Notifications,
-    ic_search_icon,
-    ic_Surveys,
-    ic_timeline1x,
-    ic_Videos,
-    ic_filter,
-    ic_fisherman,
-    ic_Leader,
-    ic_Users,
-    ic_trophyicon,
-    ic_videoTips,
-    ic_male,
-    ic_female,
-    ic_lock,
-    ic_email,
-    ic_active_activity,
-    ic_active_explore,
-    ic_active_female,
-    ic_active_history,
-    ic_active_male,
-    ic_active_meals,
-    ic_active_progress,
-    ic_active_refer,
-    ic_active_healthy,
-    ic_active_fitness,
-    ic_active_money,
-    ic_done,
-    ic_not_done,
-    ic_signup_bg,
-    ic_signin_bg
+  ic_radio_btn_on,
+  ic_radio_btn_off,
+  ic_Fish01,
+  ic_Fish02,
+  ic_Fish03,
+  ic_Fish04,
+  ic_Fish05,
+  ic_Fish06,
+  ic_Fish07,
+  ic_Fish08,
+  signin_bg_ic,
+  ic_logo_grayscale_cr,
+  ic_About,
+  ic_settings,
+  ic_pending_lcr,
+  ic_lcr_list,
+  ic_Events,
+  ic_Friends,
+  ic_Gallery,
+  ic_Important,
+  ic_LCR,
+  ic_logout,
+  ic_map,
+  ic_Mayday,
+  ic_profile,
+  ic_Notifications,
+  ic_search_icon,
+  ic_Surveys,
+  ic_timeline1x,
+  ic_Videos,
+  ic_filter,
+  ic_fisherman,
+  ic_Leader,
+  ic_Users,
+  ic_trophyicon,
+  ic_videoTips,
+  ic_male,
+  ic_female,
+  ic_lock,
+  ic_email,
+  ic_active_activity,
+  ic_active_explore,
+  ic_active_female,
+  ic_active_history,
+  ic_active_male,
+  ic_active_meals,
+  ic_active_progress,
+  ic_active_refer,
+  ic_active_healthy,
+  ic_active_fitness,
+  ic_active_money,
+  ic_done,
+  ic_not_done,
+  ic_signup_bg,
+  ic_signin_bg,
 };
 // const fonts = Platform.select({
 //     ios: {
@@ -111,21 +132,18 @@ const icons = {
 // });
 
 const fonts = Platform.select({
-    ios: {
-        regular: 'Montserrat-Regular',
-        semiBold: 'Montserrat-SemiBold',
-        bold: 'Montserrat-Bold',
-        extraBold: 'Montserrat-Bold',
-    },
-    android: {
-        regular: 'Montserrat-Regular',
-        semiBold: 'Montserrat-SemiBold',
-        bold: 'Montserrat-Bold',
-        extraBold: 'Montserrat-Bold',
-    }
+  ios: {
+    regular: 'Montserrat-Regular',
+    semiBold: 'Montserrat-SemiBold',
+    bold: 'Montserrat-Bold',
+    extraBold: 'Montserrat-Bold',
+  },
+  android: {
+    regular: 'Montserrat-Regular',
+    semiBold: 'Montserrat-SemiBold',
+    bold: 'Montserrat-Bold',
+    extraBold: 'Montserrat-Bold',
+  },
 });
 
-export {
-    fonts,
-    icons
-};
+export {fonts, icons};

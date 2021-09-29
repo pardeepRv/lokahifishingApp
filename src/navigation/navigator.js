@@ -15,6 +15,7 @@ import Home from '../screens/NavigationScreens/Home/Home';
 import DrawerComp from '../screens/NavigationScreens/Home/DrawerComp';
 
 const Stack = createNativeStackNavigator();
+const MainStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const commonScreensOptions = {
@@ -39,14 +40,16 @@ const HomeStackScreen = props => {
 const MainNavigator = props => {
   return (
     // <NavigationContainer ref={navigationRef}>
-    <NavigationContainer>
-      <Stack.Navigator
+    <NavigationContainer
+    initialRouteName={'authStack'}
+    >
+      <MainStack.Navigator
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="authStack" component={authStack} />
-        <Stack.Screen name="HomeStack" component={HomeStackScreen} />
-      </Stack.Navigator>
+        <MainStack.Screen name="authStack" component={authStack} />
+        <MainStack.Screen name="HomeStack" component={HomeStackScreen} />
+      </MainStack.Navigator>
     </NavigationContainer>
   );
 };

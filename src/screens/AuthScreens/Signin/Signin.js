@@ -1,10 +1,12 @@
 //import liraries
-import React, {useState} from 'react';
+import React, {useState , useRef,useEffect} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Image,
+  Keyboard,
+  BackHandler,
   ImageBackground,
   TouchableOpacity,
   SafeAreaView,
@@ -16,24 +18,69 @@ import styles from "./styles";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {moderateScale} from 'react-native-size-matters';
+
+//intrnal libraries
 import {colors, screenNames} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
 import TextInputComp from '../../../components/common/TextInputComp';
 import { strings } from '../../../localization';
+import {useDispatch} from 'react-redux';
 
 const Signin = ({navigation}) => {
-  const [state, setState] = useState({
+  let passwordTextInput = useRef(null);
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [errors, setErrors] = useState({
     email: '',
     password: '',
     isLoading: false,
   });
+  const name_and_values = [
+    {name: 'email', value: email},
+    {name: 'password', value: password},
+  ];  
 
-  const {email, password, isLoading} = state;
+  useEffect(() => {
+ 
+    function handleKeyUp() {
+      BackHandler.exitApp();
+      return false
+    }
+    
+    BackHandler.addEventListener("keyup", handleKeyUp);
+    return () => BackHandler.removeEventListener("keyup", handleKeyUp);
+  }, []);
+ 
 
-  const _onChangeText = key => val => {
-    setState({...state, [key]: val});
+  
+
+  function Done(){
+   navigation.navigate('HomeStack')
+    Keyboard.dismiss();
+    let err = {};
+    //email error
+    name_and_values.forEach(data => {
+      let name = data.name;
+      let value = data.value;
+      if (!value) {
+        err[name] = 'Should not be empty';
+      } else if ('email' === name && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value) ) {
+        err[name] = 'Email should be valid';
+      } else if ('password' === name && value.length < 8) {
+        err[name] = 'Too short';
+      }
+    });
+    setErrors(err);
+    if (Object.keys(err).length == 0) {
+      var formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+      // dispatch({type:REGISTER,payloads:formData});
+    }
   };
 
   return (
@@ -57,22 +104,47 @@ const Signin = ({navigation}) => {
               style={{
                 marginTop: moderateScale(40),
               }}>
-              <TextInputComp
-                label={strings.email}
-                value={email}
-                placeholder={strings.enterEmail}
-                labelTextStyle={styles.labelTextStyle}
-                onChangeText={_onChangeText('email')}
-              />
-
-              <TextInputComp
-                label={strings.Password}
-                value={password}
-                secureTextEntry
-                placeholder={strings.enterPassword}
-                labelTextStyle={styles.labelTextStyle}
-                onChangeText={_onChangeText('password')}
-              />
+                  <View>
+                <TextInputComp
+                  label={strings.email}
+                  value={email}
+                  placeholder={strings.enterEmail}
+                  labelTextStyle={styles.labelTextStyle}
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      email: '',
+                    })
+                  }
+                  onChangeText={email => setEmail(email)}
+                />
+                {errors.email? (
+                <Text transparent style={{color: colors.primary , bottom:13, left:4}}>
+                  {errors.email}
+                </Text>
+              ) : null}
+                
+                </View>
+                <View>
+                <TextInputComp
+                  label={strings.Password}
+                  value={password}
+                  placeholder={strings.enterPassword}
+                  labelTextStyle={styles.labelTextStyle}
+                  onChangeText={password => setPassword(password)}
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      password: '',
+                    })
+                  }
+                />
+                {errors.password? (
+                <Text transparent style={{color: colors.primary, bottom:13, left:4}}>
+                  {errors.password}
+                </Text>
+              ) : null}
+</View>
             </View>
 
             <TouchableOpacity
@@ -100,7 +172,7 @@ const Signin = ({navigation}) => {
                   alignSelf: 'center',
                 }}
                 label={strings.login}
-                onPress={() => alert('jviu')}
+                onPress={() => Done()}
               />
             </View>
 

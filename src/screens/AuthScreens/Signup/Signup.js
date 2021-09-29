@@ -1,10 +1,12 @@
 //import liraries
-import React, {useState} from 'react';
+import React, {useState , useRef,useEffect} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Image,
+  Keyboard,
+  BackHandler,
   ImageBackground,
   TouchableOpacity,
   SafeAreaView,
@@ -26,33 +28,87 @@ import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
+import {useDispatch} from 'react-redux';
 
-const Signup = ({navigation,data, key}) => {
-  const [state, setState] = useState({
+const Signup = ({navigation}) => {
+  let passwordTextInput = useRef(null);
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState('');
+  const [fullname, setFullname] = useState('');
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState('');  
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setconfirmpassword] = useState('');
+  const [island, setIsland] = useState('');
+
+  const [errors, setErrors] = useState({
     username: '',
     fullname: '',
     email: '',
     password: '',
-    confirmpasssword: '',
+    confirmpassword: '',
     city: '',
     island: '',
     isLoading: false,
   });
 
-  const {
-    username,
-    fullname,
-    email,
-    password,
-    confirmpasssword,
-    city,
-    island,
-    isLoading,
-  } = state;
+  const name_and_values = [
+    {name: 'username', value: username},
+    {name: 'fullname', value: fullname},
+    {name: 'email', value: email},
+    {name: 'city', value: city},
+    {name: 'island', value: island},
+    {name: 'password', value: password},
+    {name: 'confirmpassword', value: confirmpassword},
+  ];  
 
-  const _onChangeText = key => val => {
-    setState({...state, [key]: val});
+
+  useEffect(() => {
+ 
+    function handleKeyUp() {
+      BackHandler.exitApp();
+      return false
+    }
+    
+    BackHandler.addEventListener("keyup", handleKeyUp);
+    return () => BackHandler.removeEventListener("keyup", handleKeyUp);
+  }, []);
+
+  // const _onChangeText = key => val => {
+  //   setState({...state, [key]: val});
+  // };
+  function Submit(){
+    Keyboard.dismiss();
+    let err = {};
+    //email error
+    name_and_values.forEach(data => {
+      let name = data.name;
+      let value = data.value;
+      if (!value) {
+        err[name] = 'Should not be empty';
+      } else if ('email' === name && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value) ) {
+        err[name] = 'Email should be valid';
+      } else if ('password' === name && value.length < 8) {
+        err[name] = 'Too short';
+      }else if ('confirmpassword' === name && value.length < 8) {
+        err[name] = 'Too short';
+      }else if ('confirmpassword' === name && value!== password) {
+        err[name] = 'Confirm password should match';
+      }
+    });
+    setErrors(err);
+    if (Object.keys(err).length == 0) {
+      var formData = new FormData();
+      formData.append("first_name", firstname);
+      formData.append("last_name", lastname);
+      formData.append("email", email);
+      formData.append("phone_number", phonenumber);
+      formData.append("password", password);
+      formData.append("password_confirmation", confirmpassword);
+      // dispatch({type:REGISTER,payloads:formData});
+    }
   };
+
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
@@ -77,58 +133,156 @@ const Signup = ({navigation,data, key}) => {
                 style={{
                   marginTop: moderateScale(40),
                 }}>
+                  
+                  <View>
                 <TextInputComp
                   label={strings.username}
                   value={username}
                   placeholder={strings.enterusername}
                   labelTextStyle={styles.labelTextStyle}
-                  onChangeText={_onChangeText('username')}
-                />
+                  onChangeText={username => setUsername(username)}
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      username: '',
+                    })
+                  }  />
+                  {errors.username? (
+                    <Text transparent style={{color: colors.primary ,bottom:14}}>
+                      {errors.username}
+                    </Text>
+                  ) : null} 
+                  </View>
+                  
+               
+                  <View>
                 <TextInputComp
                   label={strings.fullname}
                   value={fullname}
                   placeholder={strings.enterfullname}
                   labelTextStyle={styles.labelTextStyle}
-                  onChangeText={_onChangeText('fullname')}
+                  onChangeText={fullname => setFullname(fullname)}
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      fullname: '',
+                    })
+                  } 
                 />
+                {errors.fullname? (
+                    <Text transparent style={{color: colors.primary,bottom:13, left:4}}>
+                      {errors.fullname}
+                    </Text>
+                  ) : null} 
+                  </View>
+                  <View>
                 <TextInputComp
                   label={strings.email}
                   value={email}
                   placeholder={strings.enterEmail}
                   labelTextStyle={styles.labelTextStyle}
-                  onChangeText={_onChangeText('email')}
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      email: '',
+                    })
+                  }
+                  onChangeText={email => setEmail(email)}
                 />
+                {errors.email? (
+                <Text transparent style={{color: colors.primary ,bottom:13, left:4}}>
+                  {errors.email}
+                </Text>
+              ) : null}
+                
+                </View>
+                <View>
                 <TextInputComp
                   label={strings.Password}
                   value={password}
                   placeholder={strings.enterPassword}
                   labelTextStyle={styles.labelTextStyle}
-                  onChangeText={_onChangeText('password')}
+                  onChangeText={password => setPassword(password)}
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      password: '',
+                    })
+                  }
                 />
-
+                {errors.password? (
+                <Text transparent style={{color: colors.primary,bottom:13, left:4}}>
+                  {errors.password}
+                </Text>
+              ) : null}
+</View>
+<View>
                 <TextInputComp
                   label={strings.confirmpassword}
-                  value={confirmpasssword}
+                  value={confirmpassword}
                   secureTextEntry
                   placeholder={strings.enterconfirmpassword}
                   labelTextStyle={styles.labelTextStyle}
-                  onChangeText={_onChangeText('confirmpasssword')}
+                  onChangeText={confirmpassword =>
+                    setconfirmpassword(confirmpassword)
+                  }
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      confirmpassword: '',
+                    })
+                  }
                 />
+                 {errors.confirmpassword? (
+                <Text transparent style={{color: colors.primary ,bottom:13, left:4}}>
+                  {errors.confirmpassword}
+                </Text>
+              ) : null}
+                </View>
+                <View>
                 <TextInputComp
                   label={strings.city}
                   value={city}
                   placeholder={strings.entercity}
                   labelTextStyle={styles.labelTextStyle}
-                  onChangeText={_onChangeText('city')}
+                  onChangeText={city =>
+                    setCity(city)
+                  }
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      city: '',
+                    })
+                  }
                 />
+                {errors.city? (
+                <Text transparent style={{color: colors.primary ,bottom:13, left:4}}>
+                  {errors.city}
+                </Text>
+              ) : null}
+                </View>
+                <View>
                 <TextInputComp
                   label={strings.island}
                   value={island}
                   placeholder={strings.enterisland}
                   labelTextStyle={styles.labelTextStyle}
-                  onChangeText={_onChangeText('island')}
+                  onChangeText={island =>
+                    setIsland(island)
+                  }
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      island: '',
+                    })
+                  }
                 />
-                
+                  {errors.island? (
+                <Text transparent style={{color: colors.primary ,bottom:13, left:4}}>
+                  {errors.island}
+                </Text>
+              ) : null}
+                </View>
               </View>
               
               <View
@@ -143,12 +297,12 @@ const Signup = ({navigation,data, key}) => {
                     alignSelf: 'center',
                   }}
                   label={strings.signup}
-                  onPress={() => alert('jviu')}
+                  onPress={() => Submit()}
                 />
               </View>
               
               <TouchableOpacity
-                onPress={() => navigation.navigate(screenNames.Signup)}
+                onPress={() => navigation.navigate(screenNames.Signin)}
                 // style={{
                 //   flexDirection:'row',
                 //   justifyContent:'center'
@@ -159,6 +313,7 @@ const Signup = ({navigation,data, key}) => {
                     alignSelf: 'center',
                     fontFamily: fonts.semiBold,
                     marginTop: moderateScale(10),
+                    marginBottom: moderateScale(15),
                     color: colors.white1,
                   }}>
                   {strings.alreadyaccount}
@@ -167,7 +322,7 @@ const Signup = ({navigation,data, key}) => {
                       alignSelf: 'center',
                       fontFamily: fonts.extraBold,
                       marginTop: moderateScale(10),
-                      marginBottom: moderateScale(10),
+                      marginBottom: moderateScale(15),
                       color: colors.primary,
                     }}>
                     {strings.signin}

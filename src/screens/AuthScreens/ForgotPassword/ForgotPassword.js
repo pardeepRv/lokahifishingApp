@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState , useRef,useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  Keyboard,
+  BackHandler,
 } from 'react-native';
 
 //extrenal libraries
@@ -23,18 +25,56 @@ import {Button} from '../../../components/common/Button';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
 import styles from './styles';
+import {useDispatch} from 'react-redux';
 
 const ForgotPassword = ({navigation}) => {
-  const [state, setState] = useState({
-    email: '',
+  let passwordTextInput = useRef(null);
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  
 
+  const [errors, setErrors] = useState({
+    email: '',
     isLoading: false,
   });
+  const name_and_values = [
+    {name: 'email', value: email},
+  ];  
 
-  const {email, isLoading} = state;
+  useEffect(() => {
+ 
+    function handleKeyUp() {
+      BackHandler.exitApp();
+      return false
+    }
+    
+    BackHandler.addEventListener("keyup", handleKeyUp);
+    return () => BackHandler.removeEventListener("keyup", handleKeyUp);
+  }, []);
 
   const _onChangeText = key => val => {
     setState({...state, [key]: val});
+  };
+
+  function Forpassword(){
+    Keyboard.dismiss();
+    let err = {};
+    //email error
+    name_and_values.forEach(data => {
+      let name = data.name;
+      let value = data.value;
+      if (!value) {
+        err[name] = 'Should not be empty';
+      } else if ('email' === name && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value) ) {
+        err[name] = 'Email should be valid';
+      } 
+    });
+    setErrors(err);
+    if (Object.keys(err).length == 0) {
+      var formData = new FormData();
+      formData.append("email", email);
+      // dispatch({type:REGISTER,payloads:formData});
+    }
   };
 
   return (
@@ -59,12 +99,23 @@ const ForgotPassword = ({navigation}) => {
                 marginTop: moderateScale(25),
               }}>
               <TextInputComp
-                label={strings.email}
-                value={email}
-                placeholder={strings.enterEmail}
-                labelTextStyle={styles.labelTextStyle}
-                onChangeText={_onChangeText('email')}
-              />
+                  label={strings.email}
+                  value={email}
+                  placeholder={strings.enterEmail}
+                  labelTextStyle={styles.labelTextStyle}
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      email: '',
+                    })
+                  }
+                  onChangeText={email => setEmail(email)}
+                />
+                {errors.email? (
+                <Text transparent style={{color: colors.primary , bottom:13, left:4}}>
+                  {errors.email}
+                </Text>
+              ) : null}
             </View>
             <View
               style={{
@@ -78,7 +129,7 @@ const ForgotPassword = ({navigation}) => {
                   alignSelf: 'center',
                 }}
                 label={strings.send}
-                onPress={() => alert('jviu')}
+                onPress={() => Forpassword()}
               />
             </View>
           </ScrollView>

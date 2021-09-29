@@ -30,6 +30,7 @@ const transitionConfig = () => ({
 
 const screenNames = {
 	Login: 'Login',
+	Signin:'Signin',
 	Signup: 'Signup',
 	HearFrom:'HearFrom',
 	AboutMe:'AboutMe',

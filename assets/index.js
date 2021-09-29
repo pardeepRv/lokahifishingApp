@@ -18,6 +18,8 @@ import ic_male from './icons/inactive-male.png';
 import ic_female from './icons/inactive-female.png';
 import ic_signup_bg from './icons/signup_bg.png';
 import ic_signin_bg from './icons/signin_bg.png';
+import ic_logo_grayscale_cr from './icons/logo_grayscale_cr.9.png';
+import signin_bg_ic from './icons/signin_bg_ic.png';
 
 //drawer
 import ic_pending_lcr from './icons/drawer/Data-Feeds.png';
@@ -46,8 +48,9 @@ import ic_About from './icons/drawer/About.png';
 import ic_settings from './icons/drawer/settings.png';
 
 
-
 const icons = {
+    signin_bg_ic,
+    ic_logo_grayscale_cr,
     ic_About,
     ic_settings,
     ic_pending_lcr,

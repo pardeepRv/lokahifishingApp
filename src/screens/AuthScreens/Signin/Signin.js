@@ -1,32 +1,21 @@
 //import liraries
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useRef, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Keyboard,
-  BackHandler,
-  ImageBackground,
-  TouchableOpacity,
+  ImageBackground, Keyboard,
   SafeAreaView,
-  ScrollView,
+  ScrollView, Text,
+  TouchableOpacity, View
 } from 'react-native';
-import styles from './styles';
-
-//3rd party packages
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {moderateScale} from 'react-native-size-matters';
-
-//intrnal libraries
-import {colors, screenNames} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
-import {fonts, icons} from '../../../../assets';
-import {Button} from '../../../components/common/Button';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch } from 'react-redux';
+import { fonts, icons } from '../../../../assets';
+import { Button } from '../../../components/common/Button';
 import TextInputComp from '../../../components/common/TextInputComp';
-import {strings} from '../../../localization';
-import {useDispatch} from 'react-redux';
+import { strings } from '../../../localization';
+//intrnal libraries
+import { colors, screenNames } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
+import styles from './styles';
 
 const Signin = ({navigation}) => {
   let passwordTextInput = useRef(null);
@@ -43,16 +32,6 @@ const Signin = ({navigation}) => {
     {name: 'email', value: email},
     {name: 'password', value: password},
   ];
-
-  useEffect(() => {
-    function handleKeyUp() {
-      BackHandler.exitApp();
-      return false;
-    }
-
-    BackHandler.addEventListener('keyup', handleKeyUp);
-    return () => BackHandler.removeEventListener('keyup', handleKeyUp);
-  }, []);
 
   function Done() {
     navigation.navigate('HomeStack');
@@ -81,6 +60,11 @@ const Signin = ({navigation}) => {
       // dispatch({type:REGISTER,payloads:formData});
     }
   }
+
+   const _onChangeText = key => val => {
+    setState({...state, [key]: val});
+  };
+
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>

@@ -1,36 +1,31 @@
 //import liraries
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useRef, useState} from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
+  Alert,
+  FlatList,
   Image,
-  Keyboard,
-  BackHandler,
   ImageBackground,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
-  FlatList,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import styles from './styles';
-
-//3rd party packages
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import ImagePicker from 'react-native-image-crop-picker';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {moderateScale} from 'react-native-size-matters';
-
-//internal libraries
-import {colors, screenNames} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import {useDispatch} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
-import {useDispatch} from 'react-redux';
-import {RFValue} from 'react-native-responsive-fontsize';
+//internal libraries
+import {colors, screenNames} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
+import styles from './styles';
 
 const Signup = ({navigation}) => {
   let passwordTextInput = useRef(null);
@@ -42,10 +37,11 @@ const Signup = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [confirmpassword, setconfirmpassword] = useState('');
   const [island, setIsland] = useState('');
+  const [productPhoto, setProductPhoto] = useState('');
 
   const [cmlHolder, setCmlHolder] = useState([
     {value: 'Yes', isSelected: false},
-    {value: 'No', isSelected: true},
+    {value: 'No', isSelected: false},
   ]);
 
   const [errors, setErrors] = useState({
@@ -57,6 +53,7 @@ const Signup = ({navigation}) => {
     city: '',
     island: '',
     isLoading: false,
+    productPhoto: '',
   });
 
   const name_and_values = [
@@ -68,16 +65,6 @@ const Signup = ({navigation}) => {
     {name: 'password', value: password},
     {name: 'confirmpassword', value: confirmpassword},
   ];
-
-  useEffect(() => {
-    function handleKeyUp() {
-      BackHandler.exitApp();
-      return false;
-    }
-
-    BackHandler.addEventListener('keyup', handleKeyUp);
-    return () => BackHandler.removeEventListener('keyup', handleKeyUp);
-  }, []);
 
   // const _onChangeText = key => val => {
   //   setState({...state, [key]: val});
@@ -157,13 +144,59 @@ const Signup = ({navigation}) => {
     </TouchableOpacity>
   );
 
+  function _doOpenOption(value) {
+    Alert.alert(
+      '',
+      'Please Select',
+      [
+        {text: 'Camera', onPress: () => _doOpenCamera(value)},
+        {text: 'Gallery', onPress: () => _doOpenGallery(value)},
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ],
+      {cancelable: true},
+    );
+  }
+  function _doOpenCamera(value) {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true,
+      compressImageQuality: 0.2,
+    }).then(response => {
+      let data = `data:${response.mime};base64,${response.data}`;
+      if (value == 'productPhoto') {
+        setProductPhoto(data);
+      }
+    });
+  }
+  function _doOpenGallery(value) {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true,
+      compressImageQuality: 0.2,
+    }).then(image => {
+      console.log(`images`, image);
+        let data = `data:${image.mime};base64,${image.data}`;
+        if (value == 'productPhoto') {
+          setProductPhoto(data);
+        }
+    });
+  }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
       <View
         style={{
           flex: 1,
         }}>
-        <ImageBackground source={icons.ic_signin_bg} style={styles.image}>
+        <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
           <ScrollView style={{flex: 1}}>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -171,14 +204,40 @@ const Signup = ({navigation}) => {
               contentContainerStyle={styles.subContentContainer}
               keyboardShouldPersistTaps={'always'}
               showsVerticalScrollIndicator={false}>
+              <View style={styles.uploadContainer}>
+                <Image
+                  source={
+                    productPhoto != ''
+                      ? {uri: productPhoto}
+                      : icons.signin_bg_ic
+                  }
+                  resizeMode="cover"
+                  style={{
+                    borderRadius: moderateScale(100),
+                    height: productPhoto != '' ? '100%' : '115%',
+                    width: productPhoto != '' ? '100%' : '155%',
+                  }}
+                />
+                <View style={styles.uploadContent}>
+                  <TouchableOpacity
+                    style={[styles.uploadStoreBtn]}
+                    onPress={() => _doOpenOption('productPhoto')}>
+                    <Image
+                      style={styles.logo2}
+                      source={icons.ic_cateagory}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
               <View
                 style={{
-                  marginTop: layout.size.width / 1.7,
+                  marginTop: layout.size.width / 10,
                 }}></View>
 
               <View
                 style={{
-                  marginTop: moderateScale(40),
+                  marginTop: moderateScale(30),
                 }}>
                 <View>
                   <TextInputComp

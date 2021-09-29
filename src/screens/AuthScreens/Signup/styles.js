@@ -1,11 +1,10 @@
-import { StyleSheet } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import { fonts } from '../../../../assets';
-import { colors } from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
+import {StyleSheet} from 'react-native';
+import {moderateScale} from 'react-native-size-matters';
+import {fonts} from '../../../../assets';
+import {colors} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
 
-
-//external libraries 
+//external libraries
 import {RFValue} from 'react-native-responsive-fontsize';
 
 export default StyleSheet.create({
@@ -40,7 +39,6 @@ export default StyleSheet.create({
   },
   image: {
     flex: 1,
-  
     height: '100%',
   },
   labelTextStyle: {
@@ -49,18 +47,53 @@ export default StyleSheet.create({
     color: colors.white1,
   },
   textinput: {
-    fontSize:RFValue(22),
+    fontSize: RFValue(22),
     alignSelf: 'center',
     fontFamily: fonts.semiBold,
     marginTop: moderateScale(15),
     color: colors.white1,
   },
-  textStyle:{
+  textStyle: {
     fontFamily: fonts.semiBold,
     fontSize: moderateScale(16),
     color: colors.white1,
     paddingHorizontal: moderateScale(5),
     alignSelf: 'center',
   },
-
-})
+  uploadContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: moderateScale(200),
+    width: moderateScale(200),
+    alignSelf: 'center',
+    marginTop: moderateScale(55),
+    borderRadius: moderateScale(100),
+    borderColor: 'transparent',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    borderWidth: 0.5,
+  },
+  uploadContent: {
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 30,
+    right: 10,
+  },
+  uploadStoreBtn: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    backgroundColor: 'transparent',
+    top: 20,
+    // alignItems: 'center',
+  },
+  logo2: {
+    tintColor: colors.white1,
+    width: moderateScale(40),
+    height: moderateScale(40),
+    borderRadius: 20,
+  },
+});

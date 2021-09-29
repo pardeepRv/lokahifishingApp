@@ -48,7 +48,8 @@ import ic_trophyicon from './icons/drawer/trophyicon-1.png';
 import ic_videoTips from './icons/drawer/videoTips-1.png';
 import ic_About from './icons/drawer/About.png';
 import ic_settings from './icons/drawer/settings.png';
-
+import ic_edit from './icons/drawer/edit_icon.png';
+import ic_cateagory from './icons/NewImages/camera.png';
 //home page icons
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
 import ic_Fish02 from './icons/dashbaordImages/Fish02.png';
@@ -60,6 +61,8 @@ import ic_Fish07 from './icons/dashbaordImages/Fish07.png';
 import ic_Fish08 from './icons/dashbaordImages/Fish08.png';
 
 const icons = {
+  ic_edit,
+  ic_cateagory,
   ic_radio_btn_on,
   ic_radio_btn_off,
   ic_Fish01,

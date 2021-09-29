@@ -11,7 +11,7 @@ export default {
 
   //signup screen
   alreadyaccount: 'Already have a ccount?',
-  signin: '  Sign IN',
+  signin: '  Sign in',
   username: 'Username',
   fullname: 'Full Name',
   confirmpassword: 'Confirm Password',

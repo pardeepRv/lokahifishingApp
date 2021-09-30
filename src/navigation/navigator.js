@@ -12,6 +12,7 @@ import About from '../screens/Drawerscreens/About/About';
 import PdfViewer from '../screens/Drawerscreens/PDFViewer/PdfViewer';
 import PrivacyPolicy from '../screens/Drawerscreens/PrivacyPolicy/PrivacyPolicy';
 import Settings from '../screens/Drawerscreens/Settings/Settings';
+import Survey from '../screens/Drawerscreens/Survey/Survey';
 import TermsandCondition from '../screens/Drawerscreens/TermsandCondition/TermsandCondition';
 import TournamentRules from '../screens/Drawerscreens/TournamentRules/TournamentRules';
 import DrawerComp from '../screens/NavigationScreens/Home/DrawerComp';
@@ -44,6 +45,8 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="PdfViewer" component={PdfViewer} />
       <Drawer.Screen name="Settings" component={Settings} />
       <Drawer.Screen name="TournamentRules" component={TournamentRules} />
+      <Drawer.Screen name="Survey" component={Survey} />
+
     </Drawer.Navigator>
   );
 };

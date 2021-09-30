@@ -446,7 +446,7 @@ const data = [
     },
     {
       name: strings.Survey,
-      navigate: 'Information',
+      navigate: 'Survey',
       img: icons.ic_pending_lcr,
     },
     {

@@ -416,7 +416,7 @@ const data = [
     },
     {
       name: strings.lcr_list,
-      navigate: 'aboutUs',
+      navigate: 'Aboutcsdcs',
       img: icons.ic_LCR,
     },
     {
@@ -476,7 +476,7 @@ const data = [
     },
     {
       name: strings.About,
-      navigate: 'abc',
+      navigate: 'About',
       img: icons.ic_About,
     },
     {

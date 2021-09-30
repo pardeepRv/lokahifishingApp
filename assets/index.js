@@ -22,6 +22,7 @@ import ic_logo_grayscale_cr from './icons/logo_grayscale_cr.9.png';
 import signin_bg_ic from './icons/signin_bg_ic.png';
 import ic_radio_btn_on from './icons/ic_radio_btn_on.png';
 import ic_radio_btn_off from './icons/ic_radio_btn_off.png';
+import ic_back_white from './icons/ic_back_white.png';
 
 //drawer
 import ic_pending_lcr from './icons/drawer/Data-Feeds.png';
@@ -48,8 +49,11 @@ import ic_trophyicon from './icons/drawer/trophyicon-1.png';
 import ic_videoTips from './icons/drawer/videoTips-1.png';
 import ic_About from './icons/drawer/About.png';
 import ic_settings from './icons/drawer/settings.png';
+import ic_menu_white from './icons/drawer/ic_menu_white.png';
 import ic_edit from './icons/drawer/edit_icon.png';
 import ic_cateagory from './icons/NewImages/camera.png';
+
+
 //home page icons
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
 import ic_Fish02 from './icons/dashbaordImages/Fish02.png';
@@ -64,6 +68,8 @@ import privacyPolicy from './icons/privacyPolicy.pdf';
 import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
+  ic_back_white,
+  ic_menu_white,
   privacyPolicy,
   TermsandConditionpdf,
   ic_edit,

@@ -1,12 +1,13 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, ImageBackground, Dimensions, ScrollView, View , Image} from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
-import { icons } from '../../../../assets';
+import { fonts, icons } from '../../../../assets';
+import { Header } from '../../../components/common/Header';
 import { colors } from '../../../utilities/constants';
 import { layout } from '../../../utilities/layout';
 import styles from './styles';
 
-const About = () => {
+const About = ({navigation}) => {
 	const FishingTools = [
 		'Live Catch Report: What kind of fish are being caught, where they are being caught, what they were caught on, when and how they were caught',
 		'Educational How To Videos on boating and fishing demonstrated by experts produced professionally in a simple, common-sense style',
@@ -29,6 +30,21 @@ const About = () => {
 	return (
 		<ImageBackground source={icons.ic_signin_bg} style={styles.image}>
 			<SafeAreaView style={styles.content}>
+			<Header
+            containerStyle={{
+              backgroundColor: 'transparent',
+              height: moderateScale(60),
+            }}
+            title={'About'}
+            titleStyle={{fontFamily: fonts.bold}}
+            leftIconSource={icons.ic_back_white}
+			leftButtonStyle={{
+				tintColor:colors.white1
+			}}
+            onLeftPress={() => {
+              navigation.goBack();
+            }}
+          />
 				<ScrollView>
 					<Text style={[styles.text, styles.textItem, styles.title]}>Lokahi Fishing - About Us</Text>
 					<Text style={[styles.text, styles.textItem]}>

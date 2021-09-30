@@ -16,6 +16,8 @@ import {colors, menu, screenNames} from '../../../utilities/constants';
 import {fonts, icons} from '../../../../assets';
 import {strings} from '../../../localization';
 import styles from './styles';
+import {Header} from '../../../components/common/Header';
+import {moderateScale} from 'react-native-size-matters';
 
 const Home = ({navigation}) => {
   const [menus, setMenus] = useState(menu);
@@ -24,14 +26,8 @@ const Home = ({navigation}) => {
     <TouchableOpacity
       style={[{backgroundColor: item.bgColor}, styles.renderItem]}
       activeOpacity={0.8}>
-      <Image
-        source={item.img}
-        style={styles.imageStyle}
-      />
-      <Text
-        style={styles.textStyle}>
-        {item.name}
-      </Text>
+      <Image source={item.img} style={styles.imageStyle} />
+      <Text style={styles.textStyle}>{item.name}</Text>
     </TouchableOpacity>
   );
   return (
@@ -40,9 +36,19 @@ const Home = ({navigation}) => {
         style={{
           flex: 1,
         }}>
-        <ImageBackground
-          source={icons.ic_signup_bg}
-          style={styles.image}>
+        <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
+          <Header
+            containerStyle={{
+              backgroundColor: 'transparent',
+              height: moderateScale(60),
+            }}
+            title={'Home'}
+            titleStyle={{fontFamily: fonts.bold}}
+            leftIconSource={icons.ic_menu_white}
+            onLeftPress={() => {
+              navigation.openDrawer();
+            }}
+          />
           <FlatList
             extraData={menus}
             data={menus}
@@ -51,10 +57,7 @@ const Home = ({navigation}) => {
             numColumns={2}
             ListHeaderComponent={() =>
               !menus.length ? (
-                <Text
-                  style={styles.nomatch}>
-                  No Match found
-                </Text>
+                <Text style={styles.nomatch}>No Match found</Text>
               ) : null
             }
           />

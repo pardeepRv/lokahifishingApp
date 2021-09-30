@@ -10,6 +10,7 @@ import Pdf from 'react-native-pdf';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
 import {Header} from '../../../components/common/Header';
+import { strings } from '../../../localization';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 
@@ -18,10 +19,10 @@ const PrivacyPolicy = ({navigation}) => {
     <SafeAreaView style={styles.content}>
       <Header
         containerStyle={{
-          backgroundColor: 'transparent',
+          backgroundColor: colors.transparent,
           height: moderateScale(60),
         }}
-        title={'Privacy Policy'}
+        title={strings.Privacy_Policy}
         titleStyle={{fontFamily: fonts.bold}}
         leftIconSource={icons.ic_back_white}
         leftButtonStyle={{

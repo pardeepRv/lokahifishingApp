@@ -32,10 +32,11 @@ export default StyleSheet.create({
     textItem: {
       paddingVertical: 10,
       alignSelf:'center'
+    
       // paddingHorizontal:25,
     },
     list: {
-      width: moderateScale(10)
+      width: moderateScale(10),
     },
     listItem: {
       display: 'flex',
@@ -47,7 +48,7 @@ export default StyleSheet.create({
       textAlign: 'center',
       fontSize: 26,
       fontWeight: '400',
-      paddingTop: 20,
+      paddingTop:layout.size.height/4,
     },
     toolsTitle: {
       fontWeight: '600',

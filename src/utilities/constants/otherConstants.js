@@ -421,7 +421,7 @@ const data = [
     },
     {
       name: strings.Tournament_rules,
-      navigate: 'Information',
+      navigate: 'TournamentRules',
       img: icons.ic_pending_lcr,
     },
     {
@@ -496,7 +496,7 @@ const data = [
     },
     {
       name: strings.Settings,
-      navigate: 'abc',
+      navigate: 'Settings',
       img: icons.ic_settings,
     },
     {

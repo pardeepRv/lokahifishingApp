@@ -1,10 +1,9 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, ImageBackground, Dimensions, ScrollView, View , Image} from 'react-native';
+import { Image, ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { fonts, icons } from '../../../../assets';
 import { Header } from '../../../components/common/Header';
 import { colors } from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
 import styles from './styles';
 
 const About = ({navigation}) => {

@@ -56,4 +56,10 @@ export default {
   News: 'News',
   LeaderBoard: 'LeaderBoard',
   Tournament: 'Tournament',
+
+  //Drawer items
+  Tournament_Rules:'Tournament Rules',
+  Terms_and_Conditions: 'Terms and Conditions',
+  Privacy_Policy: 'Privacy Policy',
+
 };

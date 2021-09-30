@@ -1,18 +1,13 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  ImageBackground,
-  Dimensions,
-} from 'react-native';
-import {layout} from '../../../utilities/layout';
-import {moderateScale} from 'react-native-size-matters';
+import {SafeAreaView, StyleSheet} from 'react-native';
 //external libraries
 import Pdf from 'react-native-pdf';
-import { Header } from '../../../components/common/Header';
-import { fonts, icons } from '../../../../assets';
-import { colors } from '../../../utilities/constants';
+import {moderateScale} from 'react-native-size-matters';
+import {fonts, icons} from '../../../../assets';
+import {Header} from '../../../components/common/Header';
+import { strings } from '../../../localization';
+import {colors} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
 
 const source = require('./TermsandConditionpdf.pdf');
 const TermsandConditions = ({navigation}) => {
@@ -20,10 +15,10 @@ const TermsandConditions = ({navigation}) => {
     <SafeAreaView style={styles.content}>
       <Header
         containerStyle={{
-          backgroundColor: 'transparent',
+          backgroundColor: colors.transparent,
           height: moderateScale(60),
         }}
-        title={'Terms and Conditions'}
+        title={strings.Terms_and_Conditions}
         titleStyle={{fontFamily: fonts.bold}}
         leftIconSource={icons.ic_back_white}
         leftButtonStyle={{
@@ -37,9 +32,6 @@ const TermsandConditions = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
-export default TermsandConditions;
-
 const styles = StyleSheet.create({
   content: {
     height: '100%',
@@ -52,3 +44,4 @@ const styles = StyleSheet.create({
     width: layout.size.width,
   },
 });
+export default TermsandConditions;

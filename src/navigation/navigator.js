@@ -1,23 +1,21 @@
-import React, {useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+//navigation screens
+import ForgotPassword from '../screens/AuthScreens/ForgotPassword/ForgotPassword';
+import Signin from '../screens/AuthScreens/Signin/Signin';
 /************ Screens *************** */
 //authScreen
 import Signup from '../screens/AuthScreens/Signup/Signup';
-import Signin from '../screens/AuthScreens/Signin/Signin';
-
-//navigation screens
-import ForgotPassword from '../screens/AuthScreens/ForgotPassword/ForgotPassword';
-import {navigationRef} from '../store/NavigationService';
-import Home from '../screens/NavigationScreens/Home/Home';
-import DrawerComp from '../screens/NavigationScreens/Home/DrawerComp';
 import About from '../screens/Drawerscreens/About/About';
-import TermsandCondition from '../screens/Drawerscreens/TermsandCondition/TermsandCondition';
-import PrivacyPolicy from '../screens/Drawerscreens/PrivacyPolicy/PrivacyPolicy';
 import PdfViewer from '../screens/Drawerscreens/PDFViewer/PdfViewer';
-
+import PrivacyPolicy from '../screens/Drawerscreens/PrivacyPolicy/PrivacyPolicy';
+import Settings from '../screens/Drawerscreens/Settings/Settings';
+import TermsandCondition from '../screens/Drawerscreens/TermsandCondition/TermsandCondition';
+import TournamentRules from '../screens/Drawerscreens/TournamentRules/TournamentRules';
+import DrawerComp from '../screens/NavigationScreens/Home/DrawerComp';
+import Home from '../screens/NavigationScreens/Home/Home';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -36,15 +34,16 @@ const HomeStackScreen = props => {
     <Drawer.Navigator
       initialRouteName="Drawer"
       drawerContent={props => DrawerComp({...props})}
-      // screenOptions={{
-      //   headerShown: false,
-      // }}
-    >
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Drawer.Screen name="Home" component={Home} options={{}} />
       <Drawer.Screen name="About" component={About} />
       <Drawer.Screen name="TermsandCondition" component={TermsandCondition} />
       <Drawer.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       <Drawer.Screen name="PdfViewer" component={PdfViewer} />
+      <Drawer.Screen name="Settings" component={Settings} />
+      <Drawer.Screen name="TournamentRules" component={TournamentRules} />
     </Drawer.Navigator>
   );
 };

@@ -14,6 +14,10 @@ import {navigationRef} from '../store/NavigationService';
 import Home from '../screens/NavigationScreens/Home/Home';
 import DrawerComp from '../screens/NavigationScreens/Home/DrawerComp';
 import About from '../screens/Drawerscreens/About/About';
+import TermsandCondition from '../screens/Drawerscreens/TermsandCondition/TermsandCondition';
+import PrivacyPolicy from '../screens/Drawerscreens/PrivacyPolicy/PrivacyPolicy';
+import PdfViewer from '../screens/Drawerscreens/PDFViewer/PdfViewer';
+
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -35,13 +39,12 @@ const HomeStackScreen = props => {
       // screenOptions={{
       //   headerShown: false,
       // }}
-      >
-      <Drawer.Screen name="Home" component={Home} 
-      options={{
-        
-      }}
-      />
-      <Drawer.Screen name="About" component={About}  />
+    >
+      <Drawer.Screen name="Home" component={Home} options={{}} />
+      <Drawer.Screen name="About" component={About} />
+      <Drawer.Screen name="TermsandCondition" component={TermsandCondition} />
+      <Drawer.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+      <Drawer.Screen name="PdfViewer" component={PdfViewer} />
     </Drawer.Navigator>
   );
 };
@@ -49,9 +52,7 @@ const HomeStackScreen = props => {
 const MainNavigator = props => {
   return (
     // <NavigationContainer ref={navigationRef}>
-    <NavigationContainer
-    initialRouteName={'authStack'}
-    >
+    <NavigationContainer initialRouteName={'authStack'}>
       <MainStack.Navigator
         screenOptions={{
           headerShown: false,

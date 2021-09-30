@@ -481,12 +481,12 @@ const data = [
     },
     {
       name: strings.Privacy,
-      navigate: 'Help',
+      navigate: 'PrivacyPolicy',  
       img: icons.ic_pending_lcr,
     },
     {
       name: strings.Terms,
-      navigate: 'abc',
+      navigate: 'TermsandCondition',
       img: icons.ic_pending_lcr,
     },
     {

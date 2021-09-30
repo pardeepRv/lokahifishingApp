@@ -60,7 +60,12 @@ import ic_Fish06 from './icons/dashbaordImages/Fish06.png';
 import ic_Fish07 from './icons/dashbaordImages/Fish07.png';
 import ic_Fish08 from './icons/dashbaordImages/Fish08.png';
 
+import privacyPolicy from './icons/privacyPolicy.pdf';
+import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
+
 const icons = {
+  privacyPolicy,
+  TermsandConditionpdf,
   ic_edit,
   ic_cateagory,
   ic_radio_btn_on,

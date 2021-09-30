@@ -23,7 +23,7 @@ const DrawerComp = ({navigation, ...props}) => {
   console.log(navigation, 'navigationnavigation in drwaer');
 
   const pressHnadler = screen => {
-    console.log(screen, 'where we are navigating...');
+      console.log(screen, 'where we are navigating...');
     navigation.closeDrawer();
     navigation.navigate(screen);
   };
@@ -52,7 +52,12 @@ const DrawerComp = ({navigation, ...props}) => {
                 flexDirection: 'row',
                 margin: 10,
               }}
-              onPress={() => (strings.Logout ? reset() : console.log(index))}>
+              onPress={
+                // console.log(val.name,'name is>>>');
+                val.name == strings.Logout
+                  ? () => reset()
+                  : () => pressHnadler(val.navigate)
+              }>
               <Image source={val.img} style={styles.imgStyle} />
               <Text style={styles.nameStyle}>{val.name}</Text>
             </TouchableOpacity>

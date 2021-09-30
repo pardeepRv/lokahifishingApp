@@ -13,6 +13,7 @@ import ForgotPassword from '../screens/AuthScreens/ForgotPassword/ForgotPassword
 import {navigationRef} from '../store/NavigationService';
 import Home from '../screens/NavigationScreens/Home/Home';
 import DrawerComp from '../screens/NavigationScreens/Home/DrawerComp';
+import About from '../screens/Drawerscreens/About/About';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -31,8 +32,16 @@ const HomeStackScreen = props => {
     <Drawer.Navigator
       initialRouteName="Drawer"
       drawerContent={props => DrawerComp({...props})}
+      // screenOptions={{
+      //   headerShown: false,
+      // }}
       >
-      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Home" component={Home} 
+      options={{
+        
+      }}
+      />
+      <Drawer.Screen name="About" component={About}  />
     </Drawer.Navigator>
   );
 };

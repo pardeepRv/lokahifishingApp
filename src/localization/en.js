@@ -61,5 +61,6 @@ export default {
   Tournament_Rules:'Tournament Rules',
   Terms_and_Conditions: 'Terms and Conditions',
   Privacy_Policy: 'Privacy Policy',
+  Survey:'Survey',
 
 };

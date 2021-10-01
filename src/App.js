@@ -15,9 +15,9 @@ class App extends PureComponent {
   }
 
   render() {
-    // if(__DEV__){
-    // 	console.log = () => {};
-    // }
+    if(!__DEV__){
+    	console.log = () => {};
+    }
     return (
       <Provider store={store}>
         <View

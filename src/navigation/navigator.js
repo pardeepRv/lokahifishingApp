@@ -1,6 +1,6 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 //navigation screens
 import ForgotPassword from '../screens/AuthScreens/ForgotPassword/ForgotPassword';
@@ -46,13 +46,11 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="TermsandCondition" component={TermsandCondition} />
       <Drawer.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       <Drawer.Screen name="PdfViewer" component={PdfViewer} />
-      <Drawer.Screen name="Settings" component={Settings} />
       <Drawer.Screen name="TournamentRules" component={TournamentRules} />
       <Drawer.Screen name="Survey" component={Survey} />
       <Drawer.Screen name="Members" component={Members} />
       <Drawer.Screen name="Tournament" component={TournamentHome} />
-      <Drawer.Screen name="ChangePassword" component={ChangePassword} />
-      
+      <Drawer.Screen name="Settings" component={settingsStack} />
     </Drawer.Navigator>
   );
 };
@@ -86,4 +84,16 @@ const authStack = props => {
   );
 };
 
+const settingsStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'SettingScreen'}>
+      <Stack.Screen name="SettingScreen" component={Settings} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} />
+    </Stack.Navigator>
+  );
+};
 export default MainNavigator;

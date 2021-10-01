@@ -10,8 +10,9 @@ import {
 //extrenal libraries
 import {moderateScale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
-import {icons} from '../../../../assets';
+import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
+import {Header} from '../../../components/common/Header';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
 //internal libraries
@@ -24,7 +25,6 @@ const ForgotPassword = ({navigation}) => {
   const dispatch = useDispatch();
   const [state, setState] = useState({
     email: '',
-
   });
   const {email} = state;
   const _onChangeText = key => val => {
@@ -36,7 +36,6 @@ const ForgotPassword = ({navigation}) => {
   });
   const name_and_values = [{name: 'email', value: email}];
 
- 
   function Forpassword() {
     Keyboard.dismiss();
     let err = {};
@@ -68,6 +67,21 @@ const ForgotPassword = ({navigation}) => {
           flex: 1,
         }}>
         <ImageBackground source={icons.ic_signin_bg} style={styles.image}>
+          <Header
+            containerStyle={{
+              backgroundColor: colors.transparent,
+              height: moderateScale(60),
+            }}
+            title={''}
+            titleStyle={{fontFamily: fonts.bold}}
+            leftIconSource={icons.ic_back_white}
+            leftButtonStyle={{
+              tintColor: colors.white1,
+            }}
+            onLeftPress={() => {
+              navigation.goBack();
+            }}
+          />
           <ScrollView
             style={styles.subContainer}
             contentContainerStyle={styles.subContentContainer}
@@ -78,30 +92,31 @@ const ForgotPassword = ({navigation}) => {
                 marginTop: layout.size.width / 1.7,
               }}></View>
             <Text style={styles.forgotpassword}>{strings.forgot}</Text>
-            <View style={{
+            <View
+              style={{
                 marginTop: moderateScale(25),
               }}>
-                <TextInputComp
-                  label={strings.email}
-                  value={email}
-                  placeholder={strings.enterEmail}
-                  labelTextStyle={styles.labelTextStyle}
-                  onFocus={() =>
-                    setErrors({
-                      ...errors,
-                      email: '',
-                    })
-                  }
-                  onChangeText={_onChangeText('email')}
-                />
-                {errors.email ? (
-                  <Text
-                    transparent
-                    style={{color: colors.primary, bottom: 13, left: 4}}>
-                    {errors.email}
-                  </Text>
-                ) : null}
-              </View>
+              <TextInputComp
+                label={strings.email}
+                value={email}
+                placeholder={strings.enterEmail}
+                labelTextStyle={styles.labelTextStyle}
+                onFocus={() =>
+                  setErrors({
+                    ...errors,
+                    email: '',
+                  })
+                }
+                onChangeText={_onChangeText('email')}
+              />
+              {errors.email ? (
+                <Text
+                  transparent
+                  style={{color: colors.primary, bottom: 13, left: 4}}>
+                  {errors.email}
+                </Text>
+              ) : null}
+            </View>
             <View
               style={{
                 marginTop: moderateScale(50),
@@ -125,4 +140,3 @@ const ForgotPassword = ({navigation}) => {
 };
 
 export default ForgotPassword;
-

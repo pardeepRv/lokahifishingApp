@@ -23,6 +23,7 @@ import signin_bg_ic from './icons/signin_bg_ic.png';
 import ic_radio_btn_on from './icons/ic_radio_btn_on.png';
 import ic_radio_btn_off from './icons/ic_radio_btn_off.png';
 import ic_back_white from './icons/ic_back_white.png';
+import ic_LokahiLogo from './icons/LokahiLogo.png';
 
 //drawer
 import ic_pending_lcr from './icons/drawer/Data-Feeds.png';
@@ -53,6 +54,7 @@ import ic_menu_white from './icons/drawer/ic_menu_white.png';
 import ic_edit from './icons/drawer/edit_icon.png';
 import ic_cateagory from './icons/NewImages/camera.png';
 
+import ic_rightArrow from './icons/drawer/right-arrow.png';
 
 //home page icons
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
@@ -68,6 +70,8 @@ import privacyPolicy from './icons/privacyPolicy.pdf';
 import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
+  ic_rightArrow,
+  ic_LokahiLogo,
   ic_back_white,
   ic_menu_white,
   privacyPolicy,

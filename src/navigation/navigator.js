@@ -9,6 +9,7 @@ import Signin from '../screens/AuthScreens/Signin/Signin';
 //authScreen
 import Signup from '../screens/AuthScreens/Signup/Signup';
 import About from '../screens/Drawerscreens/About/About';
+import Members from '../screens/Drawerscreens/Members/Members';
 import PdfViewer from '../screens/Drawerscreens/PDFViewer/PdfViewer';
 import PrivacyPolicy from '../screens/Drawerscreens/PrivacyPolicy/PrivacyPolicy';
 import Settings from '../screens/Drawerscreens/Settings/Settings';
@@ -17,6 +18,7 @@ import TermsandCondition from '../screens/Drawerscreens/TermsandCondition/Termsa
 import TournamentRules from '../screens/Drawerscreens/TournamentRules/TournamentRules';
 import DrawerComp from '../screens/NavigationScreens/Home/DrawerComp';
 import Home from '../screens/NavigationScreens/Home/Home';
+import TournamentHome from '../screens/NavigationScreens/TournamentHome/TournamentHome';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -46,7 +48,8 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="Settings" component={Settings} />
       <Drawer.Screen name="TournamentRules" component={TournamentRules} />
       <Drawer.Screen name="Survey" component={Survey} />
-
+      <Drawer.Screen name="Members" component={Members} />
+      <Drawer.Screen name="Tournament" component={TournamentHome} />
     </Drawer.Navigator>
   );
 };

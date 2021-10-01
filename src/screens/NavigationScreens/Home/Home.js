@@ -25,7 +25,8 @@ const Home = ({navigation}) => {
   const _renderView = ({item, index}) => (
     <TouchableOpacity
       style={[{backgroundColor: item.bgColor}, styles.renderItem]}
-      activeOpacity={0.8}>
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate(item.navigate)}>
       <Image source={item.img} style={styles.imageStyle} />
       <Text style={styles.textStyle}>{item.name}</Text>
     </TouchableOpacity>

@@ -1,4 +1,5 @@
 import {Platform} from 'react-native';
+import {screenNames} from '.';
 import {icons} from '../../../assets';
 import {strings} from '../../localization';
 
@@ -402,110 +403,109 @@ const menu = [
   },
   {
     name: strings.Tournament,
-    navigate: 'abc',
+    navigate: 'Tournament',
     img: icons.ic_Fish06,
     bgColor: '#a28147',
   },
 ];
 
 const data = [
-    {
-      name: strings.pending_lcr,
-      navigate: 'ChangeLanguage',
-      img: icons.ic_pending_lcr,
-    },
-    {
-      name: strings.lcr_list,
-      navigate: 'Aboutcsdcs',
-      img: icons.ic_LCR,
-    },
-    {
-      name: strings.Tournament_rules,
-      navigate: 'TournamentRules',
-      img: icons.ic_pending_lcr,
-    },
-    {
-      name: strings.Tag,
-      navigate: 'Help',
-      img: icons.ic_fisherman,
-    },
-    {
-      name: strings.Video_tips,
-      navigate: 'abc',
-      img: icons.ic_videoTips,
-    },
-    {
-      name: strings.LCR_filter,
-      navigate: 'ChangeLanguage',
-      img: icons.ic_filter,
-    },
-    {
-      name: strings.Catch_report,
-      navigate: 'aboutUs',
-      img: icons.ic_map,
-    },
-    {
-      name: strings.Survey,
-      navigate: 'Survey',
-      img: icons.ic_pending_lcr,
-    },
-    {
-      name: strings.Important_links,
-      navigate: 'Help',
-      img: icons.ic_Important,
-    },
-    {
-      name: strings.Members,
-      navigate: 'abc',
-      img: icons.ic_Users,
-    },
-    {
-      name: strings.Friends,
-      navigate: 'aboutUs',
-      img: icons.ic_Notifications,
-    },
-    {
-      name: strings.Gallery,
-      navigate: 'Information',
-      img: icons.ic_Gallery,
-    },
-    {
-      name: strings.My_Profile,
-      navigate: 'Help',
-      img: icons.ic_profile,
-    },
-    {
-      name: strings.About,
-      navigate: 'About',
-      img: icons.ic_About,
-    },
-    {
-      name: strings.Privacy,
-      navigate: 'PrivacyPolicy',  
-      img: icons.ic_pending_lcr,
-    },
-    {
-      name: strings.Terms,
-      navigate: 'TermsandCondition',
-      img: icons.ic_pending_lcr,
-    },
-    {
-      name: strings.Contact,
-      navigate: 'Help',
-      img: icons.ic_pending_lcr,
-    },
-    {
-      name: strings.Settings,
-      navigate: 'Settings',
-      img: icons.ic_settings,
-    },
-    {
-      name: strings.Logout,
-      navigate: 'abc',
-      img: icons.ic_logout,
-    },
-  ];
-  
+  {
+    name: strings.pending_lcr,
+    navigate: 'ChangeLanguage',
+    img: icons.ic_pending_lcr,
+  },
+  {
+    name: strings.lcr_list,
+    navigate: 'Aboutcsdcs',
+    img: icons.ic_LCR,
+  },
+  {
+    name: strings.Tournament_rules,
+    navigate: 'TournamentRules',
+    img: icons.ic_pending_lcr,
+  },
+  {
+    name: strings.Tag,
+    navigate: 'Help',
+    img: icons.ic_fisherman,
+  },
+  {
+    name: strings.Video_tips,
+    navigate: 'abc',
+    img: icons.ic_videoTips,
+  },
+  {
+    name: strings.LCR_filter,
+    navigate: 'ChangeLanguage',
+    img: icons.ic_filter,
+  },
+  {
+    name: strings.Catch_report,
+    navigate: 'aboutUs',
+    img: icons.ic_map,
+  },
+  {
+    name: strings.Survey,
+    navigate: 'Survey',
+    img: icons.ic_pending_lcr,
+  },
+  {
+    name: strings.Important_links,
+    navigate: 'Help',
+    img: icons.ic_Important,
+  },
+  {
+    name: strings.Members,
+    navigate: screenNames.Members,
+    img: icons.ic_Users,
+  },
+  {
+    name: strings.Friends,
+    navigate: 'aboutUs',
+    img: icons.ic_Notifications,
+  },
+  {
+    name: strings.Gallery,
+    navigate: 'Information',
+    img: icons.ic_Gallery,
+  },
+  {
+    name: strings.My_Profile,
+    navigate: 'Help',
+    img: icons.ic_profile,
+  },
+  {
+    name: strings.About,
+    navigate: 'About',
+    img: icons.ic_About,
+  },
+  {
+    name: strings.Privacy,
+    navigate: 'PrivacyPolicy',
+    img: icons.ic_pending_lcr,
+  },
+  {
+    name: strings.Terms,
+    navigate: 'TermsandCondition',
+    img: icons.ic_pending_lcr,
+  },
+  {
+    name: strings.Contact,
+    navigate: 'Help',
+    img: icons.ic_pending_lcr,
+  },
+  {
+    name: strings.Settings,
+    navigate: 'Settings',
+    img: icons.ic_settings,
+  },
+  {
+    name: strings.Logout,
+    navigate: 'abc',
+    img: icons.ic_logout,
+  },
+];
 
 export {
   USER_DATA,
@@ -550,5 +550,5 @@ export {
   primaryUse,
   slides,
   menu,
-  data
+  data,
 };

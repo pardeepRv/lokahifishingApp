@@ -1,11 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import {fonts} from '../../../../assets';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
-
-//external libraries
-import {RFValue} from 'react-native-responsive-fontsize';
 
 export default StyleSheet.create({
   image: {

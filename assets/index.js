@@ -53,8 +53,10 @@ import ic_settings from './icons/drawer/settings.png';
 import ic_menu_white from './icons/drawer/ic_menu_white.png';
 import ic_edit from './icons/drawer/edit_icon.png';
 import ic_cateagory from './icons/NewImages/camera.png';
-
+import moneygraphics from './icons/catch-report-icons/moneygraphics.png';
 import ic_rightArrow from './icons/drawer/right-arrow.png';
+import ic_photoVideoPlayBT from './icons/photoSharingImages/photoVideoPlayBT.png';
+
 
 //home page icons
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
@@ -70,6 +72,8 @@ import privacyPolicy from './icons/privacyPolicy.pdf';
 import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
+  ic_photoVideoPlayBT,
+  moneygraphics,
   ic_rightArrow,
   ic_LokahiLogo,
   ic_back_white,

@@ -391,7 +391,7 @@ const menu = [
   },
   {
     name: strings.News,
-    navigate: 'abc',
+    navigate: 'News',
     img: icons.ic_Fish04,
     bgColor: '#a5686a',
   },
@@ -432,7 +432,7 @@ const data = [
   },
   {
     name: strings.Video_tips,
-    navigate: 'abc',
+    navigate: 'Video',
     img: icons.ic_videoTips,
   },
   {

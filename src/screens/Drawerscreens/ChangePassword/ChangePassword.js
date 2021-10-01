@@ -86,7 +86,7 @@ const ChangePassword = ({navigation}) => {
               backgroundColor: colors.transparent,
               height: moderateScale(60),
             }}
-            title={'Lokhai'}
+            title={'Lokahi'}
             titleStyle={{fontFamily: fonts.bold}}
             leftIconSource={icons.ic_back_white}
             leftButtonStyle={{

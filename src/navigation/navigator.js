@@ -17,8 +17,10 @@ import Settings from '../screens/Drawerscreens/Settings/Settings';
 import Survey from '../screens/Drawerscreens/Survey/Survey';
 import TermsandCondition from '../screens/Drawerscreens/TermsandCondition/TermsandCondition';
 import TournamentRules from '../screens/Drawerscreens/TournamentRules/TournamentRules';
+import Video from '../screens/Drawerscreens/VideoTips/Video';
 import DrawerComp from '../screens/NavigationScreens/Home/DrawerComp';
 import Home from '../screens/NavigationScreens/Home/Home';
+import News from '../screens/NavigationScreens/News/News';
 import TournamentHome from '../screens/NavigationScreens/TournamentHome/TournamentHome';
 
 const Stack = createNativeStackNavigator();
@@ -51,6 +53,10 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="Members" component={Members} />
       <Drawer.Screen name="Tournament" component={TournamentHome} />
       <Drawer.Screen name="Settings" component={settingsStack} />
+      <Drawer.Screen name="News" component={News} />
+      <Drawer.Screen name="Video" component={Video} />
+
+
     </Drawer.Navigator>
   );
 };

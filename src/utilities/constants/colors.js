@@ -25,6 +25,7 @@ const colors = {
   black15: 'rgba(0,0,0,0.4)',
   blackOpacity90: 'rgba(0,0,0,0.9)',
   transparent: 'transparent',
+  lightTransparent:'#ffffff25',
 
   red1: '#E33134',
   red2: '#E0594A',

@@ -1,68 +1,88 @@
 import React, {useState} from 'react';
-  
-  import { View, StyleSheet, Text, Image, Pressable,SafeAreaView,ScrollView , Dimensions, ImageBackground, TouchableOpacity ,} from "react-native"
-import { useNavigation } from '@react-navigation/native';
-
+import {
+  ImageBackground,
+  Platform,
+  SafeAreaView,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 // internal lijbraries
-
 import {moderateScale} from 'react-native-size-matters';
+import {fonts, icons} from '../../../../assets';
+import {Header} from '../../../components/common/Header';
 import {strings} from '../../../localization';
-import { Header } from '../../../components/common/Header';
-import { fonts, icons } from '../../../../assets';
-import { colors } from '../../../utilities/constants';
+import {colors} from '../../../utilities/constants';
+import styles from './styles';
 
+const Settings = ({navigation}) => {
+  const [state, setState] = useState({
+    isContact: '',
+  });
+  const {isContact, password} = state;
 
-const Settings = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  
-	const [notificationState, setNotificationState] = useState(false);
-	const toggleSwitch = () => setNotificationState(previousState => !previousState);
-	const navigation = useNavigation();
+  const _onChangeText = key => val => {
+    setState({...state, [key]: val});
+  };
 
-
-
-
-	return (
+  return (
     <ImageBackground source={icons.ic_signin_bg} style={styles.image}>
-			<SafeAreaView style={styles.content}>
-      <Header
-            containerStyle={{
-              backgroundColor: 'transparent',
-              height: moderateScale(60),
-            }}
-            title={'Settings'}
-            titleStyle={{fontFamily: fonts.bold}}
-            leftIconSource={icons.ic_back_white}
-			leftButtonStyle={{
-				tintColor:colors.white1
-			}}
-            onLeftPress={() => {
-              navigation.goBack();
-            }}
-          />
+      <SafeAreaView style={styles.content}>
+        <Header
+          containerStyle={{
+            backgroundColor: 'transparent',
+            height: moderateScale(60),
+          }}
+          title={'Settings'}
+          titleStyle={{fontFamily: fonts.bold}}
+          leftIconSource={icons.ic_back_white}
+          leftButtonStyle={{
+            tintColor: colors.white1,
+          }}
+          onLeftPress={() => {
+            navigation.goBack();
+          }}
+        />
+        <View style={styles.contentcontainer}>
+          <View style={styles.Container}>
+            <View style={styles.tableRow}>
+              <View style={styles.rowContent}>
+                <Text style={styles.textstyle}>
+                  {strings.enablenotification}
+                </Text>
+                <Switch
+                  value={isContact}
+                  onValueChange={isContact =>
+                    setState({isContact}, () => updateSwitch(isContact))
+                  }
+                  trackColor={{
+                    true: colors.primary,
+                    false:
+                      Platform.OS == 'android' ? '#d3d3d3' : colors.primary,
+                  }}
+                  style={styles.contactSwitch}
+                />
+              </View>
+            </View>
+          </View>
+          <TouchableOpacity
+            style={styles.Container}
+            onPress={() => navigation.navigate('ChangePassword')}>
+            <Text style={styles.textstyle}>{strings.changepassword}</Text>
+          </TouchableOpacity>
+          <View style={styles.Container}>
+            <View style={styles.tableRow}>
+              <View style={styles.rowContent}>
+                <Text style={styles.textstyle}>{strings.appversion}</Text>
+                <Text style={styles.text}>{strings.version}</Text>
+              </View>
+            </View>
+          </View>
+        </View>
       </SafeAreaView>
-		</ImageBackground>
-
-		
-	);
+    </ImageBackground>
+  );
 };
 
 export default Settings;
-
-
-
-const styles = StyleSheet.create({
-	image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    height: '100%',
-	},
-  content: {
-    position: 'relative',
- 
-    display: 'flex',
-    flex: 1,
-
-  },
-});

@@ -22,16 +22,21 @@ import styles from './styles';
 const ForgotPassword = ({navigation}) => {
   let passwordTextInput = useRef(null);
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
+  const [state, setState] = useState({
+    email: '',
+
+  });
+  const {email} = state;
+  const _onChangeText = key => val => {
+    setState({...state, [key]: val});
+  };
   const [errors, setErrors] = useState({
     email: '',
     isLoading: false,
   });
   const name_and_values = [{name: 'email', value: email}];
-  const _onChangeText = key => val => {
-    setState({...state, [key]: val});
-  };
 
+ 
   function Forpassword() {
     Keyboard.dismiss();
     let err = {};
@@ -73,31 +78,30 @@ const ForgotPassword = ({navigation}) => {
                 marginTop: layout.size.width / 1.7,
               }}></View>
             <Text style={styles.forgotpassword}>{strings.forgot}</Text>
-            <View
-              style={{
+            <View style={{
                 marginTop: moderateScale(25),
               }}>
-              <TextInputComp
-                label={strings.email}
-                value={email}
-                placeholder={strings.enterEmail}
-                labelTextStyle={styles.labelTextStyle}
-                onFocus={() =>
-                  setErrors({
-                    ...errors,
-                    email: '',
-                  })
-                }
-                onChangeText={email => setEmail(email)}
-              />
-              {errors.email ? (
-                <Text
-                  transparent
-                  style={{color: colors.primary, bottom: 13, left: 4}}>
-                  {errors.email}
-                </Text>
-              ) : null}
-            </View>
+                <TextInputComp
+                  label={strings.email}
+                  value={email}
+                  placeholder={strings.enterEmail}
+                  labelTextStyle={styles.labelTextStyle}
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      email: '',
+                    })
+                  }
+                  onChangeText={_onChangeText('email')}
+                />
+                {errors.email ? (
+                  <Text
+                    transparent
+                    style={{color: colors.primary, bottom: 13, left: 4}}>
+                    {errors.email}
+                  </Text>
+                ) : null}
+              </View>
             <View
               style={{
                 marginTop: moderateScale(50),
@@ -121,3 +125,4 @@ const ForgotPassword = ({navigation}) => {
 };
 
 export default ForgotPassword;
+

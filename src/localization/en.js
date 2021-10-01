@@ -62,5 +62,14 @@ export default {
   Terms_and_Conditions: 'Terms and Conditions',
   Privacy_Policy: 'Privacy Policy',
   Survey:'Survey',
-
+  //Settings screen 
+  changepassword:'Change Password',
+  enablenotification:'Enable Notification',
+  version:'3.2.2',
+  appversion : 'App Version',
+  changepassword:'Change Password',
+  oldpassword: 'Enter Old Password..',
+  newpassword: 'Enter New Password..',
+  reneter :'Re-enter New Password..',
+  submit:'Submit',
 };

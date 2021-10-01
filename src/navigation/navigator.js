@@ -9,6 +9,7 @@ import Signin from '../screens/AuthScreens/Signin/Signin';
 //authScreen
 import Signup from '../screens/AuthScreens/Signup/Signup';
 import About from '../screens/Drawerscreens/About/About';
+import ChangePassword from '../screens/Drawerscreens/ChangePassword/ChangePassword';
 import Members from '../screens/Drawerscreens/Members/Members';
 import PdfViewer from '../screens/Drawerscreens/PDFViewer/PdfViewer';
 import PrivacyPolicy from '../screens/Drawerscreens/PrivacyPolicy/PrivacyPolicy';
@@ -50,6 +51,8 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="Survey" component={Survey} />
       <Drawer.Screen name="Members" component={Members} />
       <Drawer.Screen name="Tournament" component={TournamentHome} />
+      <Drawer.Screen name="ChangePassword" component={ChangePassword} />
+      
     </Drawer.Navigator>
   );
 };

@@ -48,6 +48,7 @@ export default {
   Contact: 'Contact us',
   Settings: 'Settings',
   Logout: 'Logout',
+  
 
   //Home screen
   Catch_report_h: 'Catch report',
@@ -72,4 +73,14 @@ export default {
   newpassword: 'Enter New Password..',
   reneter :'Re-enter New Password..',
   submit:'Submit',
+  //Myprofile
+  boatmaker:'Boat Maker',
+  boatlength :'Boat Length',
+  homeport:'Home Port',
+  vhfradio:'VHF Radio',
+  cbradio:'CB Radio',
+  epirb :'EPIRB',
+  liferaft:'Life Raft',
+  visualdistressignal: 'Visual Distress Signal'
+
 };

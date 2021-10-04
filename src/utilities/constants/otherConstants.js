@@ -472,7 +472,7 @@ const data = [
   },
   {
     name: strings.My_Profile,
-    navigate: 'Help',
+    navigate: 'MYprofile',
     img: icons.ic_profile,
   },
   {

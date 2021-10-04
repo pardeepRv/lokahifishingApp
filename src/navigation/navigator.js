@@ -11,6 +11,7 @@ import Signup from '../screens/AuthScreens/Signup/Signup';
 import About from '../screens/Drawerscreens/About/About';
 import ChangePassword from '../screens/Drawerscreens/ChangePassword/ChangePassword';
 import Members from '../screens/Drawerscreens/Members/Members';
+import MYprofile from '../screens/Drawerscreens/MYprofile/MYprofile';
 import PdfViewer from '../screens/Drawerscreens/PDFViewer/PdfViewer';
 import PrivacyPolicy from '../screens/Drawerscreens/PrivacyPolicy/PrivacyPolicy';
 import Settings from '../screens/Drawerscreens/Settings/Settings';
@@ -22,6 +23,9 @@ import DrawerComp from '../screens/NavigationScreens/Home/DrawerComp';
 import Home from '../screens/NavigationScreens/Home/Home';
 import News from '../screens/NavigationScreens/News/News';
 import TournamentHome from '../screens/NavigationScreens/TournamentHome/TournamentHome';
+import BoatInfo from '../screens/Drawerscreens/MYprofile/BoatInfo';
+import EmergencyContacts from '../screens/Drawerscreens/MYprofile/EmergencyContacts';
+import LCR from '../screens/Drawerscreens/MYprofile/LCR';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -55,6 +59,8 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="Settings" component={settingsStack} />
       <Drawer.Screen name="News" component={News} />
       <Drawer.Screen name="Video" component={Video} />
+      <Drawer.Screen name="MYprofile" component={MYprofileStack} />
+
 
 
     </Drawer.Navigator>
@@ -99,6 +105,22 @@ const settingsStack = props => {
       initialRouteName={'SettingScreen'}>
       <Stack.Screen name="SettingScreen" component={Settings} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
+    </Stack.Navigator>
+  );
+};
+
+const MYprofileStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'MYprofileScreen'}>
+      <Stack.Screen name="MYprofileScreen" component={MYprofile} />
+      <Stack.Screen name="BoatInfo" component={BoatInfo} />
+      <Stack.Screen name="EmergencyContacts" component={EmergencyContacts} />
+      <Stack.Screen name="LCR" component={LCR} />
+
     </Stack.Navigator>
   );
 };

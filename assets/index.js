@@ -20,10 +20,14 @@ import ic_signup_bg from './icons/signup_bg.png';
 import ic_signin_bg from './icons/signin_bg.png';
 import ic_logo_grayscale_cr from './icons/logo_grayscale_cr.9.png';
 import signin_bg_ic from './icons/signin_bg_ic.png';
+import signin_bg_icx from './icons/signin_bg_icx.png';
+
 import ic_radio_btn_on from './icons/ic_radio_btn_on.png';
-import ic_radio_btn_off from './icons/ic_radio_btn_off.png';
+import ic_radio_btn_off from './icons/ic_radio_btn_offx.png';
 import ic_back_white from './icons/ic_back_white.png';
 import ic_LokahiLogo from './icons/LokahiLogo.png';
+import ic_radio_inactivex from './icons/ic_radio_inactivex.png';
+
 
 //drawer
 import ic_pending_lcr from './icons/drawer/Data-Feeds.png';
@@ -56,6 +60,8 @@ import ic_cateagory from './icons/NewImages/camera.png';
 import moneygraphics from './icons/catch-report-icons/moneygraphics.png';
 import ic_rightArrow from './icons/drawer/right-arrow.png';
 import ic_photoVideoPlayBT from './icons/photoSharingImages/photoVideoPlayBT.png';
+import ic_donex from './icons/ic_donex.png';
+import ic_not_donex from './icons/ic_not_donex.png';
 
 
 //home page icons
@@ -72,6 +78,10 @@ import privacyPolicy from './icons/privacyPolicy.pdf';
 import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
+  ic_donex,
+  ic_not_donex,
+  signin_bg_icx,
+  ic_radio_inactivex,
   ic_photoVideoPlayBT,
   moneygraphics,
   ic_rightArrow,

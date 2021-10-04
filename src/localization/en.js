@@ -81,6 +81,9 @@ export default {
   cbradio:'CB Radio',
   epirb :'EPIRB',
   liferaft:'Life Raft',
-  visualdistressignal: 'Visual Distress Signal'
+  visualdistressignal: 'Visual Distress Signal',
+  edit:'Edit',
+  save:'Save',
+  contactnumber:'Contact Number',
 
 };

@@ -70,47 +70,53 @@ const BoatInfo = () => {
             </View>
             <View style={styles.Containertable}>
               <View style={styles.tableRow}>
-                <TouchableOpacity style={styles.rowContent3}>
+                <View style={styles.rowContent3}>
                   <Text style={styles.textstyle}>{strings.vhfradio}</Text>
-                </TouchableOpacity>
+                  <Image
+                    source={ icons.ic_donex}
+                    style={styles.checkIcon}
+                  />
+                </View>
+                
               </View>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.tableRow}>
-                <TouchableOpacity style={styles.rowContent3}>
+                <View style={styles.rowContent3}>
                   <Text style={styles.textstyle}>{strings.cbradio}</Text>
                   <Image
-                    source={iscbradio ? icons.ic_donex : icons.ic_not_donex}
+                    source={ icons.ic_donex}
                     style={styles.checkIcon}
                   />
-                </TouchableOpacity>
+                </View>
               </View>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.tableRow}>
-                <TouchableOpacity style={styles.rowContent3}>
+                <View style={styles.rowContent3}>
                   <Text style={styles.textstyle}>{strings.epirb}</Text>
                   <Image
-                    source={iscbradio ? icons.ic_donex : icons.ic_not_donex}
+ source={ icons.ic_donex}
                     style={styles.checkIcon}
                   />
-                </TouchableOpacity>
+                </View>
               </View>
             </View>
+            
             <View style={styles.Containertable}>
               <View style={styles.tableRow}>
-                <TouchableOpacity style={styles.rowContent3}>
+                <View style={styles.rowContent3}>
                   <Text style={styles.textstyle}>{strings.liferaft}</Text>
                   <Image
                     source={iscbradio ? icons.ic_donex : icons.ic_not_donex}
                     style={styles.checkIcon}
                   />
-                </TouchableOpacity>
+                </View>
               </View>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.tableRow}>
-                <TouchableOpacity style={styles.rowContent3}>
+                <View style={styles.rowContent3}>
                   <Text style={styles.textstyle}>
                     {strings.visualdistressignal}
                   </Text>
@@ -118,7 +124,7 @@ const BoatInfo = () => {
                     source={iscbradio ? icons.ic_donex : icons.ic_not_donex}
                     style={styles.checkIcon}
                   />
-                </TouchableOpacity>
+                </View>
               </View>
             </View>
           </ScrollView>

@@ -44,7 +44,7 @@ const MYprofile = ({ navigation }) => {
             navigation.goBack();
           }}
           onRightPress={() => {
-            alert('pass function here')
+             navigation.navigate('Edit')
           }}
           rightIconSource={icons.ic_edit}
           rightIconStyle={{

@@ -26,6 +26,7 @@ import TournamentHome from '../screens/NavigationScreens/TournamentHome/Tourname
 import BoatInfo from '../screens/Drawerscreens/MYprofile/BoatInfo';
 import EmergencyContacts from '../screens/Drawerscreens/MYprofile/EmergencyContacts';
 import LCR from '../screens/Drawerscreens/MYprofile/LCR';
+import Edit from '../screens/Drawerscreens/Edit /Edit';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -120,6 +121,8 @@ const MYprofileStack = props => {
       <Stack.Screen name="BoatInfo" component={BoatInfo} />
       <Stack.Screen name="EmergencyContacts" component={EmergencyContacts} />
       <Stack.Screen name="LCR" component={LCR} />
+      <Stack.Screen name="Edit" component={Edit} />
+
 
     </Stack.Navigator>
   );

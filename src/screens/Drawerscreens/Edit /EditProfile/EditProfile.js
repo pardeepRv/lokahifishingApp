@@ -22,6 +22,7 @@ import {fonts, icons} from '../../../../../assets';
 import {Button} from '../../../../components/common/Button';
 import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
+
 //internal libraries
 import {colors, screenNames} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
@@ -34,9 +35,9 @@ const EditProfile = ({navigation}) => {
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
-  const [contactnumber, setContactnumber] = useState('');
+  const [contactNumber, setContactnumber] = useState('');
   const [island, setIsland] = useState('');
-  const [productPhoto, setProductPhoto] = useState('');
+  const [profilePhoto, setprofilePhoto] = useState('');
 
   const [cmlHolder, setCmlHolder] = useState([
     {value: 'Yes', isSelected: false},
@@ -47,20 +48,20 @@ const EditProfile = ({navigation}) => {
     username: '',
     fullname: '',
     email: '',
-    contactnumber: '',
+    contactNumber: '',
     city: '',
     island: '',
     isLoading: false,
-    productPhoto: '',
+    profilePhoto: '',
   });
 
   const name_and_values = [
     {name: 'username', value: username},
     {name: 'fullname', value: fullname},
     {name: 'email', value: email},
-    {name: 'contactnumber', value: contactnumber},
+    {name: 'city', value: city},
     {name: 'island', value: island},
-
+    {name: 'contactNumber', value: contactNumber},
   ];
 
   // const _onChangeText = key => val => {
@@ -92,7 +93,9 @@ const EditProfile = ({navigation}) => {
         !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
       ) {
         err[name] = 'Email should be valid';
-      } 
+      } else if ('contactNumber' === name && value.length < 8) {
+        err[name] = 'Too short';
+      }
     });
     setErrors(err);
     if (Object.keys(err).length == 0) {
@@ -101,6 +104,7 @@ const EditProfile = ({navigation}) => {
       formData.append('last_name', lastname);
       formData.append('email', email);
       formData.append('phone_number', phonenumber);
+      formData.append('contactNumber', contactNumber);
 
       // dispatch({type:REGISTER,payloads:formData});
     }
@@ -159,8 +163,8 @@ const EditProfile = ({navigation}) => {
       compressImageQuality: 0.2,
     }).then(response => {
       let data = `data:${response.mime};base64,${response.data}`;
-      if (value == 'productPhoto') {
-        setProductPhoto(data);
+      if (value == 'profilePhoto') {
+        setprofilePhoto(data);
       }
     });
   }
@@ -173,10 +177,10 @@ const EditProfile = ({navigation}) => {
       compressImageQuality: 0.2,
     }).then(image => {
       console.log(`images`, image);
-        let data = `data:${image.mime};base64,${image.data}`;
-        if (value == 'productPhoto') {
-          setProductPhoto(data);
-        }
+      let data = `data:${image.mime};base64,${image.data}`;
+      if (value == 'profilePhoto') {
+        setprofilePhoto(data);
+      }
     });
   }
 
@@ -197,21 +201,21 @@ const EditProfile = ({navigation}) => {
               <View style={styles.uploadContainer}>
                 <Image
                   source={
-                    productPhoto != ''
-                      ? {uri: productPhoto}
+                    profilePhoto != ''
+                      ? {uri: profilePhoto}
                       : icons.signin_bg_ic
                   }
                   resizeMode="cover"
                   style={{
                     borderRadius: moderateScale(100),
-                    height: productPhoto != '' ? '100%' : '115%',
-                    width: productPhoto != '' ? '100%' : '155%',
+                    height: profilePhoto != '' ? '100%' : '115%',
+                    width: profilePhoto != '' ? '100%' : '155%',
                   }}
                 />
                 <View style={styles.uploadContent}>
                   <TouchableOpacity
                     style={[styles.uploadStoreBtn]}
-                    onPress={() => _doOpenOption('productPhoto')}>
+                    onPress={() => _doOpenOption('profilePhoto')}>
                     <Image
                       style={styles.logo2}
                       source={icons.ic_cateagory}
@@ -233,7 +237,6 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.username}
                     value={username}
-                    // placeholder={strings.enterusername}
                     labelTextStyle={styles.labelTextStyle}
                     onChangeText={username => setUsername(username)}
                     onFocus={() =>
@@ -256,7 +259,6 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.fullname}
                     value={fullname}
-                    // placeholder={strings.enterfullname}
                     labelTextStyle={styles.labelTextStyle}
                     onChangeText={fullname => setFullname(fullname)}
                     onFocus={() =>
@@ -278,7 +280,6 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.email}
                     value={email}
-                    // placeholder={strings.enterEmail}
                     labelTextStyle={styles.labelTextStyle}
                     onFocus={() =>
                       setErrors({
@@ -298,9 +299,32 @@ const EditProfile = ({navigation}) => {
                 </View>
                 <View>
                   <TextInputComp
+                    label={strings.contactnumber}
+                    value={contactNumber}
+                    labelTextStyle={styles.labelTextStyle}
+                    onFocus={() =>
+                      setErrors({
+                        ...errors,
+                        contactNumber: '',
+                      })
+                    }
+                    onChangeText={contactNumber =>
+                      setContactNumber(contactNumber)
+                    }
+                  />
+                  {errors.contactNumber ? (
+                    <Text
+                      transparent
+                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      {errors.contactNumber}
+                    </Text>
+                  ) : null}
+                </View>
+
+                <View>
+                  <TextInputComp
                     label={strings.city}
                     value={city}
-                    // placeholder={strings.entercity}
                     labelTextStyle={styles.labelTextStyle}
                     onChangeText={city => setCity(city)}
                     onFocus={() =>
@@ -320,31 +344,8 @@ const EditProfile = ({navigation}) => {
                 </View>
                 <View>
                   <TextInputComp
-                    label={strings.contactnumber}
-                    value={contactnumber}
-                    // placeholder={strings.entercity}
-                    labelTextStyle={styles.labelTextStyle}
-                    onChangeText={contactnumber => setContactnumber(contactnumber)}
-                    onFocus={() =>
-                      setErrors({
-                        ...errors,
-                        contactnumber: '',
-                      })
-                    }
-                  />
-                  {errors.contactnumber ? (
-                    <Text
-                      transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
-                      {errors.contactnumber}
-                    </Text>
-                  ) : null}
-                </View>
-                <View>
-                  <TextInputComp
                     label={strings.island}
                     value={island}
-                    // placeholder={strings.enterisland}
                     labelTextStyle={styles.labelTextStyle}
                     onChangeText={island => setIsland(island)}
                     onFocus={() =>
@@ -398,12 +399,39 @@ const EditProfile = ({navigation}) => {
                     width: layout.size.width - 80,
                     alignSelf: 'center',
                   }}
-                  label={strings.save}
-                  onPress={() =>  alert('pass function here')}
+                  label={strings.signup}
+                  onPress={() => Submit()}
                 />
               </View>
 
-             
+              <TouchableOpacity
+                onPress={() => navigation.navigate(screenNames.Signin)}
+                // style={{
+                //   flexDirection:'row',
+                //   justifyContent:'center'
+                // }}
+              >
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    fontFamily: fonts.semiBold,
+                    marginTop: moderateScale(10),
+                    marginBottom: moderateScale(15),
+                    color: colors.white1,
+                  }}>
+                  {strings.alreadyaccount}
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      fontFamily: fonts.extraBold,
+                      marginTop: moderateScale(10),
+                      marginBottom: moderateScale(15),
+                      color: colors.primary,
+                    }}>
+                    {strings.signin}
+                  </Text>
+                </Text>
+              </TouchableOpacity>
             </KeyboardAvoidingView>
           </ScrollView>
         </ImageBackground>
@@ -411,5 +439,4 @@ const EditProfile = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
 export default EditProfile;

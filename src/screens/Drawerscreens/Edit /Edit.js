@@ -7,18 +7,12 @@ import { fonts, icons } from '../../../../assets';
 import { Header } from '../../../components/common/Header';
 import { strings } from '../../../localization';
 import { colors } from '../../../utilities/constants';
-import EditProfile from './EditProfile/EditProdile';
+import BInfo from './BInfo/BInfo';
+import EditProfile from './EditProfile/EditProfile';
+import styles from './styles';
 
 const Tab = createMaterialTopTabNavigator();
 
-
-
-const BInfo = () => {
-  return (
-    <ImageBackground source={icons.ic_signin_bg} style={styles.image}>
-    </ImageBackground>
-  );
-};
 
 const EContacts = () => {
   return (
@@ -73,23 +67,6 @@ const Edit = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  content: {
-    height: '100%',
-    width: '100%',
-    flex: 1,
-    backgroundColor: colors.secondry,
-  },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    height: '100%',
-  },
-  pdf: {
-    flex: 1,
-    width: '100%',
-  },
-});
+
 
 export default Edit;

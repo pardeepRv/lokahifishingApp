@@ -74,7 +74,7 @@ export default {
   reneter :'Re-enter New Password..',
   submit:'Submit',
   //Myprofile
-  boatmaker:'Boat Maker',
+  boatmaker:'Boat Marker',
   boatlength :'Boat Length',
   homeport:'Home Port',
   vhfradio:'VHF Radio',
@@ -85,5 +85,8 @@ export default {
   edit:'Edit',
   save:'Save',
   contactnumber:'Contact Number',
+  marker:'Enter Boat Marker...',
+Length:'Enter Boat Length...',
+port:'Enter Home Port...',
 
 };

@@ -69,7 +69,7 @@ height:moderateScale(25)
     height: moderateScale(200),
     width: moderateScale(200),
     alignSelf: 'center',
-    marginTop: moderateScale(55),
+    marginTop: moderateScale(20),
     borderRadius: moderateScale(100),
     borderColor: 'transparent',
     shadowOffset: {
@@ -82,8 +82,8 @@ height:moderateScale(25)
   uploadContent: {
     alignItems: 'center',
     position: 'absolute',
-    bottom: 30,
-    right: 10,
+    bottom: moderateScale(50),
+    right: 20,
   },
   uploadStoreBtn: {
     height: 40,

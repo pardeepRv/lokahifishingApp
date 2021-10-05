@@ -14,16 +14,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+//ecternal libaraies
 import ImagePicker from 'react-native-image-crop-picker';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {moderateScale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
+//internal libraries
+
 import {fonts, icons} from '../../../../../assets';
 import {Button} from '../../../../components/common/Button';
 import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
-
-//internal libraries
 import {colors, screenNames} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 import styles from './styles';
@@ -79,7 +80,7 @@ const EditProfile = ({navigation}) => {
     setCmlHolder(array);
   };
 
-  function Submit() {
+  function Save() {
     Keyboard.dismiss();
     let err = {};
     //email error
@@ -93,9 +94,9 @@ const EditProfile = ({navigation}) => {
         !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
       ) {
         err[name] = 'Email should be valid';
-      } else if ('contactNumber' === name && value.length < 8) {
-        err[name] = 'Too short';
-      }
+      } else if ('contactNumber' === name && value!== '' && value.length < 10){
+        err[name] = 'Should be valid Phone number';
+        }
     });
     setErrors(err);
     if (Object.keys(err).length == 0) {
@@ -205,11 +206,11 @@ const EditProfile = ({navigation}) => {
                       ? {uri: profilePhoto}
                       : icons.signin_bg_ic
                   }
-                  resizeMode="cover"
+                  resizeMode={profilePhoto != '' ? 'cover' : 'contain'}
                   style={{
                     borderRadius: moderateScale(100),
-                    height: profilePhoto != '' ? '100%' : '115%',
-                    width: profilePhoto != '' ? '100%' : '155%',
+                    height: profilePhoto != '' ? '80%' : '100%',
+                    width: profilePhoto != '' ? '80%' : '100%',
                   }}
                 />
                 <View style={styles.uploadContent}>
@@ -309,7 +310,7 @@ const EditProfile = ({navigation}) => {
                       })
                     }
                     onChangeText={contactNumber =>
-                      setContactNumber(contactNumber)
+                      setContactnumber(contactNumber)
                     }
                   />
                   {errors.contactNumber ? (
@@ -399,39 +400,10 @@ const EditProfile = ({navigation}) => {
                     width: layout.size.width - 80,
                     alignSelf: 'center',
                   }}
-                  label={strings.signup}
-                  onPress={() => Submit()}
+                  label={strings.save}
+                  onPress={() => Save()}
                 />
               </View>
-
-              <TouchableOpacity
-                onPress={() => navigation.navigate(screenNames.Signin)}
-                // style={{
-                //   flexDirection:'row',
-                //   justifyContent:'center'
-                // }}
-              >
-                <Text
-                  style={{
-                    alignSelf: 'center',
-                    fontFamily: fonts.semiBold,
-                    marginTop: moderateScale(10),
-                    marginBottom: moderateScale(15),
-                    color: colors.white1,
-                  }}>
-                  {strings.alreadyaccount}
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      fontFamily: fonts.extraBold,
-                      marginTop: moderateScale(10),
-                      marginBottom: moderateScale(15),
-                      color: colors.primary,
-                    }}>
-                    {strings.signin}
-                  </Text>
-                </Text>
-              </TouchableOpacity>
             </KeyboardAvoidingView>
           </ScrollView>
         </ImageBackground>

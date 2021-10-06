@@ -228,6 +228,8 @@ const BInfo = () => {
                   <View style={styles.rowContent}>
                     <Text style={styles.textstyle}>{strings.liferaft}</Text>
                     <TouchableOpacity >
+                    {/* <TouchableOpacity onPress={() => setCheckIcon(!CheckIcon)}> */}
+
                       <Image
                         source={CheckIcon != '' ? icons.ic_donex : icons.ic_not_donex}
                         style={styles.checkIcon}

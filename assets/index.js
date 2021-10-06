@@ -62,6 +62,9 @@ import ic_rightArrow from './icons/drawer/right-arrow.png';
 import ic_photoVideoPlayBT from './icons/photoSharingImages/photoVideoPlayBT.png';
 import ic_donex from './icons/ic_donex.png';
 import ic_not_donex from './icons/ic_not_donex.png';
+import BannerRoy from './icons/BannerRoy.jpg';
+import MorrisLuresBanner from './icons/MorrisLuresBanner.jpg';
+
 
 
 //home page icons
@@ -79,6 +82,8 @@ import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
   ic_donex,
+  BannerRoy,
+  MorrisLuresBanner,
   ic_not_donex,
   signin_bg_icx,
   ic_radio_inactivex,

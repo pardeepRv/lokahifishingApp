@@ -48,6 +48,12 @@ export default {
   Contact: 'Contact us',
   Settings: 'Settings',
   Logout: 'Logout',
+  tide:'Tide/Sun/Moon',
+  sst:'SST',
+  wind:'Wind',
+  cureent:'Current',
+  radar:'Radar',
+  weather:'Weather',
   
 
   //Home screen

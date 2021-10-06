@@ -27,6 +27,13 @@ import BoatInfo from '../screens/Drawerscreens/MYprofile/BoatInfo';
 import EmergencyContacts from '../screens/Drawerscreens/MYprofile/EmergencyContacts';
 import LCR from '../screens/Drawerscreens/MYprofile/LCR';
 import Edit from '../screens/Drawerscreens/Edit /Edit';
+import DataFeeds from '../screens/NavigationScreens/DataFeeds/DataFeeds';
+import Tide from '../screens/NavigationScreens/DataFeeds/Tide/Tide';
+import SeaTemp from '../screens/NavigationScreens/DataFeeds/SeaTemp/SeaTemp';
+import Wind from '../screens/NavigationScreens/DataFeeds/Wind/Wind';
+import Current from '../screens/NavigationScreens/DataFeeds/Current/Current';
+import Radar from '../screens/NavigationScreens/DataFeeds/Radar/Radar';
+import Weather from '../screens/NavigationScreens/DataFeeds/Weather/Weather';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -61,6 +68,8 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="News" component={News} />
       <Drawer.Screen name="Video" component={Video} />
       <Drawer.Screen name="MYprofile" component={MYprofileStack} />
+      <Drawer.Screen name="DataFeeds" component={DataFeedsStack} />
+
 
 
 
@@ -123,6 +132,24 @@ const MYprofileStack = props => {
       <Stack.Screen name="LCR" component={LCR} />
       <Stack.Screen name="Edit" component={Edit} />
 
+
+    </Stack.Navigator>
+  );
+};
+const DataFeedsStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'DataFeedsScreen'}>
+      <Stack.Screen name="DataFeedsScreen" component={DataFeeds} />
+      <Stack.Screen name="Tide" component={Tide} />
+      <Stack.Screen name="SeaTemp" component={SeaTemp} />
+      <Stack.Screen name="Wind" component={Wind} />
+      <Stack.Screen name="Current" component={Current} />
+      <Stack.Screen name="Radar" component={Radar} />
+      <Stack.Screen name="Weather" component={Weather} />
 
     </Stack.Navigator>
   );

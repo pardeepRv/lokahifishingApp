@@ -378,7 +378,7 @@ const menu = [
   },
   {
     name: strings.Tids_weather,
-    navigate: 'abc',
+    navigate: 'DataFeeds',
     img: icons.ic_Fish02,
     bgColor: '#553456',
   },

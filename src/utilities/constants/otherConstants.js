@@ -372,7 +372,7 @@ const slides = [
 const menu = [
   {
     name: strings.Catch_report_h,
-    navigate: 'abc',
+    navigate: 'catchReportStack',
     img: icons.ic_Fish01,
     bgColor: '#3c264a',
   },
@@ -385,7 +385,7 @@ const menu = [
 
   {
     name: strings.Photo_sharing,
-    navigate: 'abc',
+    navigate: 'PhotoSharing',
     img: icons.ic_Fish03,
     bgColor: '#854f65',
   },

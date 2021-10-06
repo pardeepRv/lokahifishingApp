@@ -1,10 +1,10 @@
-import {Easing, Animated} from 'react-native';
+import { Easing, Animated } from 'react-native';
 
 //transition configuration for router sceens
 const transitionConfig = () => ({
   screenInterpolator: sceneProps => {
-    const {layout, position, scene} = sceneProps;
-    const {index} = scene;
+    const { layout, position, scene } = sceneProps;
+    const { index } = scene;
     const width = layout.initWidth;
 
     const inputRange = [index - 1, index, index + 1];
@@ -15,7 +15,7 @@ const transitionConfig = () => ({
     });
 
     return {
-      transform: [{translateX}],
+      transform: [{ translateX }],
     };
   },
   transitionSpec: {
@@ -36,6 +36,8 @@ const screenNames = {
   GoalWeight: 'GoalWeight',
   ForgotPassword: 'ForgotPassword',
   Members: 'Members',
+  SelectBoatFishing: 'SelectBoatFishing',
+  PhotoSharing: 'PhotoSharing'
 };
 
-export {transitionConfig, screenNames};
+export { transitionConfig, screenNames };

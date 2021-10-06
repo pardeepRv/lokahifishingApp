@@ -1,6 +1,6 @@
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 //navigation screens
 import ForgotPassword from '../screens/AuthScreens/ForgotPassword/ForgotPassword';
@@ -34,6 +34,10 @@ import Wind from '../screens/NavigationScreens/DataFeeds/Wind/Wind';
 import Current from '../screens/NavigationScreens/DataFeeds/Current/Current';
 import Radar from '../screens/NavigationScreens/DataFeeds/Radar/Radar';
 import Weather from '../screens/NavigationScreens/DataFeeds/Weather/Weather';
+import CatchReport from '../screens/NavigationScreens/CatchReport/CatchReport';
+import SelectBoatFishing from '../screens/NavigationScreens/SelectBoatFishing/SelectBoatFishing';
+import ShortLineFishing from '../screens/NavigationScreens/SelectBoatFishing/ShorLineFishing';
+import PhotoSharing from '../screens/NavigationScreens/PhotoSharing/PhotoSharing';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -42,7 +46,7 @@ const Drawer = createDrawerNavigator();
 const commonScreensOptions = {
   headerStyle: {
     elevation: 1,
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 1,
   },
 };
@@ -51,7 +55,7 @@ const HomeStackScreen = props => {
   return (
     <Drawer.Navigator
       initialRouteName="Drawer"
-      drawerContent={props => DrawerComp({...props})}
+      drawerContent={props => DrawerComp({ ...props })}
       screenOptions={{
         headerShown: false,
       }}>
@@ -69,10 +73,8 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="Video" component={Video} />
       <Drawer.Screen name="MYprofile" component={MYprofileStack} />
       <Drawer.Screen name="DataFeeds" component={DataFeedsStack} />
-
-
-
-
+      <Drawer.Screen name="catchReportStack" component={catchReportStack} />
+      <Drawer.Screen name="PhotoSharing" component={PhotoSharing} />
     </Drawer.Navigator>
   );
 };
@@ -115,6 +117,20 @@ const settingsStack = props => {
       initialRouteName={'SettingScreen'}>
       <Stack.Screen name="SettingScreen" component={Settings} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
+    </Stack.Navigator>
+  );
+};
+
+const catchReportStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'CatchReport'}>
+      <Drawer.Screen name="CatchReport" component={CatchReport} />
+      <Drawer.Screen name="SelectBoatFishing" component={SelectBoatFishing} />
+      <Drawer.Screen name="ShorLineFishing" component={ShortLineFishing} />
     </Stack.Navigator>
   );
 };

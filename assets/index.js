@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import ic_active_activity from './icons/active-activity.png';
 import ic_active_explore from './icons/active-explore.png';
 import ic_active_female from './icons/active-female.png';
@@ -58,14 +58,29 @@ import ic_menu_white from './icons/drawer/ic_menu_white.png';
 import ic_edit from './icons/drawer/edit_icon.png';
 import ic_cateagory from './icons/NewImages/camera.png';
 import moneygraphics from './icons/catch-report-icons/moneygraphics.png';
+
+import baitcasting from './icons/catch-report-icons/baitcasting.png';
+import BoatFishing from './icons/catch-report-icons/BoatFishing.png';
+import BottomFishing from './icons/catch-report-icons/BottomFishing.png';
+import DeepBottom from './icons/catch-report-icons/DeepBottom.png';
+import OffshoreFishing from './icons/catch-report-icons/OffshoreFishing.png';
+import ShallowBottom from './icons/catch-report-icons/ShallowBottom.png';
+import ShorelineFishing from './icons/catch-report-icons/ShorelineFishing.png';
+import slide from './icons/catch-report-icons/slide-bait.png';
+import TagAndRelease from './icons/catch-report-icons/TagAndRelease.png';
+import whipping from './icons/catch-report-icons/whipping.png';
+
 import ic_rightArrow from './icons/drawer/right-arrow.png';
 import ic_photoVideoPlayBT from './icons/photoSharingImages/photoVideoPlayBT.png';
+import photoVideo from './icons/photoSharingImages/photoVideo.png';
+import photoUploadPhoto from './icons/photoSharingImages/photoUploadPhoto.png';
+import sharearrow from './icons/photoSharingImages/share-arrow.png';
+import like from './icons/photoSharingImages/like.png';
+import photoComment from './icons/photoSharingImages/photoComment.png';
 import ic_donex from './icons/ic_donex.png';
 import ic_not_donex from './icons/ic_not_donex.png';
 import BannerRoy from './icons/BannerRoy.jpg';
 import MorrisLuresBanner from './icons/MorrisLuresBanner.jpg';
-
-
 
 //home page icons
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
@@ -81,6 +96,21 @@ import privacyPolicy from './icons/privacyPolicy.pdf';
 import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
+  like,
+  photoComment,
+  sharearrow,
+  photoVideo,
+  photoUploadPhoto,
+  baitcasting,
+  BoatFishing,
+  BottomFishing,
+  DeepBottom,
+  OffshoreFishing,
+  ShallowBottom,
+  ShorelineFishing,
+  slide,
+  TagAndRelease,
+  whipping,
   ic_donex,
   BannerRoy,
   MorrisLuresBanner,
@@ -183,4 +213,4 @@ const fonts = Platform.select({
   },
 });
 
-export {fonts, icons};
+export { fonts, icons };

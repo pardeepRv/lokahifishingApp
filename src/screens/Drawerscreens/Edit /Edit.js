@@ -1,12 +1,19 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React from 'react';
-import { SafeAreaView, StyleSheet, ImageBackground} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ImageBackground,
+  View,
+  Text
+} from 'react-native';
 import Pdf from 'react-native-pdf';
 import { moderateScale } from 'react-native-size-matters';
 import { fonts, icons } from '../../../../assets';
 import { Header } from '../../../components/common/Header';
 import { strings } from '../../../localization';
 import { colors } from '../../../utilities/constants';
+import EmergencyContacts from '../MYprofile/EmergencyContacts';
 import BInfo from './BInfo/BInfo';
 import EditProfile from './EditProfile/EditProfile';
 import styles from './styles';
@@ -21,7 +28,7 @@ const EContacts = () => {
   );
 };
 
-const Edit = ({navigation}) => {
+const Edit = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.content}>
       <Header
@@ -30,7 +37,7 @@ const Edit = ({navigation}) => {
           height: moderateScale(60),
         }}
         title={strings.edit}
-        titleStyle={{fontFamily: fonts.bold}}
+        titleStyle={{ fontFamily: fonts.bold }}
         leftIconSource={icons.ic_back_white}
         leftButtonStyle={{
           tintColor: colors.white1,
@@ -49,7 +56,7 @@ const Edit = ({navigation}) => {
             color: colors.white1,
             fontWeight: '700',
             shadowColor: colors.black1,
-            shadowOffset: {width: 1, height: 1},
+            shadowOffset: { width: 1, height: 1 },
             shadowOpacity: 1,
             shadowRadius: 0,
             textTransform: 'none',
@@ -61,7 +68,7 @@ const Edit = ({navigation}) => {
         }}>
         <Tab.Screen name="profile" component={EditProfile} />
         <Tab.Screen name="Boat info" component={BInfo} />
-        <Tab.Screen name="Emergency Contacts" component={EContacts} />
+        <Tab.Screen name="Emergency Contacts" component={EmergencyContacts} />
       </Tab.Navigator>
     </SafeAreaView>
   );

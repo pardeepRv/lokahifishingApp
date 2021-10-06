@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,14 +13,14 @@ import {
   ScrollView,
 } from 'react-native';
 
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 // import Carousel from 'react-native-snap-carousel';
-import {fonts, icons} from '../../../../assets';
-import {Button} from '../../../components/common/Button';
-import {Header} from '../../../components/common/Header';
-import {strings} from '../../../localization';
-import {colors} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import { fonts, icons } from '../../../../assets';
+import { Button } from '../../../components/common/Button';
+import { Header } from '../../../components/common/Header';
+import { strings } from '../../../localization';
+import { colors } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 import styles from './styles';
 
 let members = [
@@ -39,21 +39,21 @@ let members = [
   },
 ];
 
-const DataFeeds = ({navigation}) => {
+const DataFeeds = ({ navigation }) => {
   const [active, setActive] = useState(0);
   const [carousel, setCarousel] = useState('');
   const [ad, setAd] = useState('');
   const [membersList, setMembersList] = useState(members);
 
-  const _renderView = ({item, index}) => (
+  const _renderView = ({ item, index }) => (
     <TouchableOpacity>
       <Image
         style={{
           width: layout.size.width,
           flex: 1,
-          marginTop: layout.size.height/7,
-          backgroundColor:colors.transparent,
-          marginBottom:moderateScale(-15)
+          marginTop: layout.size.height / 7,
+          backgroundColor: colors.transparent,
+          marginBottom: moderateScale(-15)
         }}
 
         source={item.img}
@@ -64,7 +64,7 @@ const DataFeeds = ({navigation}) => {
   return (
     <ImageBackground
       source={icons.ic_signin_bg}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -75,7 +75,7 @@ const DataFeeds = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Data Feeds'}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -201,22 +201,23 @@ const DataFeeds = ({navigation}) => {
           <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
         </TouchableOpacity>
         <FlatList
-        extraData={membersList}
-        data={membersList}
-        renderItem={_renderView}
-        keyExtractor={(item, index) => 'key' + index}
-        ListHeaderComponent={() =>
-          !membersList.length ? (
-            <Text style={styles.nomatch}>No Match found</Text>
-          ) : null
-        }
-        horizontal={true}
-      />
+          extraData={membersList}
+          data={membersList}
+          renderItem={_renderView}
+          pagingEnabled
+          keyExtractor={(item, index) => 'key' + index}
+          ListHeaderComponent={() =>
+            !membersList.length ? (
+              <Text style={styles.nomatch}>No Match found</Text>
+            ) : null
+          }
+          horizontal={true}
+        />
 
 
       </SafeAreaView>
-      
-      
+
+
     </ImageBackground>
   );
 };

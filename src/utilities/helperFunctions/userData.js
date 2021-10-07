@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {USER_DATA} from '../constants/otherConstants';
+import { USER_DATA } from '../constants/otherConstants';
 
 const getLocalUserData = () =>
   AsyncStorage.getItem(USER_DATA).then((data) => JSON.parse(data));
@@ -11,53 +11,52 @@ const setLocalUserData = (data) =>
 const deleteUserDataFromLocal = () => AsyncStorage.removeItem(USER_DATA);
 
 const extractUserDataFromDBResponse = (userData = {}, defaultValues) => {
-  debugger;
   const {
-    address,
-    admin_id,
+    CML,
+    city,
     created_at,
-    days,
-    device_type,
-    dob,
+    deleted_at,
+    device_token,
     email,
-    fcm_id,
-    gender,
-    goal_weight,
+    email_verified_at,
+    full_name,
     id,
-    joining_date_weight,
-    latitude,
-    longitude,
-    mobile,
-    name,
-    status,
-    token,
+    ip_address,
+    is_email_verified,
+    island,
+    last_logged_in_at,
+    level,
+    os,
+    phone_number,
+    points,
+    profile_picture,
     updated_at,
-    username,
-    weight_type,
+    user_name,
+    access_token
   } = userData;
 
   return {
-    address,
-    admin_id,
+    CML,
+    city,
     created_at,
-    days,
-    device_type,
-    dob,
+    deleted_at,
+    device_token,
     email,
-    fcm_id,
-    gender,
-    goal_weight,
+    email_verified_at,
+    full_name,
     id,
-    joining_date_weight,
-    latitude,
-    longitude,
-    mobile,
-    name,
-    status,
-    token,
+    ip_address,
+    is_email_verified,
+    island,
+    last_logged_in_at,
+    level,
+    os,
+    phone_number,
+    points,
+    profile_picture,
     updated_at,
-    username,
-    weight_type,
+    user_name,
+    access_token,
     ...defaultValues,
   };
 };

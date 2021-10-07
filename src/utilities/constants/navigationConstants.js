@@ -37,7 +37,8 @@ const screenNames = {
   ForgotPassword: 'ForgotPassword',
   Members: 'Members',
   SelectBoatFishing: 'SelectBoatFishing',
-  PhotoSharing: 'PhotoSharing'
+  PhotoSharing: 'PhotoSharing',
+  HomeStack: 'HomeStack'
 };
 
 export { transitionConfig, screenNames };

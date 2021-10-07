@@ -1,7 +1,5 @@
 
-// let baseUrl = 'https://saslras.netsolutionindia.com/api/';
-// let baseUrl = 'http://54.74.233.110/api/';
-let baseUrl = 'https://nutritionclubcenter.com/api/';
+let baseUrl = 'https://server3.rvtechnologies.in/LokahiFishing_API/public/api/';
 
 // https://saslras.netsolutionindia.com/ sent by Ashish
 // let imageUrl1 = 'https://saslras.netsolutionindia.com/storage/';
@@ -15,6 +13,7 @@ const urls = {
     baseUrl,
     imageUrl,
     imageUrl1,
+    login_url:'login',
     check_login:'check_login',
     user_data:'user_data',
     uploadMedia: 'uploadmedia',

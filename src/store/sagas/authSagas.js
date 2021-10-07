@@ -1,13 +1,13 @@
-import {put, retry} from 'redux-saga/effects';
-import {I18nManager, Platform} from 'react-native';
+import { put, retry } from 'redux-saga/effects';
+import { I18nManager, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 import logger from '../../utilities/logger';
 import * as NavigationService from '../NavigationService'
 
-import {request} from '../../utilities/request';
-import {actionTypes, urls, screenNames} from '../../utilities/constants';
+import { request } from '../../utilities/request';
+import { actionTypes, urls, screenNames } from '../../utilities/constants';
 import {
   showErrorAlert,
   getAPIError,
@@ -17,7 +17,7 @@ import {
   deleteUserDataFromLocal,
   showSuccessAlert,
 } from '../../utilities/helperFunctions';
-import {getAllCatagories} from '../actions';
+import { getAllCatagories } from '../actions';
 const languages = [
   {
     code: 'en',
@@ -31,7 +31,7 @@ const languages = [
   },
 ];
 
-function* fetchAll({params}) {
+function* fetchAll({ params }) {
   debugger;
   try {
     const config = {
@@ -51,18 +51,18 @@ function* fetchAll({params}) {
   }
 }
 
-function* loginViaEmail({params}) {
+function* loginViaEmail({ params }) {
   try {
     console.log('params', params);
-    let dataGettingInParams = params.data;
 
     let dataToBesend = {
-      username: dataGettingInParams.username,
-      password: dataGettingInParams.password,
+      email: params.email,
+      password: params.password,
     };
 
+    console.log('dataToBesend', JSON.stringify(dataToBesend));
     const config = {
-      url: urls.check_login,
+      url: urls.login_url,
       method: 'POST',
       data: dataToBesend,
     };
@@ -72,11 +72,15 @@ function* loginViaEmail({params}) {
 
     if (
       response &&
-      response.status == 200 &&
       response.data &&
-      response.data.data
+      response.data.success
     ) {
-      const loginUserData = extractUserDataFromDBResponse(response.data.data);
+      let updatedObj = response.data.data.user;
+      updatedObj['access_token'] = response.data.data.access_token;
+
+      console.log(updatedObj,'response.data.data.access_tokenupdatedObjupdatedObj');
+
+      const loginUserData = extractUserDataFromDBResponse(updatedObj);
 
       console.log('data to be saved is: ', loginUserData);
 
@@ -86,8 +90,14 @@ function* loginViaEmail({params}) {
         type: actionTypes.LOGIN_WITH_EMAIL_SUCCEEDED,
         userData: loginUserData,
       });
-    NavigationService.resetRoute('Home');
 
+      NavigationService.resetRoute(screenNames.HomeStack);
+    }
+    else {
+      yield put({
+        type: actionTypes.LOGIN_WITH_EMAIL_FAIL,
+      });
+      showErrorAlert(response.data.message)
     }
   } catch (error) {
     showErrorAlert(getAPIError(error));
@@ -114,11 +124,11 @@ function* checkIfLoggedInSaga() {
     NavigationService.resetRoute('Home');
 
   } catch (error) {
-    yield put({type: actionTypes.SESSION_EXPIRED});
+    yield put({ type: actionTypes.SESSION_EXPIRED });
     console.log('checkIfLoggedIn error: ', error);
     // navigate(screenNames.AuthNavigator);
     NavigationService.resetRoute('Login');
   }
 }
 
-export {fetchAll, loginViaEmail, checkIfLoggedInSaga};
+export { fetchAll, loginViaEmail, checkIfLoggedInSaga };

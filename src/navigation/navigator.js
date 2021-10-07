@@ -38,6 +38,7 @@ import CatchReport from '../screens/NavigationScreens/CatchReport/CatchReport';
 import SelectBoatFishing from '../screens/NavigationScreens/SelectBoatFishing/SelectBoatFishing';
 import ShortLineFishing from '../screens/NavigationScreens/SelectBoatFishing/ShorLineFishing';
 import PhotoSharing from '../screens/NavigationScreens/PhotoSharing/PhotoSharing';
+import { navigationRef } from '../store/NavigationService';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -82,7 +83,9 @@ const HomeStackScreen = props => {
 const MainNavigator = props => {
   return (
     // <NavigationContainer ref={navigationRef}>
-    <NavigationContainer initialRouteName={'authStack'}>
+    <NavigationContainer initialRouteName={'authStack'}
+      ref={navigationRef}
+    >
       <MainStack.Navigator
         screenOptions={{
           headerShown: false,

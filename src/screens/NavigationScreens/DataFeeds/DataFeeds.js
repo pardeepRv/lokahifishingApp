@@ -53,7 +53,7 @@ const DataFeeds = ({ navigation }) => {
           flex: 1,
           marginTop: layout.size.height / 7,
           backgroundColor: colors.transparent,
-          marginBottom: moderateScale(-15)
+          marginBottom: moderateScale(-25)
         }}
 
         source={item.img}
@@ -91,10 +91,21 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: colors % 2 == 0 ? '#3c264a' : '#553456',
+              backgroundColor: colors.lightTransparent,
 
             },
           ]}>
+            <Image
+          source={icons.Tidesunmoon}
+          resizeMode='contain'
+          style={{
+            height: 50,
+            width: 50,
+            borderRadius:50,
+       backgroundColor:colors.primary,
+       tintColor:colors.white1
+          }}
+        />
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -111,9 +122,20 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: '#3c264a',
+              backgroundColor: colors.lightTransparent,
             },
           ]}>
+             <Image
+          source={icons.SST}
+          resizeMode='contain'
+          style={{
+            height: 50,
+            width: 50,
+            borderRadius:50,
+       backgroundColor:colors.primary,
+       tintColor:colors.white1
+          }}
+        />
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -130,9 +152,20 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: colors % 2 == 0 ? '#3c264a' : '#553456',
+              backgroundColor: colors.lightTransparent,
             },
           ]}>
+             <Image
+          source={icons.Wind}
+          resizeMode='contain'
+          style={{
+            height: 50,
+            width: 50,
+            borderRadius:50,
+       backgroundColor:colors.primary,
+       tintColor:colors.white1
+          }}
+        />
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -149,9 +182,20 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: '#3c264a',
+              backgroundColor: colors.lightTransparent,
             },
           ]}>
+             <Image
+          source={icons.cloud}
+          resizeMode='contain'
+          style={{
+            height: 50,
+            width: 50,
+            borderRadius:50,
+       backgroundColor:colors.primary,
+       tintColor:colors.white1
+          }}
+        />
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -168,9 +212,20 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: colors % 2 == 0 ? '#3c264a' : '#553456',
+              backgroundColor: colors.lightTransparent,
             },
           ]}>
+             <Image
+          source={icons.range}
+          resizeMode='contain'
+          style={{
+            height: 50,
+            width: 50,
+            borderRadius:50,
+       backgroundColor:colors.primary,
+       tintColor:colors.white1
+          }}
+        />
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -187,9 +242,20 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: '#3c264a',
+              backgroundColor: colors.lightTransparent,
             },
           ]}>
+             <Image
+          source={icons.cloud}
+          resizeMode='contain'
+          style={{
+            height: 50,
+            width: 50,
+            borderRadius:50,
+       backgroundColor:colors.primary,
+       tintColor:colors.white1
+          }}
+        />
           <View style={styles.viewStyle}>
             <View
               style={{

@@ -42,8 +42,8 @@ export default StyleSheet.create({
   listView: {
     margin: 4,
     flexDirection: 'row',
-    padding: 6,
-    paddingVertical: moderateScale(10),
+    padding: 8,
+    paddingVertical: moderateScale(2),
   },
   viewStyle: {
     flexDirection: 'row',
@@ -52,8 +52,9 @@ export default StyleSheet.create({
   nameStyle: {
     fontFamily: fonts.regular,
     fontSize: moderateScale(20),
-    color: colors.primary,
-    paddingHorizontal: moderateScale(5),
+    color: colors.white1,
+    paddingHorizontal: moderateScale(15),
+    fontWeight:'bold',
   },
   dateStyle: {
     fontFamily: fonts.regular,
@@ -64,7 +65,9 @@ export default StyleSheet.create({
   rightArrow: {
     height: 30,
     width: 30,
+    left:30,
     alignSelf: 'center',
+    tintColor:colors.primary,
   },
   nomatch: {
     alignSelf: 'center',

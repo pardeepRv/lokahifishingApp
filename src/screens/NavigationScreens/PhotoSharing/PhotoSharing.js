@@ -63,6 +63,7 @@ const PhotoSharing = ({ navigation }) => {
                 />
                 <View
                     style={{
+                        flex:1,
                         justifyContent: 'center',
                     }}>
                     <Text style={[styles.nameStyle, { fontSize: 14, fontFamily: fonts.bold }]}>{item.name}</Text>

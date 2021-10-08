@@ -81,6 +81,11 @@ import ic_donex from './icons/ic_donex.png';
 import ic_not_donex from './icons/ic_not_donex.png';
 import BannerRoy from './icons/BannerRoy.jpg';
 import MorrisLuresBanner from './icons/MorrisLuresBanner.jpg';
+import cloud from './icons/cloud.png';
+import range from './icons/Range.png';
+import SST from './icons/SST.png';
+import Wind from './icons/Wind.png';
+import Tidesunmoon from './icons/Tide-sun-moon.png';
 
 //home page icons
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
@@ -97,6 +102,11 @@ import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
   like,
+  SST,
+  Wind,
+  range,
+  cloud,
+  Tidesunmoon,
   photoComment,
   sharearrow,
   photoVideo,

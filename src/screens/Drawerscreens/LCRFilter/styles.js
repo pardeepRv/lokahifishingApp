@@ -6,17 +6,14 @@ import {layout} from '../../../utilities/layout';
 
 export default StyleSheet.create({
   listView: {
-    flex:1,
-    margin: 10,
+    margin: 15,
     flexDirection: 'row',
-    padding: 8,
+    padding: 10,
     paddingVertical: moderateScale(15),
   },
   viewStyle: {
     flexDirection: 'row',
     flex: 0.9,
-    // justifyContent: 'flex-end',
-    // alignSelf:'flex-end'
   },
   sharingtext: {
     fontFamily: fonts.bold,
@@ -27,13 +24,13 @@ export default StyleSheet.create({
   },
   nameStyle: {
     fontFamily: fonts.bold,
-    fontSize: moderateScale(15),
+    fontSize: moderateScale(16),
     color: colors.white1,
     paddingHorizontal: moderateScale(10),
   },
   dateStyle: {
     fontFamily: fonts.semiBold,
-    fontSize: moderateScale(12),
+    fontSize: moderateScale(14),
     color: colors.white1,
     paddingHorizontal: moderateScale(10),
     top:10,

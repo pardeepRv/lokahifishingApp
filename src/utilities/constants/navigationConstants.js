@@ -1,5 +1,6 @@
 import { Easing, Animated } from 'react-native';
 
+
 //transition configuration for router sceens
 const transitionConfig = () => ({
   screenInterpolator: sceneProps => {
@@ -38,7 +39,8 @@ const screenNames = {
   Members: 'Members',
   SelectBoatFishing: 'SelectBoatFishing',
   PhotoSharing: 'PhotoSharing',
-  HomeStack: 'HomeStack'
+  HomeStack: 'HomeStack',
+  BottomFishing: 'BottomFishing'
 };
 
 export { transitionConfig, screenNames };

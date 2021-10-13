@@ -397,7 +397,7 @@ const menu = [
   },
   {
     name: strings.LeaderBoard,
-    navigate: 'abc',
+    navigate: 'LeaderBoard',
     img: icons.ic_Fish08,
     bgColor: '#bc4e54',
   },
@@ -417,7 +417,7 @@ const data = [
   },
   {
     name: strings.lcr_list,
-    navigate: 'Aboutcsdcs',
+    navigate: 'LCRlist',
     img: icons.ic_LCR,
   },
   {
@@ -437,7 +437,7 @@ const data = [
   },
   {
     name: strings.LCR_filter,
-    navigate: 'ChangeLanguage',
+    navigate: 'LCRFilter',
     img: icons.ic_filter,
   },
   {

@@ -9,36 +9,32 @@ import {
   View,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../assets';
-import {Header} from '../../../components/common/Header';
-import {colors} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import { fonts, icons } from '../../../../../assets';
+
+import { Header } from '../../../../components/common/Header';
+import { colors } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
+
+
+
 import styles from './styles';
 
 let fishingArr = [
   {
-    img: icons.OffshoreFishing,
+    img: icons.DeepBottom,
     name: 'Annual Leaderboard',
     date: 'Winners 2020',
-    text: 'Offshore Fishing',
+    text: 'Deep bottom',
   },
   {
-    img: icons.BottomFishing,
+    img: icons.ShallowBottom,
     name: 'WBC Labour',
     date: 'Day tournament',
-    text: 'Bottom Fishing',
-    navigate: 'BottomFishing'
-
-  },
-  {
-    img: icons.TagAndRelease,
-    name: 'WBC Labour',
-    date: 'Day tournament',
-    text: 'Tag and Release',
+    text: 'Shallow Bottom',
   },
 ];
 
-const SelectBoatFishing = ({navigation}) => {
+const BottomFishing = ({navigation}) => {
   const [fishingList, setfishingList] = useState(fishingArr);
 
   //View of flatlist
@@ -59,7 +55,6 @@ const SelectBoatFishing = ({navigation}) => {
             },
             shadowOpacity: 0.34,
             shadowRadius: 6.27,
-
             elevation: 10,
           }}
         />
@@ -91,7 +86,7 @@ const SelectBoatFishing = ({navigation}) => {
             backgroundColor: 'transparent',
             height: moderateScale(60),
           }}
-          title={'Select Boat fishing type'}
+          title={'Select Bottom fishing type'}
           blackTitle
           titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
@@ -121,4 +116,4 @@ const SelectBoatFishing = ({navigation}) => {
   );
 };
 
-export default SelectBoatFishing;
+export default BottomFishing;

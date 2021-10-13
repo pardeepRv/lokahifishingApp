@@ -39,6 +39,11 @@ import SelectBoatFishing from '../screens/NavigationScreens/SelectBoatFishing/Se
 import ShortLineFishing from '../screens/NavigationScreens/SelectBoatFishing/ShorLineFishing';
 import PhotoSharing from '../screens/NavigationScreens/PhotoSharing/PhotoSharing';
 import { navigationRef } from '../store/NavigationService';
+import LCRFilter from '../screens/Drawerscreens/LCRFilter/LCRFilter';
+import LCRlist from '../screens/Drawerscreens/LCRlist/LCRlist';
+import PhotoSharingPost from '../screens/Drawerscreens/PhotoSharingPost/PhotoSharingPost';
+import LeaderBoard from '../screens/NavigationScreens/LeaderBoard/LeaderBoard';
+import BottomFishing from '../screens/NavigationScreens/SelectBoatFishing/BottomFishing/BottomFishing';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -76,6 +81,13 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="DataFeeds" component={DataFeedsStack} />
       <Drawer.Screen name="catchReportStack" component={catchReportStack} />
       <Drawer.Screen name="PhotoSharing" component={PhotoSharing} />
+      <Drawer.Screen name="LCRFilter" component={LcrFilterStack} />
+      <Drawer.Screen name="LCRlist" component={LcrListStack} />
+      <Drawer.Screen name="LeaderBoard" component={LeaderBoard} />
+
+
+
+
     </Drawer.Navigator>
   );
 };
@@ -134,6 +146,8 @@ const catchReportStack = props => {
       <Drawer.Screen name="CatchReport" component={CatchReport} />
       <Drawer.Screen name="SelectBoatFishing" component={SelectBoatFishing} />
       <Drawer.Screen name="ShorLineFishing" component={ShortLineFishing} />
+      <Drawer.Screen name="BottomFishing" component={BottomFishing} />
+
     </Stack.Navigator>
   );
 };
@@ -169,6 +183,35 @@ const DataFeedsStack = props => {
       <Stack.Screen name="Current" component={Current} />
       <Stack.Screen name="Radar" component={Radar} />
       <Stack.Screen name="Weather" component={Weather} />
+
+    </Stack.Navigator>
+  );
+};
+
+const LcrListStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'LCRlistScreen'}>
+      <Stack.Screen name="LCRlistScreen" component={LCRlist} />
+      <Stack.Screen name="PhotoSharingPost" component={PhotoSharingPost} />
+
+     
+
+    </Stack.Navigator>
+  );
+};
+const LcrFilterStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'LCRFilterScreen'}>
+      <Stack.Screen name="LCRFilterScreen" component={LCRFilter} />
+     
 
     </Stack.Navigator>
   );

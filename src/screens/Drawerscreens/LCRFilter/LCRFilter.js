@@ -7,7 +7,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Share,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
@@ -16,7 +15,6 @@ import {Header} from '../../../components/common/Header';
 import {strings} from '../../../localization';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
-import PhotoSharingPost from '../PhotoSharingPost/PhotoSharingPost';
 import styles from './styles';
 
 let members = [
@@ -49,28 +47,8 @@ let members = [
   },
 ];
 
-const LCRlist = ({navigation}) => {
+const LCRFilter = ({navigation}) => {
   const [membersList, setMembersList] = useState(members);
-
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   const _renderView = ({item, index}) => (
     <View style={{flex: 1}}>
@@ -82,20 +60,30 @@ const LCRlist = ({navigation}) => {
           },
         ]}
         activeOpacity={0.8}>
+        {/* <View
+              style={{
+                
+                flexDirection: 'row',
+                flex: 0.9,
+                backgroundColor:colors.black1
+              }}>
+              <Button
+                style={{}}
+              />
+            </View> */}
         <View
           style={{
             flexDirection: 'column',
+            flex: 1,
             backgroundColor: colors.transparent,
           }}>
           <TouchableOpacity
-           onPress={() => navigation.navigate('PhotoSharingPost')}
             style={{
               backgroundColor: colors.lightTransparent,
               borderRadius: 8,
               height: moderateScale(25),
-              width: layout.size.width /2.2,
+              width: layout.size.width - 200,
               alignSelf: 'flex-end',
-              right:2
             }}>
             <Text style={styles.sharingtext}>
               {strings.exporttophotosharing}
@@ -105,11 +93,11 @@ const LCRlist = ({navigation}) => {
           <View style={styles.viewStyle}>
             <Image
               source={item.img}
-              resizeMode='cover'
+              resizeMode="contain"
               style={{
-                height: moderateScale(100),
-                width: moderateScale(100),
-                backgroundColor: colors.lightTransparent,
+                height: 80,
+                width: 80,
+                backgroundColor: colors.transparent,
                 borderRadius: 50,
               }}
             />
@@ -123,72 +111,21 @@ const LCRlist = ({navigation}) => {
 
             <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
           </View>
-          <View style={styles.viewStyle}>
-            <TouchableOpacity style={{flexDirection:'row', top:moderateScale(10),}}>
-              <Image
-                source={icons.like}
-                style={{
-                  // alignSelf:'flex-end',
-                  height: 25,
-                  width: 25,
-                  tintColor: colors.white1,
-                }}
-              />
-              <Text
-                style={{
-                  fontFamily: fonts.semiBold,
-                  fontSize: moderateScale(15),
-                  color: colors.white1,
-                  paddingHorizontal: moderateScale(8),
-                }}>
-                {' '}
-                0 likes
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{flexDirection:'row', top:moderateScale(10), left :moderateScale(26),}}>
-              <Image
-                source={icons.photoComment}
-                style={{
-                  // alignSelf:'flex-end',
-                  height: 25,
-                  width: 25,
-                  tintColor: colors.white1,
-                }}
-              />
-               <Text
-                style={{
-                  fontFamily: fonts.semiBold,
-                  fontSize: moderateScale(15),
-                  color: colors.white1,
-                  paddingHorizontal: moderateScale(8),
-                }}>
-                {' '}
-                0 comments
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-            style={{ top:moderateScale(10),left:moderateScale(48)}}
-            onPress={onShare} title="Share">
-              <Image
-                source={icons.sharearrow}
-                style={{
-                  // alignSelf:'flex-end',
-                  height: 25,
-                  width: 25,
-                  tintColor: colors.white1,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
         </View>
       </TouchableOpacity>
+      <View
+        style={{
+          height: 2,
+          width: layout.size.width / 1,
+          backgroundColor: colors.white1,
+        }}></View>
     </View>
   );
 
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -198,7 +135,7 @@ const LCRlist = ({navigation}) => {
             backgroundColor: 'transparent',
             height: moderateScale(60),
           }}
-          title={'Recent Local Catches'}
+          title={'LCR List'}
           titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
@@ -225,4 +162,4 @@ const LCRlist = ({navigation}) => {
   );
 };
 
-export default LCRlist;
+export default LCRFilter;

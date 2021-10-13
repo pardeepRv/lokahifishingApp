@@ -17,37 +17,81 @@ import styles from './styles';
 
 let fishingArr = [
   {
-    img: icons.OffshoreFishing,
-    name: 'Annual Leaderboard',
-    date: 'Winners 2020',
-    text: 'Offshore Fishing',
+    img: icons.Mahi,
+    text: 'Mahi Mahi',
   },
   {
-    img: icons.BottomFishing,
-    name: 'WBC Labour',
-    date: 'Day tournament',
-    text: 'Bottom Fishing',
-    navigate: 'BottomFishing'
-
+    img: icons.Ono,
+    text: 'Ono',
   },
   {
-    img: icons.TagAndRelease,
-    name: 'WBC Labour',
-    date: 'Day tournament',
-    text: 'Tag and Release',
+    img: icons.Aku,
+    text: 'Aku',
+  },
+  {
+    img: icons.Ulua,
+    text: 'Ulua',
+  },
+  {
+    img: icons.omilu,
+    text: 'Omilu',
+  },
+  {
+    img: icons.OnagaFish,
+    text: 'Onaga',
+  },
+  {
+    img: icons.OpakapakaFish,
+    text: 'Opakapaka',
+  },
+  {
+    img: icons.EhuFish,
+    text: 'Ehu',
+  },
+  {
+    img: icons.UkuFish,
+    text: 'Uku',
+  },
+  {
+    img: icons.OpeluFish,
+    text: 'Opelu',
+  },
+  {
+    img: icons.MenpachiFish,
+    text: 'Menpachi',
+  },
+  {
+    img: icons.NoFish,
+    text: 'No Fish',
+  },
+  {
+    img: icons.BluemarlinFish,
+    text: 'Blue Marlin',
+  },
+  {
+    img: icons.StripedMarlinFish,
+    text: 'Striped Marlin',
+  },
+  {
+    img: icons.SPEARFISH,
+    text: 'Spearfish',
+  },
+  {
+    img: icons.AhiFish,
+    text: 'Ahi',
   },
 ];
 
-const SelectBoatFishing = ({navigation}) => {
+const LeaderBoard = ({navigation}) => {
   const [fishingList, setfishingList] = useState(fishingArr);
 
   //View of flatlist
   const _renderView = ({item, index}) => (
     <View style={styles.listView} activeOpacity={0.8}>
-      <TouchableOpacity style={styles.viewStyle}
-      onPress={() => navigation.navigate(item.navigate)}>
+      <TouchableOpacity style={styles.viewStyle}>
         <Image
           source={item.img}
+          resizeMode='contain'
           style={{
             height: layout.size.height / 3,
             width: layout.size.width / 1.5,
@@ -91,9 +135,9 @@ const SelectBoatFishing = ({navigation}) => {
             backgroundColor: 'transparent',
             height: moderateScale(60),
           }}
-          title={'Select Boat fishing type'}
+          title={'Leader Board- Bigest Fish'}
           blackTitle
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{fontFamily: fonts.bold , }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,
@@ -121,4 +165,4 @@ const SelectBoatFishing = ({navigation}) => {
   );
 };
 
-export default SelectBoatFishing;
+export default LeaderBoard;

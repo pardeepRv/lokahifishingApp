@@ -86,6 +86,10 @@ import range from './icons/Range.png';
 import SST from './icons/SST.png';
 import Wind from './icons/Wind.png';
 import Tidesunmoon from './icons/Tide-sun-moon.png';
+import LeaderBoard from './icons/LeaderBoard.jpg';
+// Lcr LIst 
+import user_placeholder_man_0 from './icons/NewImages/user_placeholder_man_0.jpg';
+import image_category from './icons/NewImages/image-category.jpg';
 
 //home page icons
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
@@ -96,12 +100,49 @@ import ic_Fish05 from './icons/dashbaordImages/Fish05.png';
 import ic_Fish06 from './icons/dashbaordImages/Fish06.png';
 import ic_Fish07 from './icons/dashbaordImages/Fish07.png';
 import ic_Fish08 from './icons/dashbaordImages/Fish08.png';
+import Mahi from './icons/leaderboardImages/MahiFish.png';
+import Ono from './icons/leaderboardImages/OnoFish.png';
+import Aku from './icons/leaderboardImages/AkuFish.png';
+import Ulua from './icons/leaderboardImages/UluaFish.png';
+import omilu from './icons/leaderboardImages/omilu.png';
+import OnagaFish from './icons/leaderboardImages/OnagaFish.png';
+import OpakapakaFish from './icons/leaderboardImages/OpakapakaFish.png';
+import EhuFish from './icons/leaderboardImages/EhuFish.png';
+import UkuFish from './icons/leaderboardImages/UkuFish.png';
+import OpeluFish from './icons/leaderboardImages/OpeluFish.png';
+import MenpachiFish from './icons/leaderboardImages/MenpachiFish.png';
+import NoFish from './icons/leaderboardImages/NoFish.png';
+import BluemarlinFish from './icons/leaderboardImages/BluemarlinFish.png';
+import StripedMarlinFish from './icons/leaderboardImages/StripedMarlinFish.png';
+import SPEARFISH from './icons/leaderboardImages/SPEARFISH.png';
+import AhiFish from './icons/leaderboardImages/AhiFish.png';
+
+
 
 import privacyPolicy from './icons/privacyPolicy.pdf';
 import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
   like,
+  image_category,
+  user_placeholder_man_0,
+  AhiFish,
+  SPEARFISH,
+  StripedMarlinFish,
+  BluemarlinFish,
+  NoFish,
+  MenpachiFish,
+  Ono,
+  UkuFish,
+  OpeluFish,
+  omilu,
+  EhuFish,
+  OnagaFish,
+  OpakapakaFish,
+  Ulua,
+  Aku,
+  Mahi,
+  LeaderBoard,
   SST,
   Wind,
   range,

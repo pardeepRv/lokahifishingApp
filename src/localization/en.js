@@ -94,5 +94,11 @@ export default {
   marker:'Enter Boat Marker...',
 Length:'Enter Boat Length...',
 port:'Enter Home Port...',
+//LCR Filter
+exporttophotosharing: 'Export to Photosharing',
+add:'ADD TITLE',
+uploadphotosharingpost:'Upload Photosharing Post',
+titlehere:'Enter your title Here...',
+post:'Post'
 
 };

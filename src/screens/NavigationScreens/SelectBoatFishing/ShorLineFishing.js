@@ -20,21 +20,25 @@ let fishingArr = [
         img: icons.whipping,
         name: 'Annual Leaderboard',
         date: 'Winners 2020',
+        text: 'Whipping',
     },
     {
         img: icons.baitcasting,
         name: 'WBC Labour',
         date: 'Day tournament',
+        text: 'Baitcasting',
     },
     {
         img: icons.slide,
         name: 'WBC Labour',
         date: 'Day tournament',
+        text: 'Slide Bait'
     },
     {
         img: icons.TagAndRelease,
         name: 'WBC Labour',
         date: 'Day tournament',
+        text: 'Tag and release',
     }
 ];
 
@@ -43,26 +47,47 @@ const ShorLineFishing = ({ navigation }) => {
 
     //View of flatlist
     const _renderView = ({ item, index }) => (
-        <TouchableOpacity
-            style={styles.listView}
-            activeOpacity={0.8}>
-            <View style={styles.viewStyle}
+    <View style={styles.listView} activeOpacity={0.8}>
+
+       
+            <TouchableOpacity style={styles.viewStyle}
             >
                 <Image
                     source={item.img}
                     style={{
                         height: layout.size.height / 3,
-                        width: layout.size.width / 2,
-                    }}
+                        width: layout.size.width / 1.5,
+                        shadowColor: colors.primary,
+                        borderRadius: 20,
+                        shadowOffset: {
+                          width: 0,
+                          height: 5,
+                        },
+                        shadowOpacity: 0.34,
+                        shadowRadius: 6.27,
+            
+                        elevation: 10,
+                      }}
                 />
 
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+            <View style={styles.viewStyle}>
+        <Text
+          style={{
+            top: 60,
+            fontSize: moderateScale(20),
+            fontFamily: fonts.bold,
+            
+          }}>
+          {item.text}
+        </Text>
+      </View>
+        </View>
     );
 
     return (
         <ImageBackground
-            source={icons.ic_signup_bg}
+            source={icons.LeaderBoard}
             style={{ flex: 1, height: '100%' }}>
             <SafeAreaView
                 style={{
@@ -74,10 +99,11 @@ const ShorLineFishing = ({ navigation }) => {
                         height: moderateScale(60),
                     }}
                     title={'Select Shotline fishing type'}
+                    blackTitle
                     titleStyle={{ fontFamily: fonts.bold }}
                     leftIconSource={icons.ic_back_white}
                     leftButtonStyle={{
-                        tintColor: colors.white1,
+                        tintColor: colors.black1,
                     }}
                     onLeftPress={() => {
                         navigation.goBack();

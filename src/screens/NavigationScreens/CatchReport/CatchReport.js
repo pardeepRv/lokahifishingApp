@@ -36,13 +36,13 @@ const CatchReport = ({ navigation }) => {
 
     //View of flatlist
     const _renderView = ({ item, index }) => (
-        <TouchableOpacity
+        <View
             style={styles.listView}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate(item.navigate)}
+           
         >
-            <View style={styles.viewStyle}
-
+            <TouchableOpacity style={styles.viewStyle}
+ onPress={() => navigation.navigate(item.navigate)}
             >
                 <Image
                     source={item.img}
@@ -51,8 +51,8 @@ const CatchReport = ({ navigation }) => {
                         width: moderateScale(200),
                     }}
                 />
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+        </View>
     );
 
     return (

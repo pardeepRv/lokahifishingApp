@@ -10,9 +10,9 @@ export default StyleSheet.create({
     backgroundColor: colors.white1,
   },
   renderItem: {
-    margin: moderateScale(10),
+    margin: moderateScale(4),
     borderRadius: 10,
-    width: layout.size.width / 2 - 20,
+    width: layout.size.width / 2 - 12 ,
     height: layout.size.height / 4 + 20,
     justifyContent: 'center',
     shadowColor: colors.primary,

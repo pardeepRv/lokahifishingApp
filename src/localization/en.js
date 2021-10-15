@@ -121,5 +121,8 @@ describeyourCatchHere: 'Describe your catch here(optional)',
 includegpsinlcr :'Include GPS IN LCR',
 private:'Private',
 next:'Next',
+//Leaderboard
+annualy:'Annual',
+monthly:'Monthly',
 
 };

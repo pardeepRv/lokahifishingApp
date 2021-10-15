@@ -27,15 +27,43 @@ let members = [
 
   {
     img: icons.BannerRoy,
+    navigate: 'BannerRoy'
+  },
+  {
+    img: icons.BannerShane,
+    navigate: 'BannerShane'
   },
   {
     img: icons.MorrisLuresBanner,
+    navigate: 'MorrisLuresBanner'
   },
   {
-    img: icons.ic_LokahiLogo,
+    img: icons.PacificRim,
+    navigate: 'pacificRim'
   },
   {
-    img: icons.BannerRoy,
+    img: icons.Nitta,
+    navigate: 'Nitta'
+  },
+  {
+    img: icons.NicosLogo,
+    navigate: 'NicosLogo'
+  },
+  {
+    img: icons.STokunaga,
+    navigate: 'STokunaga'
+  },
+  {
+    img: icons.ARCLogo,
+    navigate: 'ARCLogo'
+  },
+  {
+    img: icons.ahieps,
+    navigate: 'ahieps'
+  },
+  {
+    img: icons.gotakulogoredo,
+    navigate: 'Gyotaku'
   },
 ];
 
@@ -46,12 +74,13 @@ const DataFeeds = ({ navigation }) => {
   const [membersList, setMembersList] = useState(members);
 
   const _renderView = ({ item, index }) => (
-    <TouchableOpacity>
+    <TouchableOpacity
+    onPress={() => navigation.navigate(item.navigate)}>
       <Image
         style={{
           width: layout.size.width,
           flex: 1,
-          marginTop: layout.size.height / 7,
+          marginTop: layout.size.height / 9,
           backgroundColor: colors.transparent,
           marginBottom: moderateScale(-25)
         }}

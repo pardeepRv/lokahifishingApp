@@ -81,6 +81,7 @@ const LCRlist = ({navigation}) => {
             backgroundColor: colors.lightTransparent,
           },
         ]}
+        onPress={() => navigation.navigate('LCRDetails')}
         activeOpacity={0.8}>
         <View
           style={{

@@ -22,6 +22,7 @@ import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
+import { loginWithEmail, signUpWithEmail } from '../../../store/actions';
 //internal libraries
 import {colors, screenNames} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
@@ -54,6 +55,7 @@ const Signup = ({navigation}) => {
     island: '',
     isLoading: false,
     productPhoto: '',
+    cmlHolder:'',
   });
 
   const name_and_values = [
@@ -106,12 +108,26 @@ const Signup = ({navigation}) => {
     setErrors(err);
     if (Object.keys(err).length == 0) {
       var formData = new FormData();
-      formData.append('first_name', firstname);
-      formData.append('last_name', lastname);
+      formData.append('user_name', username);
+      formData.append('full_name', fullname);
       formData.append('email', email);
-      formData.append('phone_number', phonenumber);
+      formData.append('city', city);
+      formData.append('island', island);
+      formData.append('cml', cmlHolder);
       formData.append('password', password);
       formData.append('password_confirmation', confirmpassword);
+
+      let obj = {};
+      obj.email = email;
+      obj.password = password;
+      obj.full_name = fullname;
+      obj.email = email;
+      obj.island = island;
+      obj.cml = cmlHolder;
+      obj.password_confirmation = confirmpassword;
+      obj.city = city;
+      obj.user_name = username;
+      // dispatch(signUpWithEmail(obj));
       // dispatch({type:REGISTER,payloads:formData});
     }
   }

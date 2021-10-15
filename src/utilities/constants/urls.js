@@ -14,6 +14,7 @@ const urls = {
     imageUrl,
     imageUrl1,
     login_url:'login',
+    register_url:'register',
     check_login:'check_login',
     user_data:'user_data',
     uploadMedia: 'uploadmedia',

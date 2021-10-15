@@ -69,6 +69,8 @@ import ShorelineFishing from './icons/catch-report-icons/ShorelineFishing.png';
 import slide from './icons/catch-report-icons/slide-bait.png';
 import TagAndRelease from './icons/catch-report-icons/TagAndRelease.png';
 import whipping from './icons/catch-report-icons/whipping.png';
+import uploadImage1 from './icons/catch-report-icons/uploadImage1.png';
+
 
 import ic_rightArrow from './icons/drawer/right-arrow.png';
 import ic_photoVideoPlayBT from './icons/photoSharingImages/photoVideoPlayBT.png';
@@ -80,16 +82,28 @@ import photoComment from './icons/photoSharingImages/photoComment.png';
 import ic_donex from './icons/ic_donex.png';
 import ic_not_donex from './icons/ic_not_donex.png';
 import BannerRoy from './icons/BannerRoy.jpg';
-import MorrisLuresBanner from './icons/MorrisLuresBanner.jpg';
+import MorrisLuresBanner from './icons/MorrisLuresBanner.png';
 import cloud from './icons/cloud.png';
 import range from './icons/Range.png';
 import SST from './icons/SST.png';
 import Wind from './icons/Wind.png';
 import Tidesunmoon from './icons/Tide-sun-moon.png';
 import LeaderBoard from './icons/LeaderBoard.jpg';
+import LeaderBoard1 from './icons/LeaderBoard1.png';
+import BannerShane from './icons/BannerShane.png';
+import PacificRim from './icons/PacificRim.png';
+import Nitta from './icons/Nitta.png';
+import NicosLogo from './icons/NicosLogo.png';
+import STokunaga from './icons/STokunaga.png';
+import ahieps from './icons/ahieps.png';
+import ARCLogo from './icons/ARCLogo.png';
+import Rfslogo from './icons/Rfslogo.png';
+import gotakulogoredo from './icons/gotaku-logo-redo.jpg';
+
 // Lcr LIst 
 import user_placeholder_man_0 from './icons/NewImages/user_placeholder_man_0.jpg';
 import image_category from './icons/NewImages/image-category.jpg';
+import no_image from './icons/photoSharingImages/no_image.jpg';
 
 //home page icons
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
@@ -124,6 +138,18 @@ import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
   like,
+  uploadImage1,
+  ARCLogo,
+  gotakulogoredo,
+  PacificRim,
+  ahieps,
+  Rfslogo,
+  STokunaga,
+  NicosLogo,
+  Nitta,
+  BannerShane,
+  no_image,
+  LeaderBoard1,
   image_category,
   user_placeholder_man_0,
   AhiFish,

@@ -176,7 +176,7 @@ const PhotoSharingPost = ({navigation}) => {
                 source={
                   postsphoto1 != '' ? {uri: postsphoto1} : icons.image_category
                 }
-                resizeMode={postsphoto1 != '' ? 'cover' : 'contain'}
+                resizeMode={postsphoto1 != '' ? 'cover' : 'cover'}
                 style={{
                   borderRadius: moderateScale(100),
                   height: postsphoto1 != '' ? '100%' : '100%',
@@ -206,7 +206,7 @@ const PhotoSharingPost = ({navigation}) => {
                 source={
                   postsphoto2 != '' ? {uri: postsphoto2} : icons.image_category
                 }
-                resizeMode={postsphoto2 != '' ? 'cover' : 'contain'}
+                resizeMode={postsphoto2 != '' ? 'cover' : 'cover'}
                 style={{
                   borderRadius: moderateScale(100),
                   height: postsphoto2 != '' ? '100%' : '100%',
@@ -237,7 +237,7 @@ const PhotoSharingPost = ({navigation}) => {
                 source={
                   postsphoto3 != '' ? {uri: postsphoto3} : icons.image_category
                 }
-                resizeMode={postsphoto3 != '' ? 'cover' : 'contain'}
+                resizeMode={postsphoto3 != '' ? 'cover' : 'cover'}
                 style={{
                   borderRadius: moderateScale(100),
                   height: postsphoto3 != '' ? '100%' : '100%',
@@ -261,7 +261,7 @@ const PhotoSharingPost = ({navigation}) => {
                 source={
                   postsphoto4 != '' ? {uri: postsphoto4} : icons.image_category
                 }
-                resizeMode={postsphoto4 != '' ? 'cover' : 'contain'}
+                resizeMode={postsphoto4 != '' ? 'cover' : 'cover'}
                 style={{
                   borderRadius: moderateScale(100),
                   height: postsphoto4 != '' ? '100%' : '100%',
@@ -301,7 +301,7 @@ const PhotoSharingPost = ({navigation}) => {
             style={[
               styles.listView,
               {
-                backgroundColor: colors.transparent,
+                // backgroundColor: colors.primary,
               },
             ]}
             activeOpacity={0.8}>
@@ -319,7 +319,7 @@ const PhotoSharingPost = ({navigation}) => {
           </View>
           <View
                 style={{
-                  marginTop: moderateScale(1),
+                  marginTop: moderateScale(30),
                 }}>
                 <TouchableOpacity
                   style={{

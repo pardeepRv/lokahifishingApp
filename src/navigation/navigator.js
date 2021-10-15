@@ -44,6 +44,23 @@ import LCRlist from '../screens/Drawerscreens/LCRlist/LCRlist';
 import PhotoSharingPost from '../screens/Drawerscreens/PhotoSharingPost/PhotoSharingPost';
 import LeaderBoard from '../screens/NavigationScreens/LeaderBoard/LeaderBoard';
 import BottomFishing from '../screens/NavigationScreens/SelectBoatFishing/BottomFishing/BottomFishing';
+import LCRDetails from '../screens/Drawerscreens/LCRlist/LCRDetails/LCRDetails';
+import EditLCRDetails from '../screens/Drawerscreens/LCRlist/EditLCRDetails/EditLCRDetails';
+import UploadImage from '../screens/Drawerscreens/LCRlist/UploadImage/UploadImage';
+import OffShoreFishing from '../screens/NavigationScreens/SelectBoatFishing/OffshoreFishing/OffShoreFishing';
+import TagandRealse from '../screens/NavigationScreens/SelectBoatFishing/TagandRealse/TagandRealse';
+import stokunagastore from '../screens/NavigationScreens/DataFeeds/WebViews/STokunaga';
+import NittaFishing from '../screens/NavigationScreens/DataFeeds/WebViews/Nitta';
+import PacificRim from '../screens/NavigationScreens/DataFeeds/WebViews/PacificRim';
+import MorrisLures from '../screens/NavigationScreens/DataFeeds/WebViews/MorrisLuresBanner';
+import Nicos from '../screens/NavigationScreens/DataFeeds/WebViews/NicosLogo';
+import PopHawaii from '../screens/NavigationScreens/DataFeeds/WebViews/BannerShane';
+import Hobbietat from '../screens/NavigationScreens/DataFeeds/WebViews/BannerRoy';
+import ArcSolutions from '../screens/NavigationScreens/DataFeeds/WebViews/ARCLogo';
+import Tsutomu from '../screens/NavigationScreens/DataFeeds/WebViews/ahieps';
+import Gyotaku from '../screens/NavigationScreens/DataFeeds/WebViews/Gyotaku';
+import LeaderBoardType from '../screens/NavigationScreens/LeaderBoard/LeaderBoardType/LeaderBoardType';
+
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -83,11 +100,7 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="PhotoSharing" component={PhotoSharing} />
       <Drawer.Screen name="LCRFilter" component={LcrFilterStack} />
       <Drawer.Screen name="LCRlist" component={LcrListStack} />
-      <Drawer.Screen name="LeaderBoard" component={LeaderBoard} />
-
-
-
-
+      <Drawer.Screen name="LeaderBoard" component={LeaderBoardStack} />
     </Drawer.Navigator>
   );
 };
@@ -136,6 +149,18 @@ const settingsStack = props => {
   );
 };
 
+const LeaderBoardStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'LeaderBoardScreen'}>
+      <Stack.Screen name="LeaderBoardScreen" component={LeaderBoard} />
+      <Stack.Screen name="LeaderBoardType" component={LeaderBoardType} />
+    </Stack.Navigator>
+  );
+};
 const catchReportStack = props => {
   return (
     <Stack.Navigator
@@ -147,7 +172,8 @@ const catchReportStack = props => {
       <Drawer.Screen name="SelectBoatFishing" component={SelectBoatFishing} />
       <Drawer.Screen name="ShorLineFishing" component={ShortLineFishing} />
       <Drawer.Screen name="BottomFishing" component={BottomFishing} />
-
+      <Drawer.Screen name="OffShoreFishing" component={OffShoreFishing} />
+      <Drawer.Screen name="TagandRealse" component={TagandRealse} />
     </Stack.Navigator>
   );
 };
@@ -183,7 +209,16 @@ const DataFeedsStack = props => {
       <Stack.Screen name="Current" component={Current} />
       <Stack.Screen name="Radar" component={Radar} />
       <Stack.Screen name="Weather" component={Weather} />
-
+      <Stack.Screen name="STokunaga" component={stokunagastore} />
+      <Stack.Screen name="Nitta" component={NittaFishing} />
+      <Stack.Screen name="pacificRim" component={PacificRim} />
+      <Stack.Screen name="MorrisLuresBanner" component={MorrisLures} />
+      <Stack.Screen name="NicosLogo" component={Nicos} />
+      <Stack.Screen name="BannerShane" component={PopHawaii} />
+      <Stack.Screen name="BannerRoy" component={Hobbietat} />
+      <Stack.Screen name="ARCLogo" component={ArcSolutions} />
+      <Stack.Screen name="ahieps" component={Tsutomu} />
+      <Stack.Screen name="Gyotaku" component={Gyotaku} />
     </Stack.Navigator>
   );
 };
@@ -197,8 +232,10 @@ const LcrListStack = props => {
       initialRouteName={'LCRlistScreen'}>
       <Stack.Screen name="LCRlistScreen" component={LCRlist} />
       <Stack.Screen name="PhotoSharingPost" component={PhotoSharingPost} />
+      <Stack.Screen name="LCRDetails" component={LCRDetails} />
+      <Stack.Screen name="EditLCRDetails" component={EditLCRDetails} />
+      <Stack.Screen name="UploadImage" component={UploadImage} />
 
-     
 
     </Stack.Navigator>
   );
@@ -211,8 +248,6 @@ const LcrFilterStack = props => {
       }}
       initialRouteName={'LCRFilterScreen'}>
       <Stack.Screen name="LCRFilterScreen" component={LCRFilter} />
-     
-
     </Stack.Navigator>
   );
 };

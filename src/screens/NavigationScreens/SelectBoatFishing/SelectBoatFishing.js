@@ -21,6 +21,8 @@ let fishingArr = [
     name: 'Annual Leaderboard',
     date: 'Winners 2020',
     text: 'Offshore Fishing',
+    navigate: 'OffShoreFishing'
+
   },
   {
     img: icons.BottomFishing,
@@ -35,6 +37,8 @@ let fishingArr = [
     name: 'WBC Labour',
     date: 'Day tournament',
     text: 'Tag and Release',
+    navigate: 'TagandRealse'
+
   },
 ];
 

@@ -64,6 +64,17 @@ export default {
   LeaderBoard: 'LeaderBoard',
   Tournament: 'Tournament',
 
+  //Catch report
+  Tag: 'Tag#',
+  fork:'Fork Length',
+  Location:'Location',
+  Species:'Species',
+  DateandTime:'Date/Time',
+  entertags:'Enter Tags#',
+  enterforklength:'Enter Fork Length',
+  enterspecies:'Species',
+  enterlocation:'Enter Location',
+
   //Drawer items
   Tournament_Rules:'Tournament Rules',
   Terms_and_Conditions: 'Terms and Conditions',
@@ -99,6 +110,16 @@ exporttophotosharing: 'Export to Photosharing',
 add:'ADD TITLE',
 uploadphotosharingpost:'Upload Photosharing Post',
 titlehere:'Enter your title Here...',
-post:'Post'
+post:'Post',
+
+//LCR Details
+Fishingtype:'Fishing Type',
+Typeoffish :'Type Of Fish',
+Fishweight:'Fish Weight',
+Efforts :'Efforts',
+describeyourCatchHere: 'Describe your catch here(optional)',
+includegpsinlcr :'Include GPS IN LCR',
+private:'Private',
+next:'Next',
 
 };

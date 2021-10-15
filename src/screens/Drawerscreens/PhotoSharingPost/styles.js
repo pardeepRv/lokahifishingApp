@@ -57,7 +57,9 @@ logo2: {
 listView: {
   margin: moderateScale(11),
   paddingVertical: moderateScale(0),
-  alignSelf:'center'
+  alignSelf:'center',
+  height: layout.size.height/5.5,
+  width:layout.size.width/1.5,
 },
 labelTextStyle: {
   fontFamily: fonts.bold,
@@ -67,8 +69,6 @@ labelTextStyle: {
 input: {
   height: layout.size.height/5.5,
   width:layout.size.width/1.5,
-  margin: 15,
-  borderWidth: 3,
   borderColor:colors.lightTransparent,
   padding: 10,
   backgroundColor:colors.white1,
@@ -77,11 +77,11 @@ input: {
     height: 1,
   },
   shadowOpacity: 0.4,
-  borderWidth: 0.0,
+  elevation:3,
 },
 sharingtext: {
-  fontFamily: fonts.bold,
-  fontSize: moderateScale(22),
+  fontFamily: fonts.semiBold,
+  fontSize: moderateScale(20),
   color: colors.white1,
   paddingHorizontal: moderateScale(10),
   top:5,

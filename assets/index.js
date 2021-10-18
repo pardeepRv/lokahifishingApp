@@ -130,7 +130,30 @@ import BluemarlinFish from './icons/leaderboardImages/BluemarlinFish.png';
 import StripedMarlinFish from './icons/leaderboardImages/StripedMarlinFish.png';
 import SPEARFISH from './icons/leaderboardImages/SPEARFISH.png';
 import AhiFish from './icons/leaderboardImages/AhiFish.png';
-
+import KawakawaFish from './icons/leaderboardImages/KawakawaFish.png';
+import Other_fish from './icons/leaderboardImages/Other_fish.png';
+import MultipleFishes from './icons/leaderboardImages/MultipleFishes.png';
+import KaleFish from './icons/leaderboardImages/KaleFish.png';
+import KahalaFish from './icons/leaderboardImages/KahalaFish.png';
+import GindaiFish from './icons/leaderboardImages/GindaiFish.png';
+import HapuupuuFish from './icons/leaderboardImages/HapuupuuFish.png';
+import LehiFish from './icons/leaderboardImages/LehiFish.png';
+import AlphonsinFish from './icons/leaderboardImages/AlphonsinFish.png';
+import DeepSeaAweoweo from './icons/leaderboardImages/DeepSeaAweoweo.png';
+import AkuleFish from './icons/leaderboardImages/AkuleFish.png';
+import MoanoFish from './icons/leaderboardImages/MoanoFish.png';
+import WhiteUlua from './icons/leaderboardImages/WhiteUlua.png';
+import WekeFish from './icons/leaderboardImages/WekeFish.png';
+import Yellowspot from './icons/leaderboardImages/Yellowspot.png';
+import MoanaKaliFish from './icons/leaderboardImages/MoanaKaliFish.png';
+import TaapeFish from './icons/leaderboardImages/TaapeFish.png';
+import ToauFish from './icons/leaderboardImages/ToauFish.png';
+import BarracudaFish from './icons/leaderboardImages/BarracudaFish.png';
+import RoiFish from './icons/leaderboardImages/RoiFish.png';
+import KumaFish from './icons/leaderboardImages/KumaFish.png';
+import MaluFish from './icons/leaderboardImages/MaluFish.png';
+import Hage_Triggerfish from './icons/leaderboardImages/Hage_Triggerfish.png';
+import Shibi from './icons/leaderboardImages/Shibi.png';
 
 
 import privacyPolicy from './icons/privacyPolicy.pdf';
@@ -138,6 +161,30 @@ import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
   like,
+  Shibi,
+  Hage_Triggerfish,
+  KumaFish,
+  MaluFish,
+  RoiFish,
+  BarracudaFish,
+  ToauFish,
+  MoanaKaliFish,
+  TaapeFish,
+  MoanoFish,
+  Yellowspot,
+  WekeFish,
+  WhiteUlua,
+  KaleFish,
+  AkuleFish,
+  DeepSeaAweoweo,
+  AlphonsinFish,
+  HapuupuuFish,
+  LehiFish,
+  KahalaFish,
+  GindaiFish,
+  Other_fish,
+  KawakawaFish,
+  MultipleFishes,
   uploadImage1,
   ARCLogo,
   gotakulogoredo,

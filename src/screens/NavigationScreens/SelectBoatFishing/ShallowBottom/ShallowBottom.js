@@ -19,43 +19,103 @@ import styles from './styles';
 
 let fishingArr = [
   {
+    img: icons.AkuleFish,
+    text: 'Akule',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.OpeluFish,
+    text: 'Opelu',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.MenpachiFish,
+    text: 'Menpachi',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.MoanoFish,
+    text: 'Moano',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.omilu,
+    text: 'omilu',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.WhiteUlua,
+    text: 'White Ulua',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.Yellowspot,
+    text: 'Yellow spot',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.WekeFish,
+    text: 'Weke Ula',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.MoanaKaliFish,
+    text: 'Moana Kali',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.TaapeFish,
+    text: 'Taape',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.ToauFish,
+    text: 'Toau',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.BarracudaFish,
+    text: 'Barracuda',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.KahalaFish,
+    text: 'Kahala',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.DeepSeaAweoweo,
+    text: 'Aweoweo',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.RoiFish,
+    text: 'Roi',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.KumaFish,
+    text: 'Kuma',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.MaluFish,
+    text: 'Malu',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.Hage_Triggerfish,
+    text: 'Hage/Triggerfish',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.Shibi,
+    text: 'Shibi',
+    navigate: 'FishDetails',
+  },
+  {
     img: icons.Aku,
     text: 'Aku',
-    navigate: 'FishDetails',
-  },
-  {
-    img: icons.Mahi,
-    text: 'Mahi Mahi',
-    navigate: 'FishDetails',
-  },
-  {
-    img: icons.Ono,
-    text: 'Ono',
-    navigate: 'FishDetails',
-  },
-  {
-    img: icons.AhiFish,
-    text: 'Ahi',
-    navigate: 'FishDetails',
-  },
-  {
-    img: icons.BluemarlinFish,
-    text: 'Blue Marlin',
-    navigate: 'FishDetails',
-  },
-  {
-    img: icons.SPEARFISH,
-    text: 'Spearfish',
-    navigate: 'FishDetails',
-  },
-  {
-    img: icons.StripedMarlinFish,
-    text: 'Striped Marlin',
-    navigate: 'FishDetails',
-  },
-  {
-    img: icons.KawakawaFish,
-    text: 'Kawakawa',
     navigate: 'FishDetails',
   },
   {
@@ -74,7 +134,7 @@ let fishingArr = [
     navigate: 'FishDetails',
   },
 ];
-const OffShoreFishing = ({navigation}) => {
+const ShallowBottom = ({navigation}) => {
   const [fishingList, setfishingList] = useState(fishingArr);
 
   const _renderView = ({item, index}) => (
@@ -153,4 +213,4 @@ const OffShoreFishing = ({navigation}) => {
   );
 };
 
-export default OffShoreFishing;
+export default ShallowBottom;

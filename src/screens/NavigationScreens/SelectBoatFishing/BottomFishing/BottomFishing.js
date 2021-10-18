@@ -25,12 +25,15 @@ let fishingArr = [
     name: 'Annual Leaderboard',
     date: 'Winners 2020',
     text: 'Deep bottom',
+    navigate: 'DeepBottom'
   },
   {
     img: icons.ShallowBottom,
     name: 'WBC Labour',
     date: 'Day tournament',
     text: 'Shallow Bottom',
+    navigate: 'ShallowBottom'
+
   },
 ];
 

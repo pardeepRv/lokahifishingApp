@@ -185,7 +185,7 @@ const LeaderBoard = ({navigation}) => {
           renderItem={_renderView}
           keyExtractor={(item, index) => 'key' + index}
           horizontal
-          pagingEnabled
+          pagingEnabled={true}
           ListHeaderComponent={() =>
             !fishingList.length ? (
               <Text style={styles.nomatch}>No Match found</Text>

@@ -9,10 +9,10 @@ import {
   ImageBackground,
   FlatList,
   TouchableOpacity,
-  Image
+  Image,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import { getPixelSizeForLayoutSize } from 'react-native/Libraries/Utilities/PixelRatio';
+import {getPixelSizeForLayoutSize} from 'react-native/Libraries/Utilities/PixelRatio';
 //internal libraries
 import {fonts, icons} from '../../../../../assets';
 import {Header} from '../../../../components/common/Header';
@@ -20,18 +20,16 @@ import {strings} from '../../../../localization';
 import {colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 
-
-
 let members = [
   {
-    client:'Henry',
+    client: 'Henry',
     img: icons.user_placeholder_man_0,
     name: 'rv_kunal',
     srno: '# 1',
     date: 'Member since 1 oct 2021',
   },
   {
-    client:'Jhon',
+    client: 'Jhon',
 
     img: icons.user_placeholder_man_0,
     name: 'rv_kunal',
@@ -39,7 +37,7 @@ let members = [
     srno: '# 2',
   },
   {
-    client:'Sara Tyller',
+    client: 'Sara Tyller',
 
     img: icons.user_placeholder_man_0,
     name: 'rv_kunal',
@@ -47,7 +45,7 @@ let members = [
     date: 'Member since 1 oct 2021',
   },
   {
-    client:'Jim Hori',
+    client: 'Jim Hori',
 
     img: icons.user_placeholder_man_0,
     name: 'rv_kunal',
@@ -55,17 +53,33 @@ let members = [
     date: 'Member since 2 oct 2021',
   },
   {
-    client:'Dharminder thankur',
+    client: 'Dharminder thankur',
 
     img: icons.user_placeholder_man_0,
     name: 'rv_kunal',
     srno: '# 5',
     date: 'Member since 2 oct 2021',
   },
+  {
+    client: 'Jim Hori',
+
+    img: icons.user_placeholder_man_0,
+    name: 'rv_kunal',
+    srno: '# 4',
+    date: 'Member since 2 oct 2021',
+  },
+  {
+    client: 'Jim Hori',
+
+    img: icons.user_placeholder_man_0,
+    name: 'rv_kunal',
+    srno: '# 4',
+    date: 'Member since 2 oct 2021',
+  },
 ];
 let data = [
   {
-    client:'Dharminder ',
+    client: 'Dharminder ',
 
     srno: '# 1',
     img: icons.user_placeholder_man_0,
@@ -73,7 +87,7 @@ let data = [
     date: 'Member since 1 oct 2021',
   },
   {
-    client:'Ashu',
+    client: 'Ashu',
 
     srno: '# 2',
     img: icons.user_placeholder_man_0,
@@ -81,12 +95,44 @@ let data = [
     date: 'Member since 2 oct 2021',
   },
   {
-    client:'Deepak',
+    client: 'Deepak',
 
     img: icons.user_placeholder_man_0,
     name: 'rv_kunal',
     srno: '# 3',
     date: 'Member since 1 oct 2021',
+  },
+  {
+    client: 'Dharminder thankur',
+
+    img: icons.user_placeholder_man_0,
+    name: 'rv_kunal',
+    srno: '# 5',
+    date: 'Member since 2 oct 2021',
+  },
+  {
+    client: 'Jim Hori',
+
+    img: icons.user_placeholder_man_0,
+    name: 'rv_kunal',
+    srno: '# 4',
+    date: 'Member since 2 oct 2021',
+  },
+  {
+    client: 'Jim Hori',
+
+    img: icons.user_placeholder_man_0,
+    name: 'rv_kunal',
+    srno: '# 4',
+    date: 'Member since 2 oct 2021',
+  },
+  {
+    client: 'Jim Hori',
+
+    img: icons.user_placeholder_man_0,
+    name: 'rv_kunal',
+    srno: '# 4',
+    date: 'Member since 2 oct 2021',
   },
 ];
 
@@ -100,81 +146,104 @@ const LeaderBoardType = ({navigation}) => {
     },
     membersList: members,
     membersList: data,
-
   });
   const {color, membersList} = state;
   function onButtonPressed(value) {
     // box1 pressed.
-    console.log(`object`, state.membersList)
+    console.log(`object`, state.membersList);
     if (value === true) {
       // Change box1 to red, and box2 to blue
-      setState({color: {box1: colors.primary, box2: colors.white1} ,    membersList: members});
-
+      setState({
+        color: {box1: colors.primary, box2: colors.white1},
+        membersList: members,
+      });
     } else {
       // box2 pressed
       // Change box1 to blue, and box2 to blue
-      setState({color: {box1: colors.white1, box2: colors.primary} ,   membersList: data});
+      setState({
+        color: {box1: colors.white1, box2: colors.primary},
+        membersList: data,
+      });
     }
-console.log(`state.memberlist>>>>`, state.membersList)
+    console.log(`state.memberlist>>>>`, state.membersList);
   }
   // const [membersList, setMembersList] = useState(members);
 
   const _renderView = ({item, index}) => (
-  
-<ImageBackground style={{flex:1,}} source={icons.ic_signup_bg}>
-    <TouchableOpacity
-      style={[
-        styles.listView,
-        {
-          backgroundColor: colors.lightTransparent,
-        },
-      ]}
-      activeOpacity={0.8}>
- <View
-          style={{
-            flexDirection:'row',
-            justifyContent: 'flex-start',
-          }}>
-          <Text style={{fontFamily: fonts.regular,
-    fontSize: moderateScale(16),
-    color: colors.white1,
-    paddingHorizontal: moderateScale(2), width:moderateScale(40)}}>{item.srno}</Text>
-<Text style={{fontFamily: fonts.regular,
-    fontSize: moderateScale(16),
-    color: colors.white1,
-paddingHorizontal: moderateScale(2), width:layout.size.width/2 , left :moderateScale(30)}}>{item.client}</Text>
-        </View>
-      <View style={styles.viewStyle}>
-        
+    <ImageBackground style={{flex:1}}
+    activeOpacity={1} 
+     source={icons.ic_signup_bg}>
+      <TouchableOpacity
+        style={[
+          styles.listView,
+          {
+            backgroundColor: colors.lightTransparent,
+          },
+        ]}
+        activeOpacity={0.8}>
         <View
           style={{
-            justifyContent: 'center',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
           }}>
-            <View
-          style={{
-            justifyContent: 'flex-start',flexDirection:'row'
-          }}>
-          <Text style={styles.nameStyle}>{item.name}
+          <Text
+            style={{
+              fontFamily: fonts.regular,
+              fontSize: moderateScale(16),
+              color: colors.white1,
+              paddingHorizontal: moderateScale(2),
+              width: moderateScale(40),
+            }}>
+            {item.srno}
           </Text>
-          <Text style={{fontFamily: fonts.regular,
-    fontSize: moderateScale(16),
-    color: colors.white1,
-paddingHorizontal: moderateScale(2), width:layout.size.width/5 , left :moderateScale(30) }}>{item.name}
+          <Text
+            style={{
+              fontFamily: fonts.regular,
+              fontSize: moderateScale(16),
+              color: colors.white1,
+              paddingHorizontal: moderateScale(2),
+              width: layout.size.width / 2,
+              left: moderateScale(30),
+            }}>
+            {item.client}
           </Text>
-          </View>
-          <Text style={styles.dateStyle}>{item.date}</Text>
         </View>
-        
-        <Image
-          source={item.img}
-          style={{
-            height: 70,
-            width: 70,
-            borderRadius:moderateScale(70)
-          }}
-        />
-      </View>
-    </TouchableOpacity>
+        <View style={styles.viewStyle}>
+          <View
+            style={{
+              justifyContent: 'center',
+            }}>
+            <View
+              style={{
+                justifyContent: 'flex-start',
+                flexDirection: 'row',
+              }}>
+              <Text style={styles.nameStyle}>{item.name}</Text>
+              <Text
+                style={{
+                  fontFamily: fonts.regular,
+                  fontSize: moderateScale(16),
+                  color: colors.white1,
+                  paddingHorizontal: moderateScale(2),
+                  width: layout.size.width / 5,
+                  left: moderateScale(30),
+                }}>
+                {item.name}
+              </Text>
+            </View>
+            <Text style={styles.dateStyle}>{item.date}</Text>
+          </View>
+
+          <Image
+            source={item.img}
+            style={{
+              height: 70,
+              width: 70,
+              borderRadius: moderateScale(70),
+            }}
+          />
+        </View>
+      </TouchableOpacity>
     </ImageBackground>
   );
 
@@ -248,7 +317,6 @@ paddingHorizontal: moderateScale(2), width:layout.size.width/5 , left :moderateS
                   {strings.annualy}
                 </Text>
               )}
-              
             </TouchableHighlight>
 
             <TouchableHighlight
@@ -292,32 +360,31 @@ paddingHorizontal: moderateScale(2), width:layout.size.width/5 , left :moderateS
                   {strings.monthly}
                 </Text>
               )}
-            </TouchableHighlight>           
+            </TouchableHighlight>
           </View>
-          <View >
-          <Text
-                  style={{
-                    color: colors.black1,
-                    fontFamily: fonts.semiBold,
-                    fontSize: moderateScale(14),
-                    alignSelf: 'center',
-                    margin: moderateScale(10),
-                  }}>
-                  annual 2021 Leaderboard Leader
-                </Text>
+          <View>
+            <Text
+              style={{
+                color: colors.black1,
+                fontFamily: fonts.semiBold,
+                fontSize: moderateScale(14),
+                alignSelf: 'center',
+                margin: moderateScale(10),
+              }}>
+              annual 2021 Leaderboard Leader
+            </Text>
           </View>
           <FlatList
-          extraData={membersList}
-          data={membersList}
-          renderItem={_renderView}
-          keyExtractor={(item, index) => 'key' + index}
-          ListHeaderComponent={() =>
-            !membersList.length ? (
-              <Text style={styles.nomatch}>No Match found</Text>
-            ) : null
-          }
-        />
-
+            extraData={membersList}
+            data={membersList}
+            renderItem={_renderView}
+            keyExtractor={(item, index) => 'key' + index}
+            ListHeaderComponent={() =>
+              !membersList.length ? (
+                <Text style={styles.nomatch}>No Match found</Text>
+              ) : null
+            }
+          />
         </ImageBackground>
       </View>
     </SafeAreaView>
@@ -335,33 +402,32 @@ const styles = StyleSheet.create({
   },
   content: {
     position: 'relative',
-    alignItems:'center',
+    alignItems: 'center',
     top: 0.108,
     flex: 1,
   },
   nameStyle: {
     fontFamily: fonts.regular,
     fontSize: moderateScale(16),
-    width:layout.size.width/4,
+    width: layout.size.width / 4,
     color: colors.white1,
     paddingHorizontal: moderateScale(5),
-
   },
   dateStyle: {
     fontFamily: fonts.regular,
     fontSize: moderateScale(16),
     color: colors.white1,
     paddingHorizontal: moderateScale(5),
-top:moderateScale(15)
+    top: moderateScale(15),
   },
   listView: {
-    margin:10,
+    margin: 10,
     flexDirection: 'column',
     padding: 20,
     paddingVertical: moderateScale(15),
   },
   viewStyle: {
     flexDirection: 'row',
-    alignItems:'center'
+    alignItems: 'center',
   },
 });

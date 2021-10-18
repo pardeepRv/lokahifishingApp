@@ -60,6 +60,9 @@ import ArcSolutions from '../screens/NavigationScreens/DataFeeds/WebViews/ARCLog
 import Tsutomu from '../screens/NavigationScreens/DataFeeds/WebViews/ahieps';
 import Gyotaku from '../screens/NavigationScreens/DataFeeds/WebViews/Gyotaku';
 import LeaderBoardType from '../screens/NavigationScreens/LeaderBoard/LeaderBoardType/LeaderBoardType';
+import FishDetails from '../screens/NavigationScreens/SelectBoatFishing/FishDetails/fishDetails';
+import DeepBottom from '../screens/NavigationScreens/SelectBoatFishing/DeepBottom/DeepBottom';
+import ShallowBottom from '../screens/NavigationScreens/SelectBoatFishing/ShallowBottom/ShallowBottom';
 
 
 const Stack = createNativeStackNavigator();
@@ -174,6 +177,11 @@ const catchReportStack = props => {
       <Drawer.Screen name="BottomFishing" component={BottomFishing} />
       <Drawer.Screen name="OffShoreFishing" component={OffShoreFishing} />
       <Drawer.Screen name="TagandRealse" component={TagandRealse} />
+      <Drawer.Screen name="FishDetails" component={FishDetails} />
+      <Drawer.Screen name="DeepBottom" component={DeepBottom} />
+      <Drawer.Screen name="ShallowBottom" component={ShallowBottom} />
+
+
     </Stack.Navigator>
   );
 };

@@ -74,6 +74,8 @@ export default {
   enterforklength:'Enter Fork Length',
   enterspecies:'Species',
   enterlocation:'Enter Location',
+  enterfishweight:'Enter fish weight here...',
+  fishWeight:'Enter Fish Weight',
 
   //Drawer items
   Tournament_Rules:'Tournament Rules',

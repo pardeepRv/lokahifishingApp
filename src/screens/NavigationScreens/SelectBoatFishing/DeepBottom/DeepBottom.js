@@ -19,43 +19,58 @@ import styles from './styles';
 
 let fishingArr = [
   {
-    img: icons.Aku,
-    text: 'Aku',
+    img: icons.OpakapakaFish,
+    text: 'Opakapaka',
     navigate: 'FishDetails',
   },
   {
-    img: icons.Mahi,
-    text: 'Mahi Mahi',
+    img: icons.OnagaFish,
+    text: 'Onaga',
     navigate: 'FishDetails',
   },
   {
-    img: icons.Ono,
-    text: 'Ono',
+    img: icons.EhuFish,
+    text: 'Ehu',
     navigate: 'FishDetails',
   },
   {
-    img: icons.AhiFish,
-    text: 'Ahi',
+    img: icons.UkuFish,
+    text: 'Uku',
     navigate: 'FishDetails',
   },
   {
-    img: icons.BluemarlinFish,
-    text: 'Blue Marlin',
+    img: icons.KaleFish,
+    text: 'Kale Kale',
     navigate: 'FishDetails',
   },
   {
-    img: icons.SPEARFISH,
-    text: 'Spearfish',
+    img: icons.KahalaFish,
+    text: 'Kahala',
     navigate: 'FishDetails',
   },
   {
-    img: icons.StripedMarlinFish,
-    text: 'Striped Marlin',
+    img: icons.GindaiFish,
+    text: 'Gindai',
     navigate: 'FishDetails',
   },
   {
-    img: icons.KawakawaFish,
-    text: 'Kawakawa',
+    img: icons.HapuupuuFish,
+    text: 'Hapuupuu',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.LehiFish,
+    text: 'Lehi',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.AlphonsinFish,
+    text: 'Alphonsin',
+    navigate: 'FishDetails',
+  },
+  {
+    img: icons.DeepSeaAweoweo,
+    text: 'DeepSeaAweoweo',
     navigate: 'FishDetails',
   },
   {
@@ -74,7 +89,7 @@ let fishingArr = [
     navigate: 'FishDetails',
   },
 ];
-const OffShoreFishing = ({navigation}) => {
+const DeepBottom = ({navigation}) => {
   const [fishingList, setfishingList] = useState(fishingArr);
 
   const _renderView = ({item, index}) => (
@@ -153,4 +168,4 @@ const OffShoreFishing = ({navigation}) => {
   );
 };
 
-export default OffShoreFishing;
+export default DeepBottom;

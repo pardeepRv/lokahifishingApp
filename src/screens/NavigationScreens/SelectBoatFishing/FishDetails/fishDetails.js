@@ -108,6 +108,7 @@ const FishDetails = ({navigation}) => {
 
       let obj = {};
       obj.fishDetail = fishDetail;
+    navigation.navigate('Effort')
       
       // dispatch(signUpWithEmail(obj));
       // dispatch({type:REGISTER,payloads:formData});

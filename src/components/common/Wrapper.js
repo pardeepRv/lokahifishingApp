@@ -3,9 +3,10 @@ import {
     View,
     StatusBar,
     StyleSheet,
+    SafeAreaView
 } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import SafeAreaView from 'react-native-safe-area-view';
+// import SafeAreaView from 'react-native-safe-area-view';
 
 import { commonColors, colors, } from '../../utilities/constants';
 import { layout } from '../../utilities/layout';

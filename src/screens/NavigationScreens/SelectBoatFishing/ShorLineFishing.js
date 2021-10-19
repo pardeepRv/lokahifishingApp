@@ -21,24 +21,30 @@ let fishingArr = [
         name: 'Annual Leaderboard',
         date: 'Winners 2020',
         text: 'Whipping',
+        navigate: 'Whipping'
     },
     {
         img: icons.baitcasting,
         name: 'WBC Labour',
         date: 'Day tournament',
         text: 'Baitcasting',
+        navigate: 'Baitcasting'
+
     },
     {
         img: icons.slide,
         name: 'WBC Labour',
         date: 'Day tournament',
-        text: 'Slide Bait'
+        text: 'Slide Bait',
+        navigate: 'SlideBait'
+
     },
     {
         img: icons.TagAndRelease,
         name: 'WBC Labour',
         date: 'Day tournament',
         text: 'Tag and release',
+        navigate: 'TagandRealse'
     }
 ];
 
@@ -51,7 +57,8 @@ const ShorLineFishing = ({ navigation }) => {
 
        
             <TouchableOpacity style={styles.viewStyle}
-            >
+      onPress={() => navigation.navigate(item.navigate)}>
+
                 <Image
                     source={item.img}
                     style={{

@@ -126,5 +126,8 @@ next:'Next',
 //Leaderboard
 annualy:'Annual',
 monthly:'Monthly',
+//Catch Report 
+enterefforttime : 'Enter Effort Time Mannualy',
+entertime: 'Enter Time in (12.00) this format'
 
 };

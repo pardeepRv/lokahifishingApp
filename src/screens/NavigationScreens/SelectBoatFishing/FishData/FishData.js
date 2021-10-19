@@ -21,7 +21,7 @@ import {layout} from '../../../../utilities/layout';
 
 import styles from './styles';
 
-const EditLCRDetails = ({navigation}) => {
+const FishData = ({navigation}) => {
   const [state, setState] = useState({
     isGPS: '',
     title:'',
@@ -149,10 +149,41 @@ const EditLCRDetails = ({navigation}) => {
             <Text style={styles.singletextstyle}>{strings.Fishingtype}</Text>
             <Text style={styles.righttextstyle}>{'Whipping'}</Text>
           </View>
-          <View style={styles.line}></View>
-          <View style={styles.viewstylesingle}>
+          {/* <View style={styles.line}></View> */}
+          {/* <View style={styles.viewstylesingle}>
             <Text style={styles.singletextstyle}>{strings.Typeoffish}</Text>
             <Text style={styles.righttextstyle}>{'Omilu'}</Text>
+          </View> */}
+          <View style={styles.line}></View>
+          <View style={styles.viewstyle1}>
+            <View
+              style={{
+                flexDirection: 'column',
+                width: layout.size.width / 2,
+              }}>
+              <Text style={styles.doubletextstyle1}>{strings.Typeoffish}</Text>
+              <Text style={styles.style1 }
+             >Ahi</Text>
+            </View>
+            <View
+              style={{
+                height: moderateScale(50),
+                width: moderateScale(50),
+                right: 20,
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+                shadowOpacity: 0.4,
+                elevation: 3,
+
+                borderRadius: 50,
+              }}>
+              <Image
+                source={icons.AhiFish}
+                resizeMod="contain"
+                style={styles.simage1}></Image>
+            </View>
           </View>
           <View style={styles.line}></View>
           <View style={styles.viewstylesingle}>
@@ -204,4 +235,4 @@ const EditLCRDetails = ({navigation}) => {
   );
 };
 
-export default EditLCRDetails;
+export default FishData;

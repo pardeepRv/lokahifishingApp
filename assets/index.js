@@ -21,7 +21,8 @@ import ic_signin_bg from './icons/signin_bg.png';
 import ic_logo_grayscale_cr from './icons/logo_grayscale_cr.9.png';
 import signin_bg_ic from './icons/signin_bg_ic.png';
 import signin_bg_icx from './icons/signin_bg_icx.png';
-
+import save from './icons/SAVE.png';
+import post from './icons/POST.png';
 import ic_radio_btn_on from './icons/ic_radio_btn_on.png';
 import ic_radio_btn_off from './icons/ic_radio_btn_offx.png';
 import ic_back_white from './icons/ic_back_white.png';
@@ -154,6 +155,13 @@ import KumaFish from './icons/leaderboardImages/KumaFish.png';
 import MaluFish from './icons/leaderboardImages/MaluFish.png';
 import Hage_Triggerfish from './icons/leaderboardImages/Hage_Triggerfish.png';
 import Shibi from './icons/leaderboardImages/Shibi.png';
+import OioFish from './icons/leaderboardImages/OioFish.png';
+import MoiFish from './icons/leaderboardImages/MoiFish.png';
+import EnenueFish from './icons/leaderboardImages/EnenueFish.png';
+import AholeholeFish from './icons/leaderboardImages/AholeholeFish.png';
+import PoopaaFish from './icons/leaderboardImages/PoopaaFish.png';
+import PalaniFish from './icons/leaderboardImages/PalaniFish.png';
+import MuFish from './icons/leaderboardImages/MuFish.png';
 
 
 import privacyPolicy from './icons/privacyPolicy.pdf';
@@ -161,6 +169,15 @@ import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 const icons = {
   like,
+  MuFish,
+  save,
+  post,
+  PoopaaFish,
+  PalaniFish,
+  EnenueFish,
+  AholeholeFish,
+  MoiFish,
+  OioFish,
   Shibi,
   Hage_Triggerfish,
   KumaFish,

@@ -40,7 +40,7 @@
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>lokahifishinglatest wants to access your Documents Folder to upload the documents.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>lokahifishinglatest needs to access your gallery for uploading photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -7,3 +7,4 @@ export * from './Button';
 export * from './ListItemSeparator';
 export * from './StatusBarComponent';
 export * from './EmptyListComponent';
+export * from './Circular';

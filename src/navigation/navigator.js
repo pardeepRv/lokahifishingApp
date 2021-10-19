@@ -63,6 +63,11 @@ import LeaderBoardType from '../screens/NavigationScreens/LeaderBoard/LeaderBoar
 import FishDetails from '../screens/NavigationScreens/SelectBoatFishing/FishDetails/fishDetails';
 import DeepBottom from '../screens/NavigationScreens/SelectBoatFishing/DeepBottom/DeepBottom';
 import ShallowBottom from '../screens/NavigationScreens/SelectBoatFishing/ShallowBottom/ShallowBottom';
+import Whipping from '../screens/NavigationScreens/SelectBoatFishing/Whipping/Whipping';
+import Baitcasting from '../screens/NavigationScreens/SelectBoatFishing/Baitcasting/Baitcasting';
+import SlideBait from '../screens/NavigationScreens/SelectBoatFishing/SlideBait/SlideBait';
+import Effort from '../screens/NavigationScreens/SelectBoatFishing/Efffort/Effort';
+import FishData from '../screens/NavigationScreens/SelectBoatFishing/FishData/FishData';
 
 
 const Stack = createNativeStackNavigator();
@@ -180,6 +185,11 @@ const catchReportStack = props => {
       <Drawer.Screen name="FishDetails" component={FishDetails} />
       <Drawer.Screen name="DeepBottom" component={DeepBottom} />
       <Drawer.Screen name="ShallowBottom" component={ShallowBottom} />
+      <Drawer.Screen name="Whipping" component={Whipping} />
+      <Drawer.Screen name="Baitcasting" component={Baitcasting} />
+      <Drawer.Screen name="SlideBait" component={SlideBait} />
+      <Drawer.Screen name="Effort" component={Effort} />
+      <Stack.Screen name="FishData" component={FishData} />
 
 
     </Stack.Navigator>

@@ -69,6 +69,11 @@ import SlideBait from '../screens/NavigationScreens/SelectBoatFishing/SlideBait/
 import Effort from '../screens/NavigationScreens/SelectBoatFishing/Efffort/Effort';
 import FishData from '../screens/NavigationScreens/SelectBoatFishing/FishData/FishData';
 
+import FriendProfileScreen from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendProfileScreen';
+import FriendBoatInfo from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendBoatInfo';
+import FriendEmergencyContacts from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendEmergencyContacts';
+import FriendLCR from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendLCR';
+
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -253,6 +258,10 @@ const LcrListStack = props => {
       <Stack.Screen name="LCRDetails" component={LCRDetails} />
       <Stack.Screen name="EditLCRDetails" component={EditLCRDetails} />
       <Stack.Screen name="UploadImage" component={UploadImage} />
+      <Stack.Screen name="FriendProfileScreen" component={FriendProfileScreen} />
+      <Stack.Screen name="FriendBoatInfo" component={FriendBoatInfo} />
+      <Stack.Screen name="FriendEmergencyContacts" component={FriendEmergencyContacts} />
+      <Stack.Screen name="FriendLCR" component={FriendLCR} />
 
 
     </Stack.Navigator>

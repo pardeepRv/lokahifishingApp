@@ -28,6 +28,8 @@ import ic_radio_btn_off from './icons/ic_radio_btn_offx.png';
 import ic_back_white from './icons/ic_back_white.png';
 import ic_LokahiLogo from './icons/LokahiLogo.png';
 import ic_radio_inactivex from './icons/ic_radio_inactivex.png';
+import location from './icons/location.png';
+import inactivetestimonial from './icons/inactive-testimonial.png';
 
 
 //drawer
@@ -171,6 +173,7 @@ const icons = {
   like,
   MuFish,
   save,
+  inactivetestimonial,
   post,
   PoopaaFish,
   PalaniFish,
@@ -213,6 +216,7 @@ const icons = {
   Nitta,
   BannerShane,
   no_image,
+  location,
   LeaderBoard1,
   image_category,
   user_placeholder_man_0,

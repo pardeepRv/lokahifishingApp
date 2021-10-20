@@ -152,6 +152,7 @@ const FishDetails = ({navigation}) => {
                   <TextInputComp
                     label={strings.fishWeight}
                     value={fishDetail}
+                    keyboardType = "phone-pad"
                     placeholder={strings.enterfishweight}
                     labelTextStyle={styles.labelTextStyle}
                     onChangeText={fishDetail => setFishDetail(fishDetail)}

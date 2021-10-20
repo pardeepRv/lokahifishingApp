@@ -13,12 +13,12 @@ import {
 // import Pdf from 'react-native-pdf';
 import {moderateScale} from 'react-native-size-matters';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {fonts, icons} from '../../../../assets';
-import {strings} from '../../../localization';
-import {colors} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import {fonts, icons} from '../../../../../assets';
+import {strings} from '../../../../localization';
+import {colors} from '../../../../utilities/constants';
+import {layout} from '../../../../utilities/layout';
 
-const BoatInfo = () => {
+const FriendBoatInfo = () => {
   const [state, setState] = useState({
     iscbradio: '',
   });
@@ -212,4 +212,4 @@ top:2,
   },
 });
 
-export default BoatInfo;
+export default FriendBoatInfo;

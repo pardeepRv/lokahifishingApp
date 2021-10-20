@@ -123,11 +123,14 @@ describeyourCatchHere: 'Describe your catch here(optional)',
 includegpsinlcr :'Include GPS IN LCR',
 private:'Private',
 next:'Next',
+add:'Add',
+block:'Block',
 //Leaderboard
 annualy:'Annual',
 monthly:'Monthly',
 //Catch Report 
 enterefforttime : 'Enter Effort Time Mannualy',
-entertime: 'Enter Time in (12.00) this format'
+entertime: 'Enter Time in (12.00) this format',
+memberssince:'Members since september 27,2021'
 
 };

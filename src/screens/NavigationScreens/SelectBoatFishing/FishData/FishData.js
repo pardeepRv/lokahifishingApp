@@ -16,8 +16,9 @@ import {fonts, icons} from '../../../../../assets';
 import {Header} from '../../../../components/common/Header';
 import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
-import {colors} from '../../../../utilities/constants';
+import {colors, screenNames} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
+import * as NavigationService from '../../../../store/NavigationService';
 
 import styles from './styles';
 
@@ -31,6 +32,7 @@ const FishData = ({navigation}) => {
   const _onChangeText = key => val => {
     setState({ ...state, [key]: val });
   };
+
 
   return (
     <ImageBackground
@@ -56,7 +58,8 @@ const FishData = ({navigation}) => {
             navigation.goBack();
           }}
           onRightPress={() => {
-            navigation.navigate('Home');
+            NavigationService.resetRoute(screenNames.HomeStack);
+
           }}
           rightIconSource={icons.post}
           rightIconStyle={{

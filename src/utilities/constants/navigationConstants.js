@@ -40,7 +40,8 @@ const screenNames = {
   SelectBoatFishing: 'SelectBoatFishing',
   PhotoSharing: 'PhotoSharing',
   HomeStack: 'HomeStack',
-  BottomFishing: 'BottomFishing'
+  BottomFishing: 'BottomFishing',
+  LCRlist:'LCRlist'
 };
 
 export { transitionConfig, screenNames };

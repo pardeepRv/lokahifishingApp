@@ -30,6 +30,7 @@ import ic_LokahiLogo from './icons/LokahiLogo.png';
 import ic_radio_inactivex from './icons/ic_radio_inactivex.png';
 import location from './icons/location.png';
 import inactivetestimonial from './icons/inactive-testimonial.png';
+import fish2 from './icons/photoSharingImages/fish2.jpg';
 
 
 //drawer
@@ -173,6 +174,7 @@ const icons = {
   like,
   MuFish,
   save,
+  fish2,
   inactivetestimonial,
   post,
   PoopaaFish,

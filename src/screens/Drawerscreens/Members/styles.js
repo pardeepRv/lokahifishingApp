@@ -28,9 +28,10 @@ export default StyleSheet.create({
     paddingHorizontal: moderateScale(5),
   },
   rightArrow: {
-    height: 30,
-    width: 30,
+    height: moderateScale(30),
+    width: moderateScale(30),
     alignSelf: 'center',
+    left:moderateScale(20)
   },
   nomatch: {
     alignSelf: 'center',

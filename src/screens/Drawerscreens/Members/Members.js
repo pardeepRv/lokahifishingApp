@@ -42,6 +42,7 @@ const Members = ({navigation}) => {
 
   const _renderView = ({item, index}) => (
     <TouchableOpacity
+    onPress={() => {navigation.navigate('FriendProfileScreen')}}
       style={[
         styles.listView,
         {
@@ -51,10 +52,11 @@ const Members = ({navigation}) => {
       activeOpacity={0.8}>
       <View style={styles.viewStyle}>
         <Image
-          source={item.img}
+          source={icons.fish2}
           style={{
-            height: 70,
-            width: 70,
+            height: moderateScale(70),
+            width: moderateScale(70),
+borderRadius:moderateScale(40)
           }}
         />
         <View

@@ -131,6 +131,8 @@ monthly:'Monthly',
 //Catch Report 
 enterefforttime : 'Enter Effort Time Mannualy',
 entertime: 'Enter Time in (12.00) this format',
-memberssince:'Members since september 27,2021'
-
+memberssince:'Members since september 27,2021',
+//friend profile 
+areyouwant:'Are you sure. You want to block username ?',
+areyouwanttounlock:'Are you sure. You want to Unblock username ?'
 };

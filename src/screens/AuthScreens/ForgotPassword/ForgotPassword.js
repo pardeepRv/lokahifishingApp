@@ -6,6 +6,8 @@ import {
   ScrollView,
   Text,
   View,
+  KeyboardAvoidingView,
+  Image,
 } from 'react-native';
 //extrenal libraries
 import {moderateScale} from 'react-native-size-matters';
@@ -66,7 +68,7 @@ const ForgotPassword = ({navigation}) => {
         style={{
           flex: 1,
         }}>
-        <ImageBackground source={icons.ic_signin_bg} style={styles.image}>
+        <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
           <Header
             containerStyle={{
               backgroundColor: colors.transparent,
@@ -82,56 +84,66 @@ const ForgotPassword = ({navigation}) => {
               navigation.goBack();
             }}
           />
-          <ScrollView
-            style={styles.subContainer}
-            contentContainerStyle={styles.subContentContainer}
-            keyboardShouldPersistTaps={'always'}
-            showsVerticalScrollIndicator={false}>
-            <View
-              style={{
-                marginTop: layout.size.width / 1.7,
-              }}></View>
-            <Text style={styles.forgotpassword}>{strings.forgot}</Text>
-            <View
-              style={{
-                marginTop: moderateScale(25),
-              }}>
-              <TextInputComp
-                label={strings.email}
-                value={email}
-                placeholder={strings.enterEmail}
-                labelTextStyle={styles.labelTextStyle}
-                onFocus={() =>
-                  setErrors({
-                    ...errors,
-                    email: '',
-                  })
-                }
-                onChangeText={_onChangeText('email')}
-              />
-              {errors.email ? (
-                <Text
-                  transparent
-                  style={{color: colors.primary, bottom: 13, left: 4}}>
-                  {errors.email}
-                </Text>
-              ) : null}
-            </View>
-            <View
-              style={{
-                marginTop: moderateScale(50),
-              }}>
-              <Button
+          <ScrollView>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+              style={styles.subContainer}
+              contentContainerStyle={styles.subContentContainer}
+              keyboardShouldPersistTaps={'always'}
+              showsVerticalScrollIndicator={false}>
+              <View style={styles.uploadContainer}>
+                <Image
+                  source={icons.signin_bg_ic}
+                  resizeMode="contain"
+                  style={{
+                    borderRadius: moderateScale(100),
+                    height: layout.size.height / 2.8,
+                    width: layout.size.height / 2.8,
+                  }}
+                />
+              </View>
+              <Text style={styles.forgotpassword}>{strings.forgot}</Text>
+              <View
                 style={{
-                  backgroundColor: colors.primary,
-                  borderRadius: 20,
-                  width: layout.size.width - 80,
-                  alignSelf: 'center',
-                }}
-                label={strings.send}
-                onPress={() => Forpassword()}
-              />
-            </View>
+                  marginTop: moderateScale(25),
+                }}>
+                <TextInputComp
+                  label={strings.email}
+                  value={email}
+                  placeholder={strings.enterEmail}
+                  labelTextStyle={styles.labelTextStyle}
+                  onFocus={() =>
+                    setErrors({
+                      ...errors,
+                      email: '',
+                    })
+                  }
+                  onChangeText={_onChangeText('email')}
+                />
+                {errors.email ? (
+                  <Text
+                    transparent
+                    style={{color: colors.primary, bottom: 13, left: 4}}>
+                    {errors.email}
+                  </Text>
+                ) : null}
+              </View>
+              <View
+                style={{
+                  marginTop: moderateScale(50),
+                }}>
+                <Button
+                  style={{
+                    backgroundColor: colors.primary,
+                    borderRadius: 20,
+                    width: layout.size.width - 80,
+                    alignSelf: 'center',
+                  }}
+                  label={strings.send}
+                  onPress={() => Forpassword()}
+                />
+              </View>
+            </KeyboardAvoidingView>
           </ScrollView>
         </ImageBackground>
       </View>

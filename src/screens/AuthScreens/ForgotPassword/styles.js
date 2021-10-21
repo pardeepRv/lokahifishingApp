@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import { fonts } from '../../../../assets';
-import { colors } from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
+import {StyleSheet} from 'react-native';
+import {moderateScale} from 'react-native-size-matters';
+import {fonts} from '../../../../assets';
+import {colors} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
 
-//external libraries 
+//external libraries
 import {RFValue} from 'react-native-responsive-fontsize';
 
 export default StyleSheet.create({
@@ -16,7 +16,7 @@ export default StyleSheet.create({
     marginLeft: 15,
   },
   subContentContainer: {
-    paddingBottom: moderateScale(40),
+    paddingBottom: moderateScale(10),
   },
   textInputStyles: {
     height: 50,
@@ -49,10 +49,27 @@ export default StyleSheet.create({
     color: colors.white1,
   },
   forgotpassword: {
-    fontSize:RFValue(22),
+    fontSize: RFValue(22),
     alignSelf: 'center',
     fontFamily: fonts.semiBold,
     marginTop: moderateScale(15),
     color: colors.white1,
   },
-})
+  uploadContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: layout.size.height / 3.5,
+    width: layout.size.height / 3,
+    alignSelf: 'center',
+    marginTop: moderateScale(10),
+
+    borderColor: 'transparent',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    borderWidth: 0.5,
+
+  },
+});

@@ -39,6 +39,8 @@ export default StyleSheet.create({
   },
   image: {
     flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
     height: '100%',
   },
   labelTextStyle: {

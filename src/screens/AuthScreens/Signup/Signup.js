@@ -215,7 +215,7 @@ const Signup = ({navigation}) => {
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
           <ScrollView style={{flex: 1}}>
             <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
               style={styles.subContainer}
               contentContainerStyle={styles.subContentContainer}
               keyboardShouldPersistTaps={'always'}

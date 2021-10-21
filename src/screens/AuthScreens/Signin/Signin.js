@@ -8,6 +8,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView,
+  Image
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -84,15 +86,28 @@ const Signin = ({ navigation }) => {
         style={{
           flex: 1,
         }}>
-        <ImageBackground source={icons.ic_signin_bg} style={styles.image}>
-          <ScrollView
-            style={styles.subContainer}
-            contentContainerStyle={styles.subContentContainer}
-            keyboardShouldPersistTaps={'always'}
-            showsVerticalScrollIndicator={false}>
+        <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
+        <ScrollView>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+              style={styles.subContainer}
+              contentContainerStyle={styles.subContentContainer}
+              keyboardShouldPersistTaps={'always'}
+              showsVerticalScrollIndicator={false}>
+              <View style={styles.uploadContainer}>
+                <Image
+                  source={icons.signin_bg_ic}
+                  resizeMode="contain"
+                  style={{
+                    borderRadius: moderateScale(100),
+                    height: layout.size.height / 2.8,
+                    width: layout.size.height / 2.8,
+                  }}
+                />
+              </View>
             <View
               style={{
-                marginTop: layout.size.width / 2,
+                marginTop: layout.size.width / 15,
               }}></View>
 
             <View
@@ -169,6 +184,7 @@ const Signin = ({ navigation }) => {
                 <Text style={styles.signuptext}>{strings.signup}</Text>
               </Text>
             </TouchableOpacity>
+            </KeyboardAvoidingView>
           </ScrollView>
           <Loader
             isLoading={auth.loading}

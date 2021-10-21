@@ -68,5 +68,21 @@ export default StyleSheet.create({
     fontFamily: fonts.semiBold,
     marginTop: moderateScale(5),
     color: colors.white1,
-  } 
+  } ,
+  uploadContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: moderateScale(200),
+    width: moderateScale(200),
+    alignSelf: 'center',
+    marginTop: moderateScale(55),
+    borderRadius: moderateScale(100),
+    borderColor: 'transparent',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    borderWidth: 0.5,
+  },
 });

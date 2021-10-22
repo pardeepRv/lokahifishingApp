@@ -103,6 +103,7 @@ import ahieps from './icons/ahieps.png';
 import ARCLogo from './icons/ARCLogo.png';
 import Rfslogo from './icons/Rfslogo.png';
 import gotakulogoredo from './icons/gotaku-logo-redo.jpg';
+import blockuser from './icons/blockuser.png';
 
 // Lcr LIst 
 import user_placeholder_man_0 from './icons/NewImages/user_placeholder_man_0.jpg';
@@ -170,11 +171,15 @@ import MuFish from './icons/leaderboardImages/MuFish.png';
 import privacyPolicy from './icons/privacyPolicy.pdf';
 import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
+import ProfilePlaceholder from './icons/drawer/ProfilePlaceholder.jpg';
+
 const icons = {
   like,
   MuFish,
   save,
   fish2,
+  ProfilePlaceholder,
+  blockuser,
   inactivetestimonial,
   post,
   PoopaaFish,

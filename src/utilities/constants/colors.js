@@ -63,6 +63,7 @@ const colors = {
   purple1: '#353B50',
 
   primary: '#87ceeb',
+  primary1: '#48b4e0',
   facebookcolor: '#3B5999',
   secondry: '#2c385e',
 };

@@ -26,7 +26,7 @@ import {colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 import TextInputComp from '../../../../components/common/TextInputComp';
 import {RFValue} from 'react-native-responsive-fontsize';
-import { Button } from '../../../../components/common/Button';
+import {Button} from '../../../../components/common/Button';
 
 const BInfo = () => {
   let passwordTextInput = useRef(null);
@@ -35,13 +35,17 @@ const BInfo = () => {
   const [boatlength, setBoatlength] = useState('');
   const [homeport, setHomeport] = useState('');
   const [boatphoto, setboatphoto] = useState('');
-  const [CheckIcon, setCheckIcon] = useState('') ;
+  const [LifeIcon, setLifeIcon] = useState('');
+  const [VHFIcon, setVHFIcon] = useState('');
+  const [CbIcon, setCbIcon] = useState('');
+  const [EPIRBIcon, setEPIRBIcon] = useState('');
+  const [VisualIcon, setVisualIcon] = useState('');
 
   const [errors, setErrors] = useState({
     boatmarker: '',
     boatlength: '',
     homeport: '',
-    CheckIcon:false,
+    LifeIcon: false,
     isLoading: false,
     boatphoto: '',
   });
@@ -92,13 +96,13 @@ const BInfo = () => {
     });
   }
   // const ToogleCheck = () => {
-  //   const {CheckIcon} = this.state;
+  //   const {LifeIcon} = this.state;
 
-  //   if (CheckIcon == '') {
-  //     this.setState({CheckIcon: !CheckIcon});
-  //   } 
+  //   if (LifeIcon == '') {
+  //     this.setState({LifeIcon: !LifeIcon});
+  //   }
   // };
- 
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
       <View
@@ -108,7 +112,7 @@ const BInfo = () => {
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
           <ScrollView style={{flex: 1}}>
             <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
               style={styles.subContainer}
               contentContainerStyle={styles.subContentContainer}
               keyboardShouldPersistTaps={'always'}
@@ -185,70 +189,100 @@ const BInfo = () => {
                   backgroundColor: colors.white1,
                 }}></View>
               <View style={styles.Containertable}>
-                <View style={styles.tableRow}>
-                  <View style={styles.rowContent}>
-                    <Text style={styles.textstyle}>{strings.vhfradio}</Text>
-                    <TouchableOpacity >
-                      <Image
-                        source={CheckIcon != '' ? icons.ic_donex : icons.ic_not_donex}
-                        style={styles.checkIcon}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                <View style={styles.rowContent}>
+                  <Text style={styles.textstyle}>{strings.vhfradio}</Text>
+                  <TouchableOpacity
+                    style={{
+                      alignSelf: 'flex-end',
+                      height: moderateScale(40),
+                      left: moderateScale(30),
+                    }}
+                    onPress={() => setVHFIcon(!VHFIcon)}>
+                    <Image
+                      source={
+                        VHFIcon != '' ? icons.ic_donex : icons.ic_not_donex
+                      }
+                      style={styles.checkIcon}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.Containertable}>
-                <View style={styles.tableRow}>
-                  <View style={styles.rowContent}>
-                    <Text style={styles.textstyle}>{strings.cbradio}</Text>
-                    <TouchableOpacity >
-                      <Image
-                        source={CheckIcon != '' ? icons.ic_donex : icons.ic_not_donex}
-                        style={styles.checkIcon}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                <View style={styles.rowContent}>
+                  <Text style={styles.textstyle}>{strings.cbradio}</Text>
+                  <TouchableOpacity
+                    style={{
+                      alignSelf: 'flex-end',
+                      height: moderateScale(40),
+                      left: moderateScale(30),
+                    }}
+                    onPress={() => setCbIcon(!CbIcon)}>
+                    <Image
+                      source={
+                        CbIcon != '' ? icons.ic_donex : icons.ic_not_donex
+                      }
+                      style={styles.checkIcon}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.Containertable}>
-                <View style={styles.tableRow}>
-                  <View style={styles.rowContent}>
-                    <Text style={styles.textstyle}>{strings.epirb}</Text>
-                    <TouchableOpacity >
-                      <Image
-                        source={CheckIcon != '' ? icons.ic_donex : icons.ic_not_donex}
-                        style={styles.checkIcon}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                <View style={styles.rowContent}>
+                  <Text style={styles.textstyle}>{strings.epirb}</Text>
+                  <TouchableOpacity
+                    style={{
+                      alignSelf: 'flex-end',
+                      height: moderateScale(40),
+                      left: moderateScale(30),
+                    }}
+                    onPress={() => setEPIRBIcon(!EPIRBIcon)}>
+                    <Image
+                      source={
+                        EPIRBIcon != '' ? icons.ic_donex : icons.ic_not_donex
+                      }
+                      style={styles.checkIcon}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.Containertable}>
-                <View style={styles.tableRow}>
-                  <View style={styles.rowContent}>
-                    <Text style={styles.textstyle}>{strings.liferaft}</Text>
-                    <TouchableOpacity >
-                    {/* <TouchableOpacity onPress={() => setCheckIcon(!CheckIcon)}> */}
-
-                      <Image
-                        source={CheckIcon != '' ? icons.ic_donex : icons.ic_not_donex}
-                        style={styles.checkIcon}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                <View style={styles.rowContent}>
+                  <Text style={styles.textstyle}>{strings.liferaft}</Text>
+                  <TouchableOpacity
+                    style={{
+                      alignSelf: 'flex-end',
+                      height: moderateScale(40),
+                      left: moderateScale(30),
+                    }}
+                    onPress={() => setLifeIcon(!LifeIcon)}>
+                    <Image
+                      source={
+                        LifeIcon != '' ? icons.ic_donex : icons.ic_not_donex
+                      }
+                      style={styles.checkIcon}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.Containertable}>
-                <View style={styles.tableRow}>
-                  <View style={styles.rowContent}>
-                    <Text style={styles.textstyle}>{strings.visualdistressignal}</Text>
-                    <TouchableOpacity >
-                      <Image
-                        source={CheckIcon != '' ? icons.ic_donex : icons.ic_not_donex}
-                        style={styles.checkIcon}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                <View style={styles.rowContent}>
+                  <Text style={styles.textstyle}>
+                    {strings.visualdistressignal}
+                  </Text>
+                  <TouchableOpacity
+                    style={{
+                      alignSelf: 'flex-end',
+                      height: moderateScale(40),
+                      left: moderateScale(30),
+                    }}
+                    onPress={() => setVisualIcon(!VisualIcon)}>
+                    <Image
+                      source={
+                        VisualIcon != '' ? icons.ic_donex : icons.ic_not_donex
+                      }
+                      style={styles.checkIcon}
+                    />
+                  </TouchableOpacity>
                 </View>
               </View>
               <View
@@ -261,7 +295,7 @@ const BInfo = () => {
                     borderRadius: 20,
                     width: 200,
                     alignSelf: 'center',
-bottom:moderateScale(20)
+                    bottom: moderateScale(20),
                   }}
                   label={strings.save}
                   onPress={() => alert()}
@@ -335,15 +369,17 @@ const styles = StyleSheet.create({
   },
   tableRow: {
     flexDirection: 'row',
-    // alignItems: 'center',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   rowContent: {
-    flex: 1,
+    flexDirection: 'row',
   },
   textstyle: {
     fontSize: RFValue(20),
     color: colors.white1,
-    top: moderateScale(8),
+    width: layout.size.width / 1.5,
     left: moderateScale(10),
     textAlign: 'left',
     fontFamily: fonts.semiBold,
@@ -351,13 +387,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.transparent,
   },
   checkIcon: {
-    top: moderateScale(-30),
     alignSelf: 'flex-end',
-    right: 15,
+    bottom: moderateScale(7),
     borderColor: colors.white1,
     borderWidth: 0,
     borderRadius: 16,
-
   },
 });
 

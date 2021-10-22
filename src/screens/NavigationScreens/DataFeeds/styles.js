@@ -67,7 +67,7 @@ export default StyleSheet.create({
     width: 30,
     left:30,
     alignSelf: 'center',
-    tintColor:colors.primary,
+    fontFamily:fonts.bold,
   },
   nomatch: {
     alignSelf: 'center',

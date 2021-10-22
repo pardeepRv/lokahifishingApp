@@ -194,7 +194,7 @@ const EditProfile = ({navigation}) => {
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
           <ScrollView style={{flex: 1}}>
             <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
               style={styles.subContainer}
               contentContainerStyle={styles.subContentContainer}
               keyboardShouldPersistTaps={'always'}
@@ -227,7 +227,7 @@ const EditProfile = ({navigation}) => {
               </View>
               <View
                 style={{
-                  marginTop: layout.size.width / 10,
+                  marginTop: moderateScale(0),
                 }}></View>
 
               <View
@@ -238,6 +238,7 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.username}
                     value={username}
+                    placeholder={strings.enterusername}
                     labelTextStyle={styles.labelTextStyle}
                     onChangeText={username => setUsername(username)}
                     onFocus={() =>
@@ -260,6 +261,7 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.fullname}
                     value={fullname}
+                    placeholder={strings.enterfullname}
                     labelTextStyle={styles.labelTextStyle}
                     onChangeText={fullname => setFullname(fullname)}
                     onFocus={() =>
@@ -281,6 +283,7 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.email}
                     value={email}
+                    placeholder={strings.enterEmail}
                     labelTextStyle={styles.labelTextStyle}
                     onFocus={() =>
                       setErrors({
@@ -302,6 +305,7 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.contactnumber}
                     value={contactNumber}
+                    placeholder={strings.entercontact}
                     labelTextStyle={styles.labelTextStyle}
                     onFocus={() =>
                       setErrors({
@@ -326,6 +330,7 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.city}
                     value={city}
+                    placeholder={strings.entercity}
                     labelTextStyle={styles.labelTextStyle}
                     onChangeText={city => setCity(city)}
                     onFocus={() =>
@@ -347,6 +352,7 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.island}
                     value={island}
+                    placeholder={strings.enterisland}
                     labelTextStyle={styles.labelTextStyle}
                     onChangeText={island => setIsland(island)}
                     onFocus={() =>

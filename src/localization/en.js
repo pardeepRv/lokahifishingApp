@@ -1,3 +1,5 @@
+import { acceptBooking } from "../store/actions";
+
 export default {
   //Login screen
   login: 'Login',
@@ -21,7 +23,8 @@ export default {
   city: 'City',
   island: 'Island',
   entercity: 'Enter your city here...',
-  enterisland: 'Enter island nae here...',
+  enterisland: 'Enter island name here...',
+  entercontact: 'Enter Contact Number here...',
 
   //ForgotPassword
   send: 'Send',
@@ -40,6 +43,7 @@ export default {
   Important_links: 'Important links',
   Members: 'Members',
   Friends: 'Friends',
+  FriendsRequest:'Friend Requests',
   Gallery: 'Gallery',
   My_Profile: 'My Profile',
   About: 'About',
@@ -134,5 +138,9 @@ entertime: 'Enter Time in (12.00) this format',
 memberssince:'Members since september 27,2021',
 //friend profile 
 areyouwant:'Are you sure. You want to block username ?',
-areyouwanttounlock:'Are you sure. You want to Unblock username ?'
+areyouwanttounlock:'Are you sure. You want to Unblock username ?',
+
+//friendrequest
+accept:'Accept',
+deny:'Deny',
 };

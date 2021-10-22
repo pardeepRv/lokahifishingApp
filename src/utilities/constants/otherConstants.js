@@ -446,6 +446,11 @@ const data = [
     img: icons.ic_map,
   },
   {
+    name: strings.FriendsRequest,
+    navigate: 'FriendRequests',
+    img: icons.ic_Notifications,
+  },
+  {
     name: strings.Survey,
     navigate: 'Survey',
     img: icons.ic_pending_lcr,
@@ -462,12 +467,12 @@ const data = [
   },
   {
     name: strings.Friends,
-    navigate: 'aboutUs',
+    navigate: 'Friends',
     img: icons.ic_Notifications,
   },
   {
     name: strings.Gallery,
-    navigate: 'Information',
+    navigate: 'Gallery',
     img: icons.ic_Gallery,
   },
   {

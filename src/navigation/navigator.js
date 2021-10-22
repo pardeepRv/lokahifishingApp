@@ -73,6 +73,9 @@ import FriendProfileScreen from '../screens/Drawerscreens/LCRlist/FriendProfileS
 import FriendBoatInfo from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendBoatInfo';
 import FriendEmergencyContacts from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendEmergencyContacts';
 import FriendLCR from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendLCR';
+import FriendRequests from '../screens/Drawerscreens/FriendRequests/FriendRequests';
+import Friends from '../screens/Drawerscreens/Friends/Friends';
+import Gallery from '../screens/Drawerscreens/Gallery/Gallery';
 
 
 const Stack = createNativeStackNavigator();
@@ -114,6 +117,10 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="LCRFilter" component={LcrFilterStack} />
       <Drawer.Screen name="LCRlist" component={LcrListStack} />
       <Drawer.Screen name="LeaderBoard" component={LeaderBoardStack} />
+      <Drawer.Screen name="FriendRequests" component={FriendRequests} />
+      <Drawer.Screen name="Friends" component={Friends} />
+      <Drawer.Screen name="Gallery" component={GallerytStack} />
+
     </Drawer.Navigator>
   );
 };
@@ -158,6 +165,18 @@ const settingsStack = props => {
       initialRouteName={'SettingScreen'}>
       <Stack.Screen name="SettingScreen" component={Settings} />
       <Stack.Screen name="ChangePassword" component={ChangePassword} />
+    </Stack.Navigator>
+  );
+};
+const GallerytStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'GalleryScreen'}>
+      <Stack.Screen name="GalleryScreen" component={Gallery} />
+     
     </Stack.Navigator>
   );
 };

@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts} from '../../../../../assets';
 import {colors} from '../../../../utilities/constants';
@@ -69,7 +70,6 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: colors.lightTransparent,
     alignItems: 'center',
-
   },
   viewstylemap: {
     height: layout.size.height / 4,
@@ -91,10 +91,13 @@ export default StyleSheet.create({
   },
   input: {
     height: 50,
-    width:layout.size.width/2,
-    borderColor:colors.lightTransparent,
-padding:10,
-textAlign:'right',
+    width: layout.size.width / 2,
+    borderColor: colors.lightTransparent,
+    padding: 15,
+    textAlign: 'right',
+    fontSize: RFValue(15),
+    fontFamily: fonts.bold,
+    bottom: 6,
     // shadowOffset: {
     //   width: 0,
     //   height: 1,

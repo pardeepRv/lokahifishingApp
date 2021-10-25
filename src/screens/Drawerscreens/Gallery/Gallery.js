@@ -44,9 +44,9 @@ const Friends = ({navigation}) => {
   const _renderView = ({item, index}) => (
     <View style={{flex: 1}}>
       <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('FriendProfileScreen');
-        }}
+        // onPress={() => {
+        //   navigation.navigate('FriendProfileScreen');
+        // }}
         style={[
           styles.listView,
           {

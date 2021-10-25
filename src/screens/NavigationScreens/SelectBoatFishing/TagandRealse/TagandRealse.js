@@ -24,9 +24,13 @@ const TagandRealse = ({navigation}) => {
   const [state, setState] = useState({
     isGPS: '',
     title: '',
+    Tag:'',
+    Fork:'',
+    Location:'',
+    Species:'',
     isPrivate: '',
   });
-  const {isGPS, title, isPrivate} = state;
+  const {isGPS, title, isPrivate , Tag , Fork , Location ,Species} = state;
   const _onChangeText = key => val => {
     setState({...state, [key]: val});
   };
@@ -112,10 +116,10 @@ const TagandRealse = ({navigation}) => {
             <View style={{alignSelf:'center' ,  height:40, width:layout.size.width/2}}>
             <TextInputComp
                 style={styles.input }
-                
-                value={title}
+                maxLength={15} 
+                value={Tag}
                 placeholder={strings.entertags  }
-                onChangeText={_onChangeText('title')}
+                onChangeText={_onChangeText('Tag')}
               />
               </View>
               
@@ -126,10 +130,10 @@ const TagandRealse = ({navigation}) => {
             <View style={{alignSelf:'center' ,  height:40, width:layout.size.width/2}}>
             <TextInputComp
                 style={styles.input }
-                
-                value={title}
+                maxLength={15}
+                value={Fork}
                 placeholder={strings.enterforklength  }
-                onChangeText={_onChangeText('title')}
+                onChangeText={_onChangeText('Fork')}
               />
               </View>
           </View>
@@ -139,10 +143,10 @@ const TagandRealse = ({navigation}) => {
             <View style={{alignSelf:'center' ,  height:40, width:layout.size.width/2}}>
             <TextInputComp
                 style={styles.input }
-                
-                value={title}
+                maxLength={15}
+                value={Location}
                 placeholder={strings.enterlocation  }
-                onChangeText={_onChangeText('title')}
+                onChangeText={_onChangeText('Location')}
               />
               </View>
           </View>
@@ -152,10 +156,10 @@ const TagandRealse = ({navigation}) => {
             <View style={{alignSelf:'center' ,  height:40, width:layout.size.width/2}}>
             <TextInputComp
                 style={styles.input }
-                
-                value={title}
+                maxLength={15}
+                value={Species}
                 placeholder={strings.enterspecies  }
-                onChangeText={_onChangeText('title')}
+                onChangeText={_onChangeText('Species')}
               />
               </View>
           </View>

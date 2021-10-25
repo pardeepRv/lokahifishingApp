@@ -109,7 +109,7 @@ const FishData = ({navigation}) => {
             }}>
             <TouchableOpacity
              onPress={() => {
-              navigation.navigate('UploadImage');
+              navigation.navigate('UploadImg');
             }}
               style={{
                 height: layout.size.height / 6,

@@ -427,7 +427,7 @@ const data = [
   },
   {
     name: strings.Tag,
-    navigate: 'Help',
+    navigate: 'TagR',
     img: icons.ic_fisherman,
   },
   {

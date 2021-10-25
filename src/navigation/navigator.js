@@ -76,6 +76,8 @@ import FriendLCR from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/Frie
 import FriendRequests from '../screens/Drawerscreens/FriendRequests/FriendRequests';
 import Friends from '../screens/Drawerscreens/Friends/Friends';
 import Gallery from '../screens/Drawerscreens/Gallery/Gallery';
+import UploadImg from '../screens/NavigationScreens/SelectBoatFishing/UploadImg/UploadImg';
+import TagR from '../screens/Drawerscreens/TagR/TagR';
 
 
 const Stack = createNativeStackNavigator();
@@ -120,6 +122,7 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="FriendRequests" component={FriendRequests} />
       <Drawer.Screen name="Friends" component={Friends} />
       <Drawer.Screen name="Gallery" component={GallerytStack} />
+      <Drawer.Screen name="TagR" component={TagR} />
 
     </Drawer.Navigator>
   );
@@ -200,20 +203,21 @@ const catchReportStack = props => {
         headerShown: false,
       }}
       initialRouteName={'CatchReport'}>
-      <Drawer.Screen name="CatchReport" component={CatchReport} />
-      <Drawer.Screen name="SelectBoatFishing" component={SelectBoatFishing} />
-      <Drawer.Screen name="ShorLineFishing" component={ShortLineFishing} />
-      <Drawer.Screen name="BottomFishing" component={BottomFishing} />
-      <Drawer.Screen name="OffShoreFishing" component={OffShoreFishing} />
-      <Drawer.Screen name="TagandRealse" component={TagandRealse} />
-      <Drawer.Screen name="FishDetails" component={FishDetails} />
-      <Drawer.Screen name="DeepBottom" component={DeepBottom} />
-      <Drawer.Screen name="ShallowBottom" component={ShallowBottom} />
-      <Drawer.Screen name="Whipping" component={Whipping} />
-      <Drawer.Screen name="Baitcasting" component={Baitcasting} />
-      <Drawer.Screen name="SlideBait" component={SlideBait} />
-      <Drawer.Screen name="Effort" component={Effort} />
+      <Stack.Screen name="CatchReport" component={CatchReport} />
+      <Stack.Screen name="SelectBoatFishing" component={SelectBoatFishing} />
+      <Stack.Screen name="ShorLineFishing" component={ShortLineFishing} />
+      <Stack.Screen name="BottomFishing" component={BottomFishing} />
+      <Stack.Screen name="OffShoreFishing" component={OffShoreFishing} />
+      <Stack.Screen name="TagandRealse" component={TagandRealse} />
+      <Stack.Screen name="FishDetails" component={FishDetails} />
+      <Stack.Screen name="DeepBottom" component={DeepBottom} />
+      <Stack.Screen name="ShallowBottom" component={ShallowBottom} />
+      <Stack.Screen name="Whipping" component={Whipping} />
+      <Stack.Screen  name="Baitcasting" component={Baitcasting} />
+      <Stack.Screen  name="SlideBait" component={SlideBait} />
+      <Stack.Screen  name="Effort" component={Effort} />
       <Stack.Screen name="FishData" component={FishData} />
+      <Stack.Screen name="UploadImg" component={UploadImg} />
 
 
     </Stack.Navigator>

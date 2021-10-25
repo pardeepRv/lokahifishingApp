@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     label: {
         fontFamily: fonts.bold,
         color: colors.white1,
-        fontSize: moderateScale(16)
+        fontSize: moderateScale(18)
     }
 });
 

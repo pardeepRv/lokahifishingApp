@@ -78,6 +78,7 @@ import Friends from '../screens/Drawerscreens/Friends/Friends';
 import Gallery from '../screens/Drawerscreens/Gallery/Gallery';
 import UploadImg from '../screens/NavigationScreens/SelectBoatFishing/UploadImg/UploadImg';
 import TagR from '../screens/Drawerscreens/TagR/TagR';
+import QustionAnswer from '../screens/Drawerscreens/Survey/QustionAnswer';
 
 
 const Stack = createNativeStackNavigator();
@@ -106,7 +107,7 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       <Drawer.Screen name="PdfViewer" component={PdfViewer} />
       <Drawer.Screen name="TournamentRules" component={TournamentRules} />
-      <Drawer.Screen name="Survey" component={Survey} />
+      <Drawer.Screen name="Survey" component={SurveyStack} />
       <Drawer.Screen name="Members" component={Members} />
       <Drawer.Screen name="Tournament" component={TournamentHome} />
       <Drawer.Screen name="Settings" component={settingsStack} />
@@ -159,6 +160,18 @@ const authStack = props => {
   );
 };
 
+const SurveyStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'SurveyScreen'}>
+      <Stack.Screen name="SurveyScreen" component={Survey} />
+      <Stack.Screen name="QuestionAnswer" component={QustionAnswer} />
+    </Stack.Navigator>
+  );
+};
 const settingsStack = props => {
   return (
     <Stack.Navigator

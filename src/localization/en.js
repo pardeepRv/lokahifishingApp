@@ -40,6 +40,7 @@ export default {
   Catch_report: 'Catch report locations',
   Friend_requests: 'Friend requests',
   Survey: 'Survey',
+  LokhaiSurvey: 'Lokahi Surveys',
   Important_links: 'Important links',
   Members: 'Members',
   Friends: 'Friends',
@@ -96,6 +97,7 @@ export default {
   newpassword: 'Enter New Password..',
   reneter :'Re-enter New Password..',
   submit:'Submit',
+  submitsurvey:'Submit Survey',
   //Myprofile
   boatmaker:'Boat Marker',
   boatlength :'Boat Length',

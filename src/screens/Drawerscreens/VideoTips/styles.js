@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts} from '../../../../assets';
 import {colors} from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 
 export default StyleSheet.create({
   container: {
@@ -21,6 +22,7 @@ export default StyleSheet.create({
     backgroundColor: colors.secondry,
   },
   title: {
+    width:layout.size.width/1.4,
     fontSize: 20,
     fontFamily: fonts.bold,
     alignSelf: 'center',

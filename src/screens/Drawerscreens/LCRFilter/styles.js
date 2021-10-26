@@ -13,7 +13,9 @@ export default StyleSheet.create({
   },
   viewStyle: {
     flexDirection: 'row',
-    flex: 0.9,
+    flex: 1,
+    justifyContent: 'space-between',
+    // alignSelf:'flex-end'
   },
   sharingtext: {
     fontFamily: fonts.bold,
@@ -40,7 +42,6 @@ export default StyleSheet.create({
     height: 30,
     width: 30,
     alignSelf: 'center',
-
     top:5,
 
   },

@@ -12,7 +12,6 @@ export default StyleSheet.create({
   },
   content: {
     position: 'relative',
-
     display: 'flex',
     flex: 1,
   },
@@ -21,9 +20,9 @@ export default StyleSheet.create({
     marginTop: layout.size.height / 4,
   },
   Container: {
-    backgroundColor: '#ffffff25',
+    backgroundColor: colors.lightTransparent,
     marginTop: moderateScale(15),
-    height: moderateScale(45),
+    height: moderateScale(50),
   },
   text: {
     top: moderateScale(-15),
@@ -34,23 +33,29 @@ export default StyleSheet.create({
   },
   textstyle: {
     fontSize: 22,
+    width: layout.size.width / 1.5,
     color: colors.white1,
     top: moderateScale(8),
     left: moderateScale(10),
     textAlign: 'left',
-    // padding: 12,
+    fontWeight: 'bold',
+    padding: 5,
     backgroundColor: colors.transparent,
   },
+
   tableRow: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
   },
   rowContent: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   contactSwitch: {
-    top: moderateScale(-15),
-    alignSelf: 'flex-end',
+    top: moderateScale(2),
+    alignSelf: 'center',
     right: 15,
     borderColor: colors.white1,
     borderWidth: 1,

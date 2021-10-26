@@ -412,7 +412,7 @@ const menu = [
 const data = [
   {
     name: strings.pending_lcr,
-    navigate: 'ChangeLanguage',
+    navigate: 'PendingLCR',
     img: icons.ic_pending_lcr,
   },
   {

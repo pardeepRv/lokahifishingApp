@@ -79,6 +79,7 @@ import Gallery from '../screens/Drawerscreens/Gallery/Gallery';
 import UploadImg from '../screens/NavigationScreens/SelectBoatFishing/UploadImg/UploadImg';
 import TagR from '../screens/Drawerscreens/TagR/TagR';
 import QustionAnswer from '../screens/Drawerscreens/Survey/QustionAnswer';
+import PendingLCR from '../screens/Drawerscreens/pendingLCR/PendingLCR';
 
 
 const Stack = createNativeStackNavigator();
@@ -124,6 +125,7 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="Friends" component={Friends} />
       <Drawer.Screen name="Gallery" component={GallerytStack} />
       <Drawer.Screen name="TagR" component={TagR} />
+      <Drawer.Screen name="PendingLCR" component={PendingLCR} />
 
     </Drawer.Navigator>
   );

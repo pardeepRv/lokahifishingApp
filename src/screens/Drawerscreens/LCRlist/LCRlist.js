@@ -74,39 +74,40 @@ const LCRlist = ({navigation}) => {
 
   const _renderView = ({item, index}) => (
     <View style={{flex: 1}}>
-      <TouchableOpacity
+      <View
         style={[
           styles.listView,
           {
             backgroundColor: colors.lightTransparent,
           },
         ]}
-        onPress={() => navigation.navigate('LCRDetails')}
         activeOpacity={0.8}>
         <View
           style={{
+            flex: 1,
             flexDirection: 'column',
             backgroundColor: colors.transparent,
           }}>
           <TouchableOpacity
-           onPress={() => navigation.navigate('PhotoSharingPost')}
+            onPress={() => navigation.navigate('PhotoSharingPost')}
             style={{
               backgroundColor: colors.lightTransparent,
               borderRadius: 8,
               height: moderateScale(25),
-              width: layout.size.width /2.2,
+              width: layout.size.width / 2.2,
               alignSelf: 'flex-end',
-              right:2
             }}>
             <Text style={styles.sharingtext}>
               {strings.exporttophotosharing}
             </Text>
           </TouchableOpacity>
 
-          <View style={styles.viewStyle}>
+          <TouchableOpacity
+            style={styles.viewStyle}
+            onPress={() => navigation.navigate('LCRDetails')}>
             <Image
               source={item.img}
-              resizeMode='cover'
+              resizeMode="cover"
               style={{
                 height: moderateScale(100),
                 width: moderateScale(100),
@@ -121,15 +122,21 @@ const LCRlist = ({navigation}) => {
               <Text style={styles.nameStyle}>{item.name}</Text>
               <Text style={styles.dateStyle}>{item.date}</Text>
             </View>
-
-            <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
-          </View>
+            <View
+              style={{
+                justifyContent: 'flex-end',
+                alignSelf: 'center',
+                top: 5,
+              }}>
+              <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
+            </View>
+          </TouchableOpacity>
           <View style={styles.viewStyle}>
-            <TouchableOpacity style={{flexDirection:'row', top:moderateScale(10),}}>
+            <TouchableOpacity
+              style={{flexDirection: 'row', top: moderateScale(10)}}>
               <Image
                 source={icons.like}
                 style={{
-                  // alignSelf:'flex-end',
                   height: 25,
                   width: 25,
                   tintColor: colors.white1,
@@ -140,56 +147,57 @@ const LCRlist = ({navigation}) => {
                   fontFamily: fonts.semiBold,
                   fontSize: moderateScale(15),
                   color: colors.white1,
-                  paddingHorizontal: moderateScale(8),
                 }}>
                 {' '}
                 0 likes
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{flexDirection:'row', top:moderateScale(10), left :moderateScale(26),}}>
+            <TouchableOpacity
+              style={{flexDirection: 'row', top: moderateScale(10)}}>
               <Image
                 source={icons.photoComment}
                 style={{
-                  // alignSelf:'flex-end',
-                  height: 25,
-                  width: 25,
                   tintColor: colors.white1,
                 }}
               />
-               <Text
+              <Text
                 style={{
                   fontFamily: fonts.semiBold,
                   fontSize: moderateScale(15),
                   color: colors.white1,
-                  paddingHorizontal: moderateScale(8),
                 }}>
                 {' '}
                 0 comments
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-            style={{ top:moderateScale(10),left:moderateScale(48)}}
-            onPress={onShare} title="Share">
+            <TouchableOpacity
+              style={{
+                top: moderateScale(10),
+                height: moderateScale(25),
+                width: layout.size.width / 8,
+              }}
+              onPress={onShare}
+              title="Share">
               <Image
                 source={icons.sharearrow}
                 style={{
-                  // alignSelf:'flex-end',
                   height: 25,
                   width: 25,
+                  alignSelf: 'center',
                   tintColor: colors.white1,
                 }}
               />
             </TouchableOpacity>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <SafeAreaView
         style={{
           flex: 1,

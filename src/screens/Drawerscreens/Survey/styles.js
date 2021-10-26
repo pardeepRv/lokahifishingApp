@@ -28,8 +28,6 @@ export default StyleSheet.create({
     color: colors.white1,
     paddingHorizontal: moderateScale(10),
     width:layout.size.width/1.3,
-
-
   },
   nameStyle1: {
     fontFamily: fonts.bold,
@@ -43,15 +41,12 @@ export default StyleSheet.create({
     color: colors.white1,
     paddingHorizontal: moderateScale(10),
     top:10,
-
   },
   rightArrow: {
     height: 30,
     width: 30,
     alignSelf: 'center',
-
     top:5,
-
   },
   nomatch: {
     alignSelf: 'center',

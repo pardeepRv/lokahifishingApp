@@ -60,17 +60,6 @@ const LCRFilter = ({navigation}) => {
           },
         ]}
         activeOpacity={0.8}>
-        {/* <View
-              style={{
-                
-                flexDirection: 'row',
-                flex: 0.9,
-                backgroundColor:colors.black1
-              }}>
-              <Button
-                style={{}}
-              />
-            </View> */}
         <View
           style={{
             flexDirection: 'column',
@@ -82,7 +71,7 @@ const LCRFilter = ({navigation}) => {
               backgroundColor: colors.lightTransparent,
               borderRadius: 8,
               height: moderateScale(25),
-              width: layout.size.width - 200,
+              width: layout.size.width /2.2,
               alignSelf: 'flex-end',
             }}>
             <Text style={styles.sharingtext}>
@@ -93,11 +82,11 @@ const LCRFilter = ({navigation}) => {
           <View style={styles.viewStyle}>
             <Image
               source={item.img}
-              resizeMode="contain"
+              resizeMode='cover'
               style={{
-                height: 80,
-                width: 80,
-                backgroundColor: colors.transparent,
+                height: moderateScale(80),
+                width: moderateScale(80),
+                backgroundColor: colors.lightTransparent,
                 borderRadius: 50,
               }}
             />
@@ -108,8 +97,14 @@ const LCRFilter = ({navigation}) => {
               <Text style={styles.nameStyle}>{item.name}</Text>
               <Text style={styles.dateStyle}>{item.date}</Text>
             </View>
-
+            <View
+              style={{
+                justifyContent: 'flex-end',
+                alignSelf: 'center',
+                top:5,
+              }}>
             <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
+            </View>
           </View>
         </View>
       </TouchableOpacity>

@@ -46,7 +46,7 @@ const Settings = ({navigation}) => {
         />
         <View style={styles.contentcontainer}>
           <View style={styles.Container}>
-            <View style={styles.tableRow}>
+         
               <View style={styles.rowContent}>
                 <Text style={styles.textstyle}>
                   {strings.enablenotification}
@@ -64,7 +64,7 @@ const Settings = ({navigation}) => {
                   style={styles.contactSwitch}
                 />
               </View>
-            </View>
+            
           </View>
           <TouchableOpacity
             style={styles.Container}
@@ -72,13 +72,13 @@ const Settings = ({navigation}) => {
             <Text style={styles.textstyle}>{strings.changepassword}</Text>
           </TouchableOpacity>
           <View style={styles.Container}>
-            <View style={styles.tableRow}>
+        
               <View style={styles.rowContent}>
                 <Text style={styles.textstyle}>{strings.appversion}</Text>
                 <Text style={styles.text}>{strings.version}</Text>
               </View>
             </View>
-          </View>
+        
         </View>
       </SafeAreaView>
     </ImageBackground>

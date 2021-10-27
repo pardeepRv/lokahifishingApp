@@ -22,6 +22,7 @@ export default StyleSheet.create({
     fontSize: moderateScale(12),
     color: colors.primary,
     paddingHorizontal: moderateScale(10),
+    textAlign: 'center',
     top:5,
   },
   nameStyle: {

@@ -69,10 +69,7 @@ import SlideBait from '../screens/NavigationScreens/SelectBoatFishing/SlideBait/
 import Effort from '../screens/NavigationScreens/SelectBoatFishing/Efffort/Effort';
 import FishData from '../screens/NavigationScreens/SelectBoatFishing/FishData/FishData';
 
-import FriendProfileScreen from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendProfileScreen';
-import FriendBoatInfo from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendBoatInfo';
-import FriendEmergencyContacts from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendEmergencyContacts';
-import FriendLCR from '../screens/Drawerscreens/LCRlist/FriendProfileScreen/FriendLCR';
+
 import FriendRequests from '../screens/Drawerscreens/FriendRequests/FriendRequests';
 import Friends from '../screens/Drawerscreens/Friends/Friends';
 import Gallery from '../screens/Drawerscreens/Gallery/Gallery';
@@ -80,6 +77,10 @@ import UploadImg from '../screens/NavigationScreens/SelectBoatFishing/UploadImg/
 import TagR from '../screens/Drawerscreens/TagR/TagR';
 import QustionAnswer from '../screens/Drawerscreens/Survey/QustionAnswer';
 import PendingLCR from '../screens/Drawerscreens/pendingLCR/PendingLCR';
+import FriendProfileScreen from '../screens/Drawerscreens/FriendProfileScreen/FriendProfileScreen';
+import FriendBoatInfo from '../screens/Drawerscreens/FriendProfileScreen/FriendBoatInfo';
+import FriendEmergencyContacts from '../screens/Drawerscreens/FriendProfileScreen/FriendEmergencyContacts';
+import FriendLCR from '../screens/Drawerscreens/FriendProfileScreen/FriendLCR';
 
 
 const Stack = createNativeStackNavigator();
@@ -126,7 +127,10 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="Gallery" component={GallerytStack} />
       <Drawer.Screen name="TagR" component={TagR} />
       <Drawer.Screen name="PendingLCR" component={PendingLCR} />
-
+      <Drawer.Screen name="FriendProfileScreen" component={FriendProfileScreen} />
+      <Drawer.Screen name="FriendBoatInfo" component={FriendBoatInfo} />
+      <Drawer.Screen name="FriendEmergencyContacts" component={FriendEmergencyContacts} />
+      <Drawer.Screen name="FriendLCR" component={FriendLCR} />
     </Drawer.Navigator>
   );
 };
@@ -296,10 +300,7 @@ const LcrListStack = props => {
       <Stack.Screen name="LCRDetails" component={LCRDetails} />
       <Stack.Screen name="EditLCRDetails" component={EditLCRDetails} />
       <Stack.Screen name="UploadImage" component={UploadImage} />
-      <Stack.Screen name="FriendProfileScreen" component={FriendProfileScreen} />
-      <Stack.Screen name="FriendBoatInfo" component={FriendBoatInfo} />
-      <Stack.Screen name="FriendEmergencyContacts" component={FriendEmergencyContacts} />
-      <Stack.Screen name="FriendLCR" component={FriendLCR} />
+   
 
 
     </Stack.Navigator>

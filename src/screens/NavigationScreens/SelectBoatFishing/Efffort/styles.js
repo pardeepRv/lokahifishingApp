@@ -39,6 +39,7 @@ export default StyleSheet.create({
   subsection: {
     justifyContent: 'center',
     alignItems: 'center',
+    top:5
   },
   labelTextStyle: {
     fontFamily: fonts.semiBold,

@@ -73,6 +73,7 @@ const LCRFilter = ({navigation}) => {
               height: moderateScale(25),
               width: layout.size.width /2.2,
               alignSelf: 'flex-end',
+              alignItems:'center',
             }}>
             <Text style={styles.sharingtext}>
               {strings.exporttophotosharing}

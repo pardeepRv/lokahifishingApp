@@ -169,8 +169,7 @@ const styles = StyleSheet.create({
       height: 4,
     },
     shadowOpacity: 0.9,
-
-// borderStyle:"dashed"
+    elevation:3,
   },
   uploadContent: {
     alignItems: 'center',

@@ -56,7 +56,7 @@ const Members = ({navigation}) => {
           style={{
             height: moderateScale(70),
             width: moderateScale(70),
-borderRadius:moderateScale(40)
+borderRadius:moderateScale(40),
           }}
         />
         <View

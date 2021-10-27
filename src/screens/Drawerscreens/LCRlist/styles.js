@@ -6,7 +6,7 @@ import {layout} from '../../../utilities/layout';
 
 export default StyleSheet.create({
   listView: {
-    flex:1,
+    flex: 1,
     margin: 10,
     flexDirection: 'row',
     padding: 8,
@@ -22,9 +22,8 @@ export default StyleSheet.create({
     fontFamily: fonts.bold,
     fontSize: moderateScale(12),
     color: colors.primary,
-    paddingHorizontal: moderateScale(10),
-    top:5,
-
+    textAlign: 'center',
+    top: 5,
   },
   nameStyle: {
     fontFamily: fonts.bold,
@@ -37,15 +36,13 @@ export default StyleSheet.create({
     fontSize: moderateScale(12),
     color: colors.white1,
     paddingHorizontal: moderateScale(10),
-    top:10,
-
+    top: 10,
   },
   rightArrow: {
     height: 30,
     width: 30,
     alignSelf: 'center',
-    top:5,
-
+    top: 5,
   },
   nomatch: {
     alignSelf: 'center',

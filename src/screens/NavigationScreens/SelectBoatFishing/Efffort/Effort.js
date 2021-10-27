@@ -48,6 +48,15 @@ const Effort = ({navigation}) => {
           onLeftPress={() => {
             navigation.goBack();
           }}
+          rightIconSource={icons.save}
+          rightIconStyle={{
+            height: 30,
+            width: 30,
+            tintColor: colors.primary,
+          }}
+onRightPress={() => {
+  navigation.navigate('FishData')
+}}
         />
 
         <KeyboardAvoidingView
@@ -97,7 +106,7 @@ const Effort = ({navigation}) => {
               <View style={styles.subsection}>
                 <Circular />
               </View>
-              <View
+              {/* <View
                 style={{
                   marginTop: layout.size.height / 20,
                 }}>
@@ -115,7 +124,7 @@ const Effort = ({navigation}) => {
                  }}
                   
                 />
-              </View>
+              </View> */}
             </View>
           </View>
         </KeyboardAvoidingView>

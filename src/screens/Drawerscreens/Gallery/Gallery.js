@@ -108,7 +108,7 @@ const Friends = ({navigation}) => {
             </Text>
           </View> */}
         </View>
-        <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
+        
       </TouchableOpacity>
       <View
         style={{
@@ -143,7 +143,7 @@ const Friends = ({navigation}) => {
           }}
         />
 
-        <FlatList
+        {/* <FlatList
           extraData={membersList}
           data={membersList}
           renderItem={_renderView}
@@ -153,7 +153,7 @@ const Friends = ({navigation}) => {
               <Text style={styles.nomatch}>No Match found</Text>
             ) : null
           }
-        />
+        /> */}
       </SafeAreaView>
     </ImageBackground>
   );

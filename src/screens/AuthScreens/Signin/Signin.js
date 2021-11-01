@@ -29,8 +29,10 @@ const Signin = ({ navigation }) => {
   console.log(auth, 'auth in signin page>>>>>>>>>>');
   const dispatch = useDispatch();
   const [state, setState] = useState({
-    email: 'ashutosh@rvtechnologies.com',
-    password: 'ashutosh',
+    // email: 'ashutosh@rvtechnologies.com',
+    // password: 'ashutosh',
+    email: '',
+    password: '',
   });
   const { email, password } = state;
   const _onChangeText = key => val => {
@@ -49,6 +51,8 @@ const Signin = ({ navigation }) => {
 
   function Done() {
     Keyboard.dismiss();
+    return navigation.navigate('HomeStack');
+
     let err = {};
     //email error
     name_and_values.forEach(data => {
@@ -87,7 +91,7 @@ const Signin = ({ navigation }) => {
           flex: 1,
         }}>
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
-        <ScrollView>
+          <ScrollView>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
               style={styles.subContainer}
@@ -105,85 +109,85 @@ const Signin = ({ navigation }) => {
                   }}
                 />
               </View>
-            <View
-              style={{
-                marginTop: layout.size.width / 15,
-              }}></View>
+              <View
+                style={{
+                  marginTop: layout.size.width / 15,
+                }}></View>
 
-            <View
-              style={{
-                marginTop: moderateScale(40),
-              }}>
-              <View>
-                <TextInputComp
-                  label={strings.email}
-                  value={email}
-                  placeholder={strings.enterEmail}
-                  labelTextStyle={styles.labelTextStyle}
-                  onFocus={() =>
-                    setErrors({
-                      ...errors,
-                      email: '',
-                    })
-                  }
-                  onChangeText={_onChangeText('email')}
-                />
-                {errors.email ? (
-                  <Text
-                    transparent
-                    style={{ color: colors.primary, bottom: 13, left: 4 }}>
-                    {errors.email}
-                  </Text>
-                ) : null}
+              <View
+                style={{
+                  marginTop: moderateScale(40),
+                }}>
+                <View>
+                  <TextInputComp
+                    label={strings.email}
+                    value={email}
+                    placeholder={strings.enterEmail}
+                    labelTextStyle={styles.labelTextStyle}
+                    onFocus={() =>
+                      setErrors({
+                        ...errors,
+                        email: '',
+                      })
+                    }
+                    onChangeText={_onChangeText('email')}
+                  />
+                  {errors.email ? (
+                    <Text
+                      transparent
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
+                      {errors.email}
+                    </Text>
+                  ) : null}
+                </View>
+                <View>
+                  <TextInputComp
+                    label={strings.Password}
+                    value={password}
+                    secureTextEntry
+                    placeholder={strings.enterPassword}
+                    labelTextStyle={styles.labelTextStyle}
+                    onChangeText={_onChangeText('password')}
+                    onFocus={() =>
+                      setErrors({
+                        ...errors,
+                        password: '',
+                      })
+                    }
+                  />
+                  {errors.password ? (
+                    <Text
+                      transparent
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
+                      {errors.password}
+                    </Text>
+                  ) : null}
+                </View>
               </View>
-              <View>
-                <TextInputComp
-                  label={strings.Password}
-                  value={password}
-                  secureTextEntry
-                  placeholder={strings.enterPassword}
-                  labelTextStyle={styles.labelTextStyle}
-                  onChangeText={_onChangeText('password')}
-                  onFocus={() =>
-                    setErrors({
-                      ...errors,
-                      password: '',
-                    })
-                  }
+
+              <TouchableOpacity
+                onPress={() => navigation.navigate(screenNames.ForgotPassword)}>
+                <Text style={styles.forgotStyle}>{strings.forgotpassword}</Text>
+              </TouchableOpacity>
+
+              <View
+                style={{
+                  marginTop: moderateScale(50),
+                }}>
+                <Button
+                  style={styles.btnStyles}
+                  label={strings.login}
+                  onPress={() => Done()}
                 />
-                {errors.password ? (
-                  <Text
-                    transparent
-                    style={{ color: colors.primary, bottom: 13, left: 4 }}>
-                    {errors.password}
-                  </Text>
-                ) : null}
               </View>
-            </View>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate(screenNames.ForgotPassword)}>
-              <Text style={styles.forgotStyle}>{strings.forgotpassword}</Text>
-            </TouchableOpacity>
-
-            <View
-              style={{
-                marginTop: moderateScale(50),
-              }}>
-              <Button
-                style={styles.btnStyles}
-                label={strings.login}
-                onPress={() => Done()}
-              />
-            </View>
-
-            <TouchableOpacity
-              onPress={() => navigation.navigate(screenNames.Signup)}>
-              <Text style={styles.createAccount}>
-                {strings.createAccount}
-                <Text style={styles.signuptext}>{strings.signup}</Text>
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(screenNames.Signup)}>
+                <Text style={styles.createAccount}>
+                  {strings.createAccount}
+                  <Text style={styles.signuptext}>{strings.signup}</Text>
+                </Text>
+              </TouchableOpacity>
             </KeyboardAvoidingView>
           </ScrollView>
           <Loader

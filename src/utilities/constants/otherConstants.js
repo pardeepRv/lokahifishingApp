@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 import {screenNames} from '.';
 import {icons} from '../../../assets';
 import {strings} from '../../localization';
+import { colors } from './colors';
 
 // const DATE_FORMAT = 'DD/MM/YYYY';
 const DATE_FORMAT = 'YYYY/MM/DD';
@@ -374,38 +375,40 @@ const menu = [
     name: strings.Catch_report_h,
     navigate: 'catchReportStack',
     img: icons.ic_Fish01,
-    bgColor: '#3c264a',
+    bgColor: colors.primary1,
   },
   {
     name: strings.Tids_weather,
     navigate: 'DataFeeds',
     img: icons.ic_Fish02,
     bgColor: '#553456',
+
   },
 
   {
     name: strings.Photo_sharing,
     navigate: 'PhotoSharing',
     img: icons.ic_Fish03,
-    bgColor: '#854f65',
+    bgColor: '#CC8899',
   },
   {
     name: strings.News,
+    
     navigate: 'News',
-    img: icons.ic_Fish04,
-    bgColor: '#a5686a',
+    img: icons.NewsIcon,
+    bgColor: colors.yellow1,
   },
   {
     name: strings.LeaderBoard,
     navigate: 'LeaderBoard',
-    img: icons.ic_Fish08,
-    bgColor: '#bc4e54',
+    img: icons.LeaderIcon,
+    bgColor: '#C0C0C0',
   },
   {
     name: strings.Tournament,
     navigate: 'Tournament',
     img: icons.ic_Fish06,
-    bgColor: '#a28147',
+    bgColor: colors.orange1,
   },
 ];
 

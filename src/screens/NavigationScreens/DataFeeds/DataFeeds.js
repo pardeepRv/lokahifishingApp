@@ -120,11 +120,11 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: colors.lightTransparent,
+              backgroundColor: colors.lightpurple,
 
             },
           ]}>
-            <Image
+            {/* <Image
           source={icons.Tidesunmoon}
           resizeMode='contain'
           style={{
@@ -134,7 +134,7 @@ const DataFeeds = ({ navigation }) => {
        backgroundColor:colors.primary,
        tintColor:colors.white1
           }}
-        />
+        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -151,10 +151,10 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: colors.lightTransparent,
+              backgroundColor: colors.darkpurple,
             },
           ]}>
-             <Image
+             {/* <Image
           source={icons.SST}
           resizeMode='contain'
           style={{
@@ -164,7 +164,7 @@ const DataFeeds = ({ navigation }) => {
        backgroundColor:colors.primary,
        tintColor:colors.white1
           }}
-        />
+        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -181,10 +181,10 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: colors.lightTransparent,
+              backgroundColor: colors.lightpurple,
             },
           ]}>
-             <Image
+             {/* <Image
           source={icons.Wind}
           resizeMode='contain'
           style={{
@@ -194,7 +194,7 @@ const DataFeeds = ({ navigation }) => {
        backgroundColor:colors.primary,
        tintColor:colors.white1
           }}
-        />
+        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -211,10 +211,10 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: colors.lightTransparent,
+              backgroundColor: colors.darkpurple,
             },
           ]}>
-             <Image
+             {/* <Image
           source={icons.cloud}
           resizeMode='contain'
           style={{
@@ -224,7 +224,7 @@ const DataFeeds = ({ navigation }) => {
        backgroundColor:colors.primary,
        tintColor:colors.white1
           }}
-        />
+        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -241,10 +241,11 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: colors.lightTransparent,
+              backgroundColor: colors.lightpurple,
+
             },
           ]}>
-             <Image
+             {/* <Image
           source={icons.range}
           resizeMode='contain'
           style={{
@@ -254,7 +255,7 @@ const DataFeeds = ({ navigation }) => {
        backgroundColor:colors.primary,
        tintColor:colors.white1
           }}
-        />
+        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -271,10 +272,11 @@ const DataFeeds = ({ navigation }) => {
           style={[
             styles.listView,
             {
-              backgroundColor: colors.lightTransparent,
+              backgroundColor: colors.darkpurple,
+
             },
           ]}>
-             <Image
+             {/* <Image
           source={icons.cloud}
           resizeMode='contain'
           style={{
@@ -284,7 +286,7 @@ const DataFeeds = ({ navigation }) => {
        backgroundColor:colors.primary,
        tintColor:colors.white1
           }}
-        />
+        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{

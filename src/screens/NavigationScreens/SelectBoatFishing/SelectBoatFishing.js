@@ -32,14 +32,14 @@ let fishingArr = [
     navigate: 'BottomFishing'
 
   },
-  {
-    img: icons.TagAndRelease,
-    name: 'WBC Labour',
-    date: 'Day tournament',
-    text: 'Tag and Release',
-    navigate: 'TagandRealse'
+  // {
+  //   img: icons.TagAndRelease,
+  //   name: 'WBC Labour',
+  //   date: 'Day tournament',
+  //   text: 'Tag and Release',
+  //   navigate: 'TagandRealse'
 
-  },
+  // },
 ];
 
 const SelectBoatFishing = ({navigation}) => {

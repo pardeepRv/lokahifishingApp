@@ -40,9 +40,9 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
   listView: {
-    margin: 4,
+    margin: moderateScale(13),
     flexDirection: 'row',
-    padding: 8,
+    padding: 6,
     paddingVertical: moderateScale(2),
   },
   viewStyle: {

@@ -111,6 +111,10 @@ import image_category from './icons/NewImages/image-category.jpg';
 import no_image from './icons/photoSharingImages/no_image.jpg';
 
 //home page icons
+import LeaderIcon from './icons/home-icons/LeaderIcon.png'
+import NewsIcon from './icons/home-icons/NewsIcon.png'
+import TidesIcon2 from './icons/home-icons/TidesIcon2.png'
+
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
 import ic_Fish02 from './icons/dashbaordImages/Fish02.png';
 import ic_Fish03 from './icons/dashbaordImages/Fish03.png';
@@ -175,6 +179,9 @@ import ProfilePlaceholder from './icons/drawer/ProfilePlaceholder.jpg';
 
 const icons = {
   like,
+  TidesIcon2,
+  LeaderIcon,
+  NewsIcon,
   MuFish,
   save,
   fish2,

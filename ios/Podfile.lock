@@ -288,6 +288,8 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.15.8):
     - React-Core
+  - RNDateTimePicker (3.5.2):
+    - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNImageCropPicker (0.36.3):
@@ -375,6 +377,7 @@ DEPENDENCIES:
   - ReactNativeLocalization (from `../node_modules/react-native-localization`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -461,6 +464,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/rn-fetch-blob"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNDateTimePicker:
+    :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNImageCropPicker:
@@ -513,6 +518,7 @@ SPEC CHECKSUMS:
   ReactNativeLocalization: 90a1181b7672309701dd7e5364fbf587319d41c6
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNCAsyncStorage: e8b8d6320a0dd90eb610fb0d0b1ef90596697c69
+  RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 97289cd94fb01ab79db4e5c92938be4d0d63415d
   RNReanimated: ad24db8af24e3fe1b5c462785bc3db8d5baae2ee
@@ -521,6 +527,6 @@ SPEC CHECKSUMS:
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4
 
-PODFILE CHECKSUM: b14f4956ac619fb9ea7a29e13414a45b5fedf738
+PODFILE CHECKSUM: 9c28e8e9066a44eae42c4dd6cef1319f16022825
 
 COCOAPODS: 1.10.1

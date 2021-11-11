@@ -44,9 +44,9 @@ const News = ({navigation}) => {
     <TouchableOpacity
       style={[
         styles.listView,
-        // {
-        //   backgroundColor: index % 2 == 0 ? '#3c264a' : '#553456',
-        // },
+        {
+          backgroundColor: colors.white1,
+        },
       ]}
       activeOpacity={0.8}>
       <View style={styles.viewStyle}>
@@ -64,8 +64,8 @@ const News = ({navigation}) => {
         <View
           style={{
             justifyContent: 'center',
-          
-          left:15,
+
+          left:12,
             width:moderateScale(270),
           }}>
           <Text style={styles.nameStyle}     numberOfLines={5} ellipsizeMode="tail">{item.name}</Text>

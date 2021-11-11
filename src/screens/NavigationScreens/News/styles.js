@@ -6,10 +6,11 @@ import {layout} from '../../../utilities/layout';
 
 export default StyleSheet.create({
   listView: {
-    margin: 3,
+    margin:moderateScale(12),
     flexDirection: 'row',
-    paddingVertical: moderateScale(15),
+    paddingVertical: moderateScale(10),
     backgroundColor:colors.lightTransparent,
+    borderRadius:moderateScale(27)
   },
   viewStyle: {
     flexDirection: 'row',
@@ -17,9 +18,9 @@ export default StyleSheet.create({
   },
   nameStyle: {
     fontFamily: fonts.regular,
-    fontSize: moderateScale(15),
-    color: colors.white1,
-    paddingHorizontal:25,
+    fontSize: moderateScale(16),
+    color: colors.black1,
+    paddingHorizontal:moderateScale(20),
 
   },
   dateStyle: {

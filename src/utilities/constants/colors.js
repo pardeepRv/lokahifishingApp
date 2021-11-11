@@ -66,6 +66,8 @@ const colors = {
   primary1: '#48b4e0',
   facebookcolor: '#3B5999',
   secondry: '#2c385e',
+  darkpurple : '#3e1e4c',
+  lightpurple:  '#cb6769',
 };
 
 const commonColors = () => {
@@ -94,6 +96,8 @@ const colorCodes = {
   BgMagenta: '\x1b[45m%s\x1b[0m',
   BgCyan: '\x1b[46m%s\x1b[0m',
   BgWhite: '\x1b[47m%s\x1b[0m',
+
+
 };
 
 export {colors, colorCodes, commonColors};

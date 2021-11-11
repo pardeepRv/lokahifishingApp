@@ -17,7 +17,6 @@ import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
 import {colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
-
 import styles from './styles';
 
 const TagandRealse = ({navigation}) => {

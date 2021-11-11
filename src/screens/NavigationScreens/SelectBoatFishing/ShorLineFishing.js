@@ -39,13 +39,13 @@ let fishingArr = [
         navigate: 'SlideBait'
 
     },
-    {
-        img: icons.TagAndRelease,
-        name: 'WBC Labour',
-        date: 'Day tournament',
-        text: 'Tag and release',
-        navigate: 'TagandRealse'
-    }
+    // {
+    //     img: icons.TagAndRelease,
+    //     name: 'WBC Labour',
+    //     date: 'Day tournament',
+    //     text: 'Tag and release',
+    //     navigate: 'TagandRealse'
+    // }
 ];
 
 const ShorLineFishing = ({ navigation }) => {

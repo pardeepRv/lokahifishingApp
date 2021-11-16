@@ -13,7 +13,8 @@ target 'lokahifishinglatest' do
   )
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
-
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
   # target 'lokahifishinglatestTests' do
   #   inherit! :complete
   #   # Pods for testing

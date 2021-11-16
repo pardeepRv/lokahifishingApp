@@ -124,9 +124,7 @@ const FishData = ({navigation}) => {
 
   const onChangeLatitude = text => {
     console.log(text, 'coming in thisss');
-		setLocation({...location, latitude: text === '-' ? 1 : parseFloat(text)
-	}
-		);
+    setLocation({...location, latitude: text === '-' ? 1 : parseFloat(text)});
   };
 
   const onChangeLongitude = text => {
@@ -270,7 +268,7 @@ const FishData = ({navigation}) => {
 							<Marker coordinate={{ latitude: location?.latitude, longitude: location?.longitude }} />
 						</MapView> */}
               <MapView
-                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                provider={Platform.OS === 'android' && PROVIDER_GOOGLE} // remove if not using Google Maps
                 style={styles.map}
                 region={{
                   latitude:

@@ -332,7 +332,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = lokahifishinglatest/lokahifishinglatest.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3HDGGZFX5G;
@@ -350,7 +350,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvtech.lokahi;
 				PRODUCT_NAME = lokahifishinglatest;
-				PROVISIONING_PROFILE_SPECIFIER = lokahi_dis_pardeep;
+				PROVISIONING_PROFILE_SPECIFIER = Lokahi_Fishing_Development;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;

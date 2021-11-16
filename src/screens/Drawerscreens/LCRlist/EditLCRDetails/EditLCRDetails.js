@@ -9,8 +9,15 @@ import {
   View,
   Share,
   ScrollView,
-  Switch
+  Switch,
+   Alert,
+   Dimensions, 
+   TextInput
 } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
+import DateTimePicker from '@react-native-community/datetimepicker'
+import DropDownPicker from 'react-native-dropdown-picker'
+
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../../assets';
 import {Header} from '../../../../components/common/Header';
@@ -20,19 +27,104 @@ import {colors, screenNames} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 import * as NavigationService from '../../../../store/NavigationService';
 
+
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 import styles from './styles';
+import Circular from '../../../../components/common/Circular';
 
 const EditLCRDetails = ({navigation}) => {
-  const [state, setState] = useState({
-    isGPS: '',
-    title:'',
-    isPrivate:'',
-  });
-  const {isGPS, title , isPrivate} = state;
+  const [Profilepic, setProfilepic] = useState('');
+  const [date, setDate] = useState(new Date())
+  const [showDate, setDateStatus] = useState(false);
+  const [showTime, setTimeStatus] = useState(false);
+  
+  const [fishTypeState, setFishTypeState] = useState('')
+  const [fishWeightState, setFishWeightState] = useState('')
+  const [fishingTypeOpen, setFishingTypeOpen] = useState(false)
+  const [fishingTypeState, setFishingTypeState] = useState(false)
+	const [boatFishingTypeState, setBoatFishingTypeState] = useState(false)
+	const [boatFishingTypeOpen, setBoatFishingTypeOpen] = useState(false)
+  
+  const [fishingTypeItems, setFishingTypeItems] = useState([
+		{ label: 'Boat Fishing', value: 'Boat Fishing' },
+		{ label: 'Shoreline Fishing', value: 'Shoreline Fishing' },
+	])
+  const [defaultFishingTypeItems, setDefaultFishingTypeItems] = useState([
+		{ label: 'Offshore Fishing', value: 'Offshore Fishing' },
+		{ label: 'Bottom Fishing', value: 'Bottom Fishing' },
+		{ label: 'Whipping', value: 'Whipping' },
+		{ label: 'Baitcasting', value: 'Baitcasting' },
+		{ label: 'Slide Bait', value: 'Slide Bait' },
+  ])
+  const [boatFishingTypeItems, setBoatFishingTypeItems] = useState([
+		{ label: 'Offshore Fishing', value: 'Offshore Fishing' },
+		{ label: 'Bottom Fishing', value: 'Bottom Fishing' },
+	])
+  const [shorelineFishingTypeItems, setShorelineFishingTypeItems] = useState([
+		{ label: 'Whipping', value: 'Whipping' },
+		{ label: 'Baitcasting', value: 'Baitcasting' },
+		{ label: 'Slide Bait', value: 'Slide Bait' },
+	])
   const _onChangeText = key => val => {
     setState({ ...state, [key]: val });
   };
 
+  const onChange = (event, selectedDate) => {
+    // const currentDate = selectedDate || date
+    // setDate(selectedDate)
+  };
+
+  function _doOpenOption(value) {
+    Alert.alert(
+      '',
+      'Please Select',
+      [
+        {text: 'Camera', onPress: () => _doOpenCamera(value)},
+        {text: 'Gallery', onPress: () => _doOpenGallery(value)},
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ],
+      {cancelable: true},
+    );
+  }
+  function _doOpenCamera(value) {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true,
+      compressImageQuality: 0.2,
+    }).then(response => {
+      let data = `data:${response.mime};base64,${response.data}`;
+      if (value == 'Profilepic') {
+        setProfilepic(data);
+      }
+    });
+  }
+  function _doOpenGallery(value) {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true,
+      compressImageQuality: 0.2,
+    }).then(image => {
+      console.log(`images`, image);
+        let data = `data:${image.mime};base64,${image.data}`;
+        if (value == 'Profilepic') {
+          setProfilepic(data);
+        }
+    });
+  }
+  const onChangeDate = (event, selectedDate) => {
+		setDate(selectedDate)
+	}
+
+	const handleEffortChange = v => setEffortHrsState((v * 0.24).toFixed(0))
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
@@ -47,7 +139,7 @@ const EditLCRDetails = ({navigation}) => {
             height: moderateScale(60),
           }}
           blackTitle
-          title={'Catch Report'}
+          title={' Edit Catch Report'}
           titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
@@ -57,7 +149,7 @@ const EditLCRDetails = ({navigation}) => {
             navigation.goBack();
           }}
           onRightPress={() => {
-            NavigationService.resetRoute(screenNames.LCRlist);
+            navigation.navigate('LCRDetails');
           }}
           rightIconSource={icons.post}
           rightIconStyle={{
@@ -66,140 +158,166 @@ const EditLCRDetails = ({navigation}) => {
             tintColor: colors.green1,
           }}
         />
+        	<SafeAreaView style={styles.EditLCR}>
+        <TouchableOpacity onPress={() => _doOpenOption('Profilepic')}>
+          <Image
+                  source={
+                    Profilepic != ''
+                      ? {uri: Profilepic}
+                      : icons.loginLogo
+                  }
+                  resizeMode="cover"
+                  style={{
+                    height: layout.size.height/6,
+                    width: layout.size.height/6,
+                    borderColor: '#fff',
+                    borderWidth: 2,
+                    borderRadius: 7,
+                  }}
+                />
+
+
+			</TouchableOpacity>
+			<Text style={{ paddingTop: 5, marginBottom: 10, opacity: 0.6 }}>Tap photo to change</Text>
         <ScrollView style={{flex: 1}}>
-          <View style={styles.line}></View>
-          <View style={styles.viewstyle}>
-            <View
-              style={{
-                height: moderateScale(30),
-                width: moderateScale(30),
-                borderRadius:20,
-                left: moderateScale(15),
-                backgroundColor:'#fff',
-                shadowOffset: {
-                  width: 0,
-                  height: 4,
-                },
-                shadowOpacity: 0.4,
-                elevation: 3,
-              }}>
-              <Image
-                source={icons.no_image}
-                resizeMod="cover"
-                style={styles.simage}></Image>
-            </View>
-            <View
-              style={{
-                flexDirection: 'column',
-                width: layout.size.width / 2,
-              }}>
-              <Text style={styles.doubletextstyle}>Hello</Text>
-            </View>
-          </View>
-          <View style={styles.line}></View>
-          <View
+        <Text style={[styles.label, { marginTop: 0 }]}>Date & Time</Text>
+        <View
             style={{
-              height: layout.size.height / 6,
-              margin: moderateScale(10),
               flexDirection: 'row',
-              alignItems:'center',
-              justifyContent:'space-between'
+              justifyContent: 'space-between',
             }}>
             <TouchableOpacity
-             onPress={() => {
-              navigation.navigate('UploadImage');
-            }}
-              style={{
-                height: layout.size.height / 6,
-                width: layout.size.height / 6,
-                borderRadius: moderateScale(100),
-                backgroundColor:'#fff',
-                shadowOffset: {
-                  width: 0,
-                  height: 4,
-                },
-                shadowOpacity: 0.2,
-                elevation: 3,
+              onPress={() => {
+                setDateStatus(true);
+                setTimeStatus(false);
               }}>
-              <Image
-                resizeMod="contain"
-                source={icons.no_image}
-                style={styles.bgImg}
-              />
+              <Text>Show date</Text>
             </TouchableOpacity>
-            <View style={[
-              styles.listView,
-              {
-                // backgroundColor: colors.primary,
-              },
-            ]}
-            activeOpacity={0.8}>
-                <TextInputComp
-                  style={styles.input}
-                  multiline
-                  numberOfLines={6}
-                  value={title}
-                  placeholder={strings.describeyourCatchHere}
-                  labelTextStyle={styles.labelTextStyle}
-                  onChangeText={_onChangeText('title')}
-                />
+
+            <TouchableOpacity
+              onPress={() => {
+                setTimeStatus(true);
+                setDateStatus(false);
+              }}>
+              <Text>Show time</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            {showDate && Platform.OS == 'android' ? (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={'date'}
+                display="spinner"
+                onChange={onChange}
+                style={{height: windowHeight * 0.2, marginVertical: -10}}
+              />
+            ) : Platform.OS == 'ios' ? (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={'date'}
+                display="spinner"
+                onChange={onChange}
+                style={{height: windowHeight * 0.2, marginVertical: -10}}
+              />
+            ) : null}
+
+            {showTime && Platform.OS == 'android' ? (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={'time'}
+                display="spinner"
+                onChange={onChange}
+                style={{
+                  height: windowHeight * 0.2,
+                  marginTop: -10,
+                  marginBottom: -20,
+                }}
+              />
+            ) : Platform.OS == 'ios' ? (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={'time'}
+                display="spinner"
+                onChange={onChange}
+                style={{
+                  height: windowHeight * 0.2,
+                  marginTop: -10,
+                  marginBottom: -20,
+                }}
+              />
+            ) : null}
             </View>
+        <Text style={styles.label}>Fish Type</Text>
+				<TextInput
+					style={styles.info}
+					value={fishTypeState}
+					autoCorrect={false}
+					autoCapitalize='words'
+					returnKeyType='done'
+					onChangeText={text => setFishTypeState(text)}
+				/>
+<Text style={styles.label}>Fish Weight</Text>
+				<TextInput
+					style={styles.info}
+					value={fishWeightState}
+					keyboardType='decimal-pad'
+					returnKeyType='done'
+					onChangeText={text => setFishWeightState(text)}
+				/>
+ <View style={styles.subsection}>
+            <Circular />
           </View>
-          <View style={styles.line}></View>
-          <View style={styles.viewstylesingle}>
-            <Text style={styles.singletextstyle}>{strings.Fishingtype}</Text>
-            <Text style={styles.righttextstyle}>{'Whipping'}</Text>
-          </View>
-          <View style={styles.line}></View>
-          <View style={styles.viewstylesingle}>
-            <Text style={styles.singletextstyle}>{strings.Typeoffish}</Text>
-            <Text style={styles.righttextstyle}>{'Omilu'}</Text>
-          </View>
-          <View style={styles.line}></View>
-          <View style={styles.viewstylesingle}>
-            <Text style={styles.singletextstyle}>{strings.Fishweight}</Text>
-            <Text style={styles.righttextstyle}>{'34'}</Text>
-          </View>
-          <View style={styles.line}></View>
-          <View style={styles.viewstylesingle}>
-            <Text style={styles.singletextstyle}>{strings.Efforts}</Text>
-            <Text style={styles.righttextstyle}>{'2.00'}</Text>
-          </View>
-          <View style={styles.line}></View>
-          <View style={styles.viewstylesingle}>
-            <Text style={styles.singletextstyle}>{strings.includegpsinlcr}</Text>
-            <Switch
-                  value={isGPS}
-                  onValueChange={isGPS =>
-                    setState({isGPS}, () => updateSwitch(isGPS))
-                  }
-                  trackColor={{
-                    true: colors.primary,
-                    false:
-                      Platform.OS == 'android' ? '#d3d3d3' : colors.primary,
-                  }}
-                  style={styles.contactSwitch}
-                />
-          </View>
-          <View style={styles.line}></View>
-          <View style={styles.viewstylesingle}>
-            <Text style={styles.singletextstyle}>{strings.private}</Text>
-            <Switch
-                  value={isPrivate}
-                  onValueChange={isPrivate =>
-                    setState({isPrivate}, () => updateSwitch(isPrivate))
-                  }
-                  trackColor={{
-                    true: colors.primary,
-                    false:
-                      Platform.OS == 'android' ? '#d3d3d3' : colors.primary,
-                  }}
-                  style={styles.contactSwitch}
-                />
-          </View>
-          <View style={styles.line}></View>
-          <View style={styles.viewstylemap}></View>
+
+
+				<Text style={styles.label}>Fishing Type</Text>
+				<View>
+					<DropDownPicker
+						open={fishingTypeOpen}
+						value={fishingTypeState}
+						items={fishingTypeItems}
+						setOpen={setFishingTypeOpen}
+						setValue={setFishingTypeState}
+						setItems={setFishingTypeItems}
+						containerStyle={{ width: windowWidth * 0.9 }}
+						zIndex={1000}
+						dropDownDirection={'TOP'}
+					/>
+				</View>
+        <Text style={styles.label}>Boat Fishing Type</Text>
+        <View>
+					<DropDownPicker
+						open={boatFishingTypeOpen}
+						value={boatFishingTypeState}
+						items={
+							fishingTypeState === 'Boat Fishing'
+								? boatFishingTypeItems
+								: fishingTypeState === 'Shoreline Fishing'
+								? shorelineFishingTypeItems
+								: defaultFishingTypeItems
+						}
+						setOpen={setBoatFishingTypeOpen}
+						setValue={setBoatFishingTypeState}
+						setItems={
+							fishingTypeState === 'Boat Fishing'
+								? setBoatFishingTypeItems
+								: fishingTypeState === 'Shoreline Fishing'
+								? setShorelineFishingTypeItems
+								: setDefaultFishingTypeItems
+						}
+						style={{ width: windowWidth * 0.9 }}
+						containerStyle={{ width: windowWidth * 0.9 }}
+						zIndex={1000}
+						dropDownDirection={'TOP'}
+					/>
+				</View>
+
+
         </ScrollView>
+        </SafeAreaView>
       </SafeAreaView>
     </ImageBackground>
   );

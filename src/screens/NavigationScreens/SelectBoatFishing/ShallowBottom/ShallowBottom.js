@@ -13,8 +13,10 @@ import {
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../../assets';
 import {Header} from '../../../../components/common/Header';
+import { strings } from '../../../../localization';
 import {colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
+import LCRRequired from '../LCRRequired';
 import styles from './styles';
 
 let fishingArr = [
@@ -136,17 +138,18 @@ let fishingArr = [
 ];
 const ShallowBottom = ({navigation}) => {
   const [fishingList, setfishingList] = useState(fishingArr);
+  const [fishType, setfishType] = useState('');
 
   const _renderView = ({item, index}) => (
     <View style={styles.listView} activeOpacity={0.8}>
-      <TouchableOpacity
+      <View
         style={styles.viewStyle}
-        onPress={() => navigation.navigate(item.navigate)}>
+>
         <Image
           source={item.img}
           resizeMode="contain"
           style={{
-            height: layout.size.height / 3,
+            height: layout.size.height / 10,
             width: layout.size.width / 1.5,
             shadowColor: colors.primary,
             borderRadius: 20,
@@ -160,11 +163,11 @@ const ShallowBottom = ({navigation}) => {
             elevation: 10,
           }}
         />
-      </TouchableOpacity>
+      </View>
       <View style={styles.viewStyle}>
         <Text
           style={{
-            top: moderateScale(25),
+            top: moderateScale(20),
             fontSize: moderateScale(25),
             fontFamily: fonts.bold,
             color:colors.secondry
@@ -174,9 +177,35 @@ const ShallowBottom = ({navigation}) => {
       </View>
     </View>
   );
+  const onViewRef = React.useRef(viewableItems => {
+    console.log(viewableItems, 'viewwwww>>>>>>>>>>>>>>>>');
+    // Use viewable items in state or as intended
+
+    if (
+      viewableItems &&
+      viewableItems.viewableItems &&
+      viewableItems.viewableItems.length > 0
+    ) {
+      if (
+        viewableItems.viewableItems[0].item.text == 'Multiple' ||
+        viewableItems.viewableItems[0].item.text == 'Other'
+      ) {
+        console.log(
+          viewableItems.viewableItems[0].item.text,
+          'viewableItems.viewableItems[0].item.text',
+        );
+        // fishT=viewableItems.viewableItems[0].item.text;
+        setfishType(viewableItems.viewableItems[0].item.text);
+      } else {
+        setfishType('');
+      }
+    }
+  });
+  const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 50});
+
 
   return (
-    <ImageBackground source={icons.LeaderBoard} style={styles.bgImg}>
+    <ImageBackground source={icons.LeaderBoard1} style={styles.bgImg}>
       <Header
         containerStyle={{
           backgroundColor: 'transparent',
@@ -193,7 +222,8 @@ const ShallowBottom = ({navigation}) => {
           navigation.goBack();
         }}
       />
-
+<Text style={styles.nomatch}>{strings.infobelow}</Text>
+      <View style={{flex: 0.4}}>
       <FlatList
         extraData={fishingList}
         data={fishingList}
@@ -201,14 +231,20 @@ const ShallowBottom = ({navigation}) => {
         keyExtractor={(item, index) => 'key' + index}
         horizontal
         pagingEnabled
-        ListHeaderComponent={() =>
+        ListEmptyComponent={() =>
           !fishingList.length ? (
             <Text style={styles.nomatch}>No Match found</Text>
           ) : null
         }
-        indicatorActiveWidth={40}
-        contentContainerStyle={{paddingHorizontal: 16}}
+        showsHorizontalScrollIndicator={false}
+
+
+        viewabilityConfig={viewConfigRef.current}
+        onViewableItemsChanged={onViewRef.current}
       />
+      </View>
+      <LCRRequired fishType={fishType}
+      navigation={navigation}/>
     </ImageBackground>
   );
 };

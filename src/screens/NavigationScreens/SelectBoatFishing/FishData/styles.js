@@ -1,149 +1,127 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet , Dimensions} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import {fonts} from '../../../../../assets';
-import {colors} from '../../../../utilities/constants';
-import {layout} from '../../../../utilities/layout';
+import { colors } from '../../../../utilities/constants';
+
+
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 export default StyleSheet.create({
-  nomatch: {
-    alignSelf: 'center',
-    marginTop: moderateScale(20),
-    fontFamily: fonts.semiBold,
-  },
-  line: {
-    height: 1,
-    backgroundColor: colors.black1,
-    margin: 8,
-  },
-  bgImg: {
-    height: layout.size.height / 6,
-    width: layout.size.height / 6,
-    borderRadius: moderateScale(100),
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 4,
-    // },
-    // shadowOpacity: 0.2,
-    // elevation: 3,
-  },
-  simage: {
-    height: moderateScale(30),
-    width: moderateScale(30),
-    borderRadius: 30,
-  },
-  simage1: {
-    height: moderateScale(50),
-    width: layout.size.width/3,
+  safeAreaView: {
 
-right:moderateScale(55)
- 
-  },
-  doubletextstyle: {
-    fontSize: moderateScale(20),
-    left: moderateScale(10),
-    color: colors.primary,
-    fontFamily: fonts.bold,
-    left: moderateScale(30),
-  },
-  doubletextstyle1: {
-    fontSize: moderateScale(20),
-    left: moderateScale(10),
-    margin: 5,
-    color: colors.black1,
-    fontFamily: fonts.bold,
-  },
-style1: {
-    fontSize: moderateScale(20),
-    left: moderateScale(10),
-    margin: 5,
-    color: colors.primary,
-    fontFamily: fonts.semiBold,
-  },
-  singletextstyle: {
-    fontSize: moderateScale(20),
-    left: moderateScale(10),
-    margin: 5,
-    color: colors.black1,
-    fontFamily: fonts.semiBold,
-  },
-  righttextstyle: {
-    fontSize: moderateScale(20),
-    right: moderateScale(10),
-    margin: 5,
-    color: colors.primary,
-    fontFamily: fonts.bold,
-  },
-  viewstyle: {
-    flexDirection: 'row',
-    height: moderateScale(45),
-    marginVertical: moderateScale(10),
-    margin: 10,
-    backgroundColor: colors.lightTransparent,
-    alignItems: 'center',
-  },
-  viewstyle1: {
-    flexDirection: 'row',
-    height: moderateScale(70),
-    marginVertical: moderateScale(10),
-    margin: 10,
-    justifyContent: 'space-between',
-    backgroundColor: colors.lightTransparent,
-    alignItems: 'center',
-  },
-  viewstylesingle: {
-    flexDirection: 'row',
-    height: moderateScale(45),
-    marginVertical: moderateScale(10),
-    margin: 10,
-    justifyContent: 'space-between',
-    backgroundColor: colors.lightTransparent,
-    alignItems: 'center',
-  },
-  viewstylemap: {
-    height: layout.size.height / 4,
-    marginVertical: moderateScale(10),
-    margin: 10,
-    justifyContent: 'space-between',
-    backgroundColor: colors.lightTransparent,
-    alignItems: 'center',
-    borderColor: colors.transparent,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.8,
-    borderWidth: 0.5,
-  },
-  input: {
-    height: layout.size.height/5.5,
-    width:layout.size.width/2,
-    borderColor:colors.lightTransparent,
-    padding: 10,
-    backgroundColor:colors.white1,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.5,
-    elevation: 3,
+
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	mapContainer: {
+		height: windowHeight * 0.4,
+		width: windowWidth,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		borderColor: '#fafafa',
+		borderWidth: 2,
+	},
+	map: {
+		...StyleSheet.absoluteFillObject,
+	},
+	profileInfo: {
+		borderTopWidth: 1,
+		borderColor: 'lightgray',
+		paddingTop: 15,
+		paddingBottom: 15,
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+	},
+	profilePic: {
+		height: windowHeight * 0.05,
+		width: windowHeight * 0.05,
+		borderColor: '#fff',
+		borderWidth: 2,
+		borderRadius: 50,
+	},
+	title: {
+		fontWeight: '700',
+		fontSize: 18,
+	},
+	textSection: {
+		borderTopWidth: 1,
+		borderColor: 'lightgray',
+		paddingVertical: 15,
+		paddingHorizontal: 10,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	},
+	or: {
+		fontSize: 18,
+		fontWeight: '700',
+		marginVertical: 20,
+		paddingHorizontal: 10,
+	},
+	locationTextInput: {
+		borderBottomWidth: 1,
+		// borderWidth: 1,
+		// borderColor: 'gray',
+		// backgroundColor: '#fff',
+		fontSize: 16,
+		// padding: 3,
+		justifyContent: 'flex-end',
+		alignItems: 'flex-end',
+		minWidth: 80,
+		marginTop: 20,
+		marginRight: 10,
+		paddingBottom: 2,
+	},
+	degreesTextInput: {
+		borderBottomWidth: 1,
+		// borderWidth: 1,
+		// borderColor: 'gray',
+		// backgroundColor: '#fff',
+		fontSize: 16,
+		// padding: 3,
+		justifyContent: 'flex-end',
+		alignItems: 'flex-end',
+		minWidth: 40,
+		paddingBottom: 2,
+	},
+	centeredView: {
+		width: windowWidth,
+		height: windowHeight,
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 10,
+		shadowColor: '#000',
+		shadowOffset: {
+			width: 10,
+			height: 10,
+		},
+		shadowOpacity: 0.75,
+		shadowRadius: 4,
+	},
+	modalView: {
+		padding: 20,
+		backgroundColor: '#fafafa',
+		borderRadius: 10,
+		borderColor: 'black',
+		borderWidth: 1,
+		alignItems: 'center',
+		elevation: 5,
+	},
+	blurView: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		bottom: 0,
+		right: 0,
   },
   contactSwitch: {
+    top: moderateScale(2),
     alignSelf: 'center',
     right: 15,
     borderColor: colors.white1,
     borderWidth: 1,
-    borderRadius: moderateScale(16),
-  },
-  labelTextStyle: {
-    fontFamily: fonts.bold,
-    fontSize: moderateScale(16),
-    color: colors.white1,
-  },
-  listView: {
-    margin: moderateScale(1),
-
-
-    height: layout.size.height/5.5,
-    width:layout.size.width/2,
+    borderRadius: 16,
   },
 });

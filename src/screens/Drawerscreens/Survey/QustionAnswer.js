@@ -88,6 +88,7 @@ const QuestionAnswer = ({navigation}) => {
             </View>
           </View>
         </View>
+        <View style={{flexDirection:'row'}}>
         <SegmentedControl
           tabs={['Yes', 'No']}
           onChange={() => {}}
@@ -111,6 +112,7 @@ const QuestionAnswer = ({navigation}) => {
           onChange={handleTabsChange}
           theme={theme}
         />
+        </View>
       </TouchableOpacity>
       <View
         style={{

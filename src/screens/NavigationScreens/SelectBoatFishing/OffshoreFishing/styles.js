@@ -14,22 +14,24 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   listView: {
-    backgroundColor: colors.Black1,
-    paddingVertical: moderateScale(40),
-    margin: moderateScale(18),
-    right: moderateScale(20),
+
+    height:moderateScale(1),
+    top:20,
+    width: layout.size.width,
+    flex: 1,
     alignItems: 'flex-start',
+
   },
   viewStyle: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignSelf: 'center',
-    height: layout.size.height / 3,
+    height: layout.size.height / 10,
     width: layout.size.width / 1.1,
   },
   nomatch: {
     alignSelf: 'center',
     marginTop: 20,
-    fontFamily: fonts.semiBold,
+    fontFamily: fonts.regular,
   },
 });

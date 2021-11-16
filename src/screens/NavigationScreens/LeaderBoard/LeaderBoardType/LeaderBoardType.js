@@ -268,7 +268,7 @@ const LeaderBoardType = ({navigation}) => {
             }}
           />
 
-          <View
+          {/* <View
             style={{
               padding: moderateScale(20),
               height: layout.size.height / 11,
@@ -373,7 +373,7 @@ const LeaderBoardType = ({navigation}) => {
               }}>
               annual 2021 Leaderboard Leader
             </Text>
-          </View>
+          </View> */}
           <FlatList
             extraData={membersList}
             data={membersList}

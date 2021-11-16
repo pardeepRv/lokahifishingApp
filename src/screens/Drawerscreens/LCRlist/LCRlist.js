@@ -22,28 +22,31 @@ import styles from './styles';
 let members = [
   {
     img: icons.signin_bg_ic,
-    name: 'Omilu',
+    fish: 'Omilu',
+    name: 'kunal',
     date: 'September 27,2021 2:21 PM',
     text: 'Export to Photosharing',
   },
   {
     img: icons.signin_bg_ic,
+    fish: 'Ahi',
+    name: 'pardeep',
 
-    name: 'Ahi',
     date: 'September 27,2021 2:21 PM',
     text: 'Export to Photosharing',
   },
   {
     img: icons.signin_bg_ic,
-
-    name: 'Ahi',
+    fish: 'Ahi',
+    name: 'dhrmu',
     date: 'September 27,2021 2:21 PM',
     text: 'Export to Photosharing',
   },
   {
     img: icons.signin_bg_ic,
+    fish: 'Omilu',
+    name: 'ashutosh',
 
-    name: 'Omilu',
     date: 'September 27,2021 2:21 PM',
     text: 'Export to Photosharing',
   },
@@ -78,7 +81,7 @@ const LCRlist = ({navigation}) => {
         style={[
           styles.listView,
           {
-            backgroundColor: colors.lightTransparent,
+            backgroundColor: colors.secondry,
           },
         ]}
         activeOpacity={0.8}>
@@ -88,7 +91,7 @@ const LCRlist = ({navigation}) => {
             flexDirection: 'column',
             backgroundColor: colors.transparent,
           }}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate('PhotoSharingPost')}
             style={{
               backgroundColor: colors.lightTransparent,
@@ -101,14 +104,14 @@ const LCRlist = ({navigation}) => {
             <Text style={styles.sharingtext}>
               {strings.exporttophotosharing}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={styles.viewStyle}
             onPress={() => navigation.navigate('LCRDetails')}>
             <Image
               source={item.img}
-              resizeMode="cover"
+              resizeMode="contain"
               style={{
                 height: moderateScale(100),
                 width: moderateScale(100),
@@ -121,6 +124,8 @@ const LCRlist = ({navigation}) => {
                 justifyContent: 'center',
               }}>
               <Text style={styles.nameStyle}>{item.name}</Text>
+              <Text style={styles.dateStyle}>{item.fish}</Text>
+
               <Text style={styles.dateStyle}>{item.date}</Text>
             </View>
             <View
@@ -197,7 +202,7 @@ const LCRlist = ({navigation}) => {
 
   return (
     <ImageBackground
-      source={icons.ic_signup_bg}
+      source={icons.LeaderBoard1}
       style={{flex: 1, height: '100%'}}>
       <SafeAreaView
         style={{
@@ -209,10 +214,10 @@ const LCRlist = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Recent Local Catches'}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{fontFamily: fonts.bold , color: colors.black1}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
-            tintColor: colors.white1,
+            tintColor: colors.black1,
           }}
           onLeftPress={() => {
             navigation.goBack();

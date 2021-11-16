@@ -460,7 +460,7 @@ const data = [
   },
   {
     name: strings.Important_links,
-    navigate: 'Help',
+    navigate: 'Importantlinks',
     img: icons.ic_Important,
   },
   {

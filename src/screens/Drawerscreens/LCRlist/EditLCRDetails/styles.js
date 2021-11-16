@@ -1,119 +1,160 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet , Dimensions} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts} from '../../../../../assets';
 import {colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 
+
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
+
 export default StyleSheet.create({
-  nomatch: {
-    alignSelf: 'center',
-    marginTop: moderateScale(20),
-    fontFamily: fonts.semiBold,
-  },
-  line: {
-    height: 1,
-    backgroundColor: colors.black1,
-    margin: 8,
-  },
-  bgImg: {
-    height: layout.size.height / 6,
-    width: layout.size.height / 6,
-    borderRadius: moderateScale(100),
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 4,
-    // },
-    // shadowOpacity: 0.2,
-    // elevation: 3,
-  },
-  simage: {
-    height: moderateScale(30),
-    width: moderateScale(30),
-    borderRadius: 30,
-  },
-  doubletextstyle: {
-    fontSize: moderateScale(20),
-    left: moderateScale(10),
-    color: colors.primary,
-    fontFamily: fonts.bold,
-    left: moderateScale(30),
-  },
-  singletextstyle: {
-    fontSize: moderateScale(20),
-    left: moderateScale(10),
-    margin: 5,
-    color: colors.black1,
-    fontFamily: fonts.semiBold,
-  },
-  righttextstyle: {
-    fontSize: moderateScale(20),
-    right: moderateScale(10),
-    margin: 5,
-    color: colors.primary,
-    fontFamily: fonts.bold,
-  },
-  viewstyle: {
-    flexDirection: 'row',
-    height: moderateScale(45),
-    marginVertical: moderateScale(10),
-    margin: 10,
-    backgroundColor: colors.lightTransparent,
-    alignItems: 'center',
-  },
-  viewstylesingle: {
-    flexDirection: 'row',
-    height: moderateScale(45),
-    marginVertical: moderateScale(10),
-    margin: 10,
-    justifyContent: 'space-between',
-    backgroundColor: colors.lightTransparent,
-    alignItems: 'center',
-  },
-  viewstylemap: {
-    height: layout.size.height / 4,
-    marginVertical: moderateScale(10),
-    margin: 10,
-    justifyContent: 'space-between',
-    backgroundColor: colors.lightTransparent,
-    alignItems: 'center',
-    borderColor: colors.transparent,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.8,
-    borderWidth: 0.5,
-  },
-  input: {
-    height: layout.size.height/5.5,
-    width:layout.size.width/2,
-    borderColor:colors.lightTransparent,
-    padding: 10,
-    backgroundColor:colors.white1,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.5,
-    elevation: 3,
-  },
-  contactSwitch: {
-    alignSelf: 'center',
-    right: 15,
-    borderColor: colors.white1,
-    borderWidth: 1,
-    borderRadius: moderateScale(16),
-  },
-  labelTextStyle: {
-    fontFamily: fonts.bold,
-    fontSize: moderateScale(16),
-    color: colors.white1,
-  },
-  listView: {
-    margin: moderateScale(1),
+  EditLCR: {
+		position: 'relative',
 
+		width: windowWidth,
+		height: windowHeight * (1 - 0.108),
+		display: 'flex',
+		alignItems: 'center',
+    flex: 1,
+	},
+	picView: {
+		width: '100%',
+		height: windowHeight * 0.2,
+		backgroundColor: '#2c385e',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+	},
+	title: {
+		color: 'white',
+		fontSize: 26,
+		fontWeight: '700',
+	},
+	// lcrPic: {
+	// 	height: windowHeight * 0.175,
+	// 	width: windowHeight * 0.175,
+	// 	borderRadius: 100,
+	// },
+	lcrInfo: {
+		display: 'flex',
+		alignItems: 'center',
+		width: windowWidth,
+	},
+	label: {
+		fontWeight: '500',
+		fontSize: 18,
+		color: '#533655',
+		shadowColor: '#bb4e54',
+		shadowOffset: { width: 1.25, height: 1.25 },
+		shadowOpacity: 0.75,
+		shadowRadius: 0,
+    marginVertical: 15,
+    textAlign:'center'
+	},
+	info: {
+		backgroundColor: 'lightgray',
+		padding: 10,
+		width: windowWidth * 0.6,
+		fontWeight: '800',
+    color: '#2c385e',
 
-    height: layout.size.height/5.5,
-    width:layout.size.width/2,
+    alignSelf : 'center'
+	},
+	saveBtn: {
+		marginTop: 35,
+		borderWidth: 1.75,
+		borderColor: 'black',
+		paddingHorizontal: 30,
+		paddingVertical: 2,
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 10,
+		marginBottom: 125,
+	},
+	saveText: {
+		fontWeight: '800',
+		fontSize: 16,
+		color: '#533655',
+		shadowColor: '#bb4e54',
+		shadowOffset: { width: 2, height: 2 },
+		shadowOpacity: 0.75,
+		shadowRadius: 0,
+	},
+	logoView: {
+		height: windowHeight * 0.2,
+		width: windowHeight * 0.2,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	logo: {
+		height: '100%',
+		width: '100%',
+		resizeMode: 'contain',
+	},
+	lcrPic: {
+		height: windowHeight * 0.175,
+		width: windowHeight * 0.175,
+		borderColor: '#fff',
+		borderWidth: 2,
+		borderRadius: 7,
+	},
+	blurView: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		bottom: 0,
+		right: 0,
+		zIndex: 1000,
+	},
+	centeredView: {
+		width: windowWidth,
+		height: windowHeight,
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderRadius: 10,
+		shadowColor: '#000',
+		shadowOffset: {
+			width: 10,
+			height: 10,
+		},
+		shadowOpacity: 0.75,
+		shadowRadius: 4,
+	},
+	modalView: {
+		// width: windowWidth * 0.,
+		// height: windowHeight * 0.6,
+		padding: 20,
+		backgroundColor: '#fafafa',
+		borderRadius: 10,
+		borderColor: 'black',
+		borderWidth: 1,
+		alignItems: 'center',
+		elevation: 5,
+	},
+	section: {
+		marginVertical: 10,
+	},
+	title: {
+		fontWeight: '700',
+		fontSize: 18,
+		marginBottom: 10,
+	},
+	effortTitle: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginBottom: 10,
+	},
+	effortSubtext: {
+		marginLeft: 5,
+  },
+  subsection: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    marginTop: 10,
   },
 });

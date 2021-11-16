@@ -92,7 +92,7 @@ const DataFeeds = ({ navigation }) => {
   );
   return (
     <ImageBackground
-      source={icons.ic_signin_bg}
+      source={icons.ic_signup_bg}
       style={{ flex: 1, height: '100%' }}>
       <SafeAreaView
         style={{

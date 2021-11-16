@@ -35,6 +35,16 @@ let tournaMents = [
     name: 'dev_pardeep',
     date: 'App Tournament Winners',
   },
+  {
+    img: icons.ic_LokahiLogo,
+    name: 'September 2020 Lokahi',
+    date: 'App Winners',
+  },
+  {
+    img: icons.ic_LokahiLogo,
+    name: 'dev_pardeep',
+    date: 'App Tournament Winners',
+  },
 ];
 
 const TournamentHome = ({navigation}) => {
@@ -54,6 +64,7 @@ const TournamentHome = ({navigation}) => {
         <View
           style={{
             justifyContent: 'center',
+            left:10
           }}>
           <Text style={styles.nameStyle}>{item.name}</Text>
           <Text style={styles.dateStyle}>{item.date}</Text>
@@ -65,7 +76,7 @@ const TournamentHome = ({navigation}) => {
 
   return (
     <ImageBackground
-      source={icons.ic_signup_bg}
+      source={icons.LeaderBoard1}
       style={{flex: 1, height: '100%'}}>
       <SafeAreaView
         style={{
@@ -77,10 +88,11 @@ const TournamentHome = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Tournament Result List'}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{fontFamily: fonts.bold
+          ,color:colors.black1}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
-            tintColor: colors.white1,
+            tintColor: colors.black1,
           }}
           onLeftPress={() => {
             navigation.goBack();

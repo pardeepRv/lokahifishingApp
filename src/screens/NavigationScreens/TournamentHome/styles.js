@@ -10,10 +10,10 @@ import {RFValue} from 'react-native-responsive-fontsize';
 export default StyleSheet.create({
   listView: {
     backgroundColor: colors.white1,
-    margin: 10,
     flexDirection: 'row',
     padding: 10,
-    paddingVertical: moderateScale(15),
+    paddingVertical: moderateScale(5),
+    justifyContent:'space-between'
   },
   viewStyle: {
     flexDirection: 'row',

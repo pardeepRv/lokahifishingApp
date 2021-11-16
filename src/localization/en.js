@@ -145,4 +145,11 @@ areyouwanttounlock:'Are you sure. You want to Unblock username ?',
 //friendrequest
 accept:'Accept',
 deny:'Deny',
+//Ctchreport
+infobelow: 'Info below is required & will be Viewable by public',
+//Important links 
+HawaiState: 'Hawai State Legislature',
+HawaiLegislature: 'Hawai State Legislature Website Url',
+LokhaiWebsite: 'Lokhai Fishing Website',
+LokhaiUrl : 'Lokhai Fishing Website Url'
 };

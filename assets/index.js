@@ -74,6 +74,7 @@ import slide from './icons/catch-report-icons/slide-bait.png';
 import TagAndRelease from './icons/catch-report-icons/TagAndRelease.png';
 import whipping from './icons/catch-report-icons/whipping.png';
 import uploadImage1 from './icons/catch-report-icons/uploadImage1.png';
+ import loginLogo from './icons/loginLogo.png';
 
 
 import ic_rightArrow from './icons/drawer/right-arrow.png';
@@ -181,6 +182,7 @@ const icons = {
   like,
   TidesIcon2,
   LeaderIcon,
+  loginLogo,
   NewsIcon,
   MuFish,
   save,

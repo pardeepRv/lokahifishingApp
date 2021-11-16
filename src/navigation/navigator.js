@@ -81,6 +81,12 @@ import FriendProfileScreen from '../screens/Drawerscreens/FriendProfileScreen/Fr
 import FriendBoatInfo from '../screens/Drawerscreens/FriendProfileScreen/FriendBoatInfo';
 import FriendEmergencyContacts from '../screens/Drawerscreens/FriendProfileScreen/FriendEmergencyContacts';
 import FriendLCR from '../screens/Drawerscreens/FriendProfileScreen/FriendLCR';
+import LCRRequired from '../screens/NavigationScreens/SelectBoatFishing/LCRRequired';
+import LeaderboardCard from '../screens/NavigationScreens/LeaderBoard/leaderboardCard';
+import Importantlinks from '../screens/Drawerscreens/Importantlinks/Importantlinks';
+import FishingWebsite from '../screens/Drawerscreens/Importantlinks/FishingWebsite';
+import HawaiiLegislature from '../screens/Drawerscreens/Importantlinks/HawaiiLegislatureWebsite';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -131,6 +137,10 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="FriendBoatInfo" component={FriendBoatInfo} />
       <Drawer.Screen name="FriendEmergencyContacts" component={FriendEmergencyContacts} />
       <Drawer.Screen name="FriendLCR" component={FriendLCR} />
+      <Drawer.Screen name="Importantlinks" component={Importantlinks} />
+      <Drawer.Screen name="FishingWebsite" component={FishingWebsite} />
+      <Drawer.Screen name="HawaiiLegislatureWebsite" component={HawaiiLegislature} />
+
     </Drawer.Navigator>
   );
 };
@@ -212,6 +222,9 @@ const LeaderBoardStack = props => {
       initialRouteName={'LeaderBoardScreen'}>
       <Stack.Screen name="LeaderBoardScreen" component={LeaderBoard} />
       <Stack.Screen name="LeaderBoardType" component={LeaderBoardType} />
+      <Stack.Screen name="leaderboardCard" component={LeaderboardCard} />
+
+
     </Stack.Navigator>
   );
 };
@@ -237,6 +250,7 @@ const catchReportStack = props => {
       <Stack.Screen  name="Effort" component={Effort} />
       <Stack.Screen name="FishData" component={FishData} />
       <Stack.Screen name="UploadImg" component={UploadImg} />
+      <Stack.Screen name="LCRRequired" component={LCRRequired} />
 
 
     </Stack.Navigator>
@@ -300,6 +314,8 @@ const LcrListStack = props => {
       <Stack.Screen name="LCRDetails" component={LCRDetails} />
       <Stack.Screen name="EditLCRDetails" component={EditLCRDetails} />
       <Stack.Screen name="UploadImage" component={UploadImage} />
+
+
    
 
 

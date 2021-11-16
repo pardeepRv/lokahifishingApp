@@ -18,20 +18,21 @@ export default StyleSheet.create({
   nameStyle: {
     fontFamily: fonts.regular,
     fontSize: moderateScale(16),
-    color: colors.white1,
+    color: colors.black1,
     paddingHorizontal: moderateScale(5),
   },
   dateStyle: {
     fontFamily: fonts.regular,
     fontSize: moderateScale(16),
-    color: colors.white1,
+    color: colors.black1,
     paddingHorizontal: moderateScale(5),
   },
   rightArrow: {
-    height: moderateScale(30),
-    width: moderateScale(30),
+    height: moderateScale(20),
+    width: moderateScale(20),
     alignSelf: 'center',
-    left:moderateScale(20)
+    left: moderateScale(20),
+    tintColor: colors.black1,
   },
   nomatch: {
     alignSelf: 'center',

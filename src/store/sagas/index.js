@@ -1,6 +1,12 @@
 import {takeLatest, takeEvery} from 'redux-saga/effects';
 import {actionTypes} from '../../utilities/constants';
-import {checkIfLoggedInSaga, fetchAll, loginViaEmail} from './authSagas';
+import {
+  checkIfLoggedInSaga,
+  fetchAll,
+  loginViaEmail,
+  logoutSaga,
+  sessionExpiredSaga,
+} from './authSagas';
 import {getProfileSaga, updateProfileSaga, memberInfoSaga} from './userSaga';
 import {
   getSearchSaga,
@@ -33,7 +39,8 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.FETCH_DATA_REQUESTED, fetchAll);
   yield takeLatest(actionTypes.LOGIN_WITH_EMAIL_REQUESTED, loginViaEmail);
   yield takeLatest(actionTypes.CHECKED_IF_LOGGED_IN, checkIfLoggedInSaga);
-
+  yield takeLatest(actionTypes.LOGOUT_REQUESTED, logoutSaga);
+  yield takeLatest(actionTypes.SESSION_EXPIRE_REQUESTED, sessionExpiredSaga);
   // //user sagas
   // yield takeLatest(actionTypes.GET_PROFILE_REQUESTED, getProfileSaga);
   // yield takeLatest(actionTypes.UPDATE_PROFILE_REQUESTED, updateProfileSaga);

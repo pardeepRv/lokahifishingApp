@@ -1,23 +1,16 @@
-import { put, retry } from 'redux-saga/effects';
-import { I18nManager, Platform } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-import logger from '../../utilities/logger';
-import * as NavigationService from '../NavigationService'
-
-import { request } from '../../utilities/request';
-import { actionTypes, urls, screenNames } from '../../utilities/constants';
+import {put} from 'redux-saga/effects';
+import {actionTypes, screenNames, urls} from '../../utilities/constants';
 import {
-  showErrorAlert,
-  getAPIError,
-  setLocalUserData,
-  getLocalUserData,
-  extractUserDataFromDBResponse,
   deleteUserDataFromLocal,
-  showSuccessAlert,
+  extractUserDataFromDBResponse,
+  getAPIError,
+  getLocalUserData,
+  setLocalUserData,
+  showErrorAlert,
 } from '../../utilities/helperFunctions';
-import { getAllCatagories } from '../actions';
+import {request} from '../../utilities/request';
+import * as NavigationService from '../NavigationService';
+
 const languages = [
   {
     code: 'en',
@@ -31,7 +24,7 @@ const languages = [
   },
 ];
 
-function* fetchAll({ params }) {
+function* fetchAll({params}) {
   debugger;
   try {
     const config = {
@@ -51,7 +44,7 @@ function* fetchAll({ params }) {
   }
 }
 
-function* loginViaEmail({ params }) {
+function* loginViaEmail({params}) {
   try {
     console.log('params', params);
 
@@ -70,15 +63,14 @@ function* loginViaEmail({ params }) {
     const response = yield request(config);
     console.log(response, 'getting response from login api ');
 
-    if (
-      response &&
-      response.data &&
-      response.data.success
-    ) {
+    if (response && response.data && response.data.success) {
       let updatedObj = response.data.data.user;
       updatedObj['access_token'] = response.data.data.access_token;
 
-      console.log(updatedObj,'response.data.data.access_tokenupdatedObjupdatedObj');
+      console.log(
+        updatedObj,
+        'response.data.data.access_tokenupdatedObjupdatedObj',
+      );
 
       const loginUserData = extractUserDataFromDBResponse(updatedObj);
 
@@ -92,12 +84,11 @@ function* loginViaEmail({ params }) {
       });
 
       NavigationService.resetRoute(screenNames.HomeStack);
-    }
-    else {
+    } else {
       yield put({
         type: actionTypes.LOGIN_WITH_EMAIL_FAIL,
       });
-      showErrorAlert(response.data.message)
+      showErrorAlert(response.data.message);
     }
   } catch (error) {
     showErrorAlert(getAPIError(error));
@@ -121,14 +112,49 @@ function* checkIfLoggedInSaga() {
       type: actionTypes.LOGIN_WITH_EMAIL_SUCCEEDED,
       userData: userData,
     });
-    NavigationService.resetRoute('Home');
-
+    NavigationService.resetRoute(screenNames.HomeStack);
   } catch (error) {
-    yield put({ type: actionTypes.SESSION_EXPIRED });
+    yield put({type: actionTypes.SESSION_EXPIRED});
     console.log('checkIfLoggedIn error: ', error);
     // navigate(screenNames.AuthNavigator);
-    NavigationService.resetRoute('Login');
+    NavigationService.resetRoute('authStack');
   }
 }
 
-export { fetchAll, loginViaEmail, checkIfLoggedInSaga };
+function* logoutSaga() {
+  debugger;
+  try {
+    const {token} = yield getLocalUserData();
+    console.log(token, 'token coming>>>>>>>>>>>');
+    if (token == undefined) {
+      yield put({
+        type: actionTypes.SESSION_EXPIRE_REQUESTED,
+      });
+    }
+  } catch (error) {
+    console.log('logout error', error);
+    yield put({
+      type: actionTypes.SESSION_EXPIRE_REQUESTED,
+    });
+  }
+}
+
+function* sessionExpiredSaga() {
+  try {
+    yield deleteUserDataFromLocal();
+    NavigationService.resetRoute('authStack');
+    yield put({type: actionTypes.SESSION_EXPIRED});
+  } catch (error) {
+    console.log('Logout user error: ', error);
+    NavigationService.resetRoute('authStack');
+    yield put({type: actionTypes.SESSION_EXPIRED});
+  }
+}
+
+export {
+  fetchAll,
+  loginViaEmail,
+  checkIfLoggedInSaga,
+  logoutSaga,
+  sessionExpiredSaga,
+};

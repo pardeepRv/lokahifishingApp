@@ -12,6 +12,9 @@ import {
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
 import {strings} from '../../../localization';
+import store from '../../../store';
+import {useDispatch, useSelector} from 'react-redux';
+import {logout} from '../../../store/actions';
 import {colors, data} from '../../../utilities/constants';
 
 const {width, height} = Dimensions.get('window');
@@ -21,17 +24,21 @@ const dummyImg =
 
 const DrawerComp = ({navigation, ...props}) => {
   console.log(navigation, 'navigationnavigation in drwaer');
+  // const dispatch = useDispatch();
 
   const pressHnadler = screen => {
-      console.log(screen, 'where we are navigating...');
+    console.log(screen, 'where we are navigating...');
     navigation.closeDrawer();
     navigation.navigate(screen);
   };
-  // const signOut = () => {
-  //     store.dispatch(logoutUser())
-  // }
+  const signOut = () => {
+    // dispatch(logout());
+
+    store.dispatch(logout());
+  };
 
   const reset = () => {
+    return signOut();
     return navigation.dispatch(
       CommonActions.reset({
         index: 0,

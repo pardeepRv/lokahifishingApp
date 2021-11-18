@@ -29,10 +29,10 @@ const Signin = ({ navigation }) => {
   console.log(auth, 'auth in signin page>>>>>>>>>>');
   const dispatch = useDispatch();
   const [state, setState] = useState({
-    // email: 'ashutosh@rvtechnologies.com',
-    // password: 'ashutosh',
-    email: '',
-    password: '',
+    email: 'ashutosh@rvtechnologies.com',
+    password: 'ashutosh',
+    // email: '',
+    // password: '',
   });
   const { email, password } = state;
   const _onChangeText = key => val => {
@@ -51,7 +51,7 @@ const Signin = ({ navigation }) => {
 
   function Done() {
     Keyboard.dismiss();
-    return navigation.navigate('HomeStack');
+    // return navigation.navigate('HomeStack');
 
     let err = {};
     //email error

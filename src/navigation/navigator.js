@@ -102,6 +102,7 @@ const commonScreensOptions = {
 };
 
 const HomeStackScreen = props => {
+  console.log(props,'porps sednn');
   return (
     <Drawer.Navigator
       initialRouteName="Drawer"

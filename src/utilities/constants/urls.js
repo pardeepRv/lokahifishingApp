@@ -49,7 +49,7 @@ const urls = {
     get_upcoming_booking_customer: 'get_upcoming_booking_customer',
     get_booking_member: 'get_booking?artist_id=',
     apply_coupon: 'apply_coupon',
-    change_password: 'change_password',
+    change_password: 'change-password',
     get_services_by_category: 'get_services_by_category?category_id=',
     menu: 'menu',
     complete_booking: 'complete_booking',
@@ -57,7 +57,6 @@ const urls = {
     getnotifications: 'notifications?per_page=50',
 
     forgotPassword: 'forgot_password',
-    forceChangePassword: 'force_change_password',
     editProfile: 'edit_profile',
     removeResume: 'removeresume',
     changeEmail: 'change_email',

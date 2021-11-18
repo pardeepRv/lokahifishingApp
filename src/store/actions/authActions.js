@@ -54,7 +54,7 @@ const checkIfLoggedIn = () => ({
     type: actionTypes.CHECKED_IF_LOGGED_IN
 });
 
-const changePassword = (params) => ({
+const change_Password = (params) => ({
     type: actionTypes.CHANGE_PASSWORD_REQUESTED,
     params
 });
@@ -77,5 +77,5 @@ export {
     verifyForgotPasswordOtp,
     updatePassword,
     completeRegiter,
-    changePassword
+    change_Password
 };

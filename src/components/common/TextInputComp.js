@@ -57,6 +57,7 @@ const TextInputComp = ({
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry ? secureTextEntry : false}
         editable={editable}
+        autoCapitalize="none"
         {...props}
       />
     </View>
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.semiBold,
     color: colors.black1,
     fontSize: RFValue(14),
-    paddingHorizontal:5
+    paddingHorizontal: 5,
   },
 });
 

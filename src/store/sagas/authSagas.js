@@ -7,6 +7,7 @@ import {
   getLocalUserData,
   setLocalUserData,
   showErrorAlert,
+  showSuccessAlert,
 } from '../../utilities/helperFunctions';
 import {request} from '../../utilities/request';
 import * as NavigationService from '../NavigationService';
@@ -99,6 +100,45 @@ function* loginViaEmail({params}) {
   }
 }
 
+function* change_PasswordSaga({params}) {
+  try {
+    console.log('params', params);
+
+    let dataToBesend = {
+      old_password: params.old_password,
+      new_password: params.new_password,
+      confirm_password: params.confirm_password,
+    };
+
+    console.log('dataToBesend', JSON.stringify(dataToBesend));
+    const config = {
+      url: urls.change_password,
+      method: 'POST',
+      data: dataToBesend,
+      headers: {
+        Authorization: `Bearer ${params && params.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response from change pasword api ');
+
+    if (response && response.data && response.data.status == 200) {
+      yield put({
+        type: actionTypes.CHANGE_PASSWORD_SUCCEEDED,
+      });
+      showSuccessAlert(response.data.message);
+      yield put({
+        type: actionTypes.SESSION_EXPIRE_REQUESTED,
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.CHANGE_PASSWORD_FAIL,
+    });
+  }
+}
+
 function* checkIfLoggedInSaga() {
   try {
     const userData = yield getLocalUserData();
@@ -116,7 +156,7 @@ function* checkIfLoggedInSaga() {
   } catch (error) {
     yield put({type: actionTypes.SESSION_EXPIRED});
     console.log('checkIfLoggedIn error: ', error);
-    // navigate(screenNames.AuthNavigator);
+
     NavigationService.resetRoute('authStack');
   }
 }
@@ -157,4 +197,5 @@ export {
   checkIfLoggedInSaga,
   logoutSaga,
   sessionExpiredSaga,
+  change_PasswordSaga,
 };

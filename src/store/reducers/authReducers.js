@@ -7,7 +7,6 @@ const initialState = {
     loginViaPhoneMsg: null,
     otp: null,
     updatePasswordMsg: null,
-
 };
 
 export default (state = initialState, action) => {
@@ -66,7 +65,7 @@ export default (state = initialState, action) => {
             return { ...state, loading: true };
 
         case actionTypes.FORGOT_PASSWORD_SUCCEEDED:
-            return { ...state, loading: false, showInfo: true, loginViaPhoneMsg: action.payload };
+            return { ...state, loading: false };
 
         case actionTypes.FORGOT_PASSWORD_FAIL:
             return { ...state, loading: false };
@@ -99,7 +98,6 @@ export default (state = initialState, action) => {
         case actionTypes.COMPELETE_REGISTER_FAIL:
             return { ...state, loading: false };
 
-
         case actionTypes.CHANGE_PASSWORD_REQUESTED:
             return { ...state, loading: true };
 
@@ -109,13 +107,13 @@ export default (state = initialState, action) => {
         case actionTypes.CHANGE_PASSWORD_FAIL:
             return { ...state, loading: false };
 
-
         case actionTypes.SESSION_EXPIRED: {
             return {
                 ...state,
                 ...initialState
             };
         }
+        
         case actionTypes.LOGOUT_REQUESTED:
             return { ...state, loading: true };
 

@@ -139,6 +139,42 @@ function* change_PasswordSaga({params}) {
   }
 }
 
+function* forgotPasswordsaga({params}) {
+  try {
+     console.log('params', params);
+
+    let dataToBesend = {
+      email: params.email,
+    };
+
+    console.log('dataToBesend', JSON.stringify(dataToBesend));
+    const config = {
+      url: urls.forgotPassword,
+      method: 'POST',
+      data: dataToBesend,
+      headers: {
+        Authorization: `Bearer ${params && params.token}`,
+      },
+    };
+    const response = yield request(config);
+     console.log(response, 'getting response from forgot pasword api ');
+
+    if (response && response.status == 200) {
+      yield put({
+        type: actionTypes.FORGOT_PASSWORD_SUCCEEDED,
+      });
+      showSuccessAlert(response.data.message);
+      yield put({
+        type: actionTypes.SESSION_EXPIRE_REQUESTED,
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.FORGOT_PASSWORD_FAIL,
+    });
+  }
+}
 function* checkIfLoggedInSaga() {
   try {
     const userData = yield getLocalUserData();
@@ -198,4 +234,5 @@ export {
   logoutSaga,
   sessionExpiredSaga,
   change_PasswordSaga,
+  forgotPasswordsaga
 };

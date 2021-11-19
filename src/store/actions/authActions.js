@@ -77,5 +77,6 @@ export {
     verifyForgotPasswordOtp,
     updatePassword,
     completeRegiter,
-    change_Password
+    change_Password,
+
 };

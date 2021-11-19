@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState } from 'react';
 import {
   ImageBackground,
   Keyboard,
@@ -11,12 +11,14 @@ import {
 } from 'react-native';
 //extrenal libraries
 import {moderateScale} from 'react-native-size-matters';
-import {useDispatch} from 'react-redux';
+import {useDispatch , useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
 import {Header} from '../../../components/common/Header';
+import { Loader } from '../../../components/common/Loader';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
+import { forgotPassword } from '../../../store/actions';
 //internal libraries
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
@@ -24,6 +26,8 @@ import styles from './styles';
 
 const ForgotPassword = ({navigation}) => {
   let passwordTextInput = useRef(null);
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in forgotpassword page>>>>>>>>>>');
   const dispatch = useDispatch();
   const [state, setState] = useState({
     email: '',
@@ -58,6 +62,12 @@ const ForgotPassword = ({navigation}) => {
     if (Object.keys(err).length == 0) {
       var formData = new FormData();
       formData.append('email', email);
+      let obj = {};
+      obj.email = email;
+
+      obj.token = auth && auth.userDetails.access_token;
+
+      dispatch(forgotPassword(obj));
       // dispatch({type:REGISTER,payloads:formData});
     }
   }
@@ -145,6 +155,10 @@ const ForgotPassword = ({navigation}) => {
               </View>
             </KeyboardAvoidingView>
           </ScrollView>
+          <Loader
+            isLoading={auth.loading}
+            isAbsolute
+          />
         </ImageBackground>
       </View>
     </SafeAreaView>

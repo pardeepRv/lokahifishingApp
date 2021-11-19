@@ -332,9 +332,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = lokahifishinglatest/lokahifishinglatest.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 3HDGGZFX5G;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = lokahifishinglatest/Info.plist;
@@ -350,11 +350,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvtech.lokahi;
 				PRODUCT_NAME = lokahifishinglatest;
-				PROVISIONING_PROFILE_SPECIFIER = Lokahi_Fishing_Dis;
+				PROVISIONING_PROFILE_SPECIFIER = Lokahi_Fishing_Development;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -368,7 +368,7 @@
 				CODE_SIGN_ENTITLEMENTS = lokahifishinglatest/lokahifishinglatest.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 3HDGGZFX5G;
 				INFOPLIST_FILE = lokahifishinglatest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -386,7 +386,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = Lokahi_Fishing_Dis;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

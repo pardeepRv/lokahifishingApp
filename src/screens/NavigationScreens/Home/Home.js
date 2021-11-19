@@ -18,6 +18,7 @@ import {strings} from '../../../localization';
 import styles from './styles';
 import {Header} from '../../../components/common/Header';
 import {moderateScale} from 'react-native-size-matters';
+import {color} from 'react-native-reanimated';
 
 const Home = ({navigation}) => {
   const [menus, setMenus] = useState(menu);
@@ -28,7 +29,15 @@ const Home = ({navigation}) => {
       activeOpacity={0.8}
       onPress={() => navigation.navigate(item.navigate)}>
       <Image source={item.img} style={styles.imageStyle} />
-      <Text style={styles.textStyle}>{item.name}</Text>
+      {/* && strings.Tids_weather */}
+      <Text
+        style={
+          item.name != strings.LeaderBoard &&  item.name != strings.Tids_weather
+            ? styles.textStyle
+            : [styles.textStyle, {color: '#2c385e'}]
+        }>
+        {item.name}
+      </Text>
     </TouchableOpacity>
   );
   return (

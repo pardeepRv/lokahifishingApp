@@ -51,7 +51,7 @@ const Signin = ({ navigation }) => {
 
   function Done() {
     Keyboard.dismiss();
-    // return navigation.navigate('HomeStack');
+    return navigation.navigate('HomeStack');
 
     let err = {};
     //email error

@@ -8,6 +8,7 @@ import {
   sessionExpiredSaga,
   change_PasswordSaga,
   forgotPasswordsaga,
+  SignupViaEmail,
 } from './authSagas';
 import {getProfileSaga, updateProfileSaga, memberInfoSaga} from './userSaga';
 import {
@@ -40,6 +41,7 @@ export default function* rootSaga() {
   //auth sagas
   yield takeLatest(actionTypes.FETCH_DATA_REQUESTED, fetchAll);
   yield takeLatest(actionTypes.LOGIN_WITH_EMAIL_REQUESTED, loginViaEmail);
+  yield takeLatest(actionTypes.SIGNUP_WITH_EMAIL_REQUESTED, SignupViaEmail);
   yield takeLatest(actionTypes.CHECKED_IF_LOGGED_IN, checkIfLoggedInSaga);
   yield takeLatest(actionTypes.LOGOUT_REQUESTED, logoutSaga);
   yield takeLatest(actionTypes.SESSION_EXPIRE_REQUESTED, sessionExpiredSaga);

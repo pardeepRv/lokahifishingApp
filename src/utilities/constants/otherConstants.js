@@ -372,43 +372,41 @@ const slides = [
 
 const menu = [
   {
-    name: strings.Catch_report_h,
+    name: 'Local Catch Report (LCR)',
     navigate: 'catchReportStack',
     img: icons.ic_Fish01,
-    bgColor: colors.primary1,
+    bgColor: "rgb(2,19,66)",
   },
   {
     name: strings.Tids_weather,
     navigate: 'DataFeeds',
-    img: icons.ic_Fish02,
-    bgColor: '#553456',
-
+    img: icons.TidesIcon2,
+    bgColor:"#fafafa" ,
   },
-
   {
     name: strings.Photo_sharing,
     navigate: 'PhotoSharing',
-    img: icons.ic_Fish03,
-    bgColor: '#CC8899',
+    img: icons.PhotoIcon,
+    bgColor: 'rgb(100, 42, 141)',
   },
   {
     name: strings.News,
     
     navigate: 'News',
     img: icons.NewsIcon,
-    bgColor: colors.yellow1,
+    bgColor: 'rgb(254, 222, 0)',
   },
   {
     name: strings.LeaderBoard,
     navigate: 'LeaderBoard',
     img: icons.LeaderIcon,
-    bgColor: '#C0C0C0',
+    bgColor: "#fafafa",
   },
   {
     name: strings.Tournament,
     navigate: 'Tournament',
-    img: icons.ic_Fish06,
-    bgColor: colors.orange1,
+    img: icons.TournamentIcon,
+    bgColor: 'rgb(246, 88, 28)',
   },
 ];
 

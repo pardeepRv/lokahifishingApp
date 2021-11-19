@@ -22,7 +22,9 @@ import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
-import { loginWithEmail, signUpWithEmail } from '../../../store/actions';
+
+
+import {  signUpWithEmail } from '../../../store/actions';
 //internal libraries
 import {colors, screenNames} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
@@ -66,6 +68,7 @@ const Signup = ({navigation}) => {
     {name: 'island', value: island},
     {name: 'password', value: password},
     {name: 'confirmpassword', value: confirmpassword},
+    
   ];
 
   // const _onChangeText = key => val => {
@@ -85,10 +88,13 @@ const Signup = ({navigation}) => {
 
   function Submit() {
     Keyboard.dismiss();
-    let err = {};
+    let err = {} ;
+   
     //email error
     name_and_values.forEach(data => {
       let name = data.name;
+      // let check =
+      // productPhoto != '';
       let value = data.value;
       if (!value) {
         err[name] = 'Should not be empty';
@@ -103,11 +109,13 @@ const Signup = ({navigation}) => {
         err[name] = 'Too short';
       } else if ('confirmpassword' === name && value !== password) {
         err[name] = 'Confirm password should match';
-      }
+      } 
+   
     });
-    setErrors(err);
-    if (Object.keys(err).length == 0) {
+   return setErrors(err);
+    if (Object.keys(err).length == 0 ) {
       var formData = new FormData();
+      formData.append('image', productPhoto);
       formData.append('user_name', username);
       formData.append('full_name', fullname);
       formData.append('email', email);
@@ -127,6 +135,8 @@ const Signup = ({navigation}) => {
       obj.password_confirmation = confirmpassword;
       obj.city = city;
       obj.user_name = username;
+      obj.image=productPhoto;
+      dispatch(signUpWithEmail(obj));
       // dispatch(signUpWithEmail(obj));
       // dispatch({type:REGISTER,payloads:formData});
     }

@@ -115,6 +115,9 @@ import no_image from './icons/photoSharingImages/no_image.jpg';
 import LeaderIcon from './icons/home-icons/LeaderIcon.png'
 import NewsIcon from './icons/home-icons/NewsIcon.png'
 import TidesIcon2 from './icons/home-icons/TidesIcon2.png'
+import PhotoIcon from './icons/home-icons/PhotoIcon.png'
+import TournamentIcon from './icons/home-icons/TournamentIcon.png'
+
 
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
 import ic_Fish02 from './icons/dashbaordImages/Fish02.png';
@@ -182,6 +185,8 @@ const icons = {
   like,
   TidesIcon2,
   LeaderIcon,
+  TournamentIcon,
+  PhotoIcon,
   loginLogo,
   NewsIcon,
   MuFish,

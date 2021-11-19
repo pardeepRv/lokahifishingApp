@@ -29,8 +29,8 @@ export default StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     resizeMode: 'contain',
-    width: layout.size.width / 3,
-    flex: 0.4,
+    width: layout.size.width / 2,
+    flex: 0.6,
   },
   textInputStyles: {
     height: 50,
@@ -47,6 +47,8 @@ export default StyleSheet.create({
     color: colors.white1,
     paddingHorizontal: moderateScale(5),
     alignSelf: 'center',
+    textAlign:'center',
+    shadowOpacity:.5,
   },
   image: {
     flex: 1,

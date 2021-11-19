@@ -100,6 +100,68 @@ function* loginViaEmail({params}) {
   }
 }
 
+function* SignupViaEmail({params}) {
+  try {
+    console.log('params', params);
+
+    let dataToBesend = {
+      email: params.email,
+      password: params.password,
+      user_name :params.user_name,
+      full_name:params.full_name,
+      island:params.island,
+      city:params.city,
+      password_confirmation:params.password_confirmation,
+      image:params.image,
+      cml:params.cml,
+    };
+
+
+    console.log('dataToBesend', JSON.stringify(dataToBesend));
+    const config = {
+      url: urls.register_url,
+      method: 'POST',
+      data: dataToBesend,
+    };
+
+    const response = yield request(config);
+    console.log(response, 'getting response from login api ');
+
+    if (response && response.data && response.data.success) {
+      let updatedObj = response.data.data.user;
+      updatedObj['access_token'] = response.data.data.access_token;
+
+      console.log(
+        updatedObj,
+        'response.data.data.access_tokenupdatedObjupdatedObj',
+      );
+
+      const loginUserData = extractUserDataFromDBResponse(updatedObj);
+
+      console.log('data to be saved is: ', loginUserData);
+
+      yield setLocalUserData(loginUserData);
+
+      yield put({
+        type: actionTypes.SIGNUP_WITH_EMAIL_SUCCEEDED,
+        userData: loginUserData,
+      });
+
+      NavigationService.resetRoute(screenNames.HomeStack);
+    } else {
+      yield put({
+        type: actionTypes.SIGNUP_WITH_EMAIL_FAIL,
+      });
+      showErrorAlert(response.data.message);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+
+    yield put({
+      type: actionTypes.SIGNUP_WITH_EMAIL_FAIL,
+    });
+  }
+}
 function* change_PasswordSaga({params}) {
   try {
     console.log('params', params);
@@ -232,7 +294,9 @@ export {
   loginViaEmail,
   checkIfLoggedInSaga,
   logoutSaga,
+  SignupViaEmail,
   sessionExpiredSaga,
   change_PasswordSaga,
-  forgotPasswordsaga
+  forgotPasswordsaga,
+
 };

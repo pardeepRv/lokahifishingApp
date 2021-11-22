@@ -1,18 +1,16 @@
-import React, {useRef, useState} from 'react';
-
+import React, {useState} from 'react';
 import {
+  Image,
   ImageBackground,
   SafeAreaView,
-  StyleSheet,
-  View,
-  Image,
-  Text,
   ScrollView,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 // import Pdf from 'react-native-pdf';
 import {moderateScale} from 'react-native-size-matters';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {fonts, icons} from '../../../../assets';
 import {strings} from '../../../localization';
 import {colors} from '../../../utilities/constants';
@@ -50,9 +48,12 @@ const BoatInfo = () => {
                 />
                 <View style={styles.rowContent2}>
                   <Text style={styles.nameStyle}>{strings.boatmaker}</Text>
-                  <Text style={{height: moderateScale(2),
-    width: layout.size.width/1.8,
-backgroundColor:colors.white1}}></Text>
+                  <Text
+                    style={{
+                      height: moderateScale(2),
+                      width: layout.size.width / 1.8,
+                      backgroundColor: colors.white1,
+                    }}></Text>
 
                   <Text style={styles.nameStyle}>{strings.boatlength}</Text>
                 </View>
@@ -150,16 +151,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   rowContent2: {
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
-    alignSelf:'center',
-    alignItems:'center',
-
+    alignSelf: 'center',
+    alignItems: 'center',
   },
   rowContent3: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent:'space-between'
+    justifyContent: 'space-between',
   },
   subContainer: {
     paddingHorizontal: moderateScale(15),
@@ -168,16 +168,13 @@ const styles = StyleSheet.create({
     paddingBottom: moderateScale(40),
   },
   nameStyle: {
-
     height: moderateScale(35),
-    width: layout.size.width/2,
-top:2,
+    width: layout.size.width / 2,
+    top: 2,
     fontFamily: fonts.bold,
     fontSize: moderateScale(22),
     color: colors.primary,
     paddingHorizontal: moderateScale(10),
-
-
   },
   dateStyle: {
     top: 10,
@@ -207,8 +204,6 @@ top:2,
     borderWidth: 0,
     borderRadius: 16,
     top: moderateScale(2),
-
-
   },
 });
 

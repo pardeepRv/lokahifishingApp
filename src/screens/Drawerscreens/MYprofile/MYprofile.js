@@ -75,9 +75,9 @@ const MYprofile = ({navigation}) => {
             </View>
             <Text style={styles.nameStyle}>{auth.userDetails.user_name}</Text>
             <Text style={styles.nameStyle}>{auth.userDetails.full_name}</Text>
-            <Text style={styles.nameStyle}>
+            {/* <Text style={styles.nameStyle}>
               {auth.userDetails.phone_number}
-            </Text>
+            </Text> */}
             <Text style={styles.nameStyle}>{auth.userDetails.CML}</Text>
             <Text style={styles.nameStyle}>{auth.userDetails.city}</Text>
           </View>

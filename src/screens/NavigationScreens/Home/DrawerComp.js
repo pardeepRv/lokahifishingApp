@@ -13,7 +13,6 @@ import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
 import {strings} from '../../../localization';
 import store from '../../../store';
-import {useDispatch, useSelector} from 'react-redux';
 import {logout} from '../../../store/actions';
 import {colors, data} from '../../../utilities/constants';
 
@@ -24,10 +23,7 @@ const dummyImg =
 
 const DrawerComp = ({navigation, ...props}) => {
   console.log(navigation, 'navigationnavigation in drwaer');
-  // const dispatch = useDispatch();
- 
-  let auth = useSelector(state => state.auth);
-  console.log(auth, 'auth in myprofile  page>>>>>>>>>>');
+  console.log(props, 'props indrwawer');
 
   const pressHnadler = screen => {
     console.log(screen, 'where we are navigating...');
@@ -36,7 +32,6 @@ const DrawerComp = ({navigation, ...props}) => {
   };
   const signOut = () => {
     // dispatch(logout());
-
     store.dispatch(logout());
   };
 
@@ -51,8 +46,20 @@ const DrawerComp = ({navigation, ...props}) => {
   };
   return (
     <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
-      <Image source={{uri: dummyImg}} style={styles.bgImg} />
-      <Text style={styles.username}>Developer</Text>
+      <Image
+        source={{
+          uri:
+            props &&
+            props.useDetails &&
+            props.useDetails.profile_picture != null
+              ? props.useDetails.profile_picture
+              : dummyImg,
+        }}
+        style={styles.bgImg}
+      />
+      <Text style={styles.username}>
+        {props && props.useDetails && props.useDetails.full_name}
+      </Text>
       <ScrollView style={{...styles.container, marginTop: 10}}>
         {data.map((val, index) => {
           return (
@@ -63,7 +70,6 @@ const DrawerComp = ({navigation, ...props}) => {
                 margin: 10,
               }}
               onPress={
-                // console.log(val.name,'name is>>>');
                 val.name == strings.Logout
                   ? () => reset()
                   : () => pressHnadler(val.navigate)

@@ -1,7 +1,9 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+
 //navigation screens
 import ForgotPassword from '../screens/AuthScreens/ForgotPassword/ForgotPassword';
 import Signin from '../screens/AuthScreens/Signin/Signin';
@@ -38,7 +40,7 @@ import CatchReport from '../screens/NavigationScreens/CatchReport/CatchReport';
 import SelectBoatFishing from '../screens/NavigationScreens/SelectBoatFishing/SelectBoatFishing';
 import ShortLineFishing from '../screens/NavigationScreens/SelectBoatFishing/ShorLineFishing';
 import PhotoSharing from '../screens/NavigationScreens/PhotoSharing/PhotoSharing';
-import { navigationRef } from '../store/NavigationService';
+import {navigationRef} from '../store/NavigationService';
 import LCRFilter from '../screens/Drawerscreens/LCRFilter/LCRFilter';
 import LCRlist from '../screens/Drawerscreens/LCRlist/LCRlist';
 import PhotoSharingPost from '../screens/Drawerscreens/PhotoSharingPost/PhotoSharingPost';
@@ -69,7 +71,6 @@ import SlideBait from '../screens/NavigationScreens/SelectBoatFishing/SlideBait/
 import Effort from '../screens/NavigationScreens/SelectBoatFishing/Efffort/Effort';
 import FishData from '../screens/NavigationScreens/SelectBoatFishing/FishData/FishData';
 
-
 import FriendRequests from '../screens/Drawerscreens/FriendRequests/FriendRequests';
 import Friends from '../screens/Drawerscreens/Friends/Friends';
 import Gallery from '../screens/Drawerscreens/Gallery/Gallery';
@@ -87,8 +88,6 @@ import Importantlinks from '../screens/Drawerscreens/Importantlinks/Importantlin
 import FishingWebsite from '../screens/Drawerscreens/Importantlinks/FishingWebsite';
 import HawaiiLegislature from '../screens/Drawerscreens/Importantlinks/HawaiiLegislatureWebsite';
 
-
-
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -96,17 +95,22 @@ const Drawer = createDrawerNavigator();
 const commonScreensOptions = {
   headerStyle: {
     elevation: 1,
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 1,
   },
 };
 
 const HomeStackScreen = props => {
-  console.log(props,'porps sednn');
+  console.log(props, 'porps sednn');
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in navigator');
   return (
     <Drawer.Navigator
       initialRouteName="Drawer"
-      drawerContent={props => DrawerComp({ ...props })}
+      drawerContent={props => {
+        props.useDetails = auth && auth.userDetails;
+        return DrawerComp({...props});
+      }}
       screenOptions={{
         headerShown: false,
       }}>
@@ -134,14 +138,22 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="Gallery" component={GallerytStack} />
       <Drawer.Screen name="TagR" component={TagR} />
       <Drawer.Screen name="PendingLCR" component={PendingLCR} />
-      <Drawer.Screen name="FriendProfileScreen" component={FriendProfileScreen} />
+      <Drawer.Screen
+        name="FriendProfileScreen"
+        component={FriendProfileScreen}
+      />
       <Drawer.Screen name="FriendBoatInfo" component={FriendBoatInfo} />
-      <Drawer.Screen name="FriendEmergencyContacts" component={FriendEmergencyContacts} />
+      <Drawer.Screen
+        name="FriendEmergencyContacts"
+        component={FriendEmergencyContacts}
+      />
       <Drawer.Screen name="FriendLCR" component={FriendLCR} />
       <Drawer.Screen name="Importantlinks" component={Importantlinks} />
       <Drawer.Screen name="FishingWebsite" component={FishingWebsite} />
-      <Drawer.Screen name="HawaiiLegislatureWebsite" component={HawaiiLegislature} />
-
+      <Drawer.Screen
+        name="HawaiiLegislatureWebsite"
+        component={HawaiiLegislature}
+      />
     </Drawer.Navigator>
   );
 };
@@ -149,9 +161,7 @@ const HomeStackScreen = props => {
 const MainNavigator = props => {
   return (
     // <NavigationContainer ref={navigationRef}>
-    <NavigationContainer initialRouteName={'authStack'}
-      ref={navigationRef}
-    >
+    <NavigationContainer initialRouteName={'authStack'} ref={navigationRef}>
       <MainStack.Navigator
         screenOptions={{
           headerShown: false,
@@ -209,7 +219,6 @@ const GallerytStack = props => {
       }}
       initialRouteName={'GalleryScreen'}>
       <Stack.Screen name="GalleryScreen" component={Gallery} />
-     
     </Stack.Navigator>
   );
 };
@@ -224,8 +233,6 @@ const LeaderBoardStack = props => {
       <Stack.Screen name="LeaderBoardScreen" component={LeaderBoard} />
       <Stack.Screen name="LeaderBoardType" component={LeaderBoardType} />
       <Stack.Screen name="leaderboardCard" component={LeaderboardCard} />
-
-
     </Stack.Navigator>
   );
 };
@@ -246,14 +253,12 @@ const catchReportStack = props => {
       <Stack.Screen name="DeepBottom" component={DeepBottom} />
       <Stack.Screen name="ShallowBottom" component={ShallowBottom} />
       <Stack.Screen name="Whipping" component={Whipping} />
-      <Stack.Screen  name="Baitcasting" component={Baitcasting} />
-      <Stack.Screen  name="SlideBait" component={SlideBait} />
-      <Stack.Screen  name="Effort" component={Effort} />
+      <Stack.Screen name="Baitcasting" component={Baitcasting} />
+      <Stack.Screen name="SlideBait" component={SlideBait} />
+      <Stack.Screen name="Effort" component={Effort} />
       <Stack.Screen name="FishData" component={FishData} />
       <Stack.Screen name="UploadImg" component={UploadImg} />
       <Stack.Screen name="LCRRequired" component={LCRRequired} />
-
-
     </Stack.Navigator>
   );
 };
@@ -270,8 +275,6 @@ const MYprofileStack = props => {
       <Stack.Screen name="EmergencyContacts" component={EmergencyContacts} />
       <Stack.Screen name="LCR" component={LCR} />
       <Stack.Screen name="Edit" component={Edit} />
-
-
     </Stack.Navigator>
   );
 };
@@ -315,11 +318,6 @@ const LcrListStack = props => {
       <Stack.Screen name="LCRDetails" component={LCRDetails} />
       <Stack.Screen name="EditLCRDetails" component={EditLCRDetails} />
       <Stack.Screen name="UploadImage" component={UploadImage} />
-
-
-   
-
-
     </Stack.Navigator>
   );
 };

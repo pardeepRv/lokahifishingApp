@@ -103,12 +103,12 @@ const ForgotPassword = ({navigation}) => {
               showsVerticalScrollIndicator={false}>
               <View style={styles.uploadContainer}>
                 <Image
-                  source={icons.signin_bg_ic}
+                  source={icons.loginLogo}
                   resizeMode="contain"
                   style={{
                     borderRadius: moderateScale(100),
-                    height: layout.size.height / 2.8,
-                    width: layout.size.height / 2.8,
+                    height: layout.size.height / 4,
+                    width: layout.size.height / 4,
                   }}
                 />
               </View>

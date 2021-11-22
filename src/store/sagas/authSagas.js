@@ -102,30 +102,29 @@ function* loginViaEmail({params}) {
 
 function* SignupViaEmail({params}) {
   try {
-    console.log('params', params);
+    console.log('params sedning to signuop', params);
 
     let dataToBesend = {
       email: params.email,
       password: params.password,
-      user_name :params.user_name,
-      full_name:params.full_name,
-      island:params.island,
-      city:params.city,
-      password_confirmation:params.password_confirmation,
-      image:params.image,
-      cml:params.cml,
+      user_name: params.user_name,
+      full_name: params.full_name,
+      island: params.island,
+      city: params.city,
+      password_confirmation: params.password_confirmation,
+      image: params.image,
+      cml: params.cml,
     };
-
 
     console.log('dataToBesend', JSON.stringify(dataToBesend));
     const config = {
       url: urls.register_url,
       method: 'POST',
-      data: dataToBesend,
+      data: params,
     };
 
     const response = yield request(config);
-    console.log(response, 'getting response from login api ');
+    console.log(response, 'getting response from signup api ');
 
     if (response && response.data && response.data.success) {
       let updatedObj = response.data.data.user;
@@ -203,7 +202,7 @@ function* change_PasswordSaga({params}) {
 
 function* forgotPasswordsaga({params}) {
   try {
-     console.log('params', params);
+    console.log('params', params);
 
     let dataToBesend = {
       email: params.email,
@@ -219,7 +218,7 @@ function* forgotPasswordsaga({params}) {
       },
     };
     const response = yield request(config);
-     console.log(response, 'getting response from forgot pasword api ');
+    console.log(response, 'getting response from forgot pasword api ');
 
     if (response && response.status == 200) {
       yield put({
@@ -298,5 +297,4 @@ export {
   sessionExpiredSaga,
   change_PasswordSaga,
   forgotPasswordsaga,
-
 };

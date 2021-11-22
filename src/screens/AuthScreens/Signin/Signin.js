@@ -29,8 +29,8 @@ const Signin = ({ navigation }) => {
   console.log(auth, 'auth in signin page>>>>>>>>>>');
   const dispatch = useDispatch();
   const [state, setState] = useState({
-    email: 'ashutosh@rvtechnologies.com',
-    password: 'ashutosh',
+    email: 'myname@yopmail.com',
+    password: 'qwerty123',
     // email: '',
     // password: '',
   });
@@ -51,7 +51,7 @@ const Signin = ({ navigation }) => {
 
   function Done() {
     Keyboard.dismiss();
-    return navigation.navigate('HomeStack');
+    //  navigation.navigate('HomeStack');
 
     let err = {};
     //email error
@@ -100,12 +100,12 @@ const Signin = ({ navigation }) => {
               showsVerticalScrollIndicator={false}>
               <View style={styles.uploadContainer}>
                 <Image
-                  source={icons.signin_bg_ic}
+                  source={icons.loginLogo}
                   resizeMode="contain"
                   style={{
                     borderRadius: moderateScale(100),
-                    height: layout.size.height / 2.8,
-                    width: layout.size.height / 2.8,
+                    height: layout.size.height / 4,
+                    width: layout.size.height / 4,
                   }}
                 />
               </View>

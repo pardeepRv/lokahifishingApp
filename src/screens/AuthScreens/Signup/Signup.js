@@ -17,21 +17,23 @@ import {
 import ImagePicker from 'react-native-image-crop-picker';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {moderateScale} from 'react-native-size-matters';
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
+import { Loader } from '../../../components/common/Loader';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
 
-
-import {  signUpWithEmail } from '../../../store/actions';
+import {signUpWithEmail} from '../../../store/actions';
 //internal libraries
 import {colors, screenNames} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import styles from './styles';
 
 const Signup = ({navigation}) => {
-  let passwordTextInput = useRef(null);
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in sigup page>>>>>>>>>>');
+
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [fullname, setFullname] = useState('');
@@ -57,7 +59,7 @@ const Signup = ({navigation}) => {
     island: '',
     isLoading: false,
     productPhoto: '',
-    cmlHolder:'',
+    cmlHolder: '',
   });
 
   const name_and_values = [
@@ -68,7 +70,6 @@ const Signup = ({navigation}) => {
     {name: 'island', value: island},
     {name: 'password', value: password},
     {name: 'confirmpassword', value: confirmpassword},
-    
   ];
 
   // const _onChangeText = key => val => {
@@ -88,8 +89,8 @@ const Signup = ({navigation}) => {
 
   function Submit() {
     Keyboard.dismiss();
-    let err = {} ;
-   
+    let err = {};
+
     //email error
     name_and_values.forEach(data => {
       let name = data.name;
@@ -109,19 +110,23 @@ const Signup = ({navigation}) => {
         err[name] = 'Too short';
       } else if ('confirmpassword' === name && value !== password) {
         err[name] = 'Confirm password should match';
-      } 
-   
+      }
     });
-   return setErrors(err);
-    if (Object.keys(err).length == 0 ) {
-      var formData = new FormData();
-      formData.append('image', productPhoto);
+    setErrors(err);
+    if (Object.keys(err).length == 0) {
+      let formData = new FormData();
+
+      formData.append('image', {
+        uri: productPhoto,
+        type: 'image/jpeg', // or photo.type
+        name: 'profilePic',
+      });
       formData.append('user_name', username);
       formData.append('full_name', fullname);
       formData.append('email', email);
       formData.append('city', city);
       formData.append('island', island);
-      formData.append('cml', cmlHolder);
+      formData.append('cml', 1);
       formData.append('password', password);
       formData.append('password_confirmation', confirmpassword);
 
@@ -135,8 +140,10 @@ const Signup = ({navigation}) => {
       obj.password_confirmation = confirmpassword;
       obj.city = city;
       obj.user_name = username;
-      obj.image=productPhoto;
-      dispatch(signUpWithEmail(obj));
+      obj.image = productPhoto;
+
+      console.log(formData, 'sending to aApi');
+      dispatch(signUpWithEmail(formData));
       // dispatch(signUpWithEmail(obj));
       // dispatch({type:REGISTER,payloads:formData});
     }
@@ -162,6 +169,8 @@ const Signup = ({navigation}) => {
           source={icons.ic_radio_btn_off}
           style={{
             tintColor: colors.white1,
+            width: 15,
+            height: 15,
           }}
         />
       )}
@@ -170,13 +179,13 @@ const Signup = ({navigation}) => {
     </TouchableOpacity>
   );
 
-  function _doOpenOption(value) {
+  function _doOpenOption() {
     Alert.alert(
       '',
       'Please Select',
       [
-        {text: 'Camera', onPress: () => _doOpenCamera(value)},
-        {text: 'Gallery', onPress: () => _doOpenGallery(value)},
+        {text: 'Camera', onPress: () => _doOpenCamera()},
+        {text: 'Gallery', onPress: () => _doOpenGallery()},
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
@@ -186,33 +195,31 @@ const Signup = ({navigation}) => {
       {cancelable: true},
     );
   }
-  function _doOpenCamera(value) {
+  function _doOpenCamera() {
     ImagePicker.openCamera({
       width: 300,
       height: 400,
       cropping: true,
-      includeBase64: true,
+      // includeBase64: true,
       compressImageQuality: 0.2,
     }).then(response => {
       let data = `data:${response.mime};base64,${response.data}`;
-      if (value == 'productPhoto') {
-        setProductPhoto(data);
-      }
+      setProductPhoto(data);
     });
   }
-  function _doOpenGallery(value) {
+  function _doOpenGallery() {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: true,
-      includeBase64: true,
+      // includeBase64: true,
       compressImageQuality: 0.2,
-    }).then(image => {
-      console.log(`images`, image);
-        let data = `data:${image.mime};base64,${image.data}`;
-        if (value == 'productPhoto') {
-          setProductPhoto(data);
-        }
+    }).then(res => {
+      console.log(`ress`, res);
+      // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
+      if (Platform.OS == 'ios') {
+        setProductPhoto(res.sourceURL);
+      }
     });
   }
 
@@ -230,32 +237,30 @@ const Signup = ({navigation}) => {
               contentContainerStyle={styles.subContentContainer}
               keyboardShouldPersistTaps={'always'}
               showsVerticalScrollIndicator={false}>
-              <View style={styles.uploadContainer}>
+              <TouchableOpacity
+                style={styles.uploadContainer}
+                onPress={() => _doOpenOption()}>
                 <Image
                   source={
-                    productPhoto != ''
-                      ? {uri: productPhoto}
-                      : icons.signin_bg_ic
+                    productPhoto != '' ? {uri: productPhoto} : icons.loginLogo
                   }
                   resizeMode="cover"
                   style={{
                     borderRadius: moderateScale(100),
-                    height: productPhoto != '' ? '100%' : '115%',
-                    width: productPhoto != '' ? '100%' : '155%',
+                    height: productPhoto != '' ? '100%' : '100%',
+                    width: productPhoto != '' ? '100%' : '100%',
                   }}
                 />
-                <View style={styles.uploadContent}>
-                  <TouchableOpacity
-                    style={[styles.uploadStoreBtn]}
-                    onPress={() => _doOpenOption('productPhoto')}>
+                {/* <View style={styles.uploadContent}>
+                  <TouchableOpacity style={[styles.uploadStoreBtn]}>
                     <Image
                       style={styles.logo2}
                       source={icons.ic_cateagory}
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
-                </View>
-              </View>
+                </View> */}
+              </TouchableOpacity>
               <View
                 style={{
                   marginTop: layout.size.width / 10,
@@ -494,6 +499,10 @@ const Signup = ({navigation}) => {
               </TouchableOpacity>
             </KeyboardAvoidingView>
           </ScrollView>
+          <Loader
+            isLoading={auth.loading}
+            isAbsolute
+          />
         </ImageBackground>
       </View>
     </SafeAreaView>

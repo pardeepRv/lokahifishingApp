@@ -25,6 +25,9 @@ const dummyImg =
 const DrawerComp = ({navigation, ...props}) => {
   console.log(navigation, 'navigationnavigation in drwaer');
   // const dispatch = useDispatch();
+ 
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in myprofile  page>>>>>>>>>>');
 
   const pressHnadler = screen => {
     console.log(screen, 'where we are navigating...');

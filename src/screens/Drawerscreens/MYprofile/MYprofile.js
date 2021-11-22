@@ -1,31 +1,35 @@
+// ecternal libraries
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React from 'react';
 import {
+  Image,
   ImageBackground,
   SafeAreaView,
-  StyleSheet,
-  View,
-  Image,
   ScrollView,
-  Text
+  Text,
+  View,
 } from 'react-native';
+import {moderateScale} from 'react-native-size-matters';
+import {useDispatch, useSelector} from 'react-redux';
 // internal libraries
-import { fonts, icons } from '../../../../assets';
-import { Header } from '../../../components/common/Header';
-import { strings } from '../../../localization';
-import { colors } from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
+import {fonts, icons} from '../../../../assets';
+import {Header} from '../../../components/common/Header';
+import {Loader} from '../../../components/common/Loader';
+import {strings} from '../../../localization';
+import {colors} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
 import BoatInfo from './BoatInfo';
 import EmergencyContacts from './EmergencyContacts';
 import LCR from './LCR';
 import styles from './styles';
 
-// ecternal libraries
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { moderateScale } from 'react-native-size-matters';
-
 const Tab = createMaterialTopTabNavigator();
 
-const MYprofile = ({ navigation }) => {
+const MYprofile = ({navigation}) => {
+  const dispatch = useDispatch();
+
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in myprofile  page>>>>>>>>>>');
   return (
     <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
       <SafeAreaView style={styles.content}>
@@ -35,7 +39,7 @@ const MYprofile = ({ navigation }) => {
             height: moderateScale(60),
           }}
           title={strings.My_Profile}
-          titleStyle={{ fontFamily: fonts.bold }}
+          titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -44,44 +48,38 @@ const MYprofile = ({ navigation }) => {
             navigation.goBack();
           }}
           onRightPress={() => {
-             navigation.navigate('Edit')
+            navigation.navigate('Edit');
           }}
           rightIconSource={icons.ic_edit}
           rightIconStyle={{
             height: 20,
-            width: 20
+            width: 20,
           }}
         />
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{flex: 1}}>
           <View style={styles.contentcontainer}>
             <View style={styles.uploadContainer}>
               <Image
-                source={icons.signin_bg_ic}
-                resizeMode="contain"
+                source={
+                  auth.userDetails.profile_picture
+                    ? {uri: auth.userDetails.profile_picture}
+                    : icons.loginLogo
+                }
+                resizeMode="cover"
                 style={{
                   borderRadius: moderateScale(100),
-                  height: layout.size.height / 4,
-                  width: layout.size.height / 4,
+                  height: layout.size.height / 5,
+                  width: layout.size.height / 5,
                 }}
               />
-              {/* <View style={styles.uploadContent}>
-              <TouchableOpacity
-                style={[styles.uploadStoreBtn]}
-                onPress={() => _doOpenOption('productPhoto')}>
-                <Image
-                  style={styles.logo2}
-                  source={icons.ic_cateagory}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-            </View> */}
             </View>
-            <Text style={styles.nameStyle}>hello</Text>
-            <Text style={styles.nameStyle}>KC</Text>
-            <Text style={styles.nameStyle}>phonen numvber</Text>
-            <Text style={styles.nameStyle}>CM Holder: no</Text>
-            <Text style={styles.nameStyle}>city: mohali</Text>
-
+            <Text style={styles.nameStyle}>{auth.userDetails.user_name}</Text>
+            <Text style={styles.nameStyle}>{auth.userDetails.full_name}</Text>
+            <Text style={styles.nameStyle}>
+              {auth.userDetails.phone_number}
+            </Text>
+            <Text style={styles.nameStyle}>{auth.userDetails.CML}</Text>
+            <Text style={styles.nameStyle}>{auth.userDetails.city}</Text>
           </View>
         </ScrollView>
 
@@ -95,7 +93,7 @@ const MYprofile = ({ navigation }) => {
               color: colors.white1,
               fontWeight: '700',
               shadowColor: colors.black1,
-              shadowOffset: { width: 1, height: 1 },
+              shadowOffset: {width: 1, height: 1},
               shadowOpacity: 1,
               shadowRadius: 0,
               textTransform: 'none',
@@ -110,6 +108,7 @@ const MYprofile = ({ navigation }) => {
           <Tab.Screen name="LCR" component={LCR} />
         </Tab.Navigator>
       </SafeAreaView>
+      <Loader isLoading={auth.loading} isAbsolute />
     </ImageBackground>
   );
 };

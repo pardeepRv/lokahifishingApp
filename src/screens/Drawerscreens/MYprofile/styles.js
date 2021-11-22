@@ -38,7 +38,7 @@ export default StyleSheet.create({
       width: moderateScale(180),
       alignSelf: 'center',
       marginTop: moderateScale(1),
-      borderRadius: moderateScale(100),
+      borderRadius: moderateScale(90),
       borderColor: 'transparent',
       shadowOffset: {
         width: 0,

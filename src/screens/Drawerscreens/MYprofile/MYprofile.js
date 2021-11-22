@@ -1,9 +1,11 @@
 // ecternal libraries
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Image,
   ImageBackground,
+  Keyboard,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   Text,
@@ -16,6 +18,7 @@ import {fonts, icons} from '../../../../assets';
 import {Header} from '../../../components/common/Header';
 import {Loader} from '../../../components/common/Loader';
 import {strings} from '../../../localization';
+import {getLoginUserProfile} from '../../../store/actions';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import BoatInfo from './BoatInfo';
@@ -30,6 +33,20 @@ const MYprofile = ({navigation}) => {
 
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in myprofile  page>>>>>>>>>>');
+  const [state, setState] = useState({
+    refreshing: false,
+  });
+
+  function getprofile() {
+    Keyboard.dismiss();
+    let token = auth && auth.userDetails.access_token;
+    dispatch(getLoginUserProfile(token));
+  }
+
+  function _onRefresh() {
+    setState({refreshing: true});
+    getprofile();
+  }
   return (
     <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
       <SafeAreaView style={styles.content}>
@@ -56,13 +73,24 @@ const MYprofile = ({navigation}) => {
             width: 20,
           }}
         />
-        <ScrollView style={{flex: 1}}>
+        <ScrollView
+          style={{flex: 1}}
+          refreshControl={
+            <RefreshControl
+              // refreshing={state.refreshing}
+              refreshing={auth.loading}
+              onRefresh={_onRefresh.bind(this)}
+              title="Pull to refresh"
+              tintColor={colors.white1}
+              titleColor={colors.white1}
+            />
+          }>
           <View style={styles.contentcontainer}>
             <View style={styles.uploadContainer}>
               <Image
                 source={
-                  auth.userDetails.profile_picture
-                    ? {uri: auth.userDetails.profile_picture}
+                  auth?.userDetails?.profile_picture
+                    ? {uri: auth?.userDetails?.profile_picture}
                     : icons.loginLogo
                 }
                 resizeMode="cover"
@@ -73,13 +101,13 @@ const MYprofile = ({navigation}) => {
                 }}
               />
             </View>
-            <Text style={styles.nameStyle}>{auth.userDetails.user_name}</Text>
-            <Text style={styles.nameStyle}>{auth.userDetails.full_name}</Text>
+            <Text style={styles.nameStyle}>{auth?.userDetails?.user_name}</Text>
+            <Text style={styles.nameStyle}>{auth?.userDetails?.full_name}</Text>
             {/* <Text style={styles.nameStyle}>
               {auth.userDetails.phone_number}
             </Text> */}
-            <Text style={styles.nameStyle}>{auth.userDetails.CML}</Text>
-            <Text style={styles.nameStyle}>{auth.userDetails.city}</Text>
+            {/* <Text style={styles.nameStyle}>{auth.userDetails.CML}</Text> */}
+            <Text style={styles.nameStyle}>{auth?.userDetails?.city}</Text>
           </View>
         </ScrollView>
 

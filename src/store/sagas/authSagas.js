@@ -288,6 +288,103 @@ function* sessionExpiredSaga() {
   }
 }
 
+function* getProfileSaga({params}) {
+  try {
+    console.log('params in get profile', params);
+
+    const config = {
+      url: urls.my_profile,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response from get profile api ');
+
+    const token = yield getLocalUserData();
+    console.log(token, 'token coming>>>>>>>>>>>');
+
+    if (response && response.data && response.data.status) {
+      let updatedObj = response.data.data.user;
+      updatedObj['access_token'] = token.access_token;
+
+      console.log(
+        updatedObj,
+        'response.data.data.access_tokenupdatedObjupdatedObj',
+      );
+
+      const profileData = extractUserDataFromDBResponse(updatedObj);
+
+      console.log('data to be saved is: ', profileData);
+
+      yield setLocalUserData(profileData);
+      yield put({
+        type: actionTypes.GET_PROFILE_SUCCEEDED,
+        payload: profileData,
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.GET_PROFILE_FAIL,
+    });
+  }
+}
+
+function* editProfilesaga(params) {
+  try {
+    const result = yield getLocalUserData();
+    let token = result?.access_token;
+
+    console.log(token,'tokentoken');
+    const config = {
+      url: urls.editProfile,
+      method: 'POST',
+      data: params.params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = yield request(config);
+    console.log(response, 'getting response from edit api ');
+
+    if (response && response.data && response.data.success) {
+      let updatedObj = response.data.data.user;
+      updatedObj['access_token'] = token;
+
+      console.log(
+        updatedObj,
+        'response.data.data.access_tokenupdatedObjupdatedObj',
+      );
+
+      const editProfiledata = extractUserDataFromDBResponse(updatedObj);
+
+      console.log('data to be saved is: ', editProfiledata);
+
+      yield setLocalUserData(editProfiledata);
+
+      yield put({
+        type: actionTypes.UPDATE_PROFILE_SUCCEEDED,
+        payload: editProfiledata,
+      });
+
+      NavigationService.goBack();
+    } else {
+      yield put({
+        type: actionTypes.UPDATE_PROFILE_FAIL,
+      });
+      showErrorAlert(response.data.message);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+
+    yield put({
+      type: actionTypes.UPDATE_PROFILE_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   loginViaEmail,
@@ -297,4 +394,6 @@ export {
   sessionExpiredSaga,
   change_PasswordSaga,
   forgotPasswordsaga,
+  getProfileSaga,
+  editProfilesaga,
 };

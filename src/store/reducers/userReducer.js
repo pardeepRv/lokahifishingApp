@@ -29,25 +29,6 @@ export default (state = initialState, action) => {
                 loading: false
             };
 
-        case actionTypes.UPDATE_PROFILE_REQUESTED:
-            return {
-                ...state,
-                loading: true
-            };
-
-        case actionTypes.UPDATE_PROFILE_SUCCEEDED:
-            return {
-                ...state,
-                loading: false,
-                loginUserDetails: action.payload
-            };
-
-        case actionTypes.UPDATE_PROFILE_FAIL:
-            return {
-                ...state,
-                loading: false
-            };
-
         case actionTypes.MEMBER_REGISTER_INFO_REQUESTED:
             return {
                 ...state,

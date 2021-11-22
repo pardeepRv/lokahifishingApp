@@ -131,7 +131,6 @@ const Signup = ({navigation}) => {
       formData.append('password_confirmation', confirmpassword);
 
       let obj = {};
-      obj.email = email;
       obj.password = password;
       obj.full_name = fullname;
       obj.email = email;
@@ -202,9 +201,12 @@ const Signup = ({navigation}) => {
       cropping: true,
       // includeBase64: true,
       compressImageQuality: 0.2,
-    }).then(response => {
-      let data = `data:${response.mime};base64,${response.data}`;
-      setProductPhoto(data);
+    }).then(res => {
+      console.log(`ress`, res);
+      // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
+      if (Platform.OS == 'ios') {
+        setProductPhoto(res.sourceURL);
+      }
     });
   }
   function _doOpenGallery() {

@@ -13,6 +13,7 @@ const urls = {
   user_data: 'user_data',
   uploadMedia: 'uploadmedia',
   register: 'register',
+  my_profile : 'my-profile',
   complete_registration: 'complete_registration',
   login_with_email: 'login_with_email',
   login_with_phone: 'login_with_phone',
@@ -51,7 +52,7 @@ const urls = {
   getnotifications: 'notifications?per_page=50',
 
   forgotPassword: 'forgot_password',
-  editProfile: 'edit_profile',
+  editProfile: 'edit-profile',
   removeResume: 'removeresume',
   changeEmail: 'change_email',
   changePhone: 'change_phone',

@@ -18,32 +18,50 @@ import {
 import ImagePicker from 'react-native-image-crop-picker';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {moderateScale} from 'react-native-size-matters';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+
 //internal libraries
 
 import {fonts, icons} from '../../../../../assets';
 import {Button} from '../../../../components/common/Button';
+import {Loader} from '../../../../components/common/Loader';
 import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
+import {getLoginUserProfile, updateProfile} from '../../../../store/actions';
 import {colors, screenNames} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 import styles from './styles';
 
 const EditProfile = ({navigation}) => {
   let passwordTextInput = useRef(null);
-  const dispatch = useDispatch();
-  const [username, setUsername] = useState('');
-  const [fullname, setFullname] = useState('');
-  const [email, setEmail] = useState('');
-  const [city, setCity] = useState('');
-  const [contactNumber, setContactnumber] = useState('');
-  const [island, setIsland] = useState('');
-  const [profilePhoto, setprofilePhoto] = useState('');
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in editprofile  page>>>>>>>>>>');
 
-  const [cmlHolder, setCmlHolder] = useState([
-    {value: 'Yes', isSelected: false},
-    {value: 'No', isSelected: false},
-  ]);
+  const dispatch = useDispatch();
+  const [username, setUsername] = useState(auth?.userDetails?.user_name);
+  const [fullname, setFullname] = useState(auth?.userDetails?.full_name);
+  const [email, setEmail] = useState(auth?.userDetails?.email);
+  const [city, setCity] = useState(auth?.userDetails?.city);
+  const [contactNumber, setContactnumber] = useState(
+    auth?.userDetails?.phone_number ? auth?.userDetails?.phone_number : '',
+  );
+  const [island, setIsland] = useState(auth?.userDetails?.island);
+  const [profilePhoto, setprofilePhoto] = useState(
+    auth?.userDetails?.profile_picture,
+  );
+  const [sendingProfile, setSendingProfile] = useState(false);
+
+  const [cmlHolder, setCmlHolder] = useState(
+    auth?.userDetails?.CML == '0'
+      ? [
+          {value: 'Yes', isSelected: false},
+          {value: 'No', isSelected: true},
+        ]
+      : [
+          {value: 'Yes', isSelected: true},
+          {value: 'No', isSelected: false},
+        ],
+  );
 
   const [errors, setErrors] = useState({
     username: '',
@@ -94,20 +112,37 @@ const EditProfile = ({navigation}) => {
         !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
       ) {
         err[name] = 'Email should be valid';
-      } else if ('contactNumber' === name && value!== '' && value.length < 10){
+      } else if (
+        'contactNumber' === name &&
+        value !== '' &&
+        value.length < 10
+      ) {
         err[name] = 'Should be valid Phone number';
-        }
+      }
     });
     setErrors(err);
     if (Object.keys(err).length == 0) {
-      var formData = new FormData();
-      formData.append('first_name', firstname);
-      formData.append('last_name', lastname);
-      formData.append('email', email);
-      formData.append('phone_number', phonenumber);
-      formData.append('contactNumber', contactNumber);
+      let formData = new FormData();
 
-      // dispatch({type:REGISTER,payloads:formData});
+      if (sendingProfile) {
+        formData.append('image', {
+          uri: profilePhoto,
+          type: 'image/jpeg', // or photo.type
+          name: 'profilePic',
+        });
+      }
+      formData.append('username', username);
+      formData.append('full_name', fullname);
+      formData.append('email', email);
+      formData.append('city', city);
+      formData.append('island', island);
+      formData.append('cml_holder', 1);
+      formData.append('phone_number', contactNumber);
+
+      console.log(formData, 'sending to aApi');
+      dispatch(updateProfile(formData));
+
+      setSendingProfile(false);
     }
   }
 
@@ -139,50 +174,59 @@ const EditProfile = ({navigation}) => {
     </TouchableOpacity>
   );
 
-  function _doOpenOption(value) {
+  function _doOpenOption() {
+    setSendingProfile(true);
     Alert.alert(
       '',
       'Please Select',
       [
-        {text: 'Camera', onPress: () => _doOpenCamera(value)},
-        {text: 'Gallery', onPress: () => _doOpenGallery(value)},
+        {text: 'Camera', onPress: () => _doOpenCamera()},
+        {text: 'Gallery', onPress: () => _doOpenGallery()},
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => console.log('err'), //setSendingProfile(false),
           style: 'cancel',
         },
       ],
       {cancelable: true},
     );
   }
-  function _doOpenCamera(value) {
+  function _doOpenCamera() {
     ImagePicker.openCamera({
       width: 300,
       height: 400,
       cropping: true,
-      includeBase64: true,
       compressImageQuality: 0.2,
-    }).then(response => {
-      let data = `data:${response.mime};base64,${response.data}`;
-      if (value == 'profilePhoto') {
-        setprofilePhoto(data);
-      }
-    });
+    })
+      .then(res => {
+        console.log(`ress`, res);
+        // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
+        if (Platform.OS == 'ios') {
+          setprofilePhoto(res.sourceURL);
+        }
+      })
+      .catch(err => {
+        setSendingProfile(false);
+      });
   }
-  function _doOpenGallery(value) {
+  function _doOpenGallery() {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: true,
-      includeBase64: true,
       compressImageQuality: 0.2,
-    }).then(image => {
-      console.log(`images`, image);
-      let data = `data:${image.mime};base64,${image.data}`;
-      if (value == 'profilePhoto') {
-        setprofilePhoto(data);
-      }
-    });
+    })
+      .then(res => {
+        console.log(`ress`, res);
+        // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
+        if (Platform.OS == 'ios') {
+          setprofilePhoto(res.sourceURL);
+        }
+      })
+      .catch(err => {
+        setSendingProfile(false);
+        console.log(err, 'err in image picker');
+      });
   }
 
   return (
@@ -216,7 +260,7 @@ const EditProfile = ({navigation}) => {
                 <View style={styles.uploadContent}>
                   <TouchableOpacity
                     style={[styles.uploadStoreBtn]}
-                    onPress={() => _doOpenOption('profilePhoto')}>
+                    onPress={() => _doOpenOption()}>
                     <Image
                       style={styles.logo2}
                       source={icons.ic_cateagory}
@@ -283,6 +327,7 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.email}
                     value={email}
+                    editable={false}
                     placeholder={strings.enterEmail}
                     labelTextStyle={styles.labelTextStyle}
                     onFocus={() =>
@@ -412,6 +457,7 @@ const EditProfile = ({navigation}) => {
               </View>
             </KeyboardAvoidingView>
           </ScrollView>
+          <Loader isLoading={auth.loading} isAbsolute />
         </ImageBackground>
       </View>
     </SafeAreaView>

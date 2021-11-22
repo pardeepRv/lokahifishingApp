@@ -1,6 +1,6 @@
 import { actionTypes } from '../../utilities/constants';
 
-const getLoginUserProfile = ({ params }) => ({
+const getLoginUserProfile = (params ) => ({
     type: actionTypes.GET_PROFILE_REQUESTED,
     params
 });

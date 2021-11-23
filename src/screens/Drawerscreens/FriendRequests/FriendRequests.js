@@ -1,19 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
   ImageBackground,
+  RefreshControl,
   SafeAreaView,
   Text,
   TouchableOpacity,
   View,
-  TouchableHighlight,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
+import {useDispatch, useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
-import {Button} from '../../../components/common/Button';
 import {Header} from '../../../components/common/Header';
+import {Loader} from '../../../components/common/Loader';
 import {strings} from '../../../localization';
+import {friendRequest} from '../../../store/actions';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import styles from './styles';
@@ -34,7 +36,39 @@ let members = [
 ];
 
 const FriendRequests = ({navigation}) => {
-  const [membersList, setMembersList] = useState(members);
+  let auth = useSelector(state => state.auth);
+  let user = useSelector(state => state.user);
+
+  const dispatch = useDispatch();
+
+  console.log(auth, 'auth in friend Request   page>>>>>>>>>>');
+  console.log(user, 'user in friend Request   page>>>>>>>>>>');
+
+  const [membersList, setMembersList] = useState(user?.allFriendsRequest);
+  const [state, setState] = useState({
+    refreshing: false,
+  });
+
+  //hit Api here
+  useEffect(() => {
+    console.log('coming in this');
+    const unsubscribe = navigation.addListener('focus', () => {
+      getfrequest();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  //get friends list
+  function getfrequest() {
+    let token = auth && auth?.userDetails?.access_token;
+    dispatch(friendRequest(token));
+  }
+
+  function _onRefresh() {
+    setState({refreshing: true});
+    getfrequest();
+  }
+
   const _renderView = ({item, index}) => (
     <View style={{flex: 1}}>
       <View
@@ -182,11 +216,21 @@ const FriendRequests = ({navigation}) => {
           keyExtractor={(item, index) => 'key' + index}
           ListHeaderComponent={() =>
             !membersList.length ? (
-              <Text style={styles.nomatch}>No Match found</Text>
+              <Text style={styles.nomatch}>No Request found</Text>
             ) : null
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={user.loading}
+              onRefresh={_onRefresh.bind(this)}
+              title="Pull to refresh"
+              tintColor={colors.white1}
+              titleColor={colors.white1}
+            />
           }
         />
       </SafeAreaView>
+      <Loader isLoading={user.loading} isAbsolute />
     </ImageBackground>
   );
 };

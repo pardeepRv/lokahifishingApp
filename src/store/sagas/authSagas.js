@@ -385,6 +385,7 @@ function* editProfilesaga(params) {
     });
   }
 }
+
 export {
   fetchAll,
   loginViaEmail,

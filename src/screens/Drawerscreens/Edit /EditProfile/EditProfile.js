@@ -203,6 +203,8 @@ const EditProfile = ({navigation}) => {
         // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
         if (Platform.OS == 'ios') {
           setprofilePhoto(res.sourceURL);
+        } else {
+          setprofilePhoto(res.path);
         }
       })
       .catch(err => {
@@ -221,6 +223,8 @@ const EditProfile = ({navigation}) => {
         // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
         if (Platform.OS == 'ios') {
           setprofilePhoto(res.sourceURL);
+        } else {
+          setprofilePhoto(res.path);
         }
       })
       .catch(err => {

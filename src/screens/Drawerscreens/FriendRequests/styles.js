@@ -49,6 +49,7 @@ export default StyleSheet.create({
   nomatch: {
     alignSelf: 'center',
     marginTop: 20,
+    color:colors.white1,
     fontFamily: fonts.semiBold,
   },
   buttonView: {

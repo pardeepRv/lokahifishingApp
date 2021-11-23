@@ -1,12 +1,7 @@
-import {put, retry} from 'redux-saga/effects';
+import {put} from 'redux-saga/effects';
+import {actionTypes, urls} from '../../utilities/constants';
+import {getAPIError, showErrorAlert} from '../../utilities/helperFunctions';
 import {request} from '../../utilities/request';
-import {actionTypes, urls, screenNames} from '../../utilities/constants';
-
-import {
-  getAPIError,
-  showErrorAlert,
-  showSuccessAlert,
-} from '../../utilities/helperFunctions';
 
 function* fetchAll({params}) {
   try {
@@ -26,5 +21,28 @@ function* fetchAll({params}) {
   }
 }
 
+function* getfriendsaga({params}) {
+  try {
+    const config = {
+      url: urls.getfriend_requests,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'Frei req api ');
 
-export {fetchAll};
+    yield put({
+      type: actionTypes.GET_FRIEND_SUCCEEDED,
+      payload: [],
+    });
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.GET_FRIEND_FAIL,
+    });
+  }
+}
+
+export {fetchAll, getfriendsaga};

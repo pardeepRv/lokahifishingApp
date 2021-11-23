@@ -20,6 +20,7 @@ import {moderateScale} from 'react-native-size-matters';
 import {useDispatch,useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
+import { Header } from '../../../components/common/Header';
 import { Loader } from '../../../components/common/Loader';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
@@ -206,6 +207,8 @@ const Signup = ({navigation}) => {
       // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
       if (Platform.OS == 'ios') {
         setProductPhoto(res.sourceURL);
+      } else {
+        setprofilePhoto(res.path);
       }
     });
   }
@@ -221,6 +224,8 @@ const Signup = ({navigation}) => {
       // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
       if (Platform.OS == 'ios') {
         setProductPhoto(res.sourceURL);
+      } else {
+        setprofilePhoto(res.path);
       }
     });
   }
@@ -232,6 +237,21 @@ const Signup = ({navigation}) => {
           flex: 1,
         }}>
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
+        <Header
+            containerStyle={{
+              backgroundColor: colors.transparent,
+              height: moderateScale(60),
+            }}
+            title={''}
+            titleStyle={{fontFamily: fonts.bold}}
+            leftIconSource={icons.ic_back_white}
+            leftButtonStyle={{
+              tintColor: colors.white1,
+            }}
+            onLeftPress={() => {
+              navigation.goBack();
+            }}
+          />
           <ScrollView style={{flex: 1}}>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}

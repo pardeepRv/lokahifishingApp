@@ -51,6 +51,7 @@ const urls = {
   start_booking: 'start_booking',
   getnotifications: 'notifications?per_page=50',
 
+  getfriend_requests :'friend-requests',
   forgotPassword: 'forgot_password',
   editProfile: 'edit-profile',
   removeResume: 'removeresume',

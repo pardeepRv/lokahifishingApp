@@ -16,6 +16,9 @@ import {Header} from '../../../components/common/Header';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {colors} from '../../../utilities/constants';
 import styles from './styles';
+import {useDispatch, useSelector} from 'react-redux';
+import { Loader } from '../../../components/common/Loader';
+
 
 let members = [
   {
@@ -52,6 +55,10 @@ const Friends = ({navigation}) => {
   const [searchMember, setSearchMember] = useState('');
   const [tabIndex, setTabIndex] = React.useState(0);
   const [tabAscDscIndex, settabAscDscIndex] = React.useState(0);
+  const dispatch = useDispatch();
+
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in friendList   page>>>>>>>>>>');
 
   const _renderView = ({item, index}) => (
     <TouchableOpacity
@@ -104,7 +111,7 @@ const Friends = ({navigation}) => {
             backgroundColor: 'transparent',
             height: moderateScale(60),
           }}
-          title={'Members'}
+          title={'Friends List'}
           titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
@@ -186,6 +193,7 @@ const Friends = ({navigation}) => {
           />
         ) : null}
       </SafeAreaView>
+      <Loader isLoading={auth.loading} isAbsolute />
     </ImageBackground>
   );
 };

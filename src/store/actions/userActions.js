@@ -14,10 +14,15 @@ const memberInfo = (params) => ({
     type: actionTypes.MEMBER_REGISTER_INFO_REQUESTED,
     params
 });
+const friendRequest = (params) => ({
+    type: actionTypes.GET_FRIEND_REQUESTED,
+    params
+});
 
 
 export {
     getLoginUserProfile,
     updateProfile,
-    memberInfo
+    memberInfo,
+    friendRequest
 };

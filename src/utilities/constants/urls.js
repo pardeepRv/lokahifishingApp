@@ -110,9 +110,7 @@ const urls = {
   getstatesByCountry: 'getstatesByCountry',
   getCitiesByState: 'getCitiesByState',
   getFaqEn: 'faq?lang=en',
-  getFaqAm: 'faq?lang=am',
-  kunal :'get-=kubnal',
-  getdata: 'getdata'
+  getFaqAm: 'faq?lang=am'
 };
 
 export {urls};

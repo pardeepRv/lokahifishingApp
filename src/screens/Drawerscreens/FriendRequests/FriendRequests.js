@@ -20,21 +20,6 @@ import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import styles from './styles';
 
-let members = [
-  {
-    name: ' Dhrminder',
-  },
-  {
-    name: 'Pardeep kumar',
-  },
-  {
-    name: 'sunil ',
-  },
-  {
-    name: 'ashutosh',
-  },
-];
-
 const FriendRequests = ({navigation}) => {
   let auth = useSelector(state => state.auth);
   let user = useSelector(state => state.user);
@@ -44,7 +29,6 @@ const FriendRequests = ({navigation}) => {
   console.log(auth, 'auth in friend Request   page>>>>>>>>>>');
   console.log(user, 'user in friend Request   page>>>>>>>>>>');
 
-  const [membersList, setMembersList] = useState(user?.allFriendsRequest);
   const [state, setState] = useState({
     refreshing: false,
   });
@@ -87,7 +71,11 @@ const FriendRequests = ({navigation}) => {
           }}>
           <View style={styles.viewStyle}>
             <Image
-              source={icons.ProfilePlaceholder}
+              source={
+                item?.user?.profile_picture
+                  ? {uri: item?.user?.profile_picture}
+                  : icons.ProfilePlaceholder
+              }
               style={{
                 height: moderateScale(100),
                 width: moderateScale(100),
@@ -115,7 +103,7 @@ const FriendRequests = ({navigation}) => {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.nameStyle}>{item.name}</Text>
+          <Text style={styles.nameStyle}>{item?.user?.user_name}</Text>
           <View style={styles.buttonView}>
             <View style={styles.buttonviewstyle}>
               <TouchableOpacity
@@ -210,12 +198,12 @@ const FriendRequests = ({navigation}) => {
         />
 
         <FlatList
-          extraData={membersList}
-          data={membersList}
+          extraData={user?.allFriendsRequest}
+          data={user?.allFriendsRequest}
           renderItem={_renderView}
           keyExtractor={(item, index) => 'key' + index}
           ListHeaderComponent={() =>
-            !membersList.length ? (
+            !user?.allFriendsRequest.length ? (
               <Text style={styles.nomatch}>No Request found</Text>
             ) : null
           }

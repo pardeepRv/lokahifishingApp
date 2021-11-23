@@ -33,10 +33,13 @@ function* getfriendsaga({params}) {
     const response = yield request(config);
     console.log(response, 'Frei req api ');
 
-    yield put({
-      type: actionTypes.GET_FRIEND_SUCCEEDED,
-      payload: [],
-    });
+    if(response?.data?.status){
+      yield put({
+        type: actionTypes.GET_FRIEND_SUCCEEDED,
+        payload: response?.data?.data?.requests
+      });
+    }
+  
   } catch (error) {
     showErrorAlert(getAPIError(error));
     yield put({

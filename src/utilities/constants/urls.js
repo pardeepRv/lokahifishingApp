@@ -111,6 +111,7 @@ const urls = {
   getCitiesByState: 'getCitiesByState',
   getFaqEn: 'faq?lang=en',
   getFaqAm: 'faq?lang=am',
+  getData:'pardeep'
 };
 
 export {urls};

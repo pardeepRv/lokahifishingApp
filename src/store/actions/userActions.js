@@ -22,12 +22,16 @@ const respondRequest = (params) => ({
     type: actionTypes.RESPOND_FRIEND_REQUESTED,
     params
 });
-
+const friendlist = (params) => ({
+    type: actionTypes.GET_FRIEND_LIST_REQUESTED,
+    params
+});
 
 export {
     getLoginUserProfile,
     updateProfile,
     memberInfo,
     friendRequest,
-    respondRequest
+    respondRequest,
+    friendlist
 };

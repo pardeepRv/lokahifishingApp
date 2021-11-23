@@ -85,4 +85,36 @@ function* respondRequestsaga({params}) {
   }
 }
 
-export {fetchAll, getfriendsaga, respondRequestsaga};
+function* getfriendlistsaga({params}) {
+    console.log(`params>>>>>>>`, params)
+  try {
+    const config = {
+      url: urls.getfriend_list,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'Freind list req api ');
+
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.GET_FRIEND_LIST_SUCCEEDED,
+        payload: response?.data?.data?.friends,
+      });
+    } else {
+      yield put({
+        type: actionTypes.GET_FRIEND_LIST_SUCCEEDED,
+        payload: [],
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.GET_FRIEND_LIST_FAIL,
+    });
+  }
+}
+
+export {fetchAll, getfriendsaga, respondRequestsaga , getfriendlistsaga};

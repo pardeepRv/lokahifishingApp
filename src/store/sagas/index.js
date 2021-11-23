@@ -12,7 +12,7 @@ import {
   sessionExpiredSaga,
   SignupViaEmail,
 } from './authSagas';
-import {getfriendsaga, respondRequestsaga} from './userSaga';
+import {getfriendlistsaga, getfriendsaga, respondRequestsaga} from './userSaga';
 
 export default function* rootSaga() {
   //auth sagas
@@ -30,6 +30,7 @@ export default function* rootSaga() {
   // //user sagas
   yield takeLatest(actionTypes.GET_FRIEND_REQUESTED, getfriendsaga);
   yield takeLatest(actionTypes.RESPOND_FRIEND_REQUESTED, respondRequestsaga);
+  yield takeLatest(actionTypes.GET_FRIEND_LIST_REQUESTED, getfriendlistsaga);
 
 
   // //app sagas

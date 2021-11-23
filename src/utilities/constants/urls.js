@@ -52,6 +52,7 @@ const urls = {
   getnotifications: 'notifications?per_page=50',
 
   getfriend_requests :'friend-requests',
+  getfriend_list :  'friend-list',
   respondtofriendrequest :'respond-to-friend-request',
   forgotPassword: 'forgot_password',
   editProfile: 'edit-profile',

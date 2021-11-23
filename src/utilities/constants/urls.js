@@ -109,7 +109,8 @@ const urls = {
   getReadNotifications: 'readnotifications',
   getstatesByCountry: 'getstatesByCountry',
   getCitiesByState: 'getCitiesByState',
-  getFaqEn: 'faq?lang=en'
+  getFaqEn: 'faq?lang=en',
+  newAdded:'new'
 };
 
 export {urls};

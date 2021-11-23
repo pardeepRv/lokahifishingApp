@@ -1,56 +1,26 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  Dimensions,
   FlatList,
   Image,
   ImageBackground,
+  RefreshControl,
   SafeAreaView,
   Text,
   TouchableOpacity,
   View,
-  RefreshControl,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import SegmentedControl from 'rn-segmented-control';
+import TimeAgo from 'react-native-timeago';
+import {useDispatch, useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
 import {Header} from '../../../components/common/Header';
+import {Loader} from '../../../components/common/Loader';
 import TextInputComp from '../../../components/common/TextInputComp';
+import {friendlist} from '../../../store/actions';
 import {colors} from '../../../utilities/constants';
 import styles from './styles';
-import {useDispatch, useSelector} from 'react-redux';
-import {Loader} from '../../../components/common/Loader';
-import {friendlist} from '../../../store/actions';
-import TimeAgo from 'react-native-timeago';
-
-let members = [
-  {
-    img: icons.ic_LokahiLogo,
-    username: 'princepardeepkmr',
-    date: 'Member since 1 oct 2021',
-    fullname: 'Pardeep kumar',
-  },
-  {
-    img: icons.ic_LokahiLogo,
-    username: 'rv_kunal',
-    date: 'Member since 2 oct 2021',
-    fullname: 'Kunal Chauhan',
-  },
-  {
-    img: icons.ic_LokahiLogo,
-    username: 'rvtechnologies',
-    date: 'Member since 1 oct 2021',
-    fullname: 'Prince Pardeep',
-  },
-  {
-    img: icons.ic_LokahiLogo,
-    username: 'dev_pardeep',
-    date: 'Member since 2 oct 2021',
-    fullname: 'New Name',
-  },
-];
 
 const Friends = ({navigation}) => {
-
   let user = useSelector(state => state.user);
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in friendList   page>>>>>>>>>>');
@@ -58,7 +28,7 @@ const Friends = ({navigation}) => {
 
   const dispatch = useDispatch();
 
-  const [membersList, setMembersList] = useState(members);
+  const [membersList, setMembersList] = useState(user?.allFriendslist);
   const [searchMember, setSearchMember] = useState('');
   const [tabIndex, setTabIndex] = React.useState(0);
   const [tabAscDscIndex, settabAscDscIndex] = React.useState(0);
@@ -78,12 +48,31 @@ const Friends = ({navigation}) => {
   function getfriendlist() {
     let token = auth && auth?.userDetails?.access_token;
     dispatch(friendlist(token));
+    setMembersList(user?.allFriendslist);
   }
 
   function _onRefresh() {
     setState({refreshing: true});
-    getfriendlist();
+    getfriendlist(user?.allFriendslist);
   }
+
+  const searchText = e => {
+    setSearchMember(e);
+    let text = e.toLowerCase();
+    let friends = user?.allFriendslist;
+    let filteredName = friends.filter(item => {
+      console.log(item, 'consile ');
+      return item && item.user && item.user.user_name.toLowerCase().match(text);
+    });
+    console.log(filteredName, 'dbwdvewduyv');
+    if (!text || text === '') {
+      setMembersList(user?.allFriendslist);
+    } else if (!Array.isArray(filteredName) && !filteredName.length) {
+      setMembersList(user?.allFriendslist);
+    } else if (Array.isArray(filteredName)) {
+      setMembersList(filteredName);
+    }
+  };
 
   const _renderView = ({item, index}) => (
     <TouchableOpacity
@@ -113,7 +102,8 @@ const Friends = ({navigation}) => {
           }}>
           <Text style={styles.nameStyle}>{item?.user?.user_name}</Text>
           <Text style={styles.dateStyle}>
-          <TimeAgo time={item?.user?.created_at}/></Text>
+            <TimeAgo time={item?.user?.created_at} />
+          </Text>
         </View>
       </View>
       <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
@@ -160,7 +150,8 @@ const Friends = ({navigation}) => {
             fontSize: moderateScale(16),
             color: colors.white1,
           }}
-          onChangeText={text => setSearchMember(text)}
+          // onChangeText={text => setSearchMember(text)}
+          onChangeText={text => searchText(text)}
         />
 
         {/* <View
@@ -224,15 +215,13 @@ const Friends = ({navigation}) => {
         ) : null} */}
 
         <FlatList
-          extraData={user?.allFriendslist}
-          data={user?.allFriendslist}
+          extraData={membersList}
+          data={membersList}
           renderItem={_renderView}
           keyExtractor={(item, index) => 'key' + index}
           ListEmptyComponent={() =>
-            user &&
-            user.allFriendslist &&
-            user.allFriendslist.length >= 0 && (
-              <Text style={styles.nomatch}>No Request found</Text>
+            membersList >= 0 && (
+              <Text style={styles.nomatch}>No Friend found</Text>
             )
           }
           refreshControl={

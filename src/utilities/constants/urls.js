@@ -109,9 +109,7 @@ const urls = {
   getReadNotifications: 'readnotifications',
   getstatesByCountry: 'getstatesByCountry',
   getCitiesByState: 'getCitiesByState',
-  getFaqEn: 'faq?lang=en',
-  getFaqAm: 'faq?lang=am',
-  getData: 'kunal'
+  getFaqEn: 'faq?lang=en'
 };
 
 export {urls};

@@ -110,7 +110,7 @@ const urls = {
   getstatesByCountry: 'getstatesByCountry',
   getCitiesByState: 'getCitiesByState',
   getFaqEn: 'faq?lang=en',
-  newAdded:'new'
+  newAdded:'new23'
 };
 
 export {urls};

@@ -52,6 +52,7 @@ const urls = {
   getnotifications: 'notifications?per_page=50',
 
   getfriend_requests :'friend-requests',
+  respondtofriendrequest :'respond-to-friend-request',
   forgotPassword: 'forgot_password',
   editProfile: 'edit-profile',
   removeResume: 'removeresume',
@@ -110,7 +111,7 @@ const urls = {
   getstatesByCountry: 'getstatesByCountry',
   getCitiesByState: 'getCitiesByState',
   getFaqEn: 'faq?lang=en',
-  newAdded:'new23'
+
 };
 
 export {urls};

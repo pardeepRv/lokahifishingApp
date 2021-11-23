@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   FlatList,
   Image,
   ImageBackground,
@@ -15,7 +16,7 @@ import {fonts, icons} from '../../../../assets';
 import {Header} from '../../../components/common/Header';
 import {Loader} from '../../../components/common/Loader';
 import {strings} from '../../../localization';
-import {friendRequest} from '../../../store/actions';
+import {friendRequest, respondRequest} from '../../../store/actions';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import styles from './styles';
@@ -52,6 +53,37 @@ const FriendRequests = ({navigation}) => {
     setState({refreshing: true});
     getfrequest();
   }
+
+  const requestAns = (respond, val) => {
+    Alert.alert(
+      'Confirm',
+      'Request',
+      [
+        {text: 'Ok', onPress: () => hitApiAcceptReq(respond, val)},
+        {
+          text: 'Cancel',
+          onPress: () => console.log('err'),
+          style: 'cancel',
+        },
+      ],
+      {cancelable: true},
+    );
+  };
+
+  const hitApiAcceptReq = (respond, val) => {
+    console.log(val, 'valval');
+    console.log('coming in this>>>>>>', respond);
+
+    let token = auth && auth?.userDetails?.access_token;
+    let formData = new FormData();
+    formData.append('other_user_id', val?.user_id);
+    formData.append('status', respond);
+
+    dispatch(respondRequest({formData, token}));
+    setTimeout(() => {
+      getfrequest();
+    }, 1500);
+  };
 
   const _renderView = ({item, index}) => (
     <View style={{flex: 1}}>
@@ -90,7 +122,8 @@ const FriendRequests = ({navigation}) => {
                 height: moderateScale(25),
                 bottom: moderateScale(38),
                 left: 0,
-              }}>
+              }}
+              onPress={() => requestAns(2, item)}>
               <Image
                 source={icons.blockuser}
                 style={{
@@ -120,7 +153,8 @@ const FriendRequests = ({navigation}) => {
                   shadowOpacity: 0.4,
                   elevation: 3,
                 }}
-                underlayColor={colors.green1}>
+                underlayColor={colors.green1}
+                onPress={() => requestAns(1, item)}>
                 <Text
                   style={{
                     color: colors.white1,
@@ -147,6 +181,7 @@ const FriendRequests = ({navigation}) => {
                   shadowOpacity: 0.4,
                   elevation: 3,
                 }}
+                onPress={() => requestAns(0, item)}
                 underlayColor={colors.red1}>
                 <Text
                   style={{
@@ -202,10 +237,12 @@ const FriendRequests = ({navigation}) => {
           data={user?.allFriendsRequest}
           renderItem={_renderView}
           keyExtractor={(item, index) => 'key' + index}
-          ListHeaderComponent={() =>
-            !user?.allFriendsRequest.length ? (
+          ListEmptyComponent={() =>
+            user &&
+            user.allFriendsRequest &&
+            user.allFriendsRequest.length >= 0 && (
               <Text style={styles.nomatch}>No Request found</Text>
-            ) : null
+            )
           }
           refreshControl={
             <RefreshControl

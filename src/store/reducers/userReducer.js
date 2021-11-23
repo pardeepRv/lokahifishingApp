@@ -25,6 +25,23 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
+    case actionTypes.RESPOND_FRIEND_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.RESPOND_FRIEND_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.RESPOND_FRIEND_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
 
     default:
       return state;

@@ -18,11 +18,16 @@ const friendRequest = (params) => ({
     type: actionTypes.GET_FRIEND_REQUESTED,
     params
 });
+const respondRequest = (params) => ({
+    type: actionTypes.RESPOND_FRIEND_REQUESTED,
+    params
+});
 
 
 export {
     getLoginUserProfile,
     updateProfile,
     memberInfo,
-    friendRequest
+    friendRequest,
+    respondRequest
 };

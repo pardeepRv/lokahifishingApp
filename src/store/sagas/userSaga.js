@@ -1,6 +1,10 @@
 import {put} from 'redux-saga/effects';
 import {actionTypes, urls} from '../../utilities/constants';
-import {getAPIError, showErrorAlert} from '../../utilities/helperFunctions';
+import {
+  getAPIError,
+  showErrorAlert,
+  showSuccessAlert,
+} from '../../utilities/helperFunctions';
 import {request} from '../../utilities/request';
 
 function* fetchAll({params}) {
@@ -33,13 +37,17 @@ function* getfriendsaga({params}) {
     const response = yield request(config);
     console.log(response, 'Frei req api ');
 
-    if(response?.data?.status){
+    if (response?.data?.status) {
       yield put({
         type: actionTypes.GET_FRIEND_SUCCEEDED,
-        payload: response?.data?.data?.requests
+        payload: response?.data?.data?.requests,
+      });
+    } else {
+      yield put({
+        type: actionTypes.GET_FRIEND_SUCCEEDED,
+        payload: [],
       });
     }
-  
   } catch (error) {
     showErrorAlert(getAPIError(error));
     yield put({
@@ -48,4 +56,33 @@ function* getfriendsaga({params}) {
   }
 }
 
-export {fetchAll, getfriendsaga};
+function* respondRequestsaga({params}) {
+  console.log('params in it>>>>>>>>>>', params);
+  try {
+    const config = {
+      url: urls.respondtofriendrequest,
+      method: 'POST',
+      data: params?.formData,
+      headers: {
+        Authorization: `Bearer ${params && params.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response from BLOCK OR ACCEPT api ');
+
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.RESPOND_FRIEND_SUCCEEDED,
+      });
+      return showSuccessAlert(response?.data?.message);
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.RESPOND_FRIEND_FAIL,
+    });
+  }
+}
+
+export {fetchAll, getfriendsaga, respondRequestsaga};

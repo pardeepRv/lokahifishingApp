@@ -111,8 +111,6 @@ const urls = {
   getCitiesByState: 'getCitiesByState',
   getFaqEn: 'faq?lang=en',
   getFaqAm: 'faq?lang=am',
-  kunal :'get-=kubnal',
-  getdata: 'getdata'
 };
 
 export {urls};

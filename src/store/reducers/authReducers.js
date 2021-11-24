@@ -7,6 +7,7 @@ const initialState = {
   loginViaPhoneMsg: null,
   otp: null,
   updatePasswordMsg: null,
+  userAllData: {},
 };
 
 export default (state = initialState, action) => {
@@ -125,10 +126,12 @@ export default (state = initialState, action) => {
       };
 
     case actionTypes.GET_PROFILE_SUCCEEDED:
+      console.log(action, 'in get profile reducer>>>>>>>>');
       return {
         ...state,
         loading: false,
         userDetails: action.payload,
+        userAllData: action.alldata,
       };
 
     case actionTypes.GET_PROFILE_FAIL:
@@ -154,7 +157,24 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-      }; 
+      };
+    case actionTypes.UPDATE_EDIT_BOAT_INFO_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.UPDATE_EDIT_BOAT_INFO_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.UPDATE_EDIT_BOAT_INFO_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
     case actionTypes.SESSION_EXPIRED: {
       return {
         ...state,

@@ -1,46 +1,78 @@
 import React, {useRef, useState} from 'react';
-
 import {
-  ImageBackground,
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  KeyboardAvoidingView,
   Alert,
-  FlatList,
+  Image,
+  ImageBackground,
+  Keyboard,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
+import {RFValue} from 'react-native-responsive-fontsize';
 //ecxternal libraries
 import {moderateScale} from 'react-native-size-matters';
-import ImagePicker from 'react-native-image-crop-picker';
-
-//internal libraries
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {useDispatch, useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../../assets';
-import {Header} from '../../../../components/common/Header';
+import {Button} from '../../../../components/common/Button';
+import {Loader} from '../../../../components/common/Loader';
+import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
+import {updateBoatInfo} from '../../../../store/actions';
 import {colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
-import TextInputComp from '../../../../components/common/TextInputComp';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Button} from '../../../../components/common/Button';
 
 const BInfo = () => {
   let passwordTextInput = useRef(null);
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in editBoat page>>>>>>>>>>');
 
-  const [boatmarker, setBoatmarker] = useState('');
-  const [boatlength, setBoatlength] = useState('');
-  const [homeport, setHomeport] = useState('');
-  const [boatphoto, setboatphoto] = useState('');
-  const [LifeIcon, setLifeIcon] = useState('');
-  const [VHFIcon, setVHFIcon] = useState('');
-  const [CbIcon, setCbIcon] = useState('');
-  const [EPIRBIcon, setEPIRBIcon] = useState('');
-  const [VisualIcon, setVisualIcon] = useState('');
+  const dispatch = useDispatch();
 
+  const [boatmarker, setBoatmarker] = useState(
+    auth?.userAllData?.boat_info?.boat_maker,
+  );
+  const [boatlength, setBoatlength] = useState(
+    auth?.userAllData?.boat_info?.boat_length,
+  );
+  const [homeport, setHomeport] = useState(
+    auth?.userAllData?.boat_info?.home_port,
+  );
+  const [boatphoto, setboatphoto] = useState(
+    auth?.userAllData?.boat_info?.boat_image
+      ? auth?.userAllData?.boat_info?.boat_image
+      : '',
+  );
+  const [LifeIcon, setLifeIcon] = useState(
+    auth?.userAllData?.boat_info?.Life_Raft
+      ? auth?.userAllData?.boat_info?.Life_Raft
+      : false,
+  );
+  const [VHFIcon, setVHFIcon] = useState(
+    auth?.userAllData?.boat_info?.VHF_Radio
+      ? auth?.userAllData?.boat_info?.VHF_Radio
+      : false,
+  );
+  const [CbIcon, setCbIcon] = useState(
+    auth?.userAllData?.boat_info?.CB_Radio
+      ? auth?.userAllData?.boat_info?.CB_Radio
+      : false,
+  );
+  const [EPIRBIcon, setEPIRBIcon] = useState(
+    auth?.userAllData?.boat_info?.EPIRB
+      ? auth?.userAllData?.boat_info?.EPIRB
+      : false,
+  );
+  const [VisualIcon, setVisualIcon] = useState(
+    auth?.userAllData?.boat_info?.Visual_Distress_Signals
+      ? auth?.userAllData?.boat_info?.Visual_Distress_Signals
+      : false,
+  );
+  const [sendingProfile, setSendingProfile] = useState(false);
   const [errors, setErrors] = useState({
     boatmarker: '',
     boatlength: '',
@@ -49,8 +81,14 @@ const BInfo = () => {
     isLoading: false,
     boatphoto: '',
   });
+  const name_and_values = [
+    {name: 'boatmarker', value: boatmarker},
+    {name: 'boatlength', value: boatlength},
+    {name: 'homeport', value: homeport},
+  ];
 
   function _doOpenOption(value) {
+    setSendingProfile(true)
     Alert.alert(
       '',
       'Please Select',
@@ -59,7 +97,7 @@ const BInfo = () => {
         {text: 'Gallery', onPress: () => _doOpenGallery(value)},
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => console.log('err'), //setSendingProfile(false),
           style: 'cancel',
         },
       ],
@@ -71,29 +109,41 @@ const BInfo = () => {
       width: 300,
       height: 400,
       cropping: true,
-      includeBase64: true,
       compressImageQuality: 0.2,
-    }).then(response => {
-      let data = `data:${response.mime};base64,${response.data}`;
-      if (value == 'boatphoto') {
-        setboatphoto(data);
-      }
-    });
+    })
+      .then(res => {
+        console.log(`ress`, res);
+        // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
+        if (Platform.OS == 'ios') {
+          setboatphoto(res.sourceURL);
+        } else {
+          setboatphoto(res.path);
+        }
+      })
+      .catch(err => {
+        setSendingProfile(false);
+      });
   }
   function _doOpenGallery(value) {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: true,
-      includeBase64: true,
       compressImageQuality: 0.2,
-    }).then(image => {
-      console.log(`images`, image);
-      let data = `data:${image.mime};base64,${image.data}`;
-      if (value == 'boatphoto') {
-        setboatphoto(data);
-      }
-    });
+    })
+      .then(res => {
+        console.log(`ress`, res);
+        // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
+        if (Platform.OS == 'ios') {
+          setboatphoto(res.sourceURL);
+        } else {
+          setboatphoto(res.path);
+        }
+      })
+      .catch(err => {
+        setSendingProfile(false);
+        console.log(err, 'err in image picker');
+      });
   }
   // const ToogleCheck = () => {
   //   const {LifeIcon} = this.state;
@@ -102,6 +152,44 @@ const BInfo = () => {
   //     this.setState({LifeIcon: !LifeIcon});
   //   }
   // };
+
+  function Save() {
+    Keyboard.dismiss();
+    let err = {};
+    //email error
+    name_and_values.forEach(data => {
+      let name = data.name;
+      let value = data.value;
+      if (!value) {
+        err[name] = 'Should not be empty';
+      }
+    });
+    setErrors(err);
+    if (Object.keys(err).length == 0) {
+      let formData = new FormData();
+
+      if (sendingProfile) {
+        formData.append('boat_image', {
+          uri: boatphoto,
+          type: 'image/jpeg', // or photo.type
+          name: 'boat_image',
+        });
+      }
+      formData.append('boat_maker', boatmarker);
+      formData.append('boat_length', boatlength);
+      formData.append('home_port', homeport);
+      formData.append('vhf_Radio', VHFIcon ? 1 : 0);
+      formData.append('cb_radio', CbIcon ? 1 : 0);
+      formData.append('visual_distress_signals', VisualIcon ? 1 : 0);
+      formData.append('epirb', EPIRBIcon ? 1 : 0);
+      formData.append('life_raft', LifeIcon ? 1 : 0);
+
+        console.log(formData, 'sending to aApi');
+      dispatch(updateBoatInfo(formData));
+
+      setSendingProfile(false);
+    }
+  }
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
@@ -199,9 +287,7 @@ const BInfo = () => {
                     }}
                     onPress={() => setVHFIcon(!VHFIcon)}>
                     <Image
-                      source={
-                        VHFIcon != '' ? icons.ic_donex : icons.ic_not_donex
-                      }
+                      source={VHFIcon ? icons.ic_donex : icons.ic_not_donex}
                       style={styles.checkIcon}
                     />
                   </TouchableOpacity>
@@ -218,9 +304,7 @@ const BInfo = () => {
                     }}
                     onPress={() => setCbIcon(!CbIcon)}>
                     <Image
-                      source={
-                        CbIcon != '' ? icons.ic_donex : icons.ic_not_donex
-                      }
+                      source={CbIcon ? icons.ic_donex : icons.ic_not_donex}
                       style={styles.checkIcon}
                     />
                   </TouchableOpacity>
@@ -237,9 +321,7 @@ const BInfo = () => {
                     }}
                     onPress={() => setEPIRBIcon(!EPIRBIcon)}>
                     <Image
-                      source={
-                        EPIRBIcon != '' ? icons.ic_donex : icons.ic_not_donex
-                      }
+                      source={EPIRBIcon ? icons.ic_donex : icons.ic_not_donex}
                       style={styles.checkIcon}
                     />
                   </TouchableOpacity>
@@ -256,9 +338,7 @@ const BInfo = () => {
                     }}
                     onPress={() => setLifeIcon(!LifeIcon)}>
                     <Image
-                      source={
-                        LifeIcon != '' ? icons.ic_donex : icons.ic_not_donex
-                      }
+                      source={LifeIcon ? icons.ic_donex : icons.ic_not_donex}
                       style={styles.checkIcon}
                     />
                   </TouchableOpacity>
@@ -277,9 +357,7 @@ const BInfo = () => {
                     }}
                     onPress={() => setVisualIcon(!VisualIcon)}>
                     <Image
-                      source={
-                        VisualIcon != '' ? icons.ic_donex : icons.ic_not_donex
-                      }
+                      source={VisualIcon ? icons.ic_donex : icons.ic_not_donex}
                       style={styles.checkIcon}
                     />
                   </TouchableOpacity>
@@ -298,11 +376,13 @@ const BInfo = () => {
                     bottom: moderateScale(20),
                   }}
                   label={strings.save}
-                  onPress={() => alert()}
+                  onPress={() => Save()}
+                  // onPress={() => alert()}
                 />
               </View>
             </KeyboardAvoidingView>
           </ScrollView>
+          <Loader isLoading={auth.loading} isAbsolute />
         </ImageBackground>
       </View>
     </SafeAreaView>

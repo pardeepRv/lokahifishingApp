@@ -27,11 +27,17 @@ const friendlist = (params) => ({
     params
 });
 
+const updateBoatInfo = (params) => ({
+    type: actionTypes.UPDATE_EDIT_BOAT_INFO_REQUESTED,
+    params
+});
+
 export {
     getLoginUserProfile,
     updateProfile,
     memberInfo,
     friendRequest,
     respondRequest,
-    friendlist
+    friendlist,
+    updateBoatInfo
 };

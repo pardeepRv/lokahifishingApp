@@ -3,6 +3,7 @@ import {actionTypes} from '../../utilities/constants';
 import {
   change_PasswordSaga,
   checkIfLoggedInSaga,
+  editboatsaga,
   editProfilesaga,
   fetchAll,
   forgotPasswordsaga,
@@ -26,6 +27,8 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.FORGOT_PASSWORD_REQUESTED, forgotPasswordsaga);
   yield takeLatest(actionTypes.GET_PROFILE_REQUESTED, getProfileSaga);
   yield takeLatest(actionTypes.UPDATE_PROFILE_REQUESTED, editProfilesaga);
+  yield takeLatest(actionTypes.UPDATE_EDIT_BOAT_INFO_REQUESTED, editboatsaga);
+
 
   // //user sagas
   yield takeLatest(actionTypes.GET_FRIEND_REQUESTED, getfriendsaga);

@@ -322,6 +322,7 @@ function* getProfileSaga({params}) {
       yield put({
         type: actionTypes.GET_PROFILE_SUCCEEDED,
         payload: profileData,
+        alldata: response.data.data.user,
       });
     }
   } catch (error) {
@@ -337,7 +338,7 @@ function* editProfilesaga(params) {
     const result = yield getLocalUserData();
     let token = result?.access_token;
 
-    console.log(token,'tokentoken');
+    console.log(token, 'tokentoken');
     const config = {
       url: urls.editProfile,
       method: 'POST',
@@ -386,6 +387,40 @@ function* editProfilesaga(params) {
   }
 }
 
+function* editboatsaga(params) {
+  console.log(`params`, params);
+  try {
+    const result = yield getLocalUserData();
+    let token = result?.access_token;
+
+    console.log(token, 'tokentoken>>>>>>>>>>>>>>>>>>>>>>>>>>>>.');
+    const config = {
+      url: urls.edit_boat_info,
+      method: 'POST',
+      data: params.params,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = yield request(config);
+    console.log(response, 'getting response from editboat api ');
+
+    if (response && response.data && response.data.success) {
+      yield put({
+        type: actionTypes.UPDATE_EDIT_BOAT_INFO_SUCCEEDED,
+      });
+      showSuccessAlert(response.data.message);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+
+    yield put({
+      type: actionTypes.UPDATE_EDIT_BOAT_INFO_FAIL,
+    });
+  }
+}
+
 export {
   fetchAll,
   loginViaEmail,
@@ -397,4 +432,5 @@ export {
   forgotPasswordsaga,
   getProfileSaga,
   editProfilesaga,
+  editboatsaga,
 };

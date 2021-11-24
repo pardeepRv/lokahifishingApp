@@ -14,6 +14,7 @@ const urls = {
   uploadMedia: 'uploadmedia',
   register: 'register',
   my_profile : 'my-profile',
+  edit_boat_info : 'edit-boat-info',
   complete_registration: 'complete_registration',
   login_with_email: 'login_with_email',
   login_with_phone: 'login_with_phone',

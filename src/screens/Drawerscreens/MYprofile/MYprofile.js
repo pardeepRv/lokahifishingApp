@@ -1,6 +1,6 @@
 // ecternal libraries
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import {
   Image,
   ImageBackground,
@@ -36,6 +36,14 @@ const MYprofile = ({navigation}) => {
   const [state, setState] = useState({
     refreshing: false,
   });
+
+  useEffect(() => {
+    console.log('coming in this on frindz page');
+    const unsubscribe = navigation.addListener('focus', () => {
+      getprofile();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   function getprofile() {
     Keyboard.dismiss();

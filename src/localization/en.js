@@ -101,7 +101,7 @@ export default {
   //Myprofile
   boatmaker:'Boat Marker',
   boatlength :'Boat Length',
-  homeport:'Home Port',
+  homeport:'Home Port :',
   vhfradio:'VHF Radio',
   cbradio:'CB Radio',
   epirb :'EPIRB',

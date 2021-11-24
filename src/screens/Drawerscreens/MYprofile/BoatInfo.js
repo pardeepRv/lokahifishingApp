@@ -12,11 +12,15 @@ import {
 // import Pdf from 'react-native-pdf';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
+import {Loader} from '../../../components/common/Loader';
 import {strings} from '../../../localization';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
+import {useDispatch, useSelector} from 'react-redux';
 
-const BoatInfo = () => {
+const BoatInfo = ({navigation}) => {
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in boatinfo  page>>>>>>>>>>');
   const [state, setState] = useState({
     iscbradio: '',
   });
@@ -37,17 +41,27 @@ const BoatInfo = () => {
               <View style={styles.rowContent}>
                 <Image
                   source={icons.signin_bg_ic}
-                  resizeMode="contain"
+                  source={
+                    auth?.userAllData?.boat_info?.boat_image
+                      ? {uri: auth?.userAllData?.boat_info?.boat_image}
+                      : icons.loginLogo
+                  }
+                  resizeMode="cover"
                   style={{
-                    height: moderateScale(100),
-                    width: moderateScale(100),
+                    height: moderateScale(90),
+                    width: moderateScale(90),
                     left: 10,
                     marginTop: 5,
-                    borderRadius: 100 / 1,
+                    borderRadius: 50,
+                    backgroundColor: '#000',
                   }}
                 />
                 <View style={styles.rowContent2}>
-                  <Text style={styles.nameStyle}>{strings.boatmaker}</Text>
+                  <Text style={styles.nameStyle}>
+                    {auth?.userAllData?.boat_info?.boat_maker
+                      ? auth?.userAllData?.boat_info?.boat_maker
+                      : strings.boatmaker}
+                  </Text>
                   <Text
                     style={{
                       height: moderateScale(2),
@@ -55,31 +69,61 @@ const BoatInfo = () => {
                       backgroundColor: colors.white1,
                     }}></Text>
 
-                  <Text style={styles.nameStyle}>{strings.boatlength}</Text>
+                  <Text style={styles.nameStyle}>
+                    {auth?.userAllData?.boat_info?.boat_length
+                      ? auth?.userAllData?.boat_info?.boat_length
+                      : strings.boatlength}
+                  </Text>
                 </View>
               </View>
             </View>
             <View style={styles.Containertable}>
               <TouchableOpacity style={styles.rowContent3}>
-                <Text style={styles.textstyle}>{strings.homeport}</Text>
+                <Text style={styles.texthomeport}>
+                  {strings.homeport}
+                </Text>
+                <Text style={styles.textstyle}>
+                  {auth?.userAllData?.boat_info?.home_port}
+                </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.vhfradio}</Text>
-                <Image source={icons.ic_donex} style={styles.checkIcon} />
+                <Image
+                  source={
+                    auth?.userAllData?.boat_info?.VHF_Radio
+                      ? icons.ic_donex
+                      : icons.ic_not_donex
+                  }
+                  style={styles.checkIcon}
+                />
               </View>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.cbradio}</Text>
-                <Image source={icons.ic_donex} style={styles.checkIcon} />
+                <Image
+                  source={
+                    auth?.userAllData?.boat_info?.CB_Radio
+                      ? icons.ic_donex
+                      : icons.ic_not_donex
+                  }
+                  style={styles.checkIcon}
+                />
               </View>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.epirb}</Text>
-                <Image source={icons.ic_donex} style={styles.checkIcon} />
+                <Image
+                  source={
+                    auth?.userAllData?.boat_info?.EPIRB
+                      ? icons.ic_donex
+                      : icons.ic_not_donex
+                  }
+                  style={styles.checkIcon}
+                />
               </View>
             </View>
 
@@ -87,7 +131,11 @@ const BoatInfo = () => {
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.liferaft}</Text>
                 <Image
-                  source={iscbradio ? icons.ic_donex : icons.ic_not_donex}
+                  source={
+                    auth?.userAllData?.boat_info?.Life_Raft
+                      ? icons.ic_donex
+                      : icons.ic_not_donex
+                  }
                   style={styles.checkIcon}
                 />
               </View>
@@ -98,12 +146,17 @@ const BoatInfo = () => {
                   {strings.visualdistressignal}
                 </Text>
                 <Image
-                  source={iscbradio ? icons.ic_donex : icons.ic_not_donex}
+                  source={
+                    auth?.userAllData?.boat_info?.Visual_Distress_Signals
+                      ? icons.ic_donex
+                      : icons.ic_not_donex
+                  }
                   style={styles.checkIcon}
                 />
               </View>
             </View>
           </ScrollView>
+          <Loader isLoading={auth.loading} isAbsolute />
         </ImageBackground>
       </View>
     </SafeAreaView>
@@ -189,6 +242,17 @@ const styles = StyleSheet.create({
   textstyle: {
     fontSize: 22,
     width: layout.size.width / 1.5,
+    color: colors.white1,
+    top: moderateScale(8),
+    left: moderateScale(10),
+    textAlign: 'left',
+    fontWeight: 'bold',
+    padding: 5,
+    backgroundColor: colors.transparent,
+  },
+  texthomeport: {
+    fontSize: 22,
+    width: layout.size.width /3,
     color: colors.white1,
     top: moderateScale(8),
     left: moderateScale(10),

@@ -32,6 +32,10 @@ const updateBoatInfo = (params) => ({
     params
 });
 
+const updatecontacts = (params) => ({
+    type: actionTypes.UPDATE_EDIT_CONTACT_REQUESTED,
+    params
+});
 export {
     getLoginUserProfile,
     updateProfile,
@@ -39,5 +43,6 @@ export {
     friendRequest,
     respondRequest,
     friendlist,
-    updateBoatInfo
+    updateBoatInfo,
+    updatecontacts
 };

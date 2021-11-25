@@ -1,6 +1,6 @@
 // ecternal libraries
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React, {useState , useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Image,
   ImageBackground,
@@ -140,7 +140,10 @@ const MYprofile = ({navigation}) => {
             },
           }}>
           <Tab.Screen name="Boat Info" component={BoatInfo} />
-          <Tab.Screen name="Emergency Contact" component={EmergencyContacts} />
+          <Tab.Screen
+            name="Emergency Contact"
+            children={() => <EmergencyContacts {...auth} />}
+          />
           <Tab.Screen name="LCR" component={LCR} />
         </Tab.Navigator>
       </SafeAreaView>

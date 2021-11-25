@@ -15,6 +15,7 @@ const urls = {
   register: 'register',
   my_profile : 'my-profile',
   edit_boat_info : 'edit-boat-info',
+  edit_emergency_contacts : 'edit-emergency-contacts',
   complete_registration: 'complete_registration',
   login_with_email: 'login_with_email',
   login_with_phone: 'login_with_phone',

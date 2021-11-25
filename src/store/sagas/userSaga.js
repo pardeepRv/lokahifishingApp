@@ -6,6 +6,7 @@ import {
   showSuccessAlert,
 } from '../../utilities/helperFunctions';
 import {request} from '../../utilities/request';
+import * as NavigationService from '../NavigationService';
 
 function* fetchAll({params}) {
   try {
@@ -117,4 +118,42 @@ function* getfriendlistsaga({params}) {
   }
 }
 
-export {fetchAll, getfriendsaga, respondRequestsaga , getfriendlistsaga};
+function* editcontactsaga(params) {
+    console.log(`params`, params);
+  try {
+    
+    const config = {
+      url: urls.edit_emergency_contacts,
+      method: 'POST',
+      data: params?.params?.formData,
+      headers: {
+        Authorization: `Bearer ${params?.params?.token}`,
+      },
+    };
+
+    const response = yield request(config);
+      console.log(response, 'emergency contacts  api ');
+
+    if (response && response.data && response.data.success) {
+      yield put({
+        type: actionTypes.UPDATE_EDIT_CONTACT_SUCCEEDED,
+      });
+      showSuccessAlert(response.data.message);
+    }
+    NavigationService.navigate('MYprofile')
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+
+    yield put({
+      type: actionTypes.UPDATE_EDIT_CONTACT_FAIL,
+    });
+  }
+}
+
+export {
+  fetchAll,
+  getfriendsaga,
+  respondRequestsaga,
+  getfriendlistsaga,
+  editcontactsaga,
+};

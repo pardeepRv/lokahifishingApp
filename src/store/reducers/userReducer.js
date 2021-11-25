@@ -62,6 +62,24 @@ export default (state = initialState, action) => {
         loading: false,
       };
 
+    case actionTypes.UPDATE_EDIT_CONTACT_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.UPDATE_EDIT_CONTACT_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.UPDATE_EDIT_CONTACT_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
     default:
       return state;
   }

@@ -13,7 +13,12 @@ import {
   sessionExpiredSaga,
   SignupViaEmail,
 } from './authSagas';
-import {getfriendlistsaga, getfriendsaga, respondRequestsaga} from './userSaga';
+import {
+  getfriendlistsaga,
+  getfriendsaga,
+  respondRequestsaga,
+  editcontactsaga,
+} from './userSaga';
 
 export default function* rootSaga() {
   //auth sagas
@@ -29,12 +34,11 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.UPDATE_PROFILE_REQUESTED, editProfilesaga);
   yield takeLatest(actionTypes.UPDATE_EDIT_BOAT_INFO_REQUESTED, editboatsaga);
 
-
   // //user sagas
   yield takeLatest(actionTypes.GET_FRIEND_REQUESTED, getfriendsaga);
   yield takeLatest(actionTypes.RESPOND_FRIEND_REQUESTED, respondRequestsaga);
   yield takeLatest(actionTypes.GET_FRIEND_LIST_REQUESTED, getfriendlistsaga);
-
+  yield takeLatest(actionTypes.UPDATE_EDIT_CONTACT_REQUESTED, editcontactsaga);
 
   // //app sagas
   // yield takeLatest(actionTypes.SEARCH_ARTIST_REQUESTED, getSearchSaga);

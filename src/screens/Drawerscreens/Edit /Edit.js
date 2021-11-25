@@ -13,8 +13,9 @@ import { fonts, icons } from '../../../../assets';
 import { Header } from '../../../components/common/Header';
 import { strings } from '../../../localization';
 import { colors } from '../../../utilities/constants';
-import EmergencyContacts from '../MYprofile/EmergencyContacts';
+
 import BInfo from './BInfo/BInfo';
+import EditContacts from './EditemergencyContacts/Editemergencycontacts';
 import EditProfile from './EditProfile/EditProfile';
 import styles from './styles';
 
@@ -68,7 +69,7 @@ const Edit = ({ navigation }) => {
         }}>
         <Tab.Screen name="profile" component={EditProfile} />
         <Tab.Screen name="Boat info" component={BInfo} />
-        <Tab.Screen name="Emergency Contacts" component={EmergencyContacts} />
+        <Tab.Screen name="EmergencyContacts" component={EditContacts} />
       </Tab.Navigator>
     </SafeAreaView>
   );

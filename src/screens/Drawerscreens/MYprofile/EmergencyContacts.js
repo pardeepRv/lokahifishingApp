@@ -1,252 +1,189 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  FlatList,
+  ImageBackground,
+  SafeAreaView,
+  ScrollView,
   StyleSheet,
-  TouchableOpacity,
-  View,
   Text,
-  ScrollView
+  View,
 } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import { fonts } from '../../../../assets';
-import { Button } from '../../../components/common/Button';
+import {moderateScale} from 'react-native-size-matters';
+import {fonts, icons} from '../../../../assets';
 import TextInputComp from '../../../components/common/TextInputComp';
-import { strings } from '../../../localization';
 import commonStyles from '../../../utilities/commonStyles';
-import { colors } from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
+import {colors} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
 
-
-const EmergencyContacts = () => {
-
-  const [addContact, setAllContact] = useState([1, 2, 3])
-  const [state, setState] = useState({
-    name: '',
-    relation: '',
-    phoneNo: '',
-    secondName: '',
-    secondRelation: '',
-    secondPhoneNo: ''
-  });
-  const { name,
-    relation,
-    phoneNo,
-    secondName,
-    secondRelation,
-    secondPhoneNo
-  } = state;
-
-  const _onChangeText = key => val => {
-    setState({ ...state, [key]: val });
-  };
-
-  const _renderView = ({ item, index }) => (
-    <View
-      style={{
-        height: layout.size.height / 4,
-        width: layout.size.width - 20,
-        backgroundColor: colors.white1,
-        alignSelf: 'center',
-        margin: 5,
-        ...commonStyles.shadow
-      }}
-    >
-      <Text
-        style={{
-          fontFamily: fonts.bold,
-          color: colors.primary,
-          padding: 5
-        }}
-      >
-        Contact no. {index + 1}
-      </Text>
-
-      <TextInputComp
-        label={'Name'}
-        value={name}
-        placeholder={'Please enter name here.'}
-        labelTextStyle={{
-          fontFamily: fonts.semiBold,
-          fontSize: moderateScale(16),
-          color: colors.white1,
-        }}
-        onChangeText={_onChangeText('name')}
-      />
-    </View>
-  );
-
+const EmergencyContacts = props => {
+  console.log(props, 'datadata in emememeenekebev');
   return (
-    <ScrollView
-      style={{
-        flex: 1
-      }}
-      contentContainerStyle={{
-        paddingBottom: moderateScale(40),
-
-      }}
-      keyboardShouldPersistTaps={'always'}
-      showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
       <View
         style={{
-          flex: 1
-        }}
-      >
-
-        <View
-          style={{
-            height: layout.size.height / 3 + 20,
-            width: layout.size.width - 20,
-            backgroundColor: colors.white1,
-            alignSelf: 'center',
-            margin: 5,
-            ...commonStyles.shadow
-          }}
-        >
-          <Text
+          flex: 1,
+        }}>
+        <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
+          <ScrollView
             style={{
-              fontFamily: fonts.bold,
-              color: colors.primary,
-              padding: 5
+              flex: 1,
             }}
-          >
-            Contact no. 1
-          </Text>
-
-          <TextInputComp
-            label={'Name'}
-            value={name}
-            placeholder={'Please enter name here.'}
-            labelTextStyle={{
-              fontFamily: fonts.semiBold,
-              fontSize: moderateScale(16),
-              color: colors.black1,
+            contentContainerStyle={{
+              paddingBottom: moderateScale(40),
             }}
-            onChangeText={_onChangeText('name')}
-          />
+            keyboardShouldPersistTaps={'always'}
+            showsVerticalScrollIndicator={false}>
+            <View
+              style={{
+                flex: 1,
+              }}>
+              <View
+                style={{
+                  height: layout.size.height / 3 + 20,
+                  width: layout.size.width - 20,
+                  backgroundColor: colors.white1,
+                  alignSelf: 'center',
+                  margin: 5,
+                  ...commonStyles.shadow,
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fonts.bold,
+                    color: colors.primary,
+                    padding: 5,
+                  }}>
+                  Contact no. 1
+                </Text>
 
-          <TextInputComp
-            label={'Relation'}
-            value={relation}
-            placeholder={'Please enter Relation here.'}
-            labelTextStyle={{
-              fontFamily: fonts.semiBold,
-              fontSize: moderateScale(16),
-              color: colors.black1,
-            }}
-            onChangeText={_onChangeText('relation')}
-          />
-          <TextInputComp
-            label={'Phone no.'}
-            value={phoneNo}
-            placeholder={'Please Phone no. here.'}
-            labelTextStyle={{
-              fontFamily: fonts.semiBold,
-              fontSize: moderateScale(16),
-              color: colors.black1,
-            }}
-            onChangeText={_onChangeText('phoneNo')}
-          />
-        </View>
-        <View
-          style={{
-            height: layout.size.height / 3 + 20,
-            width: layout.size.width - 20,
-            backgroundColor: colors.white1,
-            alignSelf: 'center',
-            margin: 5,
-            ...commonStyles.shadow
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: fonts.bold,
-              color: colors.primary,
-              padding: 5
-            }}
-          >
-            Contact no. 2
-          </Text>
+                <TextInputComp
+                  label={'Name'}
+                  value={
+                    props &&
+                    props.userAllData &&
+                    props.userAllData.emergency_contacts &&
+                    props.userAllData.emergency_contacts.length > 0 &&
+                    props.userAllData.emergency_contacts[0].name
+                  }
+                  editable={false}
+                  placeholder={'Please enter name here.'}
+                  labelTextStyle={{
+                    fontFamily: fonts.semiBold,
+                    fontSize: moderateScale(16),
+                    color: colors.black1,
+                  }}
+                />
 
-          <TextInputComp
-            label={'Name'}
-            value={secondName}
-            placeholder={'Please enter name here.'}
-            labelTextStyle={{
-              fontFamily: fonts.semiBold,
-              fontSize: moderateScale(16),
-              color: colors.black1,
-            }}
-            onChangeText={_onChangeText('secondName')}
-          />
+                <TextInputComp
+                  label={'Relation'}
+                  value={
+                    props &&
+                    props.userAllData &&
+                    props.userAllData.emergency_contacts &&
+                    props.userAllData.emergency_contacts.length > 0 &&
+                    props.userAllData.emergency_contacts[0].relation
+                  }
+                  editable={false}
+                  placeholder={'Please enter Relation here.'}
+                  labelTextStyle={{
+                    fontFamily: fonts.semiBold,
+                    fontSize: moderateScale(16),
+                    color: colors.black1,
+                  }}
+                />
+                <TextInputComp
+                  label={'Phone no.'}
+                  value={
+                    props &&
+                    props.userAllData &&
+                    props.userAllData.emergency_contacts &&
+                    props.userAllData.emergency_contacts.length > 0 &&
+                    props.userAllData.emergency_contacts[0].phone_number
+                  }
+                  editable={false}
+                  placeholder={'Please Phone no. here.'}
+                  labelTextStyle={{
+                    fontFamily: fonts.semiBold,
+                    fontSize: moderateScale(16),
+                    color: colors.black1,
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  height: layout.size.height / 3 + 20,
+                  width: layout.size.width - 20,
+                  backgroundColor: colors.white1,
+                  alignSelf: 'center',
+                  margin: 5,
+                  ...commonStyles.shadow,
+                }}>
+                <Text
+                  style={{
+                    fontFamily: fonts.bold,
+                    color: colors.primary,
+                    padding: 5,
+                  }}>
+                  Contact no. 2
+                </Text>
 
-          <TextInputComp
-            label={'Relation'}
-            value={secondRelation}
-            placeholder={'Please relation here.'}
-            labelTextStyle={{
-              fontFamily: fonts.semiBold,
-              fontSize: moderateScale(16),
-              color: colors.black1,
-            }}
-            onChangeText={_onChangeText('secondRelation')}
-          />
+                <TextInputComp
+                  label={'Name'}
+                  value={
+                    props &&
+                    props.userAllData &&
+                    props.userAllData.emergency_contacts &&
+                    props.userAllData.emergency_contacts.length > 0 &&
+                    props.userAllData.emergency_contacts[1].name
+                  }
+                  editable={false}
+                  placeholder={'Please enter name here.'}
+                  labelTextStyle={{
+                    fontFamily: fonts.semiBold,
+                    fontSize: moderateScale(16),
+                    color: colors.black1,
+                  }}
+                />
 
-          <TextInputComp
-            label={'Phone no.'}
-            value={secondPhoneNo}
-            placeholder={'Please phone no. here.'}
-            labelTextStyle={{
-              fontFamily: fonts.semiBold,
-              fontSize: moderateScale(16),
-              color: colors.black1,
-            }}
-            onChangeText={_onChangeText('secondPhoneNo')}
-          />
-        </View>
+                <TextInputComp
+                  label={'Relation'}
+                  value={
+                    props &&
+                    props.userAllData &&
+                    props.userAllData.emergency_contacts &&
+                    props.userAllData.emergency_contacts.length > 0 &&
+                    props.userAllData.emergency_contacts[1].relation
+                  }
+                  editable={false}
+                  placeholder={'Please relation here.'}
+                  labelTextStyle={{
+                    fontFamily: fonts.semiBold,
+                    fontSize: moderateScale(16),
+                    color: colors.black1,
+                  }}
+                />
 
-        <Button
-          style={{
-            backgroundColor: colors.primary,
-            borderRadius: 20,
-            width: layout.size.width - 50,
-            alignSelf: 'center',
-            marginBottom: 30
-          }}
-          label={'Save'}
-        // onPress={() => Done()}
-        />
-
-        {/* <FlatList
-        extraData={addContact}
-        data={addContact}
-        renderItem={_renderView}
-        keyExtractor={(item, index) => 'key' + index}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() =>
-          !addContact.length ? (
-            <Text style={styles.nomatch}>No Match found</Text>
-          ) : null
-        }
-
-        ListFooterComponent={() =>
-          <Button
-            style={{
-              backgroundColor: colors.primary,
-              borderRadius: 20,
-              width: layout.size.width - 50,
-              alignSelf: 'center',
-              marginBottom: 30
-            }}
-            label={'Save'}
-          // onPress={() => Done()}
-          />
-        }
-
-      /> */}
-
+                <TextInputComp
+                  label={'Phone no.'}
+                  value={
+                    props &&
+                    props.userAllData &&
+                    props.userAllData.emergency_contacts &&
+                    props.userAllData.emergency_contacts.length > 0 &&
+                    props.userAllData.emergency_contacts[1].phone_number
+                  }
+                  editable={false}
+                  placeholder={'Please phone no. here.'}
+                  labelTextStyle={{
+                    fontFamily: fonts.semiBold,
+                    fontSize: moderateScale(16),
+                    color: colors.black1,
+                  }}
+                />
+              </View>
+            </View>
+          </ScrollView>
+        </ImageBackground>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -255,11 +192,12 @@ const styles = StyleSheet.create({
     position: 'relative',
     display: 'flex',
     flex: 1,
-  }, image: {
+  },
+  image: {
     flex: 1,
     resizeMode: 'cover',
     height: '100%',
-  }
+  },
 });
 
 export default EmergencyContacts;

@@ -87,6 +87,7 @@ import LeaderboardCard from '../screens/NavigationScreens/LeaderBoard/leaderboar
 import Importantlinks from '../screens/Drawerscreens/Importantlinks/Importantlinks';
 import FishingWebsite from '../screens/Drawerscreens/Importantlinks/FishingWebsite';
 import HawaiiLegislature from '../screens/Drawerscreens/Importantlinks/HawaiiLegislatureWebsite';
+import ModalListComponent from '../screens/NavigationScreens/SelectBoatFishing/ModalListComponent/ModalListComponent';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -259,6 +260,12 @@ const catchReportStack = props => {
       <Stack.Screen name="FishData" component={FishData} />
       <Stack.Screen name="UploadImg" component={UploadImg} />
       <Stack.Screen name="LCRRequired" component={LCRRequired} />
+      <Stack.Group screenOptions={{presentation: 'modal'}}>
+        <Stack.Screen
+          name="ModalListComponent"
+          component={ModalListComponent}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

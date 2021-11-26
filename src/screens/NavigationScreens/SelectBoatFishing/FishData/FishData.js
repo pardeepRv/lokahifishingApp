@@ -195,7 +195,16 @@ const FishData = ({navigation}) => {
               />
             </View>
             <View style={styles.textSection}>
-              <Text style={styles.title}>Sign</Text>
+              <Text
+                style={styles.title}
+                onPress={() =>
+                  navigation.navigate('ModalListComponent', {
+                    value: 1,
+                    name: 'Sign',
+                  })
+                }>
+                Sign
+              </Text>
               <TextInput
                 placeholder="Add sign info (optional)"
                 autoCapitalize="sentences"
@@ -209,7 +218,16 @@ const FishData = ({navigation}) => {
               />
             </View>
             <View style={styles.textSection}>
-              <Text style={styles.title}>Method</Text>
+              <Text
+                style={styles.title}
+                onPress={() =>
+                  navigation.navigate('ModalListComponent', {
+                    value: 2,
+                    name: 'Method',
+                  })
+                }>
+                Method
+              </Text>
               <TextInput
                 placeholder="Add info about method (optional)"
                 autoCapitalize="sentences"
@@ -223,7 +241,16 @@ const FishData = ({navigation}) => {
               />
             </View>
             <View style={styles.textSection}>
-              <Text style={styles.title}>Weather</Text>
+              <Text
+                style={styles.title}
+                onPress={() =>
+                  navigation.navigate('ModalListComponent', {
+                    value: 3,
+                    name: 'Weather',
+                  })
+                }>
+                Weather
+              </Text>
               <TextInput
                 placeholder="Add weather info (optional)"
                 autoCapitalize="sentences"
@@ -237,7 +264,16 @@ const FishData = ({navigation}) => {
               />
             </View>
             <View style={styles.textSection}>
-              <Text style={styles.title}>Tide</Text>
+              <Text
+                style={styles.title}
+                onPress={() =>
+                  navigation.navigate('ModalListComponent', {
+                    value: 4,
+                    name: 'Tide',
+                  })
+                }>
+                Tide
+              </Text>
               <TextInput
                 placeholder="Add tide info (optional)"
                 autoCapitalize="sentences"

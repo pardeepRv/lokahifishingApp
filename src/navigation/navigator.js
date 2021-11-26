@@ -88,6 +88,7 @@ import Importantlinks from '../screens/Drawerscreens/Importantlinks/Importantlin
 import FishingWebsite from '../screens/Drawerscreens/Importantlinks/FishingWebsite';
 import HawaiiLegislature from '../screens/Drawerscreens/Importantlinks/HawaiiLegislatureWebsite';
 import ModalListComponent from '../screens/NavigationScreens/SelectBoatFishing/ModalListComponent/ModalListComponent';
+import Circular from '../components/common/Circular';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -260,6 +261,7 @@ const catchReportStack = props => {
       <Stack.Screen name="FishData" component={FishData} />
       <Stack.Screen name="UploadImg" component={UploadImg} />
       <Stack.Screen name="LCRRequired" component={LCRRequired} />
+      <Stack.Screen name="Circular" component={Circular} />
       <Stack.Group screenOptions={{presentation: 'modal'}}>
         <Stack.Screen
           name="ModalListComponent"

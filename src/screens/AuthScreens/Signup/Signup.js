@@ -17,11 +17,11 @@ import {
 import ImagePicker from 'react-native-image-crop-picker';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {moderateScale} from 'react-native-size-matters';
-import {useDispatch,useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
 import {Button} from '../../../components/common/Button';
-import { Header } from '../../../components/common/Header';
-import { Loader } from '../../../components/common/Loader';
+import {Header} from '../../../components/common/Header';
+import {Loader} from '../../../components/common/Loader';
 import TextInputComp from '../../../components/common/TextInputComp';
 import {strings} from '../../../localization';
 
@@ -116,12 +116,14 @@ const Signup = ({navigation}) => {
     setErrors(err);
     if (Object.keys(err).length == 0) {
       let formData = new FormData();
+      if (productPhoto && productPhoto != '') {
+        formData.append('image', {
+          uri: productPhoto,
+          type: 'image/jpeg', // or photo.type
+          name: 'profilePic',
+        });
+      }
 
-      formData.append('image', {
-        uri: productPhoto,
-        type: 'image/jpeg', // or photo.type
-        name: 'profilePic',
-      });
       formData.append('user_name', username);
       formData.append('full_name', fullname);
       formData.append('email', email);
@@ -237,7 +239,7 @@ const Signup = ({navigation}) => {
           flex: 1,
         }}>
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
-        <Header
+          <Header
             containerStyle={{
               backgroundColor: colors.transparent,
               height: moderateScale(60),
@@ -521,10 +523,7 @@ const Signup = ({navigation}) => {
               </TouchableOpacity>
             </KeyboardAvoidingView>
           </ScrollView>
-          <Loader
-            isLoading={auth.loading}
-            isAbsolute
-          />
+          <Loader isLoading={auth.loading} isAbsolute />
         </ImageBackground>
       </View>
     </SafeAreaView>

@@ -50,6 +50,8 @@ const FishData = ({navigation}) => {
     LCRIsPosting,
     LCRPostRequired,
   ] = useState('');
+
+  const [price, setPrice] = useState(0);
   const [sign, setSign] = useState('');
   const [method, setMethod] = useState('');
   const [weather, setWeather] = useState('');
@@ -70,6 +72,8 @@ const FishData = ({navigation}) => {
     {label: 'Haleiwa', value: 'Haleiwa'},
     {label: 'Waianae', value: 'Waianae'},
   ]);
+
+  const [selectedSignArr, setselectedSignArr] = useState([]);
 
   useEffect(() => {
     setLCRPostOptional({
@@ -132,6 +136,20 @@ const FishData = ({navigation}) => {
       ...location,
       longitude: text === '-' ? 1 : parseFloat(text),
     });
+  };
+
+  const getSelectedSigns = val => {
+    console.log('coming in parent>>>>>>', val);
+    if (val && val.length > 0) {
+      setselectedSignArr(val);
+    }
+  };
+
+  const getHrs = v => {
+    console.log(v, ' in parnt hrs');
+    if (v > 0) {
+      setPrice(v);
+    }
   };
 
   return (
@@ -201,11 +219,12 @@ const FishData = ({navigation}) => {
                   navigation.navigate('ModalListComponent', {
                     value: 1,
                     name: 'Sign',
+                    getSelectedSigns: getSelectedSigns,
                   })
                 }>
                 Sign
               </Text>
-              <TextInput
+              {/* <TextInput
                 placeholder="Add sign info (optional)"
                 autoCapitalize="sentences"
                 style={{fontSize: 16}}
@@ -215,7 +234,36 @@ const FishData = ({navigation}) => {
                   Keyboard.dismiss();
                 }}
                 onChangeText={text => setSign(text)}
-              />
+              /> */}
+              <View style={{flex: 0.5}}>
+                {selectedSignArr && selectedSignArr.length > 0 ? (
+                  selectedSignArr.map((val, index) => {
+                    return (
+                      <Text
+                        key={index}
+                        style={{
+                          fontFamily: fonts.semiBold,
+                        }}>
+                        {val.name}
+                      </Text>
+                    );
+                  })
+                ) : (
+                  <Text
+                    style={{
+                      fontFamily: fonts.semiBold,
+                    }}
+                    onPress={() =>
+                      navigation.navigate('ModalListComponent', {
+                        value: 1,
+                        name: 'Sign',
+                        getSelectedSigns: getSelectedSigns,
+                      })
+                    }>
+                    Select sign here
+                  </Text>
+                )}
+              </View>
             </View>
             <View style={styles.textSection}>
               <Text
@@ -286,6 +334,31 @@ const FishData = ({navigation}) => {
                 onChangeText={text => setTide(text)}
               />
             </View>
+            <View style={styles.textSection}>
+              <Text
+                style={styles.title}
+                onPress={() =>
+                  navigation.navigate('Circular', {
+                    value: 5,
+                    getHrs: getHrs,
+                  })
+                }>
+                Efforts
+              </Text>
+              {price > 0 && (
+                <Text
+                  onPress={() =>
+                    navigation.navigate('Circular', {
+                      value: 5,
+                      getHrs: getHrs,
+                    })
+                  }
+                  style={styles.title}>
+                  {price} hrs.
+                </Text>
+              )}
+            </View>
+
             <View style={styles.textSection}>
               <Text style={styles.title}>Location</Text>
             </View>

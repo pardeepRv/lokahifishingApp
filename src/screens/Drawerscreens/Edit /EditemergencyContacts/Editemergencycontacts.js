@@ -1,32 +1,23 @@
 import React, {useState} from 'react';
 import {
+  ImageBackground,
+  Keyboard,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
-  ImageBackground,
-  Keyboard,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {useDispatch, useSelector} from 'react-redux';
-import { fonts, icons } from '../../../../../assets';
-import { Button } from '../../../../components/common/Button';
-import { Loader } from '../../../../components/common/Loader';
-
-
+import {fonts, icons} from '../../../../../assets';
+import {Button} from '../../../../components/common/Button';
+import {Loader} from '../../../../components/common/Loader';
 import TextInputComp from '../../../../components/common/TextInputComp';
-import { updatecontacts } from '../../../../store/actions';
+import {updatecontacts} from '../../../../store/actions';
 import commonStyles from '../../../../utilities/commonStyles';
-import { colors } from '../../../../utilities/constants';
-import { layout } from '../../../../utilities/layout';
-
-
-
-
-
-
-
+import {colors} from '../../../../utilities/constants';
+import {layout} from '../../../../utilities/layout';
 
 const EditContacts = () => {
   let auth = useSelector(state => state.auth);
@@ -35,12 +26,48 @@ const EditContacts = () => {
   const dispatch = useDispatch();
   const [addContact, setAllContact] = useState([1, 2, 3]);
   const [state, setState] = useState({
-    name: auth?.userAllData?.emergency_contacts[0].name,
-    relation: auth?.userAllData?.emergency_contacts[0].relation,
-    phoneNo: auth?.userAllData?.emergency_contacts[0].phone_number,
-    secondName:  auth?.userAllData?.emergency_contacts[1].name,
-    secondRelation: auth?.userAllData?.emergency_contacts[1].relation,
-    secondPhoneNo: auth?.userAllData?.emergency_contacts[1].phone_number,
+    name:
+      auth &&
+      auth.userAllData &&
+      auth.userAllData.emergency_contacts &&
+      auth.userAllData.emergency_contacts.length > 0
+        ? auth.userAllData.emergency_contacts[0].name
+        : '',
+    relation:
+      auth &&
+      auth.userAllData &&
+      auth.userAllData.emergency_contacts &&
+      auth.userAllData.emergency_contacts.length > 0
+        ? auth.userAllData.emergency_contacts[0].relation
+        : '',
+    phoneNo:
+      auth &&
+      auth.userAllData &&
+      auth.userAllData.emergency_contacts &&
+      auth.userAllData.emergency_contacts.length > 0
+        ? auth.userAllData.emergency_contacts[0].phone_number
+        : '',
+    secondName:
+      auth &&
+      auth.userAllData &&
+      auth.userAllData.emergency_contacts &&
+      auth.userAllData.emergency_contacts.length > 0
+        ? auth.userAllData.emergency_contacts[1].name
+        : '',
+    secondRelation:
+      auth &&
+      auth.userAllData &&
+      auth.userAllData.emergency_contacts &&
+      auth.userAllData.emergency_contacts.length > 0
+        ? auth.userAllData.emergency_contacts[1].relation
+        : '',
+    secondPhoneNo:
+      auth &&
+      auth.userAllData &&
+      auth.userAllData.emergency_contacts &&
+      auth.userAllData.emergency_contacts.length > 0
+        ? auth.userAllData.emergency_contacts[1].phone_number
+        : '',
   });
   const [errors, setErrors] = useState({
     name: '',

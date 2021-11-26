@@ -173,7 +173,7 @@ const LCRRequired = props => {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.section}>
+        {/* <View style={styles.section}>
           <View style={styles.effortTitle}>
             <Text style={[styles.title, {marginBottom: 0}]}>Effort</Text>
             <Text style={styles.effortSubtext}>
@@ -183,7 +183,7 @@ const LCRRequired = props => {
           <View style={styles.subsection}>
             <Circular />
           </View>
-        </View>
+        </View> */}
         <View style={styles.section}>
           <Text style={styles.title}>Date & Time</Text>
 

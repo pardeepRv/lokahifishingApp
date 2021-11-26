@@ -146,7 +146,9 @@ function* SignupViaEmail({params}) {
         userData: loginUserData,
       });
 
-      NavigationService.resetRoute(screenNames.HomeStack);
+      // NavigationService.resetRoute(screenNames.HomeStack);
+      showSuccessAlert('We have sent you an email,Please verify it.');
+      NavigationService.goBack();
     } else {
       yield put({
         type: actionTypes.SIGNUP_WITH_EMAIL_FAIL,
@@ -190,6 +192,11 @@ function* change_PasswordSaga({params}) {
       showSuccessAlert(response.data.message);
       yield put({
         type: actionTypes.SESSION_EXPIRE_REQUESTED,
+      });
+    } else {
+      showErrorAlert(response.data.message);
+      yield put({
+        type: actionTypes.CHANGE_PASSWORD_FAIL,
       });
     }
   } catch (error) {

@@ -15,7 +15,7 @@ export default StyleSheet.create({
   content: {
     display: 'flex',
     flex: 1,
-    backgroundColor:colors.white1
+    backgroundColor: colors.white1,
   },
   text: {
     color: '#fff',
@@ -40,7 +40,6 @@ export default StyleSheet.create({
     padding: 10,
     width: layout.size.width - 50,
     alignSelf: 'center',
-
   },
   title: {
     textAlign: 'center',
@@ -66,8 +65,18 @@ export default StyleSheet.create({
     height: moderateScale(50),
   },
   btnStyles: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondry,
     width: layout.size.width - 80,
     alignSelf: 'center',
+  },
+  sectionHeader: {
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2,
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#fff',
+    backgroundColor: '#8fb1aa',
   },
 });

@@ -383,7 +383,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvtech.lokahi;
 				PRODUCT_NAME = lokahifishinglatest;
-				PROVISIONING_PROFILE_SPECIFIER = Adhoc_old_lokahi;
+				PROVISIONING_PROFILE_SPECIFIER = Lokahi_Fishing_Dis;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

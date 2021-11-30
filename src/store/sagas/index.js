@@ -1,5 +1,6 @@
 import {takeLatest} from 'redux-saga/effects';
 import {actionTypes} from '../../utilities/constants';
+import { getvediosaga } from './appSagas';
 import {
   change_PasswordSaga,
   checkIfLoggedInSaga,
@@ -42,4 +43,5 @@ export default function* rootSaga() {
 
   // //app sagas
   // yield takeLatest(actionTypes.SEARCH_ARTIST_REQUESTED, getSearchSaga);
+  yield takeLatest(actionTypes.GET_VIDEO_REQUESTED, getvediosaga);
 }

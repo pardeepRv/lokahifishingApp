@@ -202,7 +202,7 @@ const EditProfile = ({navigation}) => {
         console.log(`ress`, res);
         // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
         if (Platform.OS == 'ios') {
-          setprofilePhoto(res.sourceURL);
+          setprofilePhoto(res.path);
         } else {
           setprofilePhoto(res.path);
         }

@@ -123,7 +123,6 @@ const Signup = ({navigation}) => {
           name: 'profilePic',
         });
       }
-
       formData.append('user_name', username);
       formData.append('full_name', fullname);
       formData.append('email', email);
@@ -144,7 +143,7 @@ const Signup = ({navigation}) => {
       obj.user_name = username;
       obj.image = productPhoto;
 
-      console.log(formData, 'sending to aApi');
+         console.log(formData, 'sending to aApi');
       dispatch(signUpWithEmail(formData));
       // dispatch(signUpWithEmail(obj));
       // dispatch({type:REGISTER,payloads:formData});
@@ -202,16 +201,18 @@ const Signup = ({navigation}) => {
       width: 300,
       height: 400,
       cropping: true,
+      multiple: true,
       // includeBase64: true,
       compressImageQuality: 0.2,
     }).then(res => {
       console.log(`ress`, res);
-      // res && res.assets && res.assets.length > 0 && res.assets[0].uri,
+      console.log(` res && res.assets && res.assets.length > 0 && res.assets[0].uri`,  res.path)
+      res && res.assets && res.assets.length > 0 && res.assets[0].uri
       if (Platform.OS == 'ios') {
-        setProductPhoto(res.sourceURL);
+        setProductPhoto(res.path);
       } else {
-        setprofilePhoto(res.path);
-      }
+        setProductPhoto(res.path);
+      }0
     });
   }
   function _doOpenGallery() {
@@ -227,7 +228,7 @@ const Signup = ({navigation}) => {
       if (Platform.OS == 'ios') {
         setProductPhoto(res.sourceURL);
       } else {
-        setprofilePhoto(res.path);
+        setProductPhoto(res.path);
       }
     });
   }

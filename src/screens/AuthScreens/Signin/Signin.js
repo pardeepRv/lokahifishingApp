@@ -31,8 +31,8 @@ const Signin = ({navigation}) => {
   const [state, setState] = useState({
     // email: 'myname@yopmail.com',
     // password: 'qwerty123',
-    email: '',
-    password: '',
+    email: 'myname@yopmail.com',
+    password: 'qwerty123',
   });
   const {email, password} = state;
   const _onChangeText = key => val => {

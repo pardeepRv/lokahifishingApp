@@ -89,6 +89,7 @@ import FishingWebsite from '../screens/Drawerscreens/Importantlinks/FishingWebsi
 import HawaiiLegislature from '../screens/Drawerscreens/Importantlinks/HawaiiLegislatureWebsite';
 import ModalListComponent from '../screens/NavigationScreens/SelectBoatFishing/ModalListComponent/ModalListComponent';
 import Circular from '../components/common/Circular';
+import VideoTips from '../screens/Drawerscreens/VideoTips/VideoTips';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -128,6 +129,7 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="Settings" component={settingsStack} />
       <Drawer.Screen name="News" component={News} />
       <Drawer.Screen name="Video" component={Video} />
+      <Drawer.Screen name="VideoTips" component={VideoTips} />
       <Drawer.Screen name="MYprofile" component={MYprofileStack} />
       <Drawer.Screen name="DataFeeds" component={DataFeedsStack} />
       <Drawer.Screen name="catchReportStack" component={catchReportStack} />

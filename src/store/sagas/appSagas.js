@@ -28,8 +28,39 @@ function* fetchAll({ params }) {
     }
 } 
 
+function* getvediosaga({params}) {
+    try {
+      const config = {
+        url: urls.videos,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${params}`,
+        },
+      };
+      const response = yield request(config);
+       console.log(response, 'Video alll >>>>>> api ');
+  
+      if (response?.data?.status) {
+        yield put({
+          type: actionTypes.GET_VIDEO_SUCCEEDED,
+          payload: response?.data?.data?.videos,
+        });
+      } else {
+        yield put({
+          type: actionTypes.GET_VIDEO_SUCCEEDED,
+          payload: [],
+        });
+      }
+    } catch (error) {
+      showErrorAlert(getAPIError(error));
+      yield put({
+        type: actionTypes.GET_VIDEO_FAIL,
+      });
+    }
+  }
  
 export {
     fetchAll,
+    getvediosaga,
   
 };

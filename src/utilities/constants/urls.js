@@ -11,6 +11,7 @@ const urls = {
   register_url: 'register',
   check_login: 'check_login',
   user_data: 'user_data',
+  videos :'videos',
   uploadMedia: 'uploadmedia',
   register: 'register',
   my_profile : 'my-profile',

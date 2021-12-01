@@ -433,7 +433,8 @@ const data = [
   },
   {
     name: strings.Video_tips,
-    navigate: 'VideoTips',
+    // navigate: 'VideoTips',
+    navigate: 'Video',
     img: icons.ic_videoTips,
   },
   {

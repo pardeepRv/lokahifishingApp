@@ -1,26 +1,25 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  Alert,
+  Dimensions,
+  ImageBackground,
   SafeAreaView,
-  RefreshControl,
   StyleSheet,
   Text,
-  ImageBackground,
-  Dimensions,
-  FlatList,
   View,
-  Alert,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
+import YoutubePlayer from 'react-native-youtube-iframe';
+import {useDispatch, useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
 import {Header, Loader} from '../../../components/common';
-import {colors} from '../../../utilities/constants';
-import {useDispatch, useSelector} from 'react-redux';
-import YoutubePlayer from 'react-native-youtube-iframe';
 import {getvideo} from '../../../store/actions';
+import {colors} from '../../../utilities/constants';
 
-// import firestore from '@react-native-firebase/firestore'
+const VideoTips = ({navigation, route}) => {
+  const {params} = route;
 
-const VideoTips = ({navigation}) => {
+  console.log(route, 'in videos');
   const [ad, setAd] = useState(auth?.allvideolist);
 
   const [playing, setPlaying] = useState(false);
@@ -40,22 +39,6 @@ const VideoTips = ({navigation}) => {
   const [state, setState] = useState({
     refreshing: false,
   });
-  // useEffect(() => {
-  // 	const ref = firestore().collection('VideoTips').orderBy('Title', 'asc')
-  // 	return ref.onSnapshot(querySnapshot => {
-  // 		const list1 = []
-  // 		querySnapshot.forEach(doc => {
-  // 			const { Title, Video } = doc.data()
-  // 			list1.push({
-  // 				id: doc.id,
-  // 				name: Title,
-  // 				video: Video,
-  // 			})
-  // 			setAd(list1)
-  // 			// console.log('this one is ads', list1)
-  // 		})
-  // 	})
-  // }, [])
 
   useEffect(() => {
     console.log('coming in this');
@@ -69,7 +52,7 @@ const VideoTips = ({navigation}) => {
   function Video() {
     let token = auth && auth?.userDetails?.access_token;
     dispatch(getvideo(token));
-	setAd(auth.allvideolist);
+    setAd(auth.allvideolist);
   }
 
   function _onRefresh() {
@@ -89,11 +72,11 @@ const VideoTips = ({navigation}) => {
         {item?.auth?.allvideolist?.title}
       </Text>
       <YoutubePlayer
-        height={300}
+        height={400}
         ref={controlRef}
         play={playing}
         mute={isMute}
-         videoId={item?.auth?.allvideolist?.id}
+        videoId={item?.auth?.allvideolist?.id}
         onChangeState={onStateChange}
       />
     </View>
@@ -152,26 +135,12 @@ const VideoTips = ({navigation}) => {
             navigation.goBack();
           }}
         />
-        <FlatList
-          extraData={ad}
-          data={ad}
-          renderItem={_renderView}
-          keyExtractor={(item, index) => 'key' + index}
-          // style={{marginBottom:1}}
-          ListEmptyComponent={() =>
-           ad >= 0 && (
-              <Text style={styles.nomatch}>No Request found</Text>
-            )
-          }
-          refreshControl={
-            <RefreshControl
-              refreshing={user.loading}
-              onRefresh={_onRefresh.bind(this)}
-              title="Pull to refresh"
-              tintColor={colors.white1}
-              titleColor={colors.white1}
-            />
-          }
+
+        <YoutubePlayer
+          height={400}
+          play={playing}
+          videoId={params?.videoId}
+          onChangeState={onStateChange}
         />
       </SafeAreaView>
       <Loader isLoading={user.loading} isAbsolute />

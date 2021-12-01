@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts} from '../../../../assets';
 import {colors} from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
+import {layout} from '../../../utilities/layout';
 
 export default StyleSheet.create({
   container: {
@@ -15,6 +15,7 @@ export default StyleSheet.create({
     padding: 10,
     marginVertical: 7,
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   header: {
     color: colors.white1,
@@ -22,10 +23,10 @@ export default StyleSheet.create({
     backgroundColor: colors.secondry,
   },
   title: {
-    width:layout.size.width/1.4,
-    fontSize: 20,
+    width: layout.size.width / 1.4,
+    fontSize: 14,
     fontFamily: fonts.bold,
     alignSelf: 'center',
-    paddingHorizontal: 5,
+    color: colors.white1,
   },
 });

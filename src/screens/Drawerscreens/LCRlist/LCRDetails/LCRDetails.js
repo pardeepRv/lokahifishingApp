@@ -1,24 +1,17 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
-
   Image,
   ImageBackground,
   SafeAreaView,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
-
-  ScrollView,
-
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../../assets';
 import {Header} from '../../../../components/common/Header';
-
 import {colors} from '../../../../utilities/constants';
-
-
-
 import styles from './styles';
 
 const LCRDetails = ({navigation}) => {

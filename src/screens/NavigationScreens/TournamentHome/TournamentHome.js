@@ -148,8 +148,9 @@ const TournamentHome = ({navigation}) => {
                 <Image
                   source={icons.ic_back_white}
                   style={{
-                    top: 10,
+                    top: 15,
                     left: 10,
+                    tintColor: colors.white1,
                   }}
                 />
               </TouchableOpacity>

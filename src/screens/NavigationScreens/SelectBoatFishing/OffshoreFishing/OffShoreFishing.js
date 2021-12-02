@@ -1,12 +1,5 @@
-import React, {useState, useRef} from 'react';
-import {
-  FlatList,
-  Image,
-  ImageBackground,
-  Text,
-  View,
-  TextInput,
-} from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, Image, ImageBackground, Text, View} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../../assets';
 import {Header} from '../../../../components/common/Header';
@@ -77,16 +70,6 @@ const OffShoreFishing = ({navigation}) => {
           style={{
             height: layout.size.height / 10,
             width: layout.size.width / 1.5,
-            shadowColor: colors.primary,
-            borderRadius: 20,
-            shadowOffset: {
-              width: 0,
-              height: 5,
-            },
-            shadowOpacity: 0.34,
-            shadowRadius: 6.27,
-
-            elevation: 10,
           }}
         />
       </View>
@@ -191,10 +174,8 @@ const OffShoreFishing = ({navigation}) => {
 
           // viewabilityConfig={_viewabilityConfig}
         />
-       
       </View>
-      <LCRRequired fishType={fishType}
-      navigation={navigation}/>
+      <LCRRequired fishType={fishType} navigation={navigation} />
     </ImageBackground>
   );
 };

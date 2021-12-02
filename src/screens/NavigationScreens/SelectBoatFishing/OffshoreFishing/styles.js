@@ -1,7 +1,5 @@
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-//external libraries
-import {RFValue} from 'react-native-responsive-fontsize';
 import {fonts} from '../../../../../assets';
 import {colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
@@ -14,13 +12,11 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   listView: {
-
-    height:moderateScale(1),
-    top:20,
+    height: moderateScale(1),
+    top: 20,
     width: layout.size.width,
     flex: 1,
     alignItems: 'flex-start',
-
   },
   viewStyle: {
     flexDirection: 'row',
@@ -28,6 +24,16 @@ export default StyleSheet.create({
     alignSelf: 'center',
     height: layout.size.height / 10,
     width: layout.size.width / 1.1,
+    shadowColor: colors.primary,
+    borderRadius: 20,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
   },
   nomatch: {
     alignSelf: 'center',

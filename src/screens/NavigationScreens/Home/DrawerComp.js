@@ -22,8 +22,8 @@ const dummyImg =
   'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1834&q=80';
 
 const DrawerComp = ({navigation, ...props}) => {
-  console.log(navigation, 'navigationnavigation in drwaer');
-  console.log(props, 'props indrwawer');
+  // console.log(navigation, 'navigationnavigation in drwaer');
+  // console.log(props, 'props indrwawer');
 
   const pressHnadler = screen => {
     console.log(screen, 'where we are navigating...');

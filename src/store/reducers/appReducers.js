@@ -2,8 +2,8 @@ import {actionTypes} from '../../utilities/constants';
 
 const initialState = {
   loading: false,
-
   allVideolist: [],
+  newsList: [],
 };
 
 export default (state = initialState, action) => {
@@ -15,7 +15,6 @@ export default (state = initialState, action) => {
       };
 
     case actionTypes.GET_VIDEO_SUCCEEDED:
-      console.log(action, 'in get VEDIO reducer>>>>>>>>');
       return {
         ...state,
         loading: false,
@@ -23,6 +22,25 @@ export default (state = initialState, action) => {
       };
 
     case actionTypes.GET_VIDEO_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_NEWS_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.GET_NEWS_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        newsList: action.payload,
+      };
+
+    case actionTypes.GET_NEWS_FAIL:
       return {
         ...state,
         loading: false,

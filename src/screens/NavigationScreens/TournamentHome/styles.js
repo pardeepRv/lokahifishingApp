@@ -53,7 +53,7 @@ export default StyleSheet.create({
   },
   backBtnView: {
     width: Dimensions.get('window').width,
-    backgroundColor: colors.primary1,
+    backgroundColor: colors.secondry,
     height:moderateScale(50)
   },
   modalcontent: {

@@ -48,7 +48,7 @@ const VideoTips = ({navigation, route}) => {
     return unsubscribe;
   }, [navigation]);
 
-  //get friends list
+  //get videos list
   function Video() {
     let token = auth && auth?.userDetails?.access_token;
     dispatch(getvideo(token));

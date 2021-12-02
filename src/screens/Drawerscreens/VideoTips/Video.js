@@ -96,7 +96,7 @@ const Video = ({navigation}) => {
 
       <YoutubePlayer
         height={220}
-        play={true}
+        play={false}
         videoId={item?.videoId}
         // onChangeState={onStateChange}
       />

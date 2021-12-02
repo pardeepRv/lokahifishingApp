@@ -104,9 +104,9 @@ const commonScreensOptions = {
 };
 
 const HomeStackScreen = props => {
-  console.log(props, 'porps sednn');
+  // console.log(props, 'porps sednn');
   let auth = useSelector(state => state.auth);
-  console.log(auth, 'auth in navigator');
+  // console.log(auth, 'auth in navigator');
   return (
     <Drawer.Navigator
       initialRouteName="Drawer"

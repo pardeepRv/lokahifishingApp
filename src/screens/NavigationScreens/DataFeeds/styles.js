@@ -1,14 +1,9 @@
 import {StyleSheet} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts} from '../../../../assets';
-import { colors } from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
-
-//external libraries
-import {RFValue} from 'react-native-responsive-fontsize';
+import {colors} from '../../../utilities/constants';
 
 export default StyleSheet.create({
-  
   blockButton: {
     borderColor: 'blue',
     borderWidth: 1,
@@ -54,7 +49,7 @@ export default StyleSheet.create({
     fontSize: moderateScale(20),
     color: colors.white1,
     paddingHorizontal: moderateScale(15),
-    fontWeight:'bold',
+    fontWeight: 'bold',
   },
   dateStyle: {
     fontFamily: fonts.regular,
@@ -65,9 +60,8 @@ export default StyleSheet.create({
   rightArrow: {
     height: 30,
     width: 30,
-    left:30,
+    left: 30,
     alignSelf: 'center',
-    fontFamily:fonts.bold,
   },
   nomatch: {
     alignSelf: 'center',

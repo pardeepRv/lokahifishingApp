@@ -1,24 +1,21 @@
 import React, {useState} from 'react';
 import {
-  View,
-  Text,
+  FlatList,
   Image,
   ImageBackground,
-  TouchableOpacity,
   SafeAreaView,
-  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-
-//extrenal libraries
-
-//internal libraries
-import {colors, menu, screenNames} from '../../../utilities/constants';
-import {fonts, icons} from '../../../../assets';
-import {strings} from '../../../localization';
-import styles from './styles';
-import {Header} from '../../../components/common/Header';
 import {moderateScale} from 'react-native-size-matters';
-import {color} from 'react-native-reanimated';
+import {fonts, icons} from '../../../../assets';
+import {Header} from '../../../components/common/Header';
+import {strings} from '../../../localization';
+//extrenal libraries
+//internal libraries
+import {colors, menu} from '../../../utilities/constants';
+import styles from './styles';
 
 const Home = ({navigation}) => {
   const [menus, setMenus] = useState(menu);
@@ -32,7 +29,7 @@ const Home = ({navigation}) => {
       {/* && strings.Tids_weather */}
       <Text
         style={
-          item.name != strings.LeaderBoard &&  item.name != strings.Tids_weather
+          item.name != strings.LeaderBoard && item.name != strings.Tids_weather
             ? styles.textStyle
             : [styles.textStyle, {color: '#2c385e'}]
         }>

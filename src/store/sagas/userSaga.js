@@ -104,12 +104,13 @@ function* getfriendlistsaga({params}) {
         type: actionTypes.GET_FRIEND_LIST_SUCCEEDED,
         payload: response?.data?.data?.friends,
       });
-    } else {
-      yield put({
-        type: actionTypes.GET_FRIEND_LIST_SUCCEEDED,
-        payload: [],
-      });
-    }
+    } 
+    // else {
+    //   yield put({
+    //     type: actionTypes.GET_FRIEND_LIST_SUCCEEDED,
+    //     payload: [],
+    //   });
+    // }
   } catch (error) {
     showErrorAlert(getAPIError(error));
     yield put({

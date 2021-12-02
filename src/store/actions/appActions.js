@@ -5,4 +5,9 @@ const getvideo = params => ({
   params,
 });
 
-export {getvideo};
+const getNewsFromAdmin = params => ({
+  type: actionTypes.GET_NEWS_REQUESTED,
+  params,
+});
+
+export {getvideo, getNewsFromAdmin};

@@ -29,10 +29,10 @@ const Signin = ({navigation}) => {
   console.log(auth, 'auth in signin page>>>>>>>>>>');
   const dispatch = useDispatch();
   const [state, setState] = useState({
-    // email: '',
-    // password: '',
-    email: 'myname@yopmail.com',
-    password: 'qwerty123',
+    email: '',
+    password: '',
+    // email: 'myname@yopmail.com',
+    // password: 'qwerty123',
   });
   const {email, password} = state;
   const _onChangeText = key => val => {

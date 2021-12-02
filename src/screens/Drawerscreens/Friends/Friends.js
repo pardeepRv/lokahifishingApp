@@ -28,7 +28,11 @@ const Friends = ({navigation}) => {
 
   const dispatch = useDispatch();
 
-  const [membersList, setMembersList] = useState(user?.allFriendslist);
+  const [membersList, setMembersList] = useState(
+    user && user.allFriendslist && user.allFriendslist.length > 0
+      ? user.allFriendslist
+      : [],
+  );
   const [searchMember, setSearchMember] = useState('');
   const [tabIndex, setTabIndex] = React.useState(0);
   const [tabAscDscIndex, settabAscDscIndex] = React.useState(0);
@@ -48,7 +52,9 @@ const Friends = ({navigation}) => {
   function getfriendlist() {
     let token = auth && auth?.userDetails?.access_token;
     dispatch(friendlist(token));
-    setMembersList(user?.allFriendslist);
+    if (user && user.allFriendslist && user.allFriendslist.length > 0) {
+      setMembersList(user?.allFriendslist);
+    }
   }
 
   function _onRefresh() {

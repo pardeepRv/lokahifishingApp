@@ -54,17 +54,7 @@ const SelectBoatFishing = ({navigation}) => {
           source={item.img}
           style={{
             height: layout.size.height / 3,
-            width: layout.size.width / 1.5,
-            shadowColor: colors.primary,
-            borderRadius: 20,
-            shadowOffset: {
-              width: 0,
-              height: 5,
-            },
-            shadowOpacity: 0.34,
-            shadowRadius: 6.27,
-
-            elevation: 10,
+            width: layout.size.width / 1.5,      
           }}
         />
       </TouchableOpacity>

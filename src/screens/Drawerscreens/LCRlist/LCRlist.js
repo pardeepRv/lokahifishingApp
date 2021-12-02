@@ -4,19 +4,16 @@ import {
   Image,
   ImageBackground,
   SafeAreaView,
+  Share,
   Text,
   TouchableOpacity,
   View,
-  Share,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
-import {Button} from '../../../components/common/Button';
 import {Header} from '../../../components/common/Header';
-import {strings} from '../../../localization';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
-import PhotoSharingPost from '../PhotoSharingPost/PhotoSharingPost';
 import styles from './styles';
 
 let members = [
@@ -31,7 +28,6 @@ let members = [
     img: icons.signin_bg_ic,
     fish: 'Ahi',
     name: 'pardeep',
-
     date: 'September 27,2021 2:21 PM',
     text: 'Export to Photosharing',
   },
@@ -46,7 +42,6 @@ let members = [
     img: icons.signin_bg_ic,
     fish: 'Omilu',
     name: 'ashutosh',
-
     date: 'September 27,2021 2:21 PM',
     text: 'Export to Photosharing',
   },
@@ -214,7 +209,7 @@ const LCRlist = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Recent Local Catches'}
-          titleStyle={{fontFamily: fonts.bold , color: colors.black1}}
+          titleStyle={{fontFamily: fonts.bold, color: colors.black1}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,

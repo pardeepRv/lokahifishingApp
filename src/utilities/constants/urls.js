@@ -33,7 +33,9 @@ const urls = {
   changePhone: 'change_phone',
   getUserProfile: 'getuser',
   news: 'news',
-  signs :'signs',
+  signs: 'signs',
+  positions: 'positions',
+  myName: 'pardeep',
 };
 
 export {urls};

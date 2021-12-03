@@ -34,6 +34,7 @@ const urls = {
   getUserProfile: 'getuser',
   news: 'news',
   signs :'signs',
+  positions:'positions'
 };
 
 export {urls};

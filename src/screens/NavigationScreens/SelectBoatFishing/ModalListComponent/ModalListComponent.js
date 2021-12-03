@@ -1,46 +1,36 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
-  Image,
-  SafeAreaView,
-  SectionList,
-  Text,
-  TouchableOpacity,
-  View,
-  LayoutAnimation,
-  Platform,
-  UIManager,
+  Image, ImageBackground, LayoutAnimation,
+  Platform, SafeAreaView, Text,
+  TouchableOpacity, UIManager, View
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../../assets';
-import {Button} from '../../../../components/common';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../../assets';
+import { Button, Loader } from '../../../../components/common';
 import Circular from '../../../../components/common/Circular';
-import {Header} from '../../../../components/common/Header';
-import {strings} from '../../../../localization';
-import {colors} from '../../../../utilities/constants';
+import { Header } from '../../../../components/common/Header';
+import { strings } from '../../../../localization';
+import { getsigns } from '../../../../store/actions';
+import { colors } from '../../../../utilities/constants';
 import styles from './styles.js';
 
+
 const ModalListComponent = props => {
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+
+  console.log(auth, 'auth>>>>>>>>>>>>', app, 'app>>>>>>>>>>>>>>>>');
   console.log(props, 'props in modal>>>>>>>.');
 
-  const {navigation, route} = props;
-  const {value, name, getSelectedSigns} = route?.params;
 
+  const dispatch = useDispatch();
+  const { navigation, route } = props;
+  const { value, name, getSelectedSigns } = route?.params;
   const [modalVisible, setModalVisible] = useState(false);
   const [open, setopen] = useState(false);
-
-  const [signs, setSignArr] = useState([
-    {name: 'Blind', id: 1},
-    {name: 'Matori/Shearwater', id: 2},
-    {name: 'Booby (White)', id: 3},
-    {name: 'Booby (brown)', id: 4},
-    {name: 'lwa/frigatebird', id: 5},
-    {name: 'Bullshit/fairy tern', id: 6},
-    {name: 'Noddy tern', id: 7},
-    {name: 'Tropicbird(red tail)', id: 8},
-    {name: 'Tropicbird(white tail)', id: 1},
-    {name: 'Other', id: 2},
-  ]);
+  const [signs, setSignArr] = useState(app && app.signarray);
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -80,7 +70,30 @@ const ModalListComponent = props => {
     navigation.goBack();
   };
 
-  const _renderView = ({item, index}) => (
+  useEffect(() => {
+    console.log('in useEfectof modallistComponent >>>>>>>>>>>.');
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (value == 1) {
+        signFun();
+        return;
+      }
+    });
+    return unsubscribe;
+  }, [navigation, signs]);
+
+  function signFun() {
+    let token = auth && auth?.userDetails?.access_token;
+    dispatch(getsigns(token, cb => {
+      if (cb) {
+        console.log(cb, ";cb in sign");
+        if (cb?.data?.data) {
+          setSignArr(cb?.data?.data?.sign)
+        }
+      }
+    }));
+  }
+
+  const _renderView = ({ item, index }) => (
     <TouchableOpacity
       style={[
         styles.listItem,
@@ -106,102 +119,72 @@ const ModalListComponent = props => {
   );
 
   return (
-    <SafeAreaView style={styles.content}>
-      <Header
-        containerStyle={{
-          backgroundColor: colors.secondry,
-          height: moderateScale(60),
-        }}
-        title={name}
-        titleStyle={{fontFamily: fonts.bold}}
-        leftIconSource={icons.ic_back_white}
-        leftButtonStyle={{
-          tintColor: colors.white1,
-        }}
-        onLeftPress={() => {
-          navigation.goBack();
-        }}
-      />
-      {value == 1 && (
-        <FlatList
-          extraData={signs}
-          data={signs}
-          showsVerticalScrollIndicator={false}
-          renderItem={_renderView}
-          contentInset={{bottom: 20}}
-          keyExtractor={(item, index) => 'key' + index}
-          ListEmptyComponent={() =>
-            signs >= 0 && (
-              <Text
+    <ImageBackground
+      source={icons.ic_signup_bg}
+      style={{ flex: 1, height: '100%' }}>
+      <SafeAreaView style={styles.content}>
+        <Header
+          containerStyle={{
+            backgroundColor: colors.secondry,
+            height: moderateScale(60),
+          }}
+          title={name}
+          titleStyle={{ fontFamily: fonts.bold }}
+          leftIconSource={icons.ic_back_white}
+          leftButtonStyle={{
+            tintColor: colors.white1,
+          }}
+          onLeftPress={() => {
+            navigation.goBack();
+          }}
+        />
+        {value == 1 && (
+          <FlatList
+            extraData={signs}
+            data={signs}
+            showsVerticalScrollIndicator={false}
+            renderItem={_renderView}
+            contentInset={{ bottom: 20 }}
+            keyExtractor={(item, index) => 'key' + index}
+            ListEmptyComponent={() =>
+              signs >= 0 && (
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    marginTop: 20,
+                    color: colors.white1,
+                    fontFamily: fonts.semiBold,
+                  }}>
+                  No Friend found
+                </Text>
+              )
+            }
+            ListFooterComponent={() => (
+              <View
                 style={{
-                  alignSelf: 'center',
-                  marginTop: 20,
-                  color: colors.white1,
-                  fontFamily: fonts.semiBold,
+                  marginTop: moderateScale(10),
                 }}>
-                No Friend found
-              </Text>
-            )
-          }
-          ListFooterComponent={() => (
-            <View
-              style={{
-                marginTop: moderateScale(10),
-              }}>
-              <Button
-                style={styles.btnStyles}
-                label={strings.submit}
-                onPress={() => sendSelectedValues()}
-              />
-            </View>
-          )}
-        />
-      )}
+                <Button
+                  style={styles.btnStyles}
+                  label={strings.submit}
+                  onPress={() => sendSelectedValues()}
+                />
+              </View>
+            )}
+          />
+        )}
 
-      {/* {value == 2 && <Text>jkhvtu</Text>}
+        {value == 2 && <Text>jkhvtu</Text>}
 
-      {value == 3 && (
-        <SectionList
-          sections={[
-            {
-              title: 'A',
-              data: ['ALTERED', 'ABBY', 'ACTION U.S.A.', 'AMUCK', 'ANGUISH'],
-            },
-            {
-              title: 'B',
-              data: [
-                'BEST MEN',
-                'BEYOND JUSTICE',
-                'BLACK GUNN',
-                'BLOOD RANCH',
-                'BEASTIES',
-              ],
-            },
-            {
-              title: 'C',
-              data: [
-                'CARTEL',
-                'CASTLE OF EVIL',
-                'CHANCE',
-                'COP GAME',
-                'CROSS FIRE',
-              ],
-            },
-          ]}
-          renderItem={({item}) => (
-            <Text style={{padding: 10, fontSize: 18, height: 44}}>{item}</Text>
-          )}
-          renderSectionHeader={({section,index}) => (
-            <Text style={styles.sectionHeader} onPress={onPress}>
-              {section.title}{index}
-            </Text>
-          )}
-          keyExtractor={(item, index) => index}
-        />
-      )} */}
+        {value == 3 && <Text>33333</Text>}
 
-      {value == 5 && <Circular />}
-    </SafeAreaView>
+
+
+        {value == 5 && <Circular />}
+      </SafeAreaView>
+      <Loader isLoading={app.loading} isAbsolute />
+
+    </ImageBackground>
   );
 };
 

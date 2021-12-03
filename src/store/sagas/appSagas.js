@@ -1,15 +1,12 @@
-import {put, retry} from 'redux-saga/effects';
-import {request} from '../../utilities/request';
-import {actionTypes, urls, screenNames} from '../../utilities/constants';
-import logger from '../../utilities/logger';
+import { put } from 'redux-saga/effects';
+import { actionTypes, urls } from '../../utilities/constants';
 import {
   getAPIError,
-  showErrorAlert,
-  showSuccessAlert,
-  getLocalUserData,
+  showErrorAlert
 } from '../../utilities/helperFunctions';
+import { request } from '../../utilities/request';
 
-function* fetchAll({params}) {
+function* fetchAll({ params }) {
   try {
     const config = {
       url: 'https://dog.ceo/api/breeds/image/random',
@@ -27,7 +24,7 @@ function* fetchAll({params}) {
   }
 }
 
-function* getvediosaga({params}) {
+function* getvediosaga({ params }) {
   try {
     const config = {
       url: urls.videos,
@@ -58,7 +55,7 @@ function* getvediosaga({params}) {
   }
 }
 
-function* getNewsSaga({params}) {
+function* getNewsSaga({ params }) {
   console.log(params, 'params in news api ');
   try {
     const config = {
@@ -69,7 +66,7 @@ function* getNewsSaga({params}) {
       },
     };
     const response = yield request(config);
-      console.log(response, 'news Api response ');
+    console.log(response, 'news Api response ');
 
     if (response?.data?.status) {
       yield put({
@@ -84,4 +81,33 @@ function* getNewsSaga({params}) {
     });
   }
 }
-export {fetchAll, getvediosaga, getNewsSaga};
+
+function* getSignsSaga(params) {
+  console.log(params, 'params in signs api ');
+  try {
+    const config = {
+      url: urls.signs,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.payload}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'news signs response  >>>>>>>>>>>>>>>>>');
+
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.GET_SIGNS_SUCCEEDED,
+        payload: response?.data?.data?.sign,
+      });
+
+      params.cb(response);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.GET_SIGNS_FAIL,
+    });
+  }
+}
+export { fetchAll, getvediosaga, getNewsSaga, getSignsSaga };

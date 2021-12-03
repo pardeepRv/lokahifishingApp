@@ -1,4 +1,4 @@
-import {actionTypes} from '../../utilities/constants';
+import { actionTypes } from '../../utilities/constants';
 
 const getvideo = params => ({
   type: actionTypes.GET_VIDEO_REQUESTED,
@@ -10,4 +10,12 @@ const getNewsFromAdmin = params => ({
   params,
 });
 
-export {getvideo, getNewsFromAdmin};
+const getsigns = (payload, cb) => {
+  return ({
+    type: actionTypes.GET_SIGNS_REQUESTED,
+    payload,
+    cb
+  })
+};
+
+export { getvideo, getNewsFromAdmin, getsigns };

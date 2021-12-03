@@ -4,6 +4,7 @@ const initialState = {
   loading: false,
   allVideolist: [],
   newsList: [],
+  signarray:[],
 };
 
 export default (state = initialState, action) => {
@@ -46,6 +47,24 @@ export default (state = initialState, action) => {
         loading: false,
       };
 
+      case actionTypes.GET_SIGNS_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.GET_SIGNS_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        signarray: action.payload,
+      };
+
+    case actionTypes.GET_SIGNS_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }

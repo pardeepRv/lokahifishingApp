@@ -110,4 +110,32 @@ function* getSignsSaga(params) {
     });
   }
 }
-export { fetchAll, getvediosaga, getNewsSaga, getSignsSaga };
+
+function* getPositionSaga(params) {
+    console.log(params, 'params in POSITION api ');
+   try {
+     const config = {
+       url: urls.positions,
+       method: 'GET',
+       headers: {
+         Authorization: `Bearer ${params && params.payload}`,
+       },
+     };
+     const response = yield request(config);
+ console.log(response, 'position  response ');
+ 
+     if (response?.data?.status) {
+       yield put({
+         type: actionTypes.GET_POSITION_SUCCEEDED,
+         payload: response?.data?.data?.position,
+       });
+       params.cb(response);
+     } 
+   } catch (error) {
+     showErrorAlert(getAPIError(error));
+     yield put({
+       type: actionTypes.GET_POSITION_FAIL,
+     });
+   }
+ }
+export { fetchAll, getvediosaga, getNewsSaga, getSignsSaga , getPositionSaga};

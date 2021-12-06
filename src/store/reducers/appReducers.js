@@ -5,6 +5,7 @@ const initialState = {
   allVideolist: [],
   newsList: [],
   signarray:[],
+  positionarray:[],
 };
 
 export default (state = initialState, action) => {
@@ -61,6 +62,24 @@ export default (state = initialState, action) => {
       };
 
     case actionTypes.GET_SIGNS_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+      case actionTypes.GET_POSITION_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.GET_POSITION_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        positionarray: action.payload,
+      };
+
+    case actionTypes.GET_POSITION_FAIL:
       return {
         ...state,
         loading: false,

@@ -18,4 +18,10 @@ const getsigns = (payload, cb) => {
   })
 };
 
-export { getvideo, getNewsFromAdmin, getsigns };
+const getposition = (payload, cb) => ({
+  type: actionTypes.GET_POSITION_REQUESTED,
+  payload,
+  cb
+});
+
+export { getvideo, getNewsFromAdmin, getsigns , getposition};

@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StatusBar, SafeAreaView, View} from 'react-native';
+import {StatusBar, SafeAreaView, View, Text} from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
 import MainNavigator from './navigation/navigator';
 import FlashMessage from 'react-native-flash-message';
@@ -11,12 +11,14 @@ import AuthLoading from './screens/AuthScreens/AuthLoading';
 
 class App extends PureComponent {
   constructor(props) {
+    Text.defaultProps = Text.defaultProps || {};
+    Text.defaultProps.allowFontScaling = false;
     super(props);
   }
 
   render() {
-    if(!__DEV__){
-    	console.log = () => {};
+    if (!__DEV__) {
+      console.log = () => {};
     }
     return (
       <Provider store={store}>

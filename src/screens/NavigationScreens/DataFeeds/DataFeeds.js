@@ -19,43 +19,53 @@ import styles from './styles';
 let members = [
   {
     img: icons.BannerRoy,
-    navigate: 'BannerRoy',
+    title: 'BannerRoy',
+    url: 'https://www.hawaiifishingtackle.com/',
   },
   {
     img: icons.BannerShane,
-    navigate: 'BannerShane',
+    title: 'BannerShane',
+    url: 'https://pop-hawaii.com/wp/',
   },
   {
     img: icons.MorrisLuresBanner,
-    navigate: 'MorrisLuresBanner',
+    title: 'MorrisLuresBanner',
+    url: 'https://morrislures.com/',
   },
   {
     img: icons.PacificRim,
-    navigate: 'pacificRim',
+    title: 'PacificRim',
+    url: 'https://pacific-rim-fishing-tackle.shoplightspeed.com/',
   },
   {
     img: icons.Nitta,
-    navigate: 'Nitta',
+    title: 'Nitta',
+    url: 'https://nittafishing.com/',
   },
   {
     img: icons.NicosLogo,
-    navigate: 'NicosLogo',
+    title: 'Nicos',
+    url: 'https://nicospier38.com/',
   },
   {
     img: icons.STokunaga,
-    navigate: 'STokunaga',
+    title: 'STokunaga',
+    url: 'https://stokunagastore.com/',
   },
   {
     img: icons.ARCLogo,
-    navigate: 'ARCLogo',
+    title: 'ARC',
+    url: 'https://www.e-arc.com/location/Honolulu/',
   },
   {
     img: icons.ahieps,
-    navigate: 'ahieps',
+    title: 'ahieps',
+    url: 'https://tsutomulures.com/',
   },
   {
     img: icons.gotakulogoredo,
-    navigate: 'Gyotaku',
+    title: 'gotakulogoredo',
+    url: 'https://gyotaku.com/',
   },
 ];
 
@@ -66,7 +76,10 @@ const DataFeeds = ({navigation}) => {
   const [membersList, setMembersList] = useState(members);
 
   const _renderView = ({item, index}) => (
-    <TouchableOpacity onPress={() => navigation.navigate(item.navigate)}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Webviewer', {title: item.title, url: item.url})
+      }>
       <Image
         style={{
           width: layout.size.width,
@@ -104,24 +117,18 @@ const DataFeeds = ({navigation}) => {
         />
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Tide')}
+          onPress={() =>
+            navigation.navigate('Webviewer', {
+              url: 'https://tides4fishing.com/',
+              title: 'Tide',
+            })
+          }
           style={[
             styles.listView,
             {
               backgroundColor: colors.lightpurple,
             },
           ]}>
-          {/* <Image
-          source={icons.Tidesunmoon}
-          resizeMode='contain'
-          style={{
-            height: 50,
-            width: 50,
-            borderRadius:50,
-       backgroundColor:colors.primary,
-       tintColor:colors.white1
-          }}
-        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -133,24 +140,18 @@ const DataFeeds = ({navigation}) => {
           <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('SeaTemp')}
+          onPress={() =>
+            navigation.navigate('Webviewer', {
+              url: 'http://www.pacioos.hawaii.edu/water/model-temperature-hawaii/',
+              title: 'Sea temp',
+            })
+          }
           style={[
             styles.listView,
             {
               backgroundColor: colors.darkpurple,
             },
           ]}>
-          {/* <Image
-          source={icons.SST}
-          resizeMode='contain'
-          style={{
-            height: 50,
-            width: 50,
-            borderRadius:50,
-       backgroundColor:colors.primary,
-       tintColor:colors.white1
-          }}
-        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -162,24 +163,18 @@ const DataFeeds = ({navigation}) => {
           <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Wind')}
+          onPress={() =>
+            navigation.navigate('Webviewer', {
+              url: 'https://www.windy.com/19.627/-155.565?19.034,-155.566,8,m:edRaPS',
+              title: 'Wind',
+            })
+          }
           style={[
             styles.listView,
             {
               backgroundColor: colors.lightpurple,
             },
           ]}>
-          {/* <Image
-          source={icons.Wind}
-          resizeMode='contain'
-          style={{
-            height: 50,
-            width: 50,
-            borderRadius:50,
-       backgroundColor:colors.primary,
-       tintColor:colors.white1
-          }}
-        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -191,24 +186,18 @@ const DataFeeds = ({navigation}) => {
           <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Current')}
+          onPress={() =>
+            navigation.navigate('Webviewer', {
+              url: 'http://www.pacioos.hawaii.edu/currents/model-hawaii/',
+              title: 'Current',
+            })
+          }
           style={[
             styles.listView,
             {
               backgroundColor: colors.darkpurple,
             },
           ]}>
-          {/* <Image
-          source={icons.cloud}
-          resizeMode='contain'
-          style={{
-            height: 50,
-            width: 50,
-            borderRadius:50,
-       backgroundColor:colors.primary,
-       tintColor:colors.white1
-          }}
-        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -220,24 +209,18 @@ const DataFeeds = ({navigation}) => {
           <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Radar')}
+          onPress={() =>
+            navigation.navigate('Webviewer', {
+              url: 'http://www.pacioos.hawaii.edu/currents/model-hawaii/',
+              title: 'Radar',
+            })
+          }
           style={[
             styles.listView,
             {
               backgroundColor: colors.lightpurple,
             },
           ]}>
-          {/* <Image
-          source={icons.range}
-          resizeMode='contain'
-          style={{
-            height: 50,
-            width: 50,
-            borderRadius:50,
-       backgroundColor:colors.primary,
-       tintColor:colors.white1
-          }}
-        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{
@@ -249,24 +232,18 @@ const DataFeeds = ({navigation}) => {
           <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Weather')}
+          onPress={() =>
+            navigation.navigate('Webviewer', {
+              url: 'https://www.weather.gov/hfo/',
+              title: 'Weather',
+            })
+          }
           style={[
             styles.listView,
             {
               backgroundColor: colors.darkpurple,
             },
           ]}>
-          {/* <Image
-          source={icons.cloud}
-          resizeMode='contain'
-          style={{
-            height: 50,
-            width: 50,
-            borderRadius:50,
-       backgroundColor:colors.primary,
-       tintColor:colors.white1
-          }}
-        /> */}
           <View style={styles.viewStyle}>
             <View
               style={{

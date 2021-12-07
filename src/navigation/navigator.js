@@ -90,6 +90,7 @@ import HawaiiLegislature from '../screens/Drawerscreens/Importantlinks/HawaiiLeg
 import ModalListComponent from '../screens/NavigationScreens/SelectBoatFishing/ModalListComponent/ModalListComponent';
 import Circular from '../components/common/Circular';
 import VideoTips from '../screens/Drawerscreens/VideoTips/VideoTips';
+import Webviewer from '../components/common/Webviewer';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -297,7 +298,7 @@ const DataFeedsStack = props => {
       }}
       initialRouteName={'DataFeedsScreen'}>
       <Stack.Screen name="DataFeedsScreen" component={DataFeeds} />
-      <Stack.Screen name="Tide" component={Tide} />
+      {/* <Stack.Screen name="Tide" component={Tide} />
       <Stack.Screen name="SeaTemp" component={SeaTemp} />
       <Stack.Screen name="Wind" component={Wind} />
       <Stack.Screen name="Current" component={Current} />
@@ -312,7 +313,9 @@ const DataFeedsStack = props => {
       <Stack.Screen name="BannerRoy" component={Hobbietat} />
       <Stack.Screen name="ARCLogo" component={ArcSolutions} />
       <Stack.Screen name="ahieps" component={Tsutomu} />
-      <Stack.Screen name="Gyotaku" component={Gyotaku} />
+      <Stack.Screen name="Gyotaku" component={Gyotaku} /> */}
+      <Stack.Screen name="Webviewer" component={Webviewer} />
+
     </Stack.Navigator>
   );
 };

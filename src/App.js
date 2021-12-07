@@ -1,24 +1,28 @@
-import React, {PureComponent} from 'react';
-import {StatusBar, SafeAreaView, View, Text} from 'react-native';
-import AppNavigator from './navigation/AppNavigator';
-import MainNavigator from './navigation/navigator';
+import React, { PureComponent } from 'react';
+import { SafeAreaView, Text, View, TextInput } from 'react-native';
 import FlashMessage from 'react-native-flash-message';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import {Provider} from 'react-redux';
-import store from './store';
+import { Provider } from 'react-redux';
+import MainNavigator from './navigation/navigator';
 import AuthLoading from './screens/AuthScreens/AuthLoading';
+import store from './store';
+
 
 class App extends PureComponent {
   constructor(props) {
     Text.defaultProps = Text.defaultProps || {};
     Text.defaultProps.allowFontScaling = false;
+
+    TextInput.defaultProps = {
+      ...(TextInput.defaultProps || {}),
+      allowFontScaling: false,
+    };
+
     super(props);
   }
 
   render() {
     if (!__DEV__) {
-      console.log = () => {};
+      console.log = () => { };
     }
     return (
       <Provider store={store}>

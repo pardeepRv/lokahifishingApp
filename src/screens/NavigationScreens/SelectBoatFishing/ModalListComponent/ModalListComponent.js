@@ -14,6 +14,9 @@ import { Header } from '../../../../components/common/Header';
 import { strings } from '../../../../localization';
 import { getposition, getsigns } from '../../../../store/actions';
 import { colors } from '../../../../utilities/constants';
+import Accordian from './Accordian';
+import Method from './Method';
+
 import styles from './styles.js';
 
 
@@ -213,8 +216,10 @@ const ModalListComponent = props => {
           />
         )}
 
-        {value == 2 && <Text>jkhvtu</Text>}
+        {/* {value == 2 && <Method/>}
+         */}
 
+        {value == 2 && <Accordian />}
         {value == 3 && <Text>jkhvtu</Text>}
 
 

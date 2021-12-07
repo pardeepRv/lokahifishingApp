@@ -30,6 +30,7 @@ import styles from './styles';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+
 const FishData = ({ navigation }) => {
   const [state, setState] = useState({
     isGPS: '',

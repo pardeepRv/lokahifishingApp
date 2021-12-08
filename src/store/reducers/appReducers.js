@@ -4,8 +4,8 @@ const initialState = {
   loading: false,
   allVideolist: [],
   newsList: [],
-  signarray:[],
-  positionarray:[],
+  signarray: [],
+  positionarray: [],
 };
 
 export default (state = initialState, action) => {
@@ -48,7 +48,7 @@ export default (state = initialState, action) => {
         loading: false,
       };
 
-      case actionTypes.GET_SIGNS_REQUESTED:
+    case actionTypes.GET_SIGNS_REQUESTED:
       return {
         ...state,
         loading: true,
@@ -66,7 +66,7 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
-      case actionTypes.GET_POSITION_REQUESTED:
+    case actionTypes.GET_POSITION_REQUESTED:
       return {
         ...state,
         loading: true,
@@ -84,6 +84,79 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
+
+    case actionTypes.GET_LCR_FIRST_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.GET_LCR_FIRST_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_LCR_FIRST_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_LCR_SECOND_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.GET_LCR_SECOND_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_LCR_SECOND_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_LCR_THIRD_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.GET_LCR_THIRD_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_LCR_THIRD_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_FISHES_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.GET_FISHES_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_FISHES_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
     default:
       return state;
   }

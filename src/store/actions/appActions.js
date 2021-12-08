@@ -1,4 +1,4 @@
-import { actionTypes } from '../../utilities/constants';
+import {actionTypes} from '../../utilities/constants';
 
 const getvideo = params => ({
   type: actionTypes.GET_VIDEO_REQUESTED,
@@ -11,17 +11,58 @@ const getNewsFromAdmin = params => ({
 });
 
 const getsigns = (payload, cb) => {
-  return ({
+  return {
     type: actionTypes.GET_SIGNS_REQUESTED,
     payload,
-    cb
-  })
+    cb,
+  };
 };
 
 const getposition = (payload, cb) => ({
   type: actionTypes.GET_POSITION_REQUESTED,
   payload,
-  cb
+  cb,
 });
 
-export { getvideo, getNewsFromAdmin, getsigns , getposition};
+const getLcrFirst = (payload, cb) => {
+  return {
+    type: actionTypes.GET_LCR_FIRST_REQUESTED,
+    payload,
+    cb,
+  };
+};
+
+const getLcrSecond = (payload, cb) => {
+  return {
+    type: actionTypes.GET_LCR_SECOND_REQUESTED,
+    payload,
+    cb,
+  };
+};
+
+const getLcrThird = (payload, cb) => {
+  return {
+    type: actionTypes.GET_LCR_THIRD_REQUESTED,
+    payload,
+    cb,
+  };
+};
+
+const getFishesBasedOnID = (payload, cb) => {
+  return {
+    type: actionTypes.GET_FISHES_REQUESTED,
+    payload,
+    cb,
+  };
+};
+
+export {
+  getvideo,
+  getNewsFromAdmin,
+  getsigns,
+  getposition,
+  getLcrFirst,
+  getLcrSecond,
+  getLcrThird,
+  getFishesBasedOnID,
+};

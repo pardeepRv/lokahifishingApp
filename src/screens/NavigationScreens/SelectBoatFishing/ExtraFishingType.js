@@ -13,54 +13,79 @@ import {useSelector, useDispatch} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
 import {Loader} from '../../../components/common';
 import {Header} from '../../../components/common/Header';
-import {getLcrFirst} from '../../../store/actions';
-import {colors, LCR_IMAGES, screenNames} from '../../../utilities/constants';
+import {getLcrSecond, getLcrThird} from '../../../store/actions';
+import {colors, LCR_IMAGES} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import styles from './styles';
 
 let fishingArr = [
   {
-    img: icons.BoatFishing,
+    img: icons.OffshoreFishing,
     name: 'Annual Leaderboard',
     date: 'Winners 2020',
-    navigate: screenNames.SelectBoatFishing,
+    text: 'Offshore Fishing',
+    navigate: 'OffShoreFishing',
   },
   {
-    img: icons.ShorelineFishing,
+    img: icons.BottomFishing,
     name: 'WBC Labour',
     date: 'Day tournament',
-    navigate: 'ShorLineFishing',
+    text: 'Bottom Fishing',
+    navigate: 'BottomFishing',
   },
 ];
 
-const CatchReport = ({navigation}) => {
-  const [fishingList, setfishingList] = useState([]);
+const ExtraFishingType = ({navigation, route}) => {
+  console.log(route, 'item in extra>>>>>>>>>>>> ');
+
+  const {item} = route.params;
+  console.log(item, 'c');
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
+  const [fishingList, setfishingList] = useState([]);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      getLCRS();
+      getThirdLCRS();
     });
     return unsubscribe;
   }, [navigation]);
 
-  function getLCRS() {
-    let token = auth && auth?.userDetails?.access_token;
+  const getThirdLCRS = () => {
+    let ob = {};
+    ob.first_id = item.lcr_first_category_id;
+    ob.second = item.id;
+    ob.token = auth && auth?.userDetails?.access_token;
+
     dispatch(
-      getLcrFirst(token, cb => {
+      getLcrThird(ob, cb => {
         if (cb) {
-          console.log(cb, ';cb in lcr');
-          if (cb?.data?.data) {
-            setfishingList(cb?.data?.data?.lcr_first_level);
+          console.log(cb, ';cb in extra lcr<><><>');
+          if (
+            cb &&
+            cb.data &&
+            cb.data.data &&
+            cb.data.data.lcr_third_level &&
+            cb.data.data.lcr_third_level.length > 0
+          ) {
+            console.log('do something here');
+            setfishingList(cb?.data?.data?.lcr_third_level);
           }
+          //   else {
+          //     navigation.navigate('OffShoreFishing', {item: val});
+          //   }
         }
       }),
     );
-  }
+  };
+
+  // checking here for bottom fishing
+  const checkLogicForThirdLevel = item => {
+    getThirdLCRS(item);
+  };
 
   //View of flatlist
   const _renderView = ({item, index}) => (
@@ -68,15 +93,13 @@ const CatchReport = ({navigation}) => {
       <TouchableOpacity
         style={styles.viewStyle}
         onPress={() =>
-          navigation.navigate(screenNames.SelectBoatFishing, {
-            first_id: item.id,
-          })
+          navigation.navigate('OffShoreFishing', {item: item, extraFish: true})
         }>
         <Image
           source={{uri: `${LCR_IMAGES}${item.image}`}}
           style={{
             height: layout.size.height / 3,
-            width: moderateScale(200),
+            width: layout.size.width / 1.5,
           }}
         />
       </TouchableOpacity>
@@ -85,7 +108,7 @@ const CatchReport = ({navigation}) => {
 
   return (
     <ImageBackground
-      source={icons.ic_signup_bg}
+      source={icons.LeaderBoard}
       style={{flex: 1, height: '100%'}}>
       <SafeAreaView
         style={{
@@ -96,11 +119,12 @@ const CatchReport = ({navigation}) => {
             backgroundColor: 'transparent',
             height: moderateScale(60),
           }}
-          title={'Select fishing type'}
+          title={'Select Boat fishing type'}
+          blackTitle
           titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
-            tintColor: colors.white1,
+            tintColor: colors.black1,
           }}
           onLeftPress={() => {
             navigation.goBack();
@@ -110,11 +134,17 @@ const CatchReport = ({navigation}) => {
         <FlatList
           extraData={fishingList}
           data={fishingList}
+          style={{flex: 1}}
           renderItem={_renderView}
           keyExtractor={(item, index) => 'key' + index}
-          ListHeaderComponent={() =>
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={() =>
             !fishingList.length ? (
-              <Text style={styles.nomatch}>No Result found</Text>
+              <View style={{}}>
+                <Text style={styles.nomatch}>No Result found</Text>
+              </View>
             ) : null
           }
         />
@@ -124,4 +154,4 @@ const CatchReport = ({navigation}) => {
   );
 };
 
-export default CatchReport;
+export default ExtraFishingType;

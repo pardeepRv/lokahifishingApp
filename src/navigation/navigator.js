@@ -91,6 +91,7 @@ import ModalListComponent from '../screens/NavigationScreens/SelectBoatFishing/M
 import Circular from '../components/common/Circular';
 import VideoTips from '../screens/Drawerscreens/VideoTips/VideoTips';
 import Webviewer from '../components/common/Webviewer';
+import ExtraFishingType from '../screens/NavigationScreens/SelectBoatFishing/ExtraFishingType';
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -250,6 +251,7 @@ const catchReportStack = props => {
       initialRouteName={'CatchReport'}>
       <Stack.Screen name="CatchReport" component={CatchReport} />
       <Stack.Screen name="SelectBoatFishing" component={SelectBoatFishing} />
+      <Stack.Screen name="ExtraFishingType" component={ExtraFishingType} />
       <Stack.Screen name="ShorLineFishing" component={ShortLineFishing} />
       <Stack.Screen name="BottomFishing" component={BottomFishing} />
       <Stack.Screen name="OffShoreFishing" component={OffShoreFishing} />

@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FlatList, Image, ImageBackground, Text, View} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
+import {useSelector, useDispatch} from 'react-redux';
 import {fonts, icons} from '../../../../../assets';
+import {Loader} from '../../../../components/common';
 import {Header} from '../../../../components/common/Header';
 import {strings} from '../../../../localization';
-import {colors} from '../../../../utilities/constants';
+import {getFishesBasedOnID} from '../../../../store/actions';
+import {colors, FISHES_IMAGES} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 import LCRRequired from '../LCRRequired';
 import styles from './styles';
@@ -56,16 +59,73 @@ let fishingArr = [
   },
 ];
 
-let fishT = '';
-const OffShoreFishing = ({navigation}) => {
-  const [fishingList, setfishingList] = useState(fishingArr);
+const OffShoreFishing = ({navigation, route}) => {
+  const {item, extraFish} = route.params;
+
+  console.log(extraFish, item, 'extraFish in offshore>>>>>>>>>>');
+  const [fishingList, setfishingList] = useState([]);
   const [fishType, setfishType] = useState('');
+
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (extraFish) {
+        getExtraFishes();
+      } else {
+        getFishes();
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  function getFishes() {
+    let ob = {};
+    ob.first_id = item.lcr_first_category_id;
+    ob.second = item.id;
+    ob.token = auth && auth?.userDetails?.access_token;
+    ob.extraFish = extraFish;
+
+    dispatch(
+      getFishesBasedOnID(ob, cb => {
+        if (cb) {
+          console.log(cb, 'in fishing page>>>>>>>>>');
+          if (cb?.data?.data) {
+            setfishingList(cb?.data?.data?.lcr_fishes);
+          }
+        }
+      }),
+    );
+  }
+
+  function getExtraFishes() {
+    let ob = {};
+    ob.first_id = item.lcr_first_category_id;
+    ob.second = item.lcr_second_category_id;
+    ob.third = item.id;
+    ob.token = auth && auth?.userDetails?.access_token;
+    ob.extraFish = extraFish;
+
+    dispatch(
+      getFishesBasedOnID(ob, cb => {
+        if (cb) {
+          console.log(cb, 'in fishing page>>>>>>>>>');
+          if (cb?.data?.data) {
+            setfishingList(cb?.data?.data?.lcr_fishes);
+          }
+        }
+      }),
+    );
+  }
 
   const _renderView = ({item, index}) => (
     <View style={styles.listView} activeOpacity={0.8}>
       <View style={styles.viewStyle}>
         <Image
-          source={item.img}
+          source={{uri: `${FISHES_IMAGES}${item.image}`}}
           resizeMode="contain"
           style={{
             height: layout.size.height / 10,
@@ -81,7 +141,7 @@ const OffShoreFishing = ({navigation}) => {
             fontFamily: fonts.bold,
             color: colors.secondry,
           }}>
-          {item.text}
+          {item.title}
         </Text>
       </View>
     </View>
@@ -115,15 +175,15 @@ const OffShoreFishing = ({navigation}) => {
       viewableItems.viewableItems.length > 0
     ) {
       if (
-        viewableItems.viewableItems[0].item.text == 'Multiple' ||
-        viewableItems.viewableItems[0].item.text == 'Other'
+        viewableItems.viewableItems[0].item.title == 'Multiple' ||
+        viewableItems.viewableItems[0].item.title == 'Other'
       ) {
         console.log(
-          viewableItems.viewableItems[0].item.text,
+          viewableItems.viewableItems[0].item.title,
           'viewableItems.viewableItems[0].item.text',
         );
-        // fishT=viewableItems.viewableItems[0].item.text;
-        setfishType(viewableItems.viewableItems[0].item.text);
+        // fishT=viewableItems.viewableItems[0].item.title;
+        setfishType(viewableItems.viewableItems[0].item.title);
       } else {
         setfishType('');
       }
@@ -151,29 +211,33 @@ const OffShoreFishing = ({navigation}) => {
       />
       <Text style={styles.nomatch}>{strings.infobelow}</Text>
       <View style={{flex: 0.4}}>
-        <FlatList
-          extraData={fishingList}
-          data={fishingList}
-          renderItem={_renderView}
-          keyExtractor={(item, index) => 'key' + index}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          ListEmptyComponent={() =>
-            !fishingList.length ? (
-              <Text style={styles.nomatch}>No Match found</Text>
-            ) : null
-          }
-          indicatorActiveWidth={40}
-          contentContainerStyle={{paddingHorizontal: 16}}
-          viewabilityConfig={viewConfigRef.current}
-          onViewableItemsChanged={onViewRef.current}
+        {app && app.loading ? (
+          <Loader isLoading={app.loading} isAbsolute />
+        ) : (
+          <FlatList
+            extraData={fishingList}
+            data={fishingList}
+            renderItem={_renderView}
+            keyExtractor={(item, index) => 'key' + index}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            ListEmptyComponent={() =>
+              !fishingList.length ? (
+                <Text style={styles.nomatch}>No Fish found</Text>
+              ) : null
+            }
+            indicatorActiveWidth={40}
+            contentContainerStyle={{paddingHorizontal: 16}}
+            viewabilityConfig={viewConfigRef.current}
+            onViewableItemsChanged={onViewRef.current}
 
-          // onViewableItemsChanged={_onViewableItemsChanged}
-          // viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
+            // onViewableItemsChanged={_onViewableItemsChanged}
+            // viewabilityConfig={{viewAreaCoveragePercentThreshold: 50}}
 
-          // viewabilityConfig={_viewabilityConfig}
-        />
+            // viewabilityConfig={_viewabilityConfig}
+          />
+        )}
       </View>
       <LCRRequired fishType={fishType} navigation={navigation} />
     </ImageBackground>

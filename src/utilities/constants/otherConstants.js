@@ -2,7 +2,7 @@ import {Platform} from 'react-native';
 import {screenNames} from '.';
 import {icons} from '../../../assets';
 import {strings} from '../../localization';
-import { colors } from './colors';
+import {colors} from './colors';
 
 // const DATE_FORMAT = 'DD/MM/YYYY';
 const DATE_FORMAT = 'YYYY/MM/DD';
@@ -346,6 +346,9 @@ const maxFileSize = 5000000; //5mb 5000000
 
 const JOB_CAT_ID = 33;
 
+const LCR_IMAGES = `https://server3.rvtechnologies.in/LokahiFishing_API/public/LCR_images/icons/`;
+const FISHES_IMAGES = `https://server3.rvtechnologies.in/LokahiFishing_API/public/LCR_images/fishes/`;
+
 const slides = [
   {
     key: 1,
@@ -375,13 +378,13 @@ const menu = [
     name: 'Local Catch Report (LCR)',
     navigate: 'catchReportStack',
     img: icons.ic_Fish01,
-    bgColor: "rgb(2,19,66)",
+    bgColor: 'rgb(2,19,66)',
   },
   {
     name: strings.Tids_weather,
     navigate: 'DataFeeds',
     img: icons.TidesIcon2,
-    bgColor:"#fafafa" ,
+    bgColor: '#fafafa',
   },
   {
     name: strings.Photo_sharing,
@@ -391,7 +394,7 @@ const menu = [
   },
   {
     name: strings.News,
-    
+
     navigate: 'News',
     img: icons.NewsIcon,
     bgColor: 'rgb(254, 222, 0)',
@@ -400,7 +403,7 @@ const menu = [
     name: strings.LeaderBoard,
     navigate: 'LeaderBoard',
     img: icons.LeaderIcon,
-    bgColor: "#fafafa",
+    bgColor: '#fafafa',
   },
   {
     name: strings.Tournament,
@@ -558,4 +561,6 @@ export {
   slides,
   menu,
   data,
+  LCR_IMAGES,
+  FISHES_IMAGES,
 };

@@ -33,8 +33,12 @@ const urls = {
   changePhone: 'change_phone',
   getUserProfile: 'getuser',
   news: 'news',
-  signs :'signs',
-  positions: 'positions'
+  signs: 'signs',
+  positions: 'positions',
+  lcr_first: 'lcr-first-level-category',
+  lcr_Second: 'lcr-second-level-category',
+  lcr_third: 'lcr-third-level-category',
+  lcr_fishes: 'lcr-fishes',
 };
 
 export {urls};

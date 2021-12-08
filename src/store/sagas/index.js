@@ -1,6 +1,15 @@
 import {takeLatest} from 'redux-saga/effects';
 import {actionTypes} from '../../utilities/constants';
-import {getNewsSaga, getPositionSaga, getSignsSaga, getvediosaga} from './appSagas';
+import {
+  getAllFishesSaga,
+  getLcrFirstsaga,
+  getLcrSecondsaga,
+  getLcrThirdsaga,
+  getNewsSaga,
+  getPositionSaga,
+  getSignsSaga,
+  getvediosaga,
+} from './appSagas';
 import {
   change_PasswordSaga,
   checkIfLoggedInSaga,
@@ -15,10 +24,10 @@ import {
   SignupViaEmail,
 } from './authSagas';
 import {
+  editcontactsaga,
   getfriendlistsaga,
   getfriendsaga,
   respondRequestsaga,
-  editcontactsaga,
 } from './userSaga';
 
 export default function* rootSaga() {
@@ -46,5 +55,8 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_NEWS_REQUESTED, getNewsSaga);
   yield takeLatest(actionTypes.GET_SIGNS_REQUESTED, getSignsSaga);
   yield takeLatest(actionTypes.GET_POSITION_REQUESTED, getPositionSaga);
-
+  yield takeLatest(actionTypes.GET_LCR_FIRST_REQUESTED, getLcrFirstsaga);
+  yield takeLatest(actionTypes.GET_LCR_SECOND_REQUESTED, getLcrSecondsaga);
+  yield takeLatest(actionTypes.GET_LCR_THIRD_REQUESTED, getLcrThirdsaga);
+  yield takeLatest(actionTypes.GET_FISHES_REQUESTED, getAllFishesSaga);
 }

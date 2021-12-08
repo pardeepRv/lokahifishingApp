@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { FlatList, LayoutAnimation, Platform, StyleSheet, Text, TouchableOpacity, UIManager, View } from "react-native";
+import { FlatList, LayoutAnimation, Platform, StyleSheet, Text, TouchableOpacity, UIManager, View ,Image } from "react-native";
+import { moderateScale } from 'react-native-size-matters';
+import { fonts, icons } from '../../../../../assets';
 // import Icon from "react-native-vector-icons/MaterialIcons";
 import { colors } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
 
 export default class Accordian extends Component {
 
@@ -45,6 +48,15 @@ export default class Accordian extends Component {
                         { key: 'fh', value: false }
                     ]
                 },
+                {
+                    title: 'Deserts',
+                    data: [
+                        {
+                            key: 'g', value: false
+                        },
+                        { key: 'fh', value: false }
+                    ]
+                },
             ],
             expanded: false,
         }
@@ -63,25 +75,30 @@ export default class Accordian extends Component {
                 <View style={{}}>
                     <FlatList
                         data={this.state.data}
+                        contentInset={{bottom:40}}
                         renderItem={({ item, index }) =>
-                            <View>
-                                <TouchableOpacity style={[styles.childRow, styles.button, item.value ? styles.btnActive : styles.btnInActive]} onPress={() => this.onClick(index)}>
-                                    <Text style={[styles.font, styles.itemInActive]} >{item.title}</Text>
+                            <View style={{flex:1  , backgroundColor:colors.white1}}>
+                                <TouchableOpacity  style={[styles.childRow]} onPress={() => this.onClick(index)}>
+                                    <View style={{width:layout.size.height/2,height:moderateScale(35), flexDirection: 'row' , justifyContent:'space-between' }}>
+                                    <Text style={[styles.itemInActive]} >{item.title}</Text>
+                                    <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
+                                    </View>
                                     {item.value ? (
                                         <FlatList
                                             data={item.data}
+                                            contentInset={{bottom:40}}
                                             renderItem={({ item, index }) =>
-                                                <View>
-                                                    <TouchableOpacity style={[styles.childRow, styles.button, item.value ? styles.btnActive : styles.btnInActive]} onPress={() => this.onClickInner(index)}>
+                                                <View style={{}}>
+                                                    <TouchableOpacity style={styles.childRow1 } onPress={() => this.onClickInner(index)}>
 
                                                         <Text style={[styles.font, styles.itemInActive]} >{item.key}</Text>
                                                         {/* <Icon name={'check-circle'} size={24} color={item.value ? colors.red1 : colors.black1} /> */}
                                                     </TouchableOpacity>
-                                                    <View style={styles.childHr} />
+                                                 
                                                 </View>
                                             } />) : null}
                                 </TouchableOpacity>
-                                <View style={styles.childHr} />
+                              
                             </View>
                         } />
                 </View>
@@ -121,14 +138,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    button: {
-        width: '100%',
-        alignItems: 'center',
-        paddingLeft: 35,
-        paddingRight: 35,
-        fontSize: 12,
-        padding: 10
-    },
+    // button: {
+    //     width: layout.size.width/2,
+    //     padding:5,
+    //     paddingVertical:20,
+    //     backgroundColor: colors.black1,
+
+    // },
     title: {
         fontSize: 14,
         fontWeight: 'bold',
@@ -139,7 +155,8 @@ const styles = StyleSheet.create({
         color: colors.red1,
     },
     itemInActive: {
-        fontSize: 12,
+        fontSize: 20,
+        fontFamily:fonts.semiBold,
         color: colors.black1,
     },
     btnActive: {
@@ -160,7 +177,22 @@ const styles = StyleSheet.create({
     childRow: {
         // flexDirection: 'row',
         // justifyContent: 'space-between',
-        backgroundColor: colors.grey1,
+flex:1,
+        padding: 8,
+        paddingVertical: moderateScale(10),
+        paddingHorizontal: moderateScale(20),
+
+        alignSelf: 'center',
+        // backgroundColor:colors.black1
+    },
+    childRow1: {
+        // flexDirection: 'row',
+        // justifyContent: 'space-between',
+        flex: 1,
+
+        padding: 15,
+        paddingVertical: moderateScale(10),
+        backgroundColor:colors.grey1
     },
     parentHr: {
         height: 1,
@@ -168,15 +200,18 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     childHr: {
-        height: 1,
-        backgroundColor: colors.grey4,
-        width: '100%',
+        flex:1
     },
     colorActive: {
         borderColor: colors.green2,
     },
     colorInActive: {
         borderColor: colors.grey1,
-    }
-
+    },
+    rightArrow: {
+        height: 30,
+        width: 30,
+        alignSelf: 'center',
+tintColor:colors.black1
+      },
 });

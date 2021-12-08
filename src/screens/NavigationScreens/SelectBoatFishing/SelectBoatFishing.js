@@ -54,7 +54,7 @@ const SelectBoatFishing = ({navigation}) => {
           source={item.img}
           style={{
             height: layout.size.height / 3,
-            width: layout.size.width / 1.5,      
+            width: layout.size.width / 1.5,    
           }}
         />
       </TouchableOpacity>

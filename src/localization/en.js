@@ -7,6 +7,7 @@ export default {
   Password: 'Password',
   enterPassword: 'Please enter password...',
   enterEmail: 'Please enter email...',
+  enterother :' Enter Other',
   createAccount: "Don't have account?",
   forgotpassword: 'Forgot Password?',
   signup: '  Sign Up',

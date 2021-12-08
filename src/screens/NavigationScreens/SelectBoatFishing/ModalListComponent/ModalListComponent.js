@@ -34,6 +34,7 @@ const ModalListComponent = props => {
   const { getSelectedposition } = route?.params;
 
   const [modalVisible, setModalVisible] = useState(false);
+  
   const [open, setopen] = useState(false);
   const [signs, setSignArr] = useState(app && app.signarray);
   const [position, setpositionarr] = useState(app && app.positionarray);
@@ -219,7 +220,7 @@ const ModalListComponent = props => {
         {/* {value == 2 && <Method/>}
          */}
 
-        {value == 2 && <Accordian />}
+        {value == 2 && <Method navigation={navigation}  />}
         {value == 3 && <Text>jkhvtu</Text>}
 
 

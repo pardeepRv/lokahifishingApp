@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import CircularPicker from 'react-native-circular-picker';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { moderateScale } from 'react-native-size-matters';
 import { Button } from '.';
 import { fonts, icons } from '../../../assets';
@@ -18,18 +19,17 @@ const Circular = ({ navigation, route }) => {
 
     const [price, setPrice] = useState(0);
     const handleChange = v => setPrice((v * 0.24).toFixed(0));
+
     const [time, settime] = useState('');
 
-
-
-    
     const [errors, setErrors] = useState({
-      time: '',
+      time:'',
       isLoading: false,
     });
-    const name_and_values = [{ name: 'time', value: time }];
-
-
+  
+    const name_and_values = [
+      {name: 'time', value: time},
+    ]
     const sendSelectedValues = () => {
       console.log(price, 'price');
       getHrs(price);
@@ -92,34 +92,50 @@ const Circular = ({ navigation, route }) => {
           </CircularPicker>
 
           <View
-            style={{
-              marginTop: moderateScale(25),
-            }}>
-            <TextInputComp
-              // label={strings.email}
-              value={time}
-              placeholder={strings.entertime}
-              labelTextStyle={{
-                fontFamily: fonts.semiBold,
-                fontSize: moderateScale(16),
-                color: colors.white1,
-              }}
-              onFocus={() =>
-                setErrors({
-                  ...errors,
-                  time: '',
-                })
-              }
+                style={{
+                  marginTop: moderateScale(30),
 
-            />
-            {errors.time ? (
-              <Text
-                transparent
-                style={{ color: colors.primary, bottom: 13, left: 4 }}>
-                {errors.time}
-              </Text>
-            ) : null}
-          </View>
+                  width:layout.size.width/1.5
+                }}>
+                  <TextInputComp
+                    // label={strings.username}
+                    value={price}
+                   
+                    placeholder={strings.entertime}
+                    placeholderTextColor={colors.black1}
+                    style={{
+                      fontSize: RFValue(16),
+                      backgroundColor: colors.grey1,
+                      paddingVertical: moderateScale(10),
+                      paddingHorizontal: moderateScale(10),
+                      borderBottomWidth: 1,
+                      borderColor: colors.black1,
+                      alignItems: 'center',
+                      height: moderateScale(42),
+                      borderRadius:8,
+                    
+                    }}
+                    labelTextStyle={{  fontFamily: fonts.semiBold,
+                      fontSize: moderateScale(16),
+                      color: colors.blue1,
+                     
+                  height:moderateScale(25)}}
+                    onChangeText={price => settime(price)}
+                    onFocus={() =>
+                      setErrors({
+                        ...errors,
+                        time: '',
+                      })
+                    }
+                  />
+                  {errors.time ? (
+                    <Text
+                      transparent
+                      style={{color: colors.primary, bottom: 14}}>
+                      {errors.time}
+                    </Text>
+                  ) : null}
+                </View>
           <Button
             style={{
               backgroundColor: colors.secondry,

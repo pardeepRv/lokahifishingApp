@@ -9,6 +9,7 @@ import {
   getPositionSaga,
   getSignsSaga,
   getvediosaga,
+  getWeaherSaga,
 } from './appSagas';
 import {
   change_PasswordSaga,
@@ -59,4 +60,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_LCR_SECOND_REQUESTED, getLcrSecondsaga);
   yield takeLatest(actionTypes.GET_LCR_THIRD_REQUESTED, getLcrThirdsaga);
   yield takeLatest(actionTypes.GET_FISHES_REQUESTED, getAllFishesSaga);
+  yield takeLatest(actionTypes.GET_WEATHER_REQUESTED, getWeaherSaga);
+
 }

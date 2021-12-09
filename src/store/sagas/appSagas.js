@@ -277,6 +277,37 @@ function* getAllFishesSaga(params) {
   }
 }
 
+function* getWeaherSaga(params) {
+   console.log(params, 'params in signs api ');
+  try {
+    const config = {
+      url: urls.weather,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.payload}`,
+      },
+    };
+    const response = yield request(config);
+     console.log(response, '<<<<<<<< weather response  >>>>>>>>>>>>>>>>>');
+
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.GET_WEATHER_SUCCEEDED,
+        payload: response?.data?.data?.weather,
+      });
+
+      params.cb(response);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.GET_WEATHER_FAIL,
+    });
+  }
+}
+
+
+
 export {
   fetchAll,
   getvediosaga,
@@ -287,4 +318,5 @@ export {
   getLcrSecondsaga,
   getLcrThirdsaga,
   getAllFishesSaga,
+  getWeaherSaga
 };

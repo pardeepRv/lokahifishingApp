@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { FlatList, LayoutAnimation, Platform, StyleSheet, Text, TouchableOpacity, UIManager, View ,Image } from "react-native";
+import { FlatList, Image, LayoutAnimation, Platform, StyleSheet, Text, TouchableOpacity, UIManager, View } from "react-native";
 import { moderateScale } from 'react-native-size-matters';
 import { fonts, icons } from '../../../../../assets';
-// import Icon from "react-native-vector-icons/MaterialIcons";
 import { colors } from '../../../../utilities/constants';
 import { layout } from '../../../../utilities/layout';
 
 export default class Accordian extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -59,48 +57,58 @@ export default class Accordian extends Component {
                 },
             ],
             expanded: false,
+            isLoading: false,
+            // data: [],
+
         }
 
         if (Platform.OS === 'android') {
             UIManager.setLayoutAnimationEnabledExperimental(true);
         }
     }
+    _renderItem = ({ item, index }) => {
+        return (
 
+            <View style={{ flex: 1, backgroundColor: colors.white1 }}>
+                <TouchableOpacity style={[styles.childRow]} onPress={() => this.onClick(index)}>
+                    <View style={{ width: layout.size.height / 2, height: moderateScale(35), flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={[styles.itemInActive]} >{item.name}</Text>
+                        <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
+                    </View>
+                    {item.value ? (
+                        <FlatList
+                            data={item.data}
+                            contentInset={{ bottom: 40 }}
+                            renderItem={({ item, index }) =>
+                                <View style={{}}>
+                                    <TouchableOpacity style={styles.childRow1} onPress={() => this.onClickInner(index)}>
+
+                                        <Text style={[styles.font, styles.itemInActive]} >{item.key}</Text>
+                                        {/* <Icon name={'check-circle'} size={24} color={item.value ? colors.red1 : colors.black1} /> */}
+                                    </TouchableOpacity>
+
+                                </View>
+                            } />) : null}
+                </TouchableOpacity>
+
+            </View>
+        );
+    };
     render() {
-
+        const { data, isLoading } = this.state;
         return (
             <View>
 
                 <View style={styles.parentHr} />
                 <View style={{}}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={this.state.data}
-                        contentInset={{bottom:40}}
-                        renderItem={({ item, index }) =>
-                            <View style={{flex:1  , backgroundColor:colors.white1}}>
-                                <TouchableOpacity  style={[styles.childRow]} onPress={() => this.onClick(index)}>
-                                    <View style={{width:layout.size.height/2,height:moderateScale(35), flexDirection: 'row' , justifyContent:'space-between' }}>
-                                    <Text style={[styles.itemInActive]} >{item.title}</Text>
-                                    <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
-                                    </View>
-                                    {item.value ? (
-                                        <FlatList
-                                            data={item.data}
-                                            contentInset={{bottom:40}}
-                                            renderItem={({ item, index }) =>
-                                                <View style={{}}>
-                                                    <TouchableOpacity style={styles.childRow1 } onPress={() => this.onClickInner(index)}>
-
-                                                        <Text style={[styles.font, styles.itemInActive]} >{item.key}</Text>
-                                                        {/* <Icon name={'check-circle'} size={24} color={item.value ? colors.red1 : colors.black1} /> */}
-                                                    </TouchableOpacity>
-                                                 
-                                                </View>
-                                            } />) : null}
-                                </TouchableOpacity>
-                              
-                            </View>
-                        } />
+                        contentInset={{ bottom: 40 }}
+                        renderItem={this._renderItem}
+                        keyExtractor={item => item.id}
+                    />
                 </View>
 
             </View>
@@ -117,7 +125,7 @@ export default class Accordian extends Component {
     }
 
     onClickInner = (index) => {
-        return console.log(index,'seeci');
+        return console.log(index, 'seeci');
         const temp = this.state.data.slice()
         console.log(temp, 'temp before');
         temp[index].value = !temp[index].value
@@ -138,13 +146,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    // button: {
-    //     width: layout.size.width/2,
-    //     padding:5,
-    //     paddingVertical:20,
-    //     backgroundColor: colors.black1,
-
-    // },
     title: {
         fontSize: 14,
         fontWeight: 'bold',
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
     },
     itemInActive: {
         fontSize: 20,
-        fontFamily:fonts.semiBold,
+        fontFamily: fonts.semiBold,
         color: colors.black1,
     },
     btnActive: {
@@ -175,24 +176,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.grey1,
     },
     childRow: {
-        // flexDirection: 'row',
-        // justifyContent: 'space-between',
-flex:1,
+        flex: 1,
         padding: 8,
         paddingVertical: moderateScale(10),
         paddingHorizontal: moderateScale(20),
 
         alignSelf: 'center',
-        // backgroundColor:colors.black1
     },
     childRow1: {
-        // flexDirection: 'row',
-        // justifyContent: 'space-between',
         flex: 1,
-
         padding: 15,
         paddingVertical: moderateScale(10),
-        backgroundColor:colors.grey1
+        backgroundColor: colors.grey1
     },
     parentHr: {
         height: 1,
@@ -200,7 +195,7 @@ flex:1,
         width: '100%'
     },
     childHr: {
-        flex:1
+        flex: 1
     },
     colorActive: {
         borderColor: colors.green2,
@@ -212,6 +207,6 @@ flex:1,
         height: 30,
         width: 30,
         alignSelf: 'center',
-tintColor:colors.black1
-      },
+        tintColor: colors.black1
+    },
 });

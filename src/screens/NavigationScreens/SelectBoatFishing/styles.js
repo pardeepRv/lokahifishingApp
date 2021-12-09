@@ -27,5 +27,7 @@ export default StyleSheet.create({
     marginTop: 20,
     fontFamily: fonts.semiBold,
     left: layout.size.width / 3,
+    color:colors.white1,
+
   },
 });

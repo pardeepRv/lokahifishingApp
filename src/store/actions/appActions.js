@@ -56,6 +56,13 @@ const getFishesBasedOnID = (payload, cb) => {
   };
 };
 
+const getWeather = (payload, cb) => {
+  return {
+    type: actionTypes.GET_WEATHER_REQUESTED,
+    payload,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -65,4 +72,5 @@ export {
   getLcrSecond,
   getLcrThird,
   getFishesBasedOnID,
+  getWeather
 };

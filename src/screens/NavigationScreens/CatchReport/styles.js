@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { fonts } from '../../../../assets';
+import { colors } from '../../../utilities/constants';
 
 
 export default StyleSheet.create({
@@ -16,5 +17,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         marginTop: 20,
         fontFamily: fonts.semiBold,
+        color:colors.white1,
+
     },
 });

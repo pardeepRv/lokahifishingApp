@@ -6,6 +6,7 @@ const initialState = {
   newsList: [],
   signarray: [],
   positionarray: [],
+  weatherarray: [],
 };
 
 export default (state = initialState, action) => {
@@ -156,6 +157,25 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
+
+      case actionTypes.GET_WEATHER_REQUESTED:
+        return {
+          ...state,
+          loading: true,
+        };
+  
+      case actionTypes.GET_WEATHER_SUCCEEDED:
+        return {
+          ...state,
+          loading: false,
+          weatherarray: action.payload,
+        };
+  
+      case actionTypes.GET_WEATHER_FAIL:
+        return {
+          ...state,
+          loading: false,
+        };
 
     default:
       return state;

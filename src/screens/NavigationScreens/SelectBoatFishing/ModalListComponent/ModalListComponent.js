@@ -12,7 +12,7 @@ import { Button, Loader } from '../../../../components/common';
 import Circular from '../../../../components/common/Circular';
 import { Header } from '../../../../components/common/Header';
 import { strings } from '../../../../localization';
-import { getposition, getsigns } from '../../../../store/actions';
+import { getposition, getsigns, getWeather } from '../../../../store/actions';
 import { colors } from '../../../../utilities/constants';
 import Accordian from './Accordian';
 import Method from './Method';
@@ -107,6 +107,9 @@ const ModalListComponent = props => {
       } else if (value == 4) {
         positionfun();
       }
+      else if (value == 3){
+        weatherfun();
+      }
     });
     return unsubscribe;
   }, [navigation, signs]);
@@ -132,6 +135,19 @@ const ModalListComponent = props => {
         }
       }
     }));
+
+  }
+  function weatherfun() {
+    let token = auth && auth?.userDetails?.access_token;
+    // dispatch(getposition(token, cb => {
+    //   if (cb) {
+    //     console.log(cb, ";cb in poosition");
+    //     if (cb?.data?.data) {
+    //       setpositionarr(cb?.data?.data?.position)
+    //     }
+    //   }
+    // }));
+    dispatch(getWeather(token));
 
   }
 
@@ -221,8 +237,7 @@ const ModalListComponent = props => {
          */}
 
         {value == 2 && <Method navigation={navigation}  />}
-        {value == 3 && <Text>jkhvtu</Text>}
-
+        {value == 3 && <Accordian  />}
 
         {value == 4 && (
           <FlatList

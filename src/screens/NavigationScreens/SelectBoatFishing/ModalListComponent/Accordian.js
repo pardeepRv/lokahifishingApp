@@ -39,6 +39,24 @@ export default class Accordian extends PureComponent {
     }
   }
 
+  sendSelectedValues = () => {
+    const {data} = this.state;
+    let arr = [];
+
+    data.forEach(element => {
+      if (element && element.weather_type && element.weather_type.length > 0) {
+        element.weather_type.map((value, i) => {
+          if (value && value.isSelected) {
+            // arr.push(element);
+            console.log(value, 'is selected');
+          }
+        });
+      }
+    });
+    // getSelectedSigns(arr);
+    // navigation.goBack();
+  };
+
   _renderItem = ({item, index}) => {
     return (
       <View style={{flex: 1, backgroundColor: colors.white1}}>
@@ -116,7 +134,7 @@ export default class Accordian extends PureComponent {
                   alignSelf: 'center',
                 }}
                 label={strings.submit}
-                // onPress={() => sendSelectedValues()}
+                onPress={() => this.sendSelectedValues()}
               />
             </View>
           )}
@@ -133,8 +151,9 @@ export default class Accordian extends PureComponent {
 
   onClickInner = (index, idx) => {
     const temp = this.state.data.slice();
-    temp[index].weather_type[idx].isSelected =
-      !temp[index].weather_type[idx].isSelected;
+    // temp[index].weather_type[idx].isSelected =
+    //   !temp[index].weather_type[idx].isSelected;
+      temp[index].weather_type[idx].isSelected =true
     this.setState({data: temp});
   };
 

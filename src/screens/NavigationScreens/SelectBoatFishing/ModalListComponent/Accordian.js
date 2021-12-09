@@ -153,7 +153,7 @@ export default class Accordian extends PureComponent {
     const temp = this.state.data.slice();
     // temp[index].weather_type[idx].isSelected =
     //   !temp[index].weather_type[idx].isSelected;
-      temp[index].weather_type[idx].isSelected =true
+    temp[index].weather_type[idx].isSelected = true;
     this.setState({data: temp});
   };
 

@@ -18,11 +18,15 @@ import {Button, Loader} from '../../../../components/common';
 import Circular from '../../../../components/common/Circular';
 import {Header} from '../../../../components/common/Header';
 import {strings} from '../../../../localization';
-import {getMethod, getposition, getsigns, getWeather} from '../../../../store/actions';
+import {
+  getMethod,
+  getposition,
+  getsigns,
+  getWeather,
+} from '../../../../store/actions';
 import {colors} from '../../../../utilities/constants';
 import Accordian from './Accordian';
 import Method from './Method';
-
 import styles from './styles.js';
 
 const ModalListComponent = props => {
@@ -112,7 +116,7 @@ const ModalListComponent = props => {
         positionfun();
       } else if (value == 3) {
         weatherfun();
-      }else if (value == 2){
+      } else if (value == 2) {
         methodfun();
       }
     });
@@ -163,9 +167,9 @@ const ModalListComponent = props => {
     dispatch(
       getMethod(token, cb => {
         if (cb) {
-          console.log(cb, 'callback weather>>>>>>>>>>');
+          console.log(cb, 'callback setmethodarr>>>>>>>>>>');
           if (cb?.data?.data) {
-            setmethodarr(cb?.data?.data?.weather);
+            setmethodarr(cb?.data?.data?.category);
           }
         }
       }),
@@ -253,11 +257,10 @@ const ModalListComponent = props => {
           />
         )}
 
-        {/* {value == 2 && <Method/>}
-         */}
-
         {value == 2 && <Method navigation={navigation} />}
-        {value == 3 &&  weateherArr && weateherArr.length>0 ? <Accordian weateherArr={weateherArr} /> :null}
+        {value == 3 && weateherArr && weateherArr.length > 0 ? (
+          <Accordian weateherArr={weateherArr} />
+        ) : null}
 
         {value == 4 && (
           <FlatList

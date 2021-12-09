@@ -1,22 +1,34 @@
-import React, {useState} from 'react';
-import {Text, View} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
 import CircularPicker from 'react-native-circular-picker';
-import {moderateScale} from 'react-native-size-matters';
-import {Button} from '.';
-import {fonts, icons} from '../../../assets';
-import {Header} from '../../components/common/Header';
-import {strings} from '../../localization';
-import {colors} from '../../utilities/constants';
-import {layout} from '../../utilities/layout';
+import { moderateScale } from 'react-native-size-matters';
+import { Button } from '.';
+import { fonts, icons } from '../../../assets';
+import { Header } from '../../components/common/Header';
+import { strings } from '../../localization';
+import { colors } from '../../utilities/constants';
+import { layout } from '../../utilities/layout';
+import TextInputComp from './TextInputComp';
 
-const Circular = ({navigation, route}) => {
+const Circular = ({ navigation, route }) => {
   console.log(route, 'in circleureer');
 
   if (route != undefined) {
-    const {getHrs} = route?.params;
+    const { getHrs } = route?.params;
 
     const [price, setPrice] = useState(0);
     const handleChange = v => setPrice((v * 0.24).toFixed(0));
+    const [time, settime] = useState('');
+
+
+
+    
+    const [errors, setErrors] = useState({
+      time: '',
+      isLoading: false,
+    });
+    const name_and_values = [{ name: 'time', value: time }];
+
 
     const sendSelectedValues = () => {
       console.log(price, 'price');
@@ -40,7 +52,7 @@ const Circular = ({navigation, route}) => {
             height: moderateScale(60),
           }}
           title={''}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -79,6 +91,35 @@ const Circular = ({navigation, route}) => {
             </Text>
           </CircularPicker>
 
+          <View
+            style={{
+              marginTop: moderateScale(25),
+            }}>
+            <TextInputComp
+              // label={strings.email}
+              value={time}
+              placeholder={strings.entertime}
+              labelTextStyle={{
+                fontFamily: fonts.semiBold,
+                fontSize: moderateScale(16),
+                color: colors.white1,
+              }}
+              onFocus={() =>
+                setErrors({
+                  ...errors,
+                  time: '',
+                })
+              }
+
+            />
+            {errors.time ? (
+              <Text
+                transparent
+                style={{ color: colors.primary, bottom: 13, left: 4 }}>
+                {errors.time}
+              </Text>
+            ) : null}
+          </View>
           <Button
             style={{
               backgroundColor: colors.secondry,

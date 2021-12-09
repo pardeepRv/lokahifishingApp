@@ -11,6 +11,7 @@ export default {
   createAccount: "Don't have account?",
   forgotpassword: 'Forgot Password?',
   signup: '  Sign Up',
+  entertime  : 'enter time here',
 
   //signup screen
   alreadyaccount: 'Already have a ccount?',

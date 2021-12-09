@@ -1,24 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
-  Image, ImageBackground, LayoutAnimation,
-  Platform, SafeAreaView, Text,
-  TouchableOpacity, UIManager, View
+  Image,
+  ImageBackground,
+  LayoutAnimation,
+  Platform,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  UIManager,
+  View,
 } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import { useDispatch, useSelector } from 'react-redux';
-import { fonts, icons } from '../../../../../assets';
-import { Button, Loader } from '../../../../components/common';
+import {moderateScale} from 'react-native-size-matters';
+import {useDispatch, useSelector} from 'react-redux';
+import {fonts, icons} from '../../../../../assets';
+import {Button, Loader} from '../../../../components/common';
 import Circular from '../../../../components/common/Circular';
-import { Header } from '../../../../components/common/Header';
-import { strings } from '../../../../localization';
-import { getposition, getsigns, getWeather } from '../../../../store/actions';
-import { colors } from '../../../../utilities/constants';
+import {Header} from '../../../../components/common/Header';
+import {strings} from '../../../../localization';
+import {getposition, getsigns, getWeather} from '../../../../store/actions';
+import {colors} from '../../../../utilities/constants';
 import Accordian from './Accordian';
 import Method from './Method';
 
 import styles from './styles.js';
-
 
 const ModalListComponent = props => {
   let auth = useSelector(state => state.auth);
@@ -27,14 +32,13 @@ const ModalListComponent = props => {
   console.log(auth, 'auth>>>>>>>>>>>>', app, 'app>>>>>>>>>>>>>>>>');
   console.log(props, 'props in modal>>>>>>>.');
 
-
   const dispatch = useDispatch();
-  const { navigation, route } = props;
-  const { value, name, getSelectedSigns } = route?.params;
-  const { getSelectedposition } = route?.params;
+  const {navigation, route} = props;
+  const {value, name, getSelectedSigns} = route?.params;
+  const {getSelectedposition} = route?.params;
 
-  const [modalVisible, setModalVisible] = useState(false);
-  
+  const [weateherArr, setWeatherAr] = useState([]);
+
   const [open, setopen] = useState(false);
   const [signs, setSignArr] = useState(app && app.signarray);
   const [position, setpositionarr] = useState(app && app.positionarray);
@@ -98,7 +102,6 @@ const ModalListComponent = props => {
     navigation.goBack();
   };
 
-
   useEffect(() => {
     console.log('in useEfectof modallistComponent >>>>>>>>>>>.');
     const unsubscribe = navigation.addListener('focus', () => {
@@ -106,8 +109,7 @@ const ModalListComponent = props => {
         signFun();
       } else if (value == 4) {
         positionfun();
-      }
-      else if (value == 3){
+      } else if (value == 3) {
         weatherfun();
       }
     });
@@ -116,43 +118,45 @@ const ModalListComponent = props => {
 
   function signFun() {
     let token = auth && auth?.userDetails?.access_token;
-    dispatch(getsigns(token, cb => {
-      if (cb) {
-        console.log(cb, ";cb in sign");
-        if (cb?.data?.data) {
-          setSignArr(cb?.data?.data?.sign)
+    dispatch(
+      getsigns(token, cb => {
+        if (cb) {
+          console.log(cb, ';cb in sign');
+          if (cb?.data?.data) {
+            setSignArr(cb?.data?.data?.sign);
+          }
         }
-      }
-    }));
+      }),
+    );
   }
   function positionfun() {
     let token = auth && auth?.userDetails?.access_token;
-    dispatch(getposition(token, cb => {
-      if (cb) {
-        console.log(cb, ";cb in poosition");
-        if (cb?.data?.data) {
-          setpositionarr(cb?.data?.data?.position)
+    dispatch(
+      getposition(token, cb => {
+        if (cb) {
+          console.log(cb, ';cb in poosition');
+          if (cb?.data?.data) {
+            setpositionarr(cb?.data?.data?.position);
+          }
         }
-      }
-    }));
-
+      }),
+    );
   }
   function weatherfun() {
     let token = auth && auth?.userDetails?.access_token;
-    // dispatch(getposition(token, cb => {
-    //   if (cb) {
-    //     console.log(cb, ";cb in poosition");
-    //     if (cb?.data?.data) {
-    //       setpositionarr(cb?.data?.data?.position)
-    //     }
-    //   }
-    // }));
-    dispatch(getWeather(token));
-
+    dispatch(
+      getWeather(token, cb => {
+        if (cb) {
+          console.log(cb, 'callback weather>>>>>>>>>>');
+          if (cb?.data?.data) {
+            setWeatherAr(cb?.data?.data?.weather);
+          }
+        }
+      }),
+    );
   }
 
-
-  const _renderView = ({ item, index }) => (
+  const _renderView = ({item, index}) => (
     <TouchableOpacity
       style={[
         styles.listItem,
@@ -180,7 +184,7 @@ const ModalListComponent = props => {
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{ flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <SafeAreaView style={styles.content}>
         <Header
           containerStyle={{
@@ -188,7 +192,7 @@ const ModalListComponent = props => {
             height: moderateScale(60),
           }}
           title={name}
-          titleStyle={{ fontFamily: fonts.bold }}
+          titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -203,7 +207,7 @@ const ModalListComponent = props => {
             data={signs}
             showsVerticalScrollIndicator={false}
             renderItem={_renderView}
-            contentInset={{ bottom: 20 }}
+            contentInset={{bottom: 20}}
             keyExtractor={(item, index) => 'key' + index}
             ListEmptyComponent={() =>
               signs >= 0 && (
@@ -236,8 +240,8 @@ const ModalListComponent = props => {
         {/* {value == 2 && <Method/>}
          */}
 
-        {value == 2 && <Method navigation={navigation}  />}
-        {value == 3 && <Accordian  />}
+        {value == 2 && <Method navigation={navigation} />}
+        {value == 3 &&  weateherArr && weateherArr.length>0 ? <Accordian weateherArr={weateherArr} /> :null}
 
         {value == 4 && (
           <FlatList
@@ -245,7 +249,7 @@ const ModalListComponent = props => {
             data={position}
             showsVerticalScrollIndicator={false}
             renderItem={_renderView}
-            contentInset={{ bottom: 20 }}
+            contentInset={{bottom: 20}}
             keyExtractor={(item, index) => 'key' + index}
             ListEmptyComponent={() =>
               position >= 0 && (
@@ -277,7 +281,6 @@ const ModalListComponent = props => {
         {value == 5 && <Circular />}
       </SafeAreaView>
       <Loader isLoading={app.loading} isAbsolute />
-
     </ImageBackground>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -10,17 +10,17 @@ import {
   Switch,
   Text,
   TextInput,
-  View
+  View,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 // import { AuthContext } from '../../../../context/authProvider'
 import GetLocation from 'react-native-get-location';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { moderateScale } from 'react-native-size-matters';
-import { fonts, icons } from '../../../../../assets';
-import { Header } from '../../../../components/common/Header';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {moderateScale} from 'react-native-size-matters';
+import {fonts, icons} from '../../../../../assets';
+import {Header} from '../../../../components/common/Header';
 import * as NavigationService from '../../../../store/NavigationService';
-import { colors, screenNames } from '../../../../utilities/constants';
+import {colors, screenNames} from '../../../../utilities/constants';
 import styles from './styles';
 
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -30,19 +30,18 @@ import styles from './styles';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-
-const FishData = ({ navigation }) => {
+const FishData = ({navigation}) => {
   const [state, setState] = useState({
     isGPS: '',
     title: '',
     isPrivate: '',
   });
-  const { isGPS, title, isPrivate } = state;
+  const {isGPS, title, isPrivate} = state;
   const _onChangeText = key => val => {
-    setState({ ...state, [key]: val });
+    setState({...state, [key]: val});
   };
 
-  const { user, setUser } = useState('');
+  const {user, setUser} = useState('');
   const [
     LCRPostOptional,
     setLCRPostOptional,
@@ -67,16 +66,15 @@ const FishData = ({ navigation }) => {
     longitude: '',
   });
   const [harborItems, setHarborItems] = useState([
-    { label: 'Hawaii Kai', value: 'Hawaii Kai' },
-    { label: 'Keehi', value: 'Keehi' },
-    { label: 'Kaneohe', value: 'Kaneohe' },
-    { label: 'Haleiwa', value: 'Haleiwa' },
-    { label: 'Waianae', value: 'Waianae' },
+    {label: 'Hawaii Kai', value: 'Hawaii Kai'},
+    {label: 'Keehi', value: 'Keehi'},
+    {label: 'Kaneohe', value: 'Kaneohe'},
+    {label: 'Haleiwa', value: 'Haleiwa'},
+    {label: 'Waianae', value: 'Waianae'},
   ]);
 
   const [selectedSignArr, setselectedSignArr] = useState([]);
   const [positionarr, setpositionarr] = useState([]);
-
 
   useEffect(() => {
     setLCRPostOptional({
@@ -116,7 +114,7 @@ const FishData = ({ navigation }) => {
         setLocation(location);
       })
       .catch(error => {
-        const { code, message } = error;
+        const {code, message} = error;
         console.log(code, message);
       });
     // I set this so that the region could update as we move the map around and it seems to break the map. Setting the actual <MapView> region to this seems to work but then the pin only stays at the users current location. Maybe the map will be good if they make the post at the spot of location and use the other method if it is created later.
@@ -131,7 +129,7 @@ const FishData = ({ navigation }) => {
 
   const onChangeLatitude = text => {
     console.log(text, 'coming in thisss');
-    setLocation({ ...location, latitude: text === '-' ? 1 : parseFloat(text) });
+    setLocation({...location, latitude: text === '-' ? 1 : parseFloat(text)});
   };
 
   const onChangeLongitude = text => {
@@ -163,7 +161,7 @@ const FishData = ({ navigation }) => {
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
-      style={{ flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <Header
         containerStyle={{
           backgroundColor: 'transparent',
@@ -171,7 +169,7 @@ const FishData = ({ navigation }) => {
         }}
         blackTitle
         title={'Catch Report'}
-        titleStyle={{ fontFamily: fonts.bold }}
+        titleStyle={{fontFamily: fonts.bold}}
         leftIconSource={icons.ic_back_white}
         leftButtonStyle={{
           tintColor: colors.black1,
@@ -192,7 +190,7 @@ const FishData = ({ navigation }) => {
       <SafeAreaView style={styles.safeAreaView}>
         <KeyboardAvoidingView>
           <ScrollView>
-            <View style={[styles.textSection, { justifyContent: 'center' }]}>
+            <View style={[styles.textSection, {justifyContent: 'center'}]}>
               <Text>Info below is optional & will be private to user only</Text>
             </View>
             {/* <View style={styles.profileInfo}>
@@ -210,12 +208,12 @@ const FishData = ({ navigation }) => {
               ]}>
               <Text>Post Catch Report to Photo Sharing?</Text>
               <Switch
-                trackColor={{ false: '#767577', true: '#34C759' }}
+                trackColor={{false: '#767577', true: '#34C759'}}
                 thumbColor={'#f4f3f4'}
                 ios_backgroundColor="#767577"
                 // onValueChange={() => setPostToPhotos(!isGPS)}
                 onValueChange={isGPS =>
-                  setState({ isGPS }, () => setPostToPhotos(isGPS))
+                  setState({isGPS}, () => setPostToPhotos(isGPS))
                 }
                 value={isGPS}
               />
@@ -243,7 +241,7 @@ const FishData = ({ navigation }) => {
                 }}
                 onChangeText={text => setSign(text)}
               /> */}
-              <View style={{ flex: 0.5 }}>
+              <View style={{flex: 0.5}}>
                 {selectedSignArr && selectedSignArr.length > 0 ? (
                   selectedSignArr.map((val, index) => {
                     return (
@@ -287,7 +285,7 @@ const FishData = ({ navigation }) => {
               <TextInput
                 placeholder="Add info about method (optional)"
                 autoCapitalize="sentences"
-                style={{ fontSize: 16 }}
+                style={{fontSize: 16}}
                 returnKeyType="done"
                 blurOnSubmit={true}
                 onSubmitEditing={() => {
@@ -310,7 +308,7 @@ const FishData = ({ navigation }) => {
               <TextInput
                 placeholder="Add weather info (optional)"
                 autoCapitalize="sentences"
-                style={{ fontSize: 16 }}
+                style={{fontSize: 16}}
                 returnKeyType="done"
                 blurOnSubmit={true}
                 onSubmitEditing={() => {
@@ -332,7 +330,7 @@ const FishData = ({ navigation }) => {
                 Position
               </Text>
 
-              <View style={{ flex: 0.5 }}>
+              <View style={{flex: 0.5}}>
                 {positionarr && positionarr.length > 0 ? (
                   positionarr.map((val, index) => {
                     return (
@@ -357,7 +355,7 @@ const FishData = ({ navigation }) => {
                         getSelectedposition: getSelectedposition,
                       })
                     }>
-                    Select position  here
+                    Select position here
                   </Text>
                 )}
               </View>
@@ -405,7 +403,7 @@ const FishData = ({ navigation }) => {
 							<Marker coordinate={{ latitude: location?.latitude, longitude: location?.longitude }} />
 						</MapView> */}
               <MapView
-                provider={Platform.OS === 'android' && PROVIDER_GOOGLE} // remove if not using Google Maps
+                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                 style={styles.map}
                 region={{
                   latitude:
@@ -452,13 +450,13 @@ const FishData = ({ navigation }) => {
                       ? 'numbers-and-punctuation'
                       : 'default'
                   }
-                // value={location?.latitude?.toString()}
+                  // value={location?.latitude?.toString()}
                 />
-                <Text style={{ fontSize: 16, marginRight: 10, paddingBottom: 2 }}>
+                <Text style={{fontSize: 16, marginRight: 10, paddingBottom: 2}}>
                   latitude
                 </Text>
                 <TextInput
-                  style={{ fontSize: 16 }}
+                  style={{fontSize: 16}}
                   returnKeyType="done"
                   blurOnSubmit={true}
                   onSubmitEditing={() => {
@@ -472,9 +470,9 @@ const FishData = ({ navigation }) => {
                       ? 'numbers-and-punctuation'
                       : 'default'
                   }
-                // value={location?.longitude?.toString()}
+                  // value={location?.longitude?.toString()}
                 />
-                <Text style={{ fontSize: 16, paddingBottom: 2 }}>longitude</Text>
+                <Text style={{fontSize: 16, paddingBottom: 2}}>longitude</Text>
               </View>
             ) : (
               <View
@@ -484,14 +482,14 @@ const FishData = ({ navigation }) => {
                   paddingHorizontal: 10,
                 }}>
                 <ActivityIndicator />
-                <Text style={{ fontSize: 16, marginLeft: 10 }}>
+                <Text style={{fontSize: 16, marginLeft: 10}}>
                   getting location...
                 </Text>
               </View>
             )}
             <Text style={styles.or}>OR</Text>
-            <View style={{ zIndex: 1, paddingHorizontal: 10 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+            <View style={{zIndex: 1, paddingHorizontal: 10}}>
+              <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                 <TextInput
                   returnKeyType="done"
                   blurOnSubmit={true}
@@ -503,7 +501,7 @@ const FishData = ({ navigation }) => {
                   onChangeText={text => setDegrees(text)}
                   keyboardType="decimal-pad"
                 />
-                <Text style={{ fontSize: 16, marginRight: 5, paddingBottom: 2 }}>
+                <Text style={{fontSize: 16, marginRight: 5, paddingBottom: 2}}>
                   {' '}
                   degree(s) and{' '}
                 </Text>
@@ -518,16 +516,16 @@ const FishData = ({ navigation }) => {
                   onChangeText={text => setMiles(text)}
                   keyboardType="decimal-pad"
                 />
-                <Text style={{ fontSize: 16, paddingBottom: 2 }}>
+                <Text style={{fontSize: 16, paddingBottom: 2}}>
                   {' '}
                   miles from:{' '}
                 </Text>
               </View>
-              <View style={{ zIndex: 1 }}>
+              <View style={{zIndex: 1}}>
                 <DropDownPicker
-                  style={{ backgroundColor: '#fafafa' }}
+                  style={{backgroundColor: '#fafafa'}}
                   theme="LIGHT"
-                  containerStyle={{ width: '50%', marginVertical: 10 }}
+                  containerStyle={{width: '50%', marginVertical: 10}}
                   labelStyle={{
                     fontWeight: 'bold',
                     fontSize: 16,

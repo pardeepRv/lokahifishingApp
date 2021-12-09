@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import ic_active_activity from './icons/active-activity.png';
 import ic_active_explore from './icons/active-explore.png';
 import ic_active_female from './icons/active-female.png';
@@ -31,7 +31,6 @@ import ic_radio_inactivex from './icons/ic_radio_inactivex.png';
 import location from './icons/location.png';
 import inactivetestimonial from './icons/inactive-testimonial.png';
 import fish2 from './icons/photoSharingImages/fish2.jpg';
-
 
 //drawer
 import ic_pending_lcr from './icons/drawer/Data-Feeds.png';
@@ -74,10 +73,10 @@ import slide from './icons/catch-report-icons/slide-bait.png';
 import TagAndRelease from './icons/catch-report-icons/TagAndRelease.png';
 import whipping from './icons/catch-report-icons/whipping.png';
 import uploadImage1 from './icons/catch-report-icons/uploadImage1.png';
- import loginLogo from './icons/loginLogo.png';
-
+import loginLogo from './icons/loginLogo.png';
 
 import ic_rightArrow from './icons/drawer/right-arrow.png';
+import ic_downA from './icons/drawer/downA.png';
 import ic_photoVideoPlayBT from './icons/photoSharingImages/photoVideoPlayBT.png';
 import photoVideo from './icons/photoSharingImages/photoVideo.png';
 import photoUploadPhoto from './icons/photoSharingImages/photoUploadPhoto.png';
@@ -106,18 +105,17 @@ import Rfslogo from './icons/Rfslogo.png';
 import gotakulogoredo from './icons/gotaku-logo-redo.jpg';
 import blockuser from './icons/blockuser.png';
 
-// Lcr LIst 
+// Lcr LIst
 import user_placeholder_man_0 from './icons/NewImages/user_placeholder_man_0.jpg';
 import image_category from './icons/NewImages/image-category.jpg';
 import no_image from './icons/photoSharingImages/no_image.jpg';
 
 //home page icons
-import LeaderIcon from './icons/home-icons/LeaderIcon.png'
-import NewsIcon from './icons/home-icons/NewsIcon.png'
-import TidesIcon2 from './icons/home-icons/TidesIcon2.png'
-import PhotoIcon from './icons/home-icons/PhotoIcon.png'
-import TournamentIcon from './icons/home-icons/TournamentIcon.png'
-
+import LeaderIcon from './icons/home-icons/LeaderIcon.png';
+import NewsIcon from './icons/home-icons/NewsIcon.png';
+import TidesIcon2 from './icons/home-icons/TidesIcon2.png';
+import PhotoIcon from './icons/home-icons/PhotoIcon.png';
+import TournamentIcon from './icons/home-icons/TournamentIcon.png';
 
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
 import ic_Fish02 from './icons/dashbaordImages/Fish02.png';
@@ -175,13 +173,13 @@ import PoopaaFish from './icons/leaderboardImages/PoopaaFish.png';
 import PalaniFish from './icons/leaderboardImages/PalaniFish.png';
 import MuFish from './icons/leaderboardImages/MuFish.png';
 
-
 import privacyPolicy from './icons/privacyPolicy.pdf';
 import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 
 import ProfilePlaceholder from './icons/drawer/ProfilePlaceholder.jpg';
 
 const icons = {
+  ic_downA,
   like,
   TidesIcon2,
   LeaderIcon,
@@ -379,4 +377,4 @@ const fonts = Platform.select({
   },
 });
 
-export { fonts, icons };
+export {fonts, icons};

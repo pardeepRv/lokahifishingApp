@@ -63,6 +63,13 @@ const getWeather = (payload, cb) => {
     cb,
   };
 };
+const getMethod = (payload, cb) => {
+  return {
+    type: actionTypes.GET_METHOD_REQUESTED,
+    payload,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -72,5 +79,6 @@ export {
   getLcrSecond,
   getLcrThird,
   getFishesBasedOnID,
-  getWeather
+  getWeather,
+  getMethod
 };

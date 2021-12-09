@@ -39,7 +39,8 @@ const urls = {
   lcr_Second: 'lcr-second-level-category',
   lcr_third: 'lcr-third-level-category',
   lcr_fishes: 'lcr-fishes',
-  weather:'weather'
+  weather:'weather',
+  method: 'method',
 };
 
 export {urls};

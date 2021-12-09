@@ -18,7 +18,7 @@ import {Button, Loader} from '../../../../components/common';
 import Circular from '../../../../components/common/Circular';
 import {Header} from '../../../../components/common/Header';
 import {strings} from '../../../../localization';
-import {getposition, getsigns, getWeather} from '../../../../store/actions';
+import {getMethod, getposition, getsigns, getWeather} from '../../../../store/actions';
 import {colors} from '../../../../utilities/constants';
 import Accordian from './Accordian';
 import Method from './Method';
@@ -38,6 +38,7 @@ const ModalListComponent = props => {
   const {getSelectedposition} = route?.params;
 
   const [weateherArr, setWeatherAr] = useState([]);
+  const [methodarr, setmethodarr] = useState([]);
 
   const [open, setopen] = useState(false);
   const [signs, setSignArr] = useState(app && app.signarray);
@@ -111,6 +112,8 @@ const ModalListComponent = props => {
         positionfun();
       } else if (value == 3) {
         weatherfun();
+      }else if (value == 2){
+        methodfun();
       }
     });
     return unsubscribe;
@@ -150,6 +153,19 @@ const ModalListComponent = props => {
           console.log(cb, 'callback weather>>>>>>>>>>');
           if (cb?.data?.data) {
             setWeatherAr(cb?.data?.data?.weather);
+          }
+        }
+      }),
+    );
+  }
+  function methodfun() {
+    let token = auth && auth?.userDetails?.access_token;
+    dispatch(
+      getMethod(token, cb => {
+        if (cb) {
+          console.log(cb, 'callback weather>>>>>>>>>>');
+          if (cb?.data?.data) {
+            setmethodarr(cb?.data?.data?.weather);
           }
         }
       }),

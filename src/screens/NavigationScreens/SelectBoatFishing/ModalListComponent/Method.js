@@ -8,6 +8,7 @@ import { strings } from '../../../../localization';
 import { colors } from '../../../../utilities/constants';
 import { layout } from '../../../../utilities/layout';
 import Accordian from './Accordian';
+import {useDispatch, useSelector} from 'react-redux';
 
 
 
@@ -195,6 +196,10 @@ const Other = (props) => {
 const Method = ({ props, navigation }) => {
     console.log(props, 'props in methoddd');
     const [modalVisible, setModalVisible] = useState(false);
+    let auth = useSelector(state => state.auth);
+    let app = useSelector(state => state.app);
+  
+    console.log(auth, 'auth>>>>>>>>>>>>auth', app, 'app>>>>>>>>>>>>>>>>app');
 
     const setMethod = (state) => {
         console.log('press>>>>>>>>>>>>q', state);

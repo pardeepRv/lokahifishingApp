@@ -5,6 +5,7 @@ import {
   getLcrFirstsaga,
   getLcrSecondsaga,
   getLcrThirdsaga,
+  getMethodsaga,
   getNewsSaga,
   getPositionSaga,
   getSignsSaga,
@@ -61,5 +62,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_LCR_THIRD_REQUESTED, getLcrThirdsaga);
   yield takeLatest(actionTypes.GET_FISHES_REQUESTED, getAllFishesSaga);
   yield takeLatest(actionTypes.GET_WEATHER_REQUESTED, getWeaherSaga);
+  yield takeLatest(actionTypes.GET_METHOD_REQUESTED, getMethodsaga);
 
 }

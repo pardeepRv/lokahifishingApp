@@ -306,7 +306,34 @@ function* getWeaherSaga(params) {
   }
 }
 
+function* getMethodsaga(params) {
+   console.log(params, 'params in signs api ');
+ try {
+   const config = {
+     url: urls.method,
+     method: 'GET',
+     headers: {
+       Authorization: `Bearer ${params && params.payload}`,
+     },
+   };
+   const response = yield request(config);
+     console.log(response, '<<<<<<<< method response  >>>>>>>>>>>>>>>>>');
 
+   if (response?.data?.status) {
+     yield put({
+       type: actionTypes.GET_METHOD_SUCCEEDED,
+       payload: response?.data?.data?.category,
+     });
+
+     params.cb(response);
+   }
+ } catch (error) {
+   showErrorAlert(getAPIError(error));
+   yield put({
+     type: actionTypes.GET_METHOD_FAIL,
+   });
+ }
+}
 
 export {
   fetchAll,
@@ -318,5 +345,6 @@ export {
   getLcrSecondsaga,
   getLcrThirdsaga,
   getAllFishesSaga,
-  getWeaherSaga
+  getWeaherSaga,
+  getMethodsaga
 };

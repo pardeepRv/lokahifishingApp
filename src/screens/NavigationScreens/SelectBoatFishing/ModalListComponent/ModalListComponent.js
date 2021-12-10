@@ -267,7 +267,7 @@ const ModalListComponent = props => {
 
         {value == 2 && <Method navigation={navigation} />}
         {value == 3 && weateherArr && weateherArr.length > 0 ? (
-          <Accordian weateherArr={weateherArr} />
+          <Accordian weateherArr={weateherArr} navigation={navigation}/>
         ) : null}
 
         {value == 4 && (

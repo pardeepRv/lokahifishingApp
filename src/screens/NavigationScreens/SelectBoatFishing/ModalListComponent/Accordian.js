@@ -42,6 +42,8 @@ export default class Accordian extends PureComponent {
   }
 
   sendSelectedValues = () => {
+   return this.props.navigation.goBack();
+
     const {data} = this.state;
     let arr = [];
 

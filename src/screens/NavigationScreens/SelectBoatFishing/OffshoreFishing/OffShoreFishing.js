@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, Image, ImageBackground, Text, View} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../../assets';
 import {Loader} from '../../../../components/common';
 import {Header} from '../../../../components/common/Header';
@@ -64,7 +64,9 @@ const OffShoreFishing = ({navigation, route}) => {
 
   console.log(extraFish, item, 'extraFish in offshore>>>>>>>>>>');
   const [fishingList, setfishingList] = useState([]);
+
   const [fishType, setfishType] = useState('');
+  const [fishTypeId, setfishTypeId] = useState(null);
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -95,6 +97,7 @@ const OffShoreFishing = ({navigation, route}) => {
           console.log(cb, 'in fishing page>>>>>>>>>');
           if (cb?.data?.data) {
             setfishingList(cb?.data?.data?.lcr_fishes);
+            setfishTypeId(cb?.data?.data?.lcr_fishes[0].id);
           }
         }
       }),
@@ -115,6 +118,7 @@ const OffShoreFishing = ({navigation, route}) => {
           console.log(cb, 'in fishing page>>>>>>>>>');
           if (cb?.data?.data) {
             setfishingList(cb?.data?.data?.lcr_fishes);
+            setfishTypeId(cb?.data?.data?.lcr_fishes[0].id);
           }
         }
       }),
@@ -186,6 +190,7 @@ const OffShoreFishing = ({navigation, route}) => {
         setfishType(viewableItems.viewableItems[0].item.title);
       } else {
         setfishType('');
+        setfishTypeId(viewableItems.viewableItems[0].item.id);
       }
     }
   });
@@ -239,7 +244,11 @@ const OffShoreFishing = ({navigation, route}) => {
           />
         )}
       </View>
-      <LCRRequired fishType={fishType} navigation={navigation} />
+      <LCRRequired
+        fishType={fishType}
+        selectedFish={fishTypeId}
+        navigation={navigation}
+      />
     </ImageBackground>
   );
 };

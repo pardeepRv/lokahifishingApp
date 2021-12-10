@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Keyboard,
   KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   ScrollView,
   Switch,
@@ -13,7 +14,9 @@ import {
   View,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-// import { AuthContext } from '../../../../context/authProvider'
+
+import {useDispatch, useSelector} from 'react-redux';
+
 import GetLocation from 'react-native-get-location';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {moderateScale} from 'react-native-size-matters';
@@ -22,45 +25,42 @@ import {Header} from '../../../../components/common/Header';
 import * as NavigationService from '../../../../store/NavigationService';
 import {colors, screenNames} from '../../../../utilities/constants';
 import styles from './styles';
-
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-// import { LCRContext } from '../../../../context/LCRContext/lcrProvider'
-// import { BlurView } from '@react-native-community/blur'
+import {savelcrreport} from '../../../../store/actions';
+import {Loader} from '../../../../components/common';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const FishData = ({navigation}) => {
+const FishData = ({navigation, route}) => {
+  const {previousScreen} = route && route.params;
+
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+
+  console.log(auth, 'auth fish page');
+
+  const dispatch = useDispatch();
+
   const [state, setState] = useState({
     isGPS: '',
     title: '',
     isPrivate: '',
   });
   const {isGPS, title, isPrivate} = state;
+
   const _onChangeText = key => val => {
     setState({...state, [key]: val});
   };
 
-  const {user, setUser} = useState('');
-  const [
-    LCRPostOptional,
-    setLCRPostOptional,
-    postToPhotos,
-    setPostToPhotos,
-    LCRIsPosting,
-    LCRPostRequired,
-  ] = useState('');
-
   const [price, setPrice] = useState(0);
-  const [sign, setSign] = useState('');
-  const [method, setMethod] = useState('');
-  const [weather, setWeather] = useState('');
-  const [position, setposition] = useState('');
+
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [degrees, setDegrees] = useState('');
   const [miles, setMiles] = useState('');
   const [harbor, setHarbor] = useState('');
   const [open, setOpen] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+
   const [location, setLocation] = useState({
     latitude: '',
     longitude: '',
@@ -77,37 +77,12 @@ const FishData = ({navigation}) => {
   const [positionarr, setpositionarr] = useState([]);
   const [weateherArr, setWeatherAr] = useState([]);
 
-
-  useEffect(() => {
-    setLCRPostOptional({
-      sign: sign,
-      method: method,
-      weather: weather,
-      position: position,
-      additionalNotes: additionalNotes,
-      hawaiiLocation: {
-        degrees: degrees,
-        miles: miles,
-        harbor: harbor,
-      },
-      gpsLocation: location,
-    });
-  }, [
-    sign,
-    method,
-    weather,
-    position,
-    additionalNotes,
-    degrees,
-    miles,
-    harbor,
-    location,
-  ]);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   useEffect(() => {
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
-      //I'm not sure what is best for the timeout to be set as. Some more testing could be beneficial here
+      //I'm not sure what is best for the timeout to be set as. Some more testing could be beneficial
       timeout: 15000,
     })
       .then(location => {
@@ -166,6 +141,102 @@ const FishData = ({navigation}) => {
     }
   };
 
+  //hit api
+  const _postCatchReport = () => {
+    console.log(previousScreen, 'previousScreen data');
+    let selectedSigns = [];
+    let selectedPosition = [];
+    let user_os = '';
+
+    if (selectedSignArr && selectedSignArr.length > 0) {
+      console.log(selectedSignArr, 'selectedSignArr');
+      selectedSignArr.forEach(element => {
+        selectedSigns.push(element.id);
+      });
+    }
+
+    if (positionarr && positionarr.length > 0) {
+      console.log(positionarr, 'positionarr');
+      positionarr.forEach(element => {
+        selectedPosition.push(element.id);
+      });
+    }
+
+    console.log(isEnabled, 'isEnabled');
+
+    console.log(selectedSigns, 'selectedSigns');
+    console.log(selectedPosition, 'selectedPosition');
+    console.log(price, 'efforts');
+    console.log(
+      location && location.latitude ? location.latitude : 0.0,
+      'latitude',
+    );
+    console.log(
+      location && location.longitude ? location.longitude : 0.0,
+      'longitude',
+    );
+
+    console.log(additionalNotes, 'additionalNotes');
+    // is_private
+    // user_os
+
+    if (Platform.OS == 'ios') {
+      user_os = 'ios';
+    }
+    if (Platform.OS == 'android') {
+      user_os = 'android';
+    }
+
+    let formData = new FormData();
+
+    formData.append('fish_id', previousScreen && previousScreen.selectedFish);
+    formData.append('image', previousScreen && previousScreen.fishphoto);
+    // formData.append('image', 'file:///Users/user/Library/Developer/CoreSimulator/Devices/BA2665E5-90D5-41E6-8F6F-97E99BEE6817/data/Containers/Data/Application/C2C4B907-C395-44BC-9AFD-410C476A719D/tmp/react-native-image-crop-picker/FC66A229-0B72-41CF-8637-6FCE812D71E9.jpg');
+    formData.append('fish_weight', previousScreen && previousScreen.weight);
+    formData.append('lcr_date_time', previousScreen && previousScreen.date);
+    formData.append('effort', price);
+    formData.append(
+      'lat',
+      location && location.latitude ? location.latitude : 0.0,
+    );
+    formData.append(
+      'long',
+      location && location.longitude ? location.longitude : 0.0,
+    );
+    formData.append('description', additionalNotes);
+
+    // formData.append('sign_id', selectedSigns);
+    // formData.append('method_id', []);
+    // formData.append('weather_id', []);
+    // formData.append('position_id', selectedPosition);
+
+    for (let i = 0; i < selectedSigns.length; i++) {
+      console.log(selectedSigns[i], 'selectedSigns[i]');
+      let index = selectedSigns[i];
+      formData.append(`sign_id[${i}]`, index);
+    }
+
+    for (let i = 0; i < selectedPosition.length; i++) {
+      console.log(selectedPosition[i], 'selectedPosition[i]');
+      let index = selectedPosition[i];
+      formData.append(`position_id[${i}]`, index);
+    }
+
+    formData.append('method_id[0]', 1);
+    formData.append('weather_id[0]', 1);
+    // formData.append('position_id[0]', 3);
+
+    formData.append('user_os', user_os);
+    formData.append('is_private', isEnabled);
+
+    console.log(formData, 'consoling formadta');
+    let token = auth && auth.userDetails.access_token;
+
+    dispatch(savelcrreport(formData, token));
+    return;
+    NavigationService.resetRoute(screenNames.HomeStack);
+  };
+
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
@@ -185,9 +256,7 @@ const FishData = ({navigation}) => {
         onLeftPress={() => {
           navigation.goBack();
         }}
-        onRightPress={() => {
-          NavigationService.resetRoute(screenNames.HomeStack);
-        }}
+        onRightPress={_postCatchReport}
         rightIconSource={icons.post}
         rightIconStyle={{
           height: 30,
@@ -201,10 +270,6 @@ const FishData = ({navigation}) => {
             <View style={[styles.textSection, {justifyContent: 'center'}]}>
               <Text>Info below is optional & will be private to user only</Text>
             </View>
-            {/* <View style={styles.profileInfo}>
-					<Text style={{ marginRight: 10, fontWeight: '600', fontSize: 18 }}>{user.dbData.fullname}</Text>
-					<FastImage style={styles.profilePic} source={{ uri: user.dbData.User_Image }} />
-				</View> */}
             <View
               style={[
                 styles.textSection,
@@ -219,11 +284,8 @@ const FishData = ({navigation}) => {
                 trackColor={{false: '#767577', true: '#34C759'}}
                 thumbColor={'#f4f3f4'}
                 ios_backgroundColor="#767577"
-                // onValueChange={() => setPostToPhotos(!isGPS)}
-                onValueChange={isGPS =>
-                  setState({isGPS}, () => setPostToPhotos(isGPS))
-                }
-                value={isGPS}
+                onValueChange={toggleSwitch}
+                value={isEnabled}
               />
             </View>
             <View style={styles.textSection}>
@@ -236,19 +298,8 @@ const FishData = ({navigation}) => {
                     getSelectedSigns: getSelectedSigns,
                   })
                 }>
-                Sign
+                Sign(optional)
               </Text>
-              {/* <TextInput
-                placeholder="Add sign info (optional)"
-                autoCapitalize="sentences"
-                style={{fontSize: 16}}
-                returnKeyType="done"
-                blurOnSubmit={true}
-                onSubmitEditing={() => {
-                  Keyboard.dismiss();
-                }}
-                onChangeText={text => setSign(text)}
-              /> */}
               <View style={{flex: 0.5}}>
                 {selectedSignArr && selectedSignArr.length > 0 ? (
                   selectedSignArr.map((val, index) => {
@@ -274,7 +325,7 @@ const FishData = ({navigation}) => {
                         getSelectedSigns: getSelectedSigns,
                       })
                     }>
-                    Select sign here
+                    Select sign
                   </Text>
                 )}
               </View>
@@ -288,19 +339,20 @@ const FishData = ({navigation}) => {
                     name: 'Method',
                   })
                 }>
-                Method
+                Method(optional)
               </Text>
-              <TextInput
-                placeholder="Add info about method (optional)"
-                autoCapitalize="sentences"
-                style={{fontSize: 16}}
-                returnKeyType="done"
-                blurOnSubmit={true}
-                onSubmitEditing={() => {
-                  Keyboard.dismiss();
+              <Text
+                style={{
+                  fontFamily: fonts.semiBold,
                 }}
-                onChangeText={text => setMethod(text)}
-              />
+                onPress={() =>
+                  navigation.navigate('ModalListComponent', {
+                    value: 2,
+                    name: 'Method',
+                  })
+                }>
+                Select Method
+              </Text>
             </View>
             <View style={styles.textSection}>
               <Text
@@ -309,22 +361,11 @@ const FishData = ({navigation}) => {
                   navigation.navigate('ModalListComponent', {
                     value: 3,
                     name: 'Weather',
-                    getSelectedweather: getSelectedweather ,
+                    getSelectedweather: getSelectedweather,
                   })
                 }>
-                Weather
+                Weather(optional)
               </Text>
-              {/* <TextInput
-                placeholder="Add weather info (optional)"
-                autoCapitalize="sentences"
-                style={{fontSize: 16}}
-                returnKeyType="done"
-                blurOnSubmit={true}
-                onSubmitEditing={() => {
-                  Keyboard.dismiss();
-                }}
-                onChangeText={text => setWeather(text)}
-              /> */}
               <View style={{flex: 0.5}}>
                 {weateherArr && weateherArr.length > 0 ? (
                   weateherArr.map((val, index) => {
@@ -350,7 +391,7 @@ const FishData = ({navigation}) => {
                         getSelectedweather: getSelectedweather,
                       })
                     }>
-                    Select weather here
+                    Select weather
                   </Text>
                 )}
               </View>
@@ -365,7 +406,7 @@ const FishData = ({navigation}) => {
                     getSelectedposition: getSelectedposition,
                   })
                 }>
-                Position
+                Position(optional)
               </Text>
 
               <View style={{flex: 0.5}}>
@@ -393,7 +434,7 @@ const FishData = ({navigation}) => {
                         getSelectedposition: getSelectedposition,
                       })
                     }>
-                    Select position here
+                    Select position
                   </Text>
                 )}
               </View>
@@ -427,19 +468,6 @@ const FishData = ({navigation}) => {
               <Text style={styles.title}>Location</Text>
             </View>
             <View style={styles.mapContainer}>
-              {/* <MapView
-							style={styles.map}
-							provider={PROVIDER_GOOGLE}
-							region={{
-								latitude: location?.latitude,
-								longitude: location?.longitude,
-								latitudeDelta: 0.009,
-								longitudeDelta: 0.009,
-							}}
-							// onRegionChangeComplete={region => setRegion(region)}
-						>
-							<Marker coordinate={{ latitude: location?.latitude, longitude: location?.longitude }} />
-						</MapView> */}
               <MapView
                 provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                 style={styles.map}
@@ -586,7 +614,6 @@ const FishData = ({navigation}) => {
                 />
               </View>
             </View>
-            {/* <View style={{ borderTopWidth: 1, borderColor: 'lightgray', paddingTop: 15, paddingBottom: 15, height: windowHeight * 0.25 }}> */}
             <TextInput
               placeholder="Add any additional notes you would like"
               autoCapitalize="sentences"
@@ -606,24 +633,12 @@ const FishData = ({navigation}) => {
               onSubmitEditing={() => {
                 Keyboard.dismiss();
               }}
+              value={additionalNotes}
               onChangeText={text => setAdditionalNotes(text)}
             />
-            {/* </View> */}
-            {/* <View style={{ borderTopWidth: 1, borderColor: 'lightgray', paddingTop: 5, paddingBottom: 15 }} />
-				<View style={{ flex: 1 }} /> */}
           </ScrollView>
-
-          {/* </KeyboardAvoidingView> */}
         </KeyboardAvoidingView>
-        {/* {LCRIsPosting ? <BlurView style={styles.blurView} blurType='light' blurAmount={10} reducedTransparencyFallbackColor='white' /> : null}
-			<Modal animationType='slide' transparent={true} visible={LCRIsPosting}>
-				<View style={styles.centeredView}>
-					<View style={styles.modalView}>
-						<ActivityIndicator size='large' />
-						<Text style={{ fontSize: 18, fontWeight: '600', paddingTop: 20 }}>Posting catch report...</Text>
-					</View>
-				</View>
-			</Modal> */}
+        <Loader isLoading={app.loading} isAbsolute />
       </SafeAreaView>
     </ImageBackground>
   );

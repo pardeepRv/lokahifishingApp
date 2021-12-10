@@ -211,6 +211,7 @@ const EditProfile = ({navigation}) => {
         setSendingProfile(false);
       });
   }
+
   function _doOpenGallery() {
     ImagePicker.openPicker({
       width: 300,

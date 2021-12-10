@@ -6,34 +6,48 @@ import {
   Dimensions,
   Image,
   Keyboard,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Platform,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
-import Circular from '../../../components/common/Circular';
+var moment = require('moment');
 
 const LCRRequired = props => {
-  console.log(props, 'consoling props ');
+  console.log(props, 'consoling props in lcr requires');
+  console.log(props.selectedFish, 'selectedFish is <<<<<<<');
+
   const [weight, setWeight] = useState(0);
   const [date, setDate] = useState(new Date());
-  const [image, setImage] = useState('');
+
+  // const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [time, setTime] = useState(new Date());
+
   const [fishphoto, setFishphoto] = useState('');
   const [fishInput, setfishInput] = useState('');
 
-  const [transferred, setTransferred] = useState(0);
   const [showDate, setDateStatus] = useState(false);
   const [showTime, setTimeStatus] = useState(false);
 
   const onChange = (event, selectedDate) => {
+    console.log(event, selectedDate);
+    // let dateIs = moment(selectedDate).format('YYYY-MM-DD');
+    // console.log(dateIs, '<>><><><><');
+
     // const currentDate = selectedDate || date
-    // setDate(selectedDate)
+    setDate(selectedDate);
+  };
+
+  const onTimeChange = (event, newTime) => {
+    console.log(event, newTime);
+    // setTime(moment(newTime, 'MM/DD/YYYY h:mmA'));
+    // console.log(time,'time>>>>>>>>>');
   };
 
   const [errors, setErrors] = useState({
@@ -42,13 +56,13 @@ const LCRRequired = props => {
 
   const name_and_values = [{name: 'fishphoto', value: fishphoto}];
 
-  function _doOpenOption(value) {
+  function _doOpenOption() {
     Alert.alert(
       '',
       'Please Select',
       [
-        {text: 'Camera', onPress: () => _doOpenCamera(value)},
-        {text: 'Gallery', onPress: () => _doOpenGallery(value)},
+        {text: 'Camera', onPress: () => _doOpenCamera()},
+        {text: 'Gallery', onPress: () => _doOpenGallery()},
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
@@ -58,34 +72,35 @@ const LCRRequired = props => {
       {cancelable: true},
     );
   }
-  function _doOpenCamera(value) {
+
+  function _doOpenCamera() {
     ImagePicker.openCamera({
       width: 300,
       height: 400,
       cropping: true,
-      includeBase64: true,
       compressImageQuality: 0.2,
     }).then(response => {
-      let data = `data:${response.mime};base64,${response.data}`;
-      if (value == 'fishphoto') {
-        setFishphoto(data);
+      console.log(`ress`, response);
+      if (Platform.OS == 'ios') {
+        setFishphoto(response.path);
+      } else {
+        setFishphoto(response.path);
       }
     });
   }
-  function _doOpenGallery(value) {
+
+  function _doOpenGallery() {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: true,
-      includeBase64: true,
       compressImageQuality: 0.2,
     }).then(image => {
       console.log(`images`, image);
-      let data = `data:${image.mime};base64,${image.data}`;
-      if (value == 'fishphoto') {
-        setFishphoto(data);
-      } else if ('fishphoto' === name && value != '') {
-        err[name] = 'Confirm password should match';
+      if (Platform.OS == 'ios') {
+        setFishphoto(image.sourceURL);
+      } else {
+        setFishphoto(image.path);
       }
     });
   }
@@ -96,12 +111,27 @@ const LCRRequired = props => {
 
   const onSubmit = () => {
     Keyboard.dismiss();
-    props.navigation.navigate('FishData');
+
+    let selectedDate = moment(date).format('YYYY-MM-DD');
+    let selectedTime = new Date().toLocaleTimeString();
+    let dataTobeSendOnNext = {};
+    dataTobeSendOnNext.selectedFish = props.selectedFish;
+    dataTobeSendOnNext.weight = weight;
+    dataTobeSendOnNext.fishphoto = fishphoto;
+    dataTobeSendOnNext.date = selectedDate;
+    dataTobeSendOnNext.selectedTime = selectedTime;
+
+    console.log(dataTobeSendOnNext, 'dataTobeSendOnNext');
+
+    props.navigation.navigate('FishData', {previousScreen: dataTobeSendOnNext});
   };
 
   return (
     <View style={styles.bg} blurRadius={4}>
-      <ScrollView nestedScrollEnabled style={styles.scrollView}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled
+        style={styles.scrollView}>
         {props.fishType === 'Multiple' ? (
           <View style={{zIndex: 1, paddingHorizontal: 20, width: '100%'}}>
             <TextInput
@@ -160,7 +190,7 @@ const LCRRequired = props => {
           <Text style={styles.title}>Upload Image</Text>
           <TouchableOpacity
             style={styles.uploadContainer}
-            onPress={() => _doOpenOption('fishphoto')}>
+            onPress={() => _doOpenOption()}>
             <Image
               source={fishphoto != '' ? {uri: fishphoto} : icons.uploadImage1}
               resizeMode="cover"
@@ -197,7 +227,7 @@ const LCRRequired = props => {
                 setDateStatus(true);
                 setTimeStatus(false);
               }}>
-              <Text style={{fontFamily:fonts.bold}}>Show date</Text>
+              <Text style={{fontFamily: fonts.bold}}>Show date</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -226,6 +256,7 @@ const LCRRequired = props => {
                 mode={'date'}
                 display="spinner"
                 onChange={onChange}
+                maximumDate={new Date()}
                 style={{height: windowHeight * 0.2, marginVertical: -10}}
               />
             ) : null}
@@ -233,10 +264,10 @@ const LCRRequired = props => {
             {showTime && Platform.OS == 'android' ? (
               <DateTimePicker
                 testID="dateTimePicker"
-                value={date}
+                value={time}
                 mode={'time'}
                 display="spinner"
-                onChange={onChange}
+                onChange={onTimeChange}
                 style={{
                   height: windowHeight * 0.2,
                   marginTop: -10,
@@ -246,10 +277,10 @@ const LCRRequired = props => {
             ) : Platform.OS == 'ios' ? (
               <DateTimePicker
                 testID="dateTimePicker"
-                value={date}
+                value={time}
                 mode={'time'}
                 display="spinner"
-                onChange={onChange}
+                onChange={onTimeChange}
                 style={{
                   height: windowHeight * 0.2,
                   marginTop: -10,
@@ -269,16 +300,6 @@ const LCRRequired = props => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      {/* {photoIsUploading ? <BlurView style={styles.blurView} blurType='light' blurAmount={10} reducedTransparencyFallbackColor='white' /> : null} */}
-      {/* <Modal animationType='slide' transparent={true} visible={photoIsUploading}>
-				<View style={styles.centeredView}>
-					<View style={styles.modalView}>
-						<ActivityIndicator size='large' />
-						<Text style={{ fontSize: 18, fontWeight: '600', paddingTop: 20 }}>Uploading photo...</Text>
-						<Text style={{ fontSize: 16, fontWeight: '400', paddingTop: 10 }}>{transferred}% Uploaded</Text>
-					</View>
-				</View>
-			</Modal> */}
     </View>
   );
 };
@@ -396,13 +417,13 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(100),
     borderColor: 'transparent',
 
-		shadowOffset: {
-			width: 0,
-			height: 4,
-		},
-		shadowOpacity: 0.58,
-shadowRadius: 16.00,
-		
-		elevation: 30
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+
+    elevation: 30,
   },
 });

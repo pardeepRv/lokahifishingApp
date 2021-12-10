@@ -1,6 +1,12 @@
 import {put} from 'redux-saga/effects';
-import {actionTypes, urls} from '../../utilities/constants';
-import {getAPIError, showErrorAlert} from '../../utilities/helperFunctions';
+import {actionTypes, screenNames, urls} from '../../utilities/constants';
+import {
+  getAPIError,
+  showErrorAlert,
+  showSuccessAlert,
+} from '../../utilities/helperFunctions';
+import * as NavigationService from '../../store/NavigationService';
+
 import {request} from '../../utilities/request';
 
 function* fetchAll({params}) {
@@ -278,7 +284,7 @@ function* getAllFishesSaga(params) {
 }
 
 function* getWeaherSaga(params) {
-   console.log(params, 'params in signs api ');
+  console.log(params, 'params in signs api ');
   try {
     const config = {
       url: urls.weather,
@@ -288,7 +294,7 @@ function* getWeaherSaga(params) {
       },
     };
     const response = yield request(config);
-     console.log(response, '<<<<<<<< weather response  >>>>>>>>>>>>>>>>>');
+    console.log(response, '<<<<<<<< weather response  >>>>>>>>>>>>>>>>>');
 
     if (response?.data?.status) {
       yield put({
@@ -307,93 +313,58 @@ function* getWeaherSaga(params) {
 }
 
 function* getMethodsaga(params) {
-   console.log(params, 'params in signs api ');
- try {
-   const config = {
-     url: urls.method,
-     method: 'GET',
-     headers: {
-       Authorization: `Bearer ${params && params.payload}`,
-     },
-   };
-   const response = yield request(config);
-     console.log(response, '<<<<<<<< method response  >>>>>>>>>>>>>>>>>');
-
-   if (response?.data?.status) {
-     yield put({
-       type: actionTypes.GET_METHOD_SUCCEEDED,
-       payload: response?.data?.data?.category,
-     });
-
-     params.cb(response);
-   }
- } catch (error) {
-   showErrorAlert(getAPIError(error));
-   yield put({
-     type: actionTypes.GET_METHOD_FAIL,
-   });
- }
-}
-
-function* savelcrreport({params}) {
-  return console.log('params sedning to signuop', params);
+  console.log(params, 'params in signs api ');
   try {
-   
-
-    let dataToBesend = {
-      email: params.email,
-      password: params.password,
-      user_name: params.user_name,
-      full_name: params.full_name,
-      island: params.island,
-      city: params.city,
-      password_confirmation: params.password_confirmation,
-      image: params.image,
-      cml: params.cml,
-    };
-
-    console.log('dataToBesend', JSON.stringify(dataToBesend));
     const config = {
-      url: urls.save_lcr_report,
-      method: 'POST',
-      data: params,
+      url: urls.method,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.payload}`,
+      },
     };
-
     const response = yield request(config);
-    console.log(response, 'getting response from signup api ');
+    console.log(response, '<<<<<<<< method response  >>>>>>>>>>>>>>>>>');
 
-    if (response && response.data && response.data.success) {
-      let updatedObj = response.data.data.user;
-      updatedObj['access_token'] = response.data.data.access_token;
-
-      console.log(
-        updatedObj,
-        'response.data.data.access_tokenupdatedObjupdatedObj',
-      );
-
-      const loginUserData = extractUserDataFromDBResponse(updatedObj);
-
-      console.log('data to be saved is: ', loginUserData);
-
-      yield setLocalUserData(loginUserData);
-
+    if (response?.data?.status) {
       yield put({
-        type: actionTypes.SAVE_LCR_REPORT_SUCCEEDED,
-        userData: loginUserData,
+        type: actionTypes.GET_METHOD_SUCCEEDED,
+        payload: response?.data?.data?.category,
       });
 
-      // NavigationService.resetRoute(screenNames.HomeStack);
-      showSuccessAlert('We have sent you an email,Please verify it.');
-      NavigationService.goBack();
-    } else {
-      yield put({
-        type: actionTypes.SAVE_LCR_REPORT_FAIL,
-      });
-      showErrorAlert(response.data.message);
+      params.cb(response);
     }
   } catch (error) {
     showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.GET_METHOD_FAIL,
+    });
+  }
+}
 
+function* savelcrreport(params) {
+  console.log('params sedning to LCR', params);
+  try {
+    const config = {
+      url: urls.save_lcr_report,
+      method: 'POST',
+      data: params && params.payload,
+      headers: {
+        Authorization: `Bearer ${params && params.cb}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response from LCR api ');
+
+    if (response?.data?.success) {
+      yield put({
+        type: actionTypes.SAVE_LCR_REPORT_SUCCEEDED,
+      });
+      showSuccessAlert(response?.data?.message);
+      NavigationService.resetRoute(screenNames.HomeStack);
+    }
+  } catch (error) {
+    console.log(error, 'in Api error');
+    showErrorAlert(getAPIError(error));
     yield put({
       type: actionTypes.SAVE_LCR_REPORT_FAIL,
     });
@@ -412,5 +383,5 @@ export {
   getAllFishesSaga,
   getWeaherSaga,
   getMethodsaga,
-  savelcrreport
+  savelcrreport,
 };

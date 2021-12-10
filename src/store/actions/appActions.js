@@ -70,10 +70,12 @@ const getMethod = (payload, cb) => {
     cb,
   };
 };
-const savelcrreport = (params) => {
+
+const savelcrreport = (payload, cb) => {
   return {
     type: actionTypes.SAVE_LCR_REPORT_REQUESTED,
-params,
+    payload,
+    cb,
   };
 };
 export {
@@ -87,5 +89,5 @@ export {
   getFishesBasedOnID,
   getWeather,
   getMethod,
-  savelcrreport
+  savelcrreport,
 };

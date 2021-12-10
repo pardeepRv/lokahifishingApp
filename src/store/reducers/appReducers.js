@@ -7,8 +7,7 @@ const initialState = {
   signarray: [],
   positionarray: [],
   weatherarray: [],
-  methodarray:[],
-  UserLcrListReport :{},
+  methodarray: [],
 };
 
 export default (state = initialState, action) => {
@@ -160,62 +159,61 @@ export default (state = initialState, action) => {
         loading: false,
       };
 
-      case actionTypes.GET_WEATHER_REQUESTED:
-        return {
-          ...state,
-          loading: true,
-        };
-  
-      case actionTypes.GET_WEATHER_SUCCEEDED:
-        return {
-          ...state,
-          loading: false,
-          weatherarray: action.payload,
-        };
-  
-      case actionTypes.GET_WEATHER_FAIL:
-        return {
-          ...state,
-          loading: false,
-        };
+    case actionTypes.GET_WEATHER_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
 
-        case actionTypes.GET_METHOD_REQUESTED:
-          return {
-            ...state,
-            loading: true,
-          };
-    
-        case actionTypes.GET_METHOD_SUCCEEDED:
-          return {
-            ...state,
-            loading: false,
-            methodarray: action.payload,
-          };
-    
-        case actionTypes.GET_METHOD_FAIL:
-          return {
-            ...state,
-            loading: false,
-          };
+    case actionTypes.GET_WEATHER_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        weatherarray: action.payload,
+      };
 
-          case actionTypes.SAVE_LCR_REPORT_REQUESTED:
-            return {
-              ...state,
-              loading: true,
-            };
-      
-          case actionTypes.SAVE_LCR_REPORT_SUCCEEDED:
-            return {
-              ...state,
-              loading: false,
-              UserLcrListReport: action.payload,
-            };
-      
-          case actionTypes.SAVE_LCR_REPORT_FAIL:
-            return {
-              ...state,
-              loading: false,
-            };
+    case actionTypes.GET_WEATHER_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_METHOD_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.GET_METHOD_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        methodarray: action.payload,
+      };
+
+    case actionTypes.GET_METHOD_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.SAVE_LCR_REPORT_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.SAVE_LCR_REPORT_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.SAVE_LCR_REPORT_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }

@@ -375,7 +375,32 @@ function* savelcrreport(params) {
     });
   }
 }
+function* getlcrlistsaga(params) {
+    console.log(params, 'params in signs api ');
+  try {
+    const config = {
+      url: urls.lcr_list,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.payload}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, '<<<<<<<< method response  >>>>>>>>>>>>>>>>>');
 
+    if (response?.data?.success) {
+      yield put({
+        type: actionTypes.LCR_LIST_SUCCEEDED,
+      });
+      params.cb(response);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.LCR_LIST_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -389,4 +414,5 @@ export {
   getWeaherSaga,
   getMethodsaga,
   savelcrreport,
+  getlcrlistsaga
 };

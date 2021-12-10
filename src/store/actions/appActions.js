@@ -78,6 +78,13 @@ const savelcrreport = (payload, cb) => {
     cb,
   };
 };
+const getlcrlist = (payload, cb) => {
+  return {
+    type: actionTypes.LCR_LIST_REQUESTED,
+    payload,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -90,4 +97,5 @@ export {
   getWeather,
   getMethod,
   savelcrreport,
+  getlcrlist,
 };

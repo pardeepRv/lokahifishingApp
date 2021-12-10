@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
+
 import {
   FlatList,
   Image,
@@ -9,12 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../assets';
-import {Header} from '../../../components/common/Header';
-import {colors} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import { moderateScale } from 'react-native-size-matters';
+import TimeAgo from 'react-native-timeago';
+import { fonts, icons } from '../../../../assets';
+import { Header } from '../../../components/common/Header';
+import { colors } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 import styles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '../../../components/common/Loader';
+import { getlcrlist } from '../../../store/actions';
 
 let members = [
   {
@@ -47,8 +52,42 @@ let members = [
   },
 ];
 
-const LCRlist = ({navigation}) => {
-  const [membersList, setMembersList] = useState(members);
+const LCRlist = ({ navigation }) => {
+  const [membersList, setMembersList] = useState([]);
+
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+
+  console.log(app, 'appp in lcrlist   page>>>>>>>>>>');
+  console.log(auth, 'auth in lcrlist page >>>>>>>>>>');
+
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('coming in this on lcrlist page');
+    const unsubscribe = navigation.addListener('focus', () => {
+      // getlcrlistfunc();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  function getlcrlistfunc() {
+    let token = auth && auth?.userDetails?.access_token;
+
+    dispatch(
+      getlcrlist(token, cb => {
+        if (cb) {
+          console.log(cb, 'callback list arr>>>>>>>>>>');
+          if (cb?.data?.data) {
+            setMembersList(cb?.data?.data?.List);
+          }
+        }
+      }),
+    );
+  }
+
+
 
   const onShare = async () => {
     try {
@@ -70,8 +109,8 @@ const LCRlist = ({navigation}) => {
     }
   };
 
-  const _renderView = ({item, index}) => (
-    <View style={{flex: 1}}>
+  const _renderView = ({ item, index }) => (
+    <View style={{ flex: 1 }}>
       <View
         style={[
           styles.listView,
@@ -105,7 +144,7 @@ const LCRlist = ({navigation}) => {
             style={styles.viewStyle}
             onPress={() => navigation.navigate('LCRDetails')}>
             <Image
-              source={item.img}
+              source={item && item.image != null ? item.img : { uri: item.image }}
               resizeMode="contain"
               style={{
                 height: moderateScale(100),
@@ -121,7 +160,9 @@ const LCRlist = ({navigation}) => {
               <Text style={styles.nameStyle}>{item.name}</Text>
               <Text style={styles.dateStyle}>{item.fish}</Text>
 
-              <Text style={styles.dateStyle}>{item.date}</Text>
+              {/* <Text style={styles.dateStyle}>{item.date}</Text> */}
+              <TimeAgo time={item.created_at} />
+
             </View>
             <View
               style={{
@@ -134,7 +175,7 @@ const LCRlist = ({navigation}) => {
           </TouchableOpacity>
           <View style={styles.viewStyle}>
             <TouchableOpacity
-              style={{flexDirection: 'row', top: moderateScale(10)}}>
+              style={{ flexDirection: 'row', top: moderateScale(10) }}>
               <Image
                 source={icons.like}
                 style={{
@@ -154,7 +195,7 @@ const LCRlist = ({navigation}) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{flexDirection: 'row', top: moderateScale(10)}}>
+              style={{ flexDirection: 'row', top: moderateScale(10) }}>
               <Image
                 source={icons.photoComment}
                 style={{
@@ -198,7 +239,7 @@ const LCRlist = ({navigation}) => {
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -209,7 +250,7 @@ const LCRlist = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Recent Local Catches'}
-          titleStyle={{fontFamily: fonts.bold, color: colors.black1}}
+          titleStyle={{ fontFamily: fonts.bold, color: colors.black1 }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,
@@ -231,6 +272,8 @@ const LCRlist = ({navigation}) => {
           }
         />
       </SafeAreaView>
+      <Loader isLoading={app.loading} isAbsolute />
+
     </ImageBackground>
   );
 };

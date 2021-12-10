@@ -3,6 +3,7 @@ import {actionTypes} from '../../utilities/constants';
 import {
   getAllFishesSaga,
   getLcrFirstsaga,
+  getlcrlistsaga,
   getLcrSecondsaga,
   getLcrThirdsaga,
   getMethodsaga,
@@ -65,5 +66,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_WEATHER_REQUESTED, getWeaherSaga);
   yield takeLatest(actionTypes.GET_METHOD_REQUESTED, getMethodsaga);
   yield takeLatest(actionTypes.SAVE_LCR_REPORT_REQUESTED, savelcrreport);
+  yield takeLatest(actionTypes.LCR_LIST_REQUESTED, getlcrlistsaga);
 
 }

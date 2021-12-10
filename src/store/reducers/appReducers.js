@@ -8,6 +8,7 @@ const initialState = {
   positionarray: [],
   weatherarray: [],
   methodarray: [],
+  lcrlistarray:[],
 };
 
 export default (state = initialState, action) => {
@@ -214,6 +215,24 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
+      case actionTypes.LCR_LIST_REQUESTED:
+        return {
+          ...state,
+          loading: true,
+        };
+  
+      case actionTypes.LCR_LIST_SUCCEEDED:
+        return {
+          ...state,
+          loading: false,
+          // lcrlistarray: action.payload,
+        };
+  
+      case actionTypes.LCR_LIST_FAIL:
+        return {
+          ...state,
+          loading: false,
+        };
     default:
       return state;
   }

@@ -41,6 +41,7 @@ const urls = {
   lcr_fishes: 'lcr-fishes',
   weather:'weather',
   method: 'method',
+  save_lcr_report: 'save-lcr-report,'
 };
 
 export {urls};

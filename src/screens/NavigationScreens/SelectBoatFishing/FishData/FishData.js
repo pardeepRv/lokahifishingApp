@@ -75,6 +75,8 @@ const FishData = ({navigation}) => {
 
   const [selectedSignArr, setselectedSignArr] = useState([]);
   const [positionarr, setpositionarr] = useState([]);
+  const [weateherArr, setWeatherAr] = useState([]);
+
 
   useEffect(() => {
     setLCRPostOptional({
@@ -149,6 +151,12 @@ const FishData = ({navigation}) => {
     console.log('coming in parent>>>>>>', val);
     if (val && val.length > 0) {
       setpositionarr(val);
+    }
+  };
+  const getSelectedweather = val => {
+    console.log('coming in parent>>>>>>', val);
+    if (val && val.length > 0) {
+      setWeatherAr(val);
     }
   };
   const getHrs = v => {
@@ -301,11 +309,12 @@ const FishData = ({navigation}) => {
                   navigation.navigate('ModalListComponent', {
                     value: 3,
                     name: 'Weather',
+                    getSelectedweather: getSelectedweather ,
                   })
                 }>
                 Weather
               </Text>
-              <TextInput
+              {/* <TextInput
                 placeholder="Add weather info (optional)"
                 autoCapitalize="sentences"
                 style={{fontSize: 16}}
@@ -315,7 +324,36 @@ const FishData = ({navigation}) => {
                   Keyboard.dismiss();
                 }}
                 onChangeText={text => setWeather(text)}
-              />
+              /> */}
+              <View style={{flex: 0.5}}>
+                {weateherArr && weateherArr.length > 0 ? (
+                  weateherArr.map((val, index) => {
+                    return (
+                      <Text
+                        key={index}
+                        style={{
+                          fontFamily: fonts.semiBold,
+                        }}>
+                        {val.name}
+                      </Text>
+                    );
+                  })
+                ) : (
+                  <Text
+                    style={{
+                      fontFamily: fonts.semiBold,
+                    }}
+                    onPress={() =>
+                      navigation.navigate('ModalListComponent', {
+                        value: 3,
+                        name: 'weather',
+                        getSelectedweather: getSelectedweather,
+                      })
+                    }>
+                    Select weather here
+                  </Text>
+                )}
+              </View>
             </View>
             <View style={styles.textSection}>
               <Text

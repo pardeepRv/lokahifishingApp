@@ -11,6 +11,7 @@ import {
   getSignsSaga,
   getvediosaga,
   getWeaherSaga,
+  savelcrreport,
 } from './appSagas';
 import {
   change_PasswordSaga,
@@ -63,5 +64,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_FISHES_REQUESTED, getAllFishesSaga);
   yield takeLatest(actionTypes.GET_WEATHER_REQUESTED, getWeaherSaga);
   yield takeLatest(actionTypes.GET_METHOD_REQUESTED, getMethodsaga);
+  yield takeLatest(actionTypes.SAVE_LCR_REPORT_REQUESTED, savelcrreport);
 
 }

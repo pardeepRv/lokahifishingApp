@@ -41,7 +41,7 @@ const ModalListComponent = props => {
   const {value, name, getSelectedSigns} = route?.params;
   const {getSelectedposition} = route?.params;
 
-  const [weateherArr, setWeatherAr] = useState([]);
+  const [weateherArr, setWeatherAr] = useState(app && app.weatherarray);
   const [methodarr, setmethodarr] = useState([]);
 
   const [open, setopen] = useState(false);
@@ -80,6 +80,14 @@ const ModalListComponent = props => {
       });
       array[index].isSelected = !array[index].isSelected;
       setpositionarr(array);
+    }else if (val == 3) {
+      array = weateherArr.map(v => {
+        const newItem = Object.assign({}, v);
+        newItem.isSelected = false;
+        return newItem;
+      });
+      array[index].isSelected = !array[index].isSelected;
+      setWeatherAr(array);
     }
   };
 

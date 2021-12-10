@@ -8,6 +8,7 @@ const initialState = {
   positionarray: [],
   weatherarray: [],
   methodarray:[],
+  UserLcrListReport :{},
 };
 
 export default (state = initialState, action) => {
@@ -197,7 +198,24 @@ export default (state = initialState, action) => {
             loading: false,
           };
 
-
+          case actionTypes.SAVE_LCR_REPORT_REQUESTED:
+            return {
+              ...state,
+              loading: true,
+            };
+      
+          case actionTypes.SAVE_LCR_REPORT_SUCCEEDED:
+            return {
+              ...state,
+              loading: false,
+              UserLcrListReport: action.payload,
+            };
+      
+          case actionTypes.SAVE_LCR_REPORT_FAIL:
+            return {
+              ...state,
+              loading: false,
+            };
     default:
       return state;
   }

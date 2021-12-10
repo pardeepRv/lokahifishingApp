@@ -335,6 +335,71 @@ function* getMethodsaga(params) {
  }
 }
 
+function* savelcrreport({params}) {
+  return console.log('params sedning to signuop', params);
+  try {
+   
+
+    let dataToBesend = {
+      email: params.email,
+      password: params.password,
+      user_name: params.user_name,
+      full_name: params.full_name,
+      island: params.island,
+      city: params.city,
+      password_confirmation: params.password_confirmation,
+      image: params.image,
+      cml: params.cml,
+    };
+
+    console.log('dataToBesend', JSON.stringify(dataToBesend));
+    const config = {
+      url: urls.save_lcr_report,
+      method: 'POST',
+      data: params,
+    };
+
+    const response = yield request(config);
+    console.log(response, 'getting response from signup api ');
+
+    if (response && response.data && response.data.success) {
+      let updatedObj = response.data.data.user;
+      updatedObj['access_token'] = response.data.data.access_token;
+
+      console.log(
+        updatedObj,
+        'response.data.data.access_tokenupdatedObjupdatedObj',
+      );
+
+      const loginUserData = extractUserDataFromDBResponse(updatedObj);
+
+      console.log('data to be saved is: ', loginUserData);
+
+      yield setLocalUserData(loginUserData);
+
+      yield put({
+        type: actionTypes.SAVE_LCR_REPORT_SUCCEEDED,
+        userData: loginUserData,
+      });
+
+      // NavigationService.resetRoute(screenNames.HomeStack);
+      showSuccessAlert('We have sent you an email,Please verify it.');
+      NavigationService.goBack();
+    } else {
+      yield put({
+        type: actionTypes.SAVE_LCR_REPORT_FAIL,
+      });
+      showErrorAlert(response.data.message);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+
+    yield put({
+      type: actionTypes.SAVE_LCR_REPORT_FAIL,
+    });
+  }
+}
+
 export {
   fetchAll,
   getvediosaga,
@@ -346,5 +411,6 @@ export {
   getLcrThirdsaga,
   getAllFishesSaga,
   getWeaherSaga,
-  getMethodsaga
+  getMethodsaga,
+  savelcrreport
 };

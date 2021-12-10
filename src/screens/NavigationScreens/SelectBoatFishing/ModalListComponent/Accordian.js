@@ -20,6 +20,8 @@ import {layout} from '../../../../utilities/layout';
 export default class Accordian extends PureComponent {
   constructor(props) {
     console.log(props, 'props on accordian>>>>>>>>>>');
+  // const {getSelectedweather} = props?.params;
+
     super(props);
     this.state = {
       data: props.weateherArr,
@@ -53,8 +55,8 @@ export default class Accordian extends PureComponent {
         });
       }
     });
-    // getSelectedSigns(arr);
-    // navigation.goBack();
+    getSelectedweather(arr);
+    navigation.goBack();
   };
 
   _renderItem = ({item, index}) => {

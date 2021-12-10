@@ -177,7 +177,8 @@ const Lure = props => {
                 <>
                   {val.methods.map((v, i) => {
                     return (
-                      <TouchableOpacity onPress={() => alert(i)}>
+                      <TouchableOpacity>
+                        {/* onPress={() => alert(i)} */}
                         <Text
                           style={{
                             padding: 10,
@@ -302,7 +303,7 @@ const Other = props => {
   );
 };
 
-const Method = ({props, navigation}) => {
+const Method = props => {
   console.log(props, 'props in methoddd');
   const [modalVisible, setModalVisible] = useState(false);
   let auth = useSelector(state => state.auth);
@@ -385,7 +386,7 @@ const Method = ({props, navigation}) => {
             alignSelf: 'center',
           }}
           label={strings.submit}
-          //   onPress={() => this.sendSelectedValues()}
+          onPress={() => props.navigation.goBack()}
         />
       </View>
     </SafeAreaView>

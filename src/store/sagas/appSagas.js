@@ -361,6 +361,11 @@ function* savelcrreport(params) {
       });
       showSuccessAlert(response?.data?.message);
       NavigationService.resetRoute(screenNames.HomeStack);
+    } else {
+      showErrorAlert(response?.data?.message);
+      yield put({
+        type: actionTypes.SAVE_LCR_REPORT_FAIL,
+      });
     }
   } catch (error) {
     console.log(error, 'in Api error');

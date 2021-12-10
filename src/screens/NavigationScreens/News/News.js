@@ -81,14 +81,14 @@ const News = ({navigation}) => {
       }}>
       <View style={styles.viewStyle}>
         <Image
-          source={{uri: `${item.image_folder}/${item.image}`}}
+          source={{uri: `${item.image_folder}/${item.image}`}}       
           style={{
             height: moderateScale(70),
             width: moderateScale(70),
             left: 10,
-            backgroundColor: '#fff',
+            backgroundColor: colors.secondry,
             borderRadius: 70 / 2,
-            resizeMode: 'center',
+            resizeMode: 'cover',
           }}
         />
         <View

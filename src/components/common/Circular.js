@@ -20,22 +20,21 @@ const Circular = ({ navigation, route }) => {
     const [price, setPrice] = useState(0);
     const handleChange = v => setPrice((v * 0.24).toFixed(0));
 
-    const [time, settime] = useState('');
+
 
     const [errors, setErrors] = useState({
-      time:'',
+
       isLoading: false,
     });
   
-    const name_and_values = [
-      {name: 'time', value: time},
-    ]
+
     const sendSelectedValues = () => {
       console.log(price, 'price');
       getHrs(price);
       if (price > 0) {
         navigation.goBack();
-      } else {
+      }
+       else {
         alert('Please select efforts');
       }
     };
@@ -94,7 +93,7 @@ const Circular = ({ navigation, route }) => {
           <View
                 style={{
                   marginTop: moderateScale(30),
-
+ 
                   width:layout.size.width/1.5
                 }}>
                   <TextInputComp
@@ -120,19 +119,19 @@ const Circular = ({ navigation, route }) => {
                       color: colors.blue1,
                      
                   height:moderateScale(25)}}
-                    onChangeText={price => settime(price)}
+                    onChangeText={price => setPrice(price)}
                     onFocus={() =>
                       setErrors({
                         ...errors,
-                        time: '',
+                        price: '',
                       })
                     }
                   />
-                  {errors.time ? (
+                  {errors.price ? (
                     <Text
                       transparent
                       style={{color: colors.primary, bottom: 14}}>
-                      {errors.time}
+                      {errors.price}
                     </Text>
                   ) : null}
                 </View>

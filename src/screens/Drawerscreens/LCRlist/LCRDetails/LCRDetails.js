@@ -8,17 +8,31 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../../assets';
-import {Header} from '../../../../components/common/Header';
-import {colors} from '../../../../utilities/constants';
-import styles from './styles';
+import { moderateScale } from 'react-native-size-matters';
+import { fonts, icons } from '../../../../../assets';
+import { Header } from '../../../../components/common/Header';
+import { colors, FISHES_IMAGES, screenNames } from '../../../../utilities/constants';
+import TimeAgo from 'react-native-timeago';
+import {useDispatch, useSelector} from 'react-redux';
 
-const LCRDetails = ({navigation}) => {
+import styles from './styles';
+import { Loader } from '../../../../components/common';
+
+const LCRDetails = ({ navigation, route }) => {
+  const { item,allDropDown } = route.params;
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+
+  console.log(app, 'appp in lcrlist   page>>>>>>>>>>');
+  console.log(auth, 'auth in lcrlist page >>>>>>>>>>');
+  console.log(item, 'lcrlist  in lcrdetails >>>>>>>>>>');
+  console.log(allDropDown, 'allDropDown  in lcrdetails >>>>>>>>>>');
+
+  
   return (
     <ImageBackground
       source={icons.signin_bg_ic}
-      style={{flex: 1, height: '100%'}}
+      style={{ flex: 1, height: '100%' }}
       blurRadius={6}
       opacity={0.8}>
       <SafeAreaView
@@ -32,7 +46,7 @@ const LCRDetails = ({navigation}) => {
           }}
           blackTitle
           title={'LCR Detail'}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,
@@ -40,44 +54,52 @@ const LCRDetails = ({navigation}) => {
           onLeftPress={() => {
             navigation.goBack();
           }}
-          onRightPress={() => {
-            navigation.navigate('EditLCRDetails');
-          }}
-          rightIconSource={icons.ic_edit}
+          onRightPress={() =>
+            navigation.navigate(screenNames.EditLCRDetails, { item: item, allDropDown: allDropDown })
+          }
+          rightIconSource={auth.userDetails.id===item.user.id ?icons.ic_edit :null}
           rightIconStyle={{
             height: 20,
             width: 20,
             tintColor: colors.primary,
           }}
         />
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{ flex: 1 }}>
           <View style={styles.content}>
             <View style={styles.picView}>
               <Image
-                source={icons.loginLogo}
+                // source={icons.loginLogo}
+                source={{
+                  uri: item && item.user && item.user.profile_picture
+                  // uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
+                }}
                 // onLoadStart={() => setImgIsLoading(true)}
                 // onLoadEnd={() => setImgIsLoading(false)}
 
                 style={styles.pic}
-                // style={styles.pic}
+              // style={styles.pic}
               />
               {/* <ActivityIndicator size='large' color='#ffffff' style={    styles.loading } /> */}
             </View>
             <View style={styles.userInfo}>
-              <Image source={icons.loginLogo} style={styles.profilePic} />
+              <Image source={{ uri: `${FISHES_IMAGES}${item && item.fish && item.fish.image}` }}
+                style={styles.profilePic}
+              resizeMode="stretch"
+              />
               <Text style={styles.text}>mahi</Text>
             </View>
-            <View style={{alignItems: 'center'}}>
+            <View style={{ alignItems: 'center' }}>
               <Text style={[styles.text, styles.date]}>Caught on:</Text>
-              <Text style={[styles.text, styles.date]}>12/oct/2021</Text>
+              {/* <Text style={[styles.text, styles.date]}>12/oct/2021</Text> */}
+              <TimeAgo style={[styles.text, styles.date]}time={item.created_at} />
             </View>
             <View style={styles.commentView}>
               <Text style={[styles.text, styles.fishText]}>
-                weight not given
+              {item.Fish_weight} lbs
               </Text>
-              <Text style={[styles.comment]}>Effort: 22 hrs</Text>
+              <Text style={[styles.comment]}>Effort: {item.effort}hrs</Text>
               <Text style={styles.comment}>
-                Fishing type : Boat fishing, Offshore Fishing
+                Fishing type : {item.fish.lcr_second_category_id},{item.fish.lcr_second_category_id}, {item.fish.lcr_third_category_id}
               </Text>
             </View>
             <View style={styles.likecommentview}>
@@ -109,6 +131,8 @@ const LCRDetails = ({navigation}) => {
           </View>
         </ScrollView>
       </SafeAreaView>
+      <Loader isLoading={app.loading} isAbsolute />
+
     </ImageBackground>
   );
 };

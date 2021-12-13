@@ -41,7 +41,9 @@ const screenNames = {
   PhotoSharing: 'PhotoSharing',
   HomeStack: 'HomeStack',
   BottomFishing: 'BottomFishing',
-  LCRlist:'LCRlist'
+  LCRlist:'LCRlist',
+  LCRDetails:'LCRDetails',
+  EditLCRDetails:'EditLCRDetails'
 };
 
 export { transitionConfig, screenNames };

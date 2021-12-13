@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   FlatList,
@@ -10,16 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
-import {fonts, icons} from '../../../../assets';
-import {Header} from '../../../components/common/Header';
-import {colors} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import { fonts, icons } from '../../../../assets';
+import { Header } from '../../../components/common/Header';
+import { colors, screenNames } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 import styles from './styles';
-import {useDispatch, useSelector} from 'react-redux';
-import {Loader} from '../../../components/common/Loader';
-import {getlcrlist} from '../../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '../../../components/common/Loader';
+import { getlcrlist } from '../../../store/actions';
 
 let members = [
   {
@@ -52,8 +52,10 @@ let members = [
   },
 ];
 
-const LCRlist = ({navigation}) => {
+const LCRlist = ({ navigation }) => {
   const [membersList, setMembersList] = useState([]);
+  const [allDropDown, setAllDropDown] = useState({});
+
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -79,7 +81,10 @@ const LCRlist = ({navigation}) => {
         if (cb) {
           console.log(cb, 'callback list arr>>>>>>>>>>');
           if (cb?.data?.data) {
-            setMembersList(cb?.data?.data?.List);
+            let updatedLcrList = cb?.data?.data?.List;
+            updatedLcrList.reverse();
+            setMembersList(updatedLcrList);
+            setAllDropDown(cb?.data?.dropdowns);
           }
         }
       }),
@@ -90,7 +95,7 @@ const LCRlist = ({navigation}) => {
     try {
       const result = await Share.share({
         message:
-          'React Native | A framework for building native apps using React',
+          'Shating post of lokahi',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -106,8 +111,8 @@ const LCRlist = ({navigation}) => {
     }
   };
 
-  const _renderView = ({item, index}) => (
-    <View style={{flex: 1}}>
+  const _renderView = ({ item, index }) => (
+    <View style={{ flex: 1 }}>
       <View
         style={[
           styles.listView,
@@ -139,13 +144,15 @@ const LCRlist = ({navigation}) => {
 
           <TouchableOpacity
             style={styles.viewStyle}
-            // onPress={() => navigation.navigate('LCRDetails')}
-            >
+            onPress={() =>
+              navigation.navigate(screenNames.LCRDetails, { item: item, allDropDown: allDropDown })
+            }
+          >
             <Image
-            // source={item.user.profile_picture}
+              // source={item.user.profile_picture}
               source={{
-              // {icons.signin_bg_ic
-                uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
+                uri: item && item.user && item.user.profile_picture
+                // uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
               }}
               resizeMode="cover"
               style={{
@@ -176,7 +183,7 @@ const LCRlist = ({navigation}) => {
           </TouchableOpacity>
           <View style={styles.viewStyle}>
             <TouchableOpacity
-              style={{flexDirection: 'row', top: moderateScale(10)}}>
+              style={{ flexDirection: 'row', top: moderateScale(10) }}>
               <Image
                 source={icons.like}
                 style={{
@@ -196,7 +203,7 @@ const LCRlist = ({navigation}) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{flexDirection: 'row', top: moderateScale(10)}}>
+              style={{ flexDirection: 'row', top: moderateScale(10) }}>
               <Image
                 source={icons.photoComment}
                 style={{
@@ -240,7 +247,7 @@ const LCRlist = ({navigation}) => {
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -251,7 +258,7 @@ const LCRlist = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Recent Local Catches'}
-          titleStyle={{fontFamily: fonts.bold, color: colors.black1}}
+          titleStyle={{ fontFamily: fonts.bold, color: colors.black1 }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,

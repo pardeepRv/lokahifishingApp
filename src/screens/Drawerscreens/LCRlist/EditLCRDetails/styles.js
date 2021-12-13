@@ -50,7 +50,8 @@ export default StyleSheet.create({
 		shadowOpacity: 0.75,
 		shadowRadius: 0,
     marginVertical: 15,
-    textAlign:'center'
+    textAlign:'center',
+	bottom:moderateScale(10)
 	},
 	info: {
 		backgroundColor: 'lightgray',

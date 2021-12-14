@@ -233,6 +233,23 @@ export default (state = initialState, action) => {
           ...state,
           loading: false,
         };
+        case actionTypes.UPDATE_LCR_REPORT_REQUESTED:
+          return {
+            ...state,
+            loading: true,
+          };
+    
+        case actionTypes.UPDATE_LCR_REPORT_SUCCEEDED:
+          return {
+            ...state,
+            loading: false,
+          };
+    
+        case actionTypes.UPDATE_LCR_REPORT_FAIL:
+          return {
+            ...state,
+            loading: false,
+          };
     default:
       return state;
   }

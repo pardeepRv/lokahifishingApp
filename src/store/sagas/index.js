@@ -13,6 +13,7 @@ import {
   getvediosaga,
   getWeaherSaga,
   savelcrreport,
+  UpdateLcrReportsaga,
 } from './appSagas';
 import {
   change_PasswordSaga,
@@ -67,5 +68,7 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_METHOD_REQUESTED, getMethodsaga);
   yield takeLatest(actionTypes.SAVE_LCR_REPORT_REQUESTED, savelcrreport);
   yield takeLatest(actionTypes.LCR_LIST_REQUESTED, getlcrlistsaga);
+  yield takeLatest(actionTypes.UPDATE_LCR_REPORT_REQUESTED, UpdateLcrReportsaga);
+
 
 }

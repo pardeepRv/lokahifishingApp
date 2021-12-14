@@ -8,25 +8,33 @@ import {
   SafeAreaView,
   ScrollView,
   Text, TouchableOpacity,
-  View
+  View,
+  Keyboard
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import { moderateScale } from 'react-native-size-matters';
 import { fonts, icons } from '../../../../../assets';
 import { Header } from '../../../../components/common/Header';
+import { Loader } from '../../../../components/common/Loader';
 import TextInputComp from '../../../../components/common/TextInputComp';
+import { updatelcrreport } from '../../../../store/actions';
 import { colors } from '../../../../utilities/constants';
 import { layout } from '../../../../utilities/layout';
 import styles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const EditLCRDetails = ({ navigation, route }) => {
   const { item, allDropDown } = route.params;
+  let auth = useSelector(state => state.auth);
+  console.log(auth, 'auth in editprofile  page>>>>>>>>>>');
   console.log(item, 'editlcrlist   in  >>>>>>>>>>');
   console.log(allDropDown, 'allDropDown   in edit lcrdetails >>>>>>>>>>');
+  const dispatch = useDispatch();
 
   console.log(item.Fish_weight, 'Fish_weight');
 
@@ -38,9 +46,10 @@ const EditLCRDetails = ({ navigation, route }) => {
   const [fishTypeState, setFishTypeState] = useState(item && item.fish && item.fish.title);
   const [fishWeightState, setFishWeightState] = useState(toString(item && item.Fish_weight ? item.Fish_weight.toString() : ''));
   const [fishingTypeOpen, setFishingTypeOpen] = useState(false);
-  const [fishingTypeState, setFishingTypeState] = useState(item.fish.first_category.title ?item.fish.first_category.title: false);
-  const [boatFishingTypeState, setBoatFishingTypeState] = useState(item.fish.second_category.title ?item.fish.second_category.title: false);
+  const [fishingTypeState, setFishingTypeState] = useState(item.fish.first_category.title ? item.fish.first_category.title : false);
+  const [boatFishingTypeState, setBoatFishingTypeState] = useState(item.fish.second_category.title ? item.fish.second_category.title : false);
   const [boatFishingTypeOpen, setBoatFishingTypeOpen] = useState(false);
+  const [sendingimage, setsendingimage] = useState(false);
 
   const [fishingTypeItems, setFishingTypeItems] = useState([
     { label: 'Boat Fishing', value: 'Boat Fishing' },
@@ -68,7 +77,7 @@ const EditLCRDetails = ({ navigation, route }) => {
 
   const onChange = (event, selectedDate) => {
     // const currentDate = selectedDate || date
-    // setDate(selectedDate)
+    // setDate(selectedDate)HGHG
   };
 
   useEffect(() => {
@@ -78,13 +87,42 @@ const EditLCRDetails = ({ navigation, route }) => {
     console.log(fishWeightState, 'fishWeightState');
   }, [])
 
-  function _doOpenOption(value) {
+
+  function Save() {
+    let token = auth && auth?.userDetails?.access_token;
+    Keyboard.dismiss();
+    let err = {};
+    //email error
+
+
+    if (Object.keys(err).length == 0) {
+      let formData = new FormData();
+      // if (sendingimage) {
+      //   formData.append('image', {
+      //     uri: Profilepic,
+      //     type: 'image/jpeg', // or photo.type
+      //     name: 'profilePic',
+      //   });
+      // }
+
+      formData.append('fish_weight', fishWeightState);
+      // formData.append('fish_id', fishTypeState);
+      formData.append('id', item && item.id);
+
+      console.log(formData, 'sending to aApi');
+      dispatch(updatelcrreport(token, formData));
+
+    }
+  }
+
+
+  function _doOpenOption() {
     Alert.alert(
       '',
       'Please Select',
       [
-        { text: 'Camera', onPress: () => _doOpenCamera(value) },
-        { text: 'Gallery', onPress: () => _doOpenGallery(value) },
+        { text: 'Camera', onPress: () => _doOpenCamera() },
+        { text: 'Gallery', onPress: () => _doOpenGallery() },
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
@@ -94,7 +132,7 @@ const EditLCRDetails = ({ navigation, route }) => {
       { cancelable: true },
     );
   }
-  function _doOpenCamera(value) {
+  function _doOpenCamera() {
     ImagePicker.openCamera({
       width: 300,
       height: 400,
@@ -106,9 +144,12 @@ const EditLCRDetails = ({ navigation, route }) => {
       if (value == 'Profilepic') {
         setProfilepic(data);
       }
-    });
+    })
+      .catch(err => {
+        setsendingimage(false);
+      });
   }
-  function _doOpenGallery(value) {
+  function _doOpenGallery() {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
@@ -118,10 +159,12 @@ const EditLCRDetails = ({ navigation, route }) => {
     }).then(image => {
       console.log(`images`, image);
       let data = `data:${image.mime};base64,${image.data}`;
-      if (value == 'Profilepic') {
-        setProfilepic(data);
-      }
-    });
+      setProfilepic(data);
+    })
+      .catch(err => {
+        setsendingimage(false);
+        console.log(err, 'err in image picker');
+      });
   }
   const onChangeDate = (event, selectedDate) => {
     setDate(selectedDate);
@@ -151,9 +194,10 @@ const EditLCRDetails = ({ navigation, route }) => {
           onLeftPress={() => {
             navigation.goBack();
           }}
-          onRightPress={() => {
-            navigation.navigate('LCRDetails');
-          }}
+          onRightPress={() => Save()}
+          // {() => {
+          //   navigation.navigate('LCRDetails');
+          // }}
           rightIconSource={icons.post}
           rightIconStyle={{
             height: 30,
@@ -162,10 +206,11 @@ const EditLCRDetails = ({ navigation, route }) => {
           }}
         />
         <SafeAreaView style={styles.EditLCR}>
-          <TouchableOpacity onPress={() => _doOpenOption('Profilepic')}>
+          <TouchableOpacity onPress={() => _doOpenOption()}>
             <Image
               source=
-              {{ uri: item && item.user && item.user.profile_picture ? item && item.user && item.user.profile_picture : icons.loginLogo
+              {{
+                uri: item && item.user && item.user.profile_picture ? item && item.user && item.user.profile_picture : icons.loginLogo
                 // Profilepic != '' ? { uri: Profilepic } : icons.loginLogo
               }}
               resizeMode="cover"
@@ -275,7 +320,7 @@ const EditLCRDetails = ({ navigation, route }) => {
             </View> */}
 
             <Text style={styles.label}>Fishing Type</Text>
-            <View style={{bottom:moderateScale(10)}}>
+            <View style={{ bottom: moderateScale(10) }}>
               <DropDownPicker
                 open={fishingTypeOpen}
                 value={fishingTypeState}
@@ -289,7 +334,7 @@ const EditLCRDetails = ({ navigation, route }) => {
               />
             </View>
             <Text style={styles.label}>Boat Fishing Type</Text>
-            <View style={{bottom:moderateScale(10)}}>
+            <View style={{ bottom: moderateScale(10) }}>
               <DropDownPicker
                 open={boatFishingTypeOpen}
                 value={boatFishingTypeState}
@@ -318,6 +363,8 @@ const EditLCRDetails = ({ navigation, route }) => {
           </ScrollView>
         </SafeAreaView>
       </SafeAreaView>
+      <Loader isLoading={auth.loading} isAbsolute />
+
     </ImageBackground>
   );
 };

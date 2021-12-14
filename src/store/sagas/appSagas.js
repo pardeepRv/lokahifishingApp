@@ -401,6 +401,41 @@ function* getlcrlistsaga(params) {
     });
   }
 }
+function* UpdateLcrReportsaga(params) {
+   console.log('params sedning to LCR', params);
+  try {
+    const config = {
+      url: urls.update_lcr_report,
+      method: 'POST',
+      data: params && params.cb,
+      headers: {
+        Authorization: `Bearer ${params && params.payload}`,
+      },
+    };
+    const response = yield request(config);
+     console.log(response, 'getting response from LCR api ');
+
+    if (response?.data?.success) {
+      yield put({
+        type: actionTypes.UPDATE_LCR_REPORT_SUCCEEDED,
+      });
+      showSuccessAlert(response?.data?.message);
+      NavigationService.resetRoute(screenNames.HomeStack);
+    }
+     else {
+      showErrorAlert(response?.data?.message);
+      yield put({
+        type: actionTypes.UPDATE_LCR_REPORT_FAIL,
+      });
+    }
+  } catch (error) {
+    console.log(error, 'in Api error');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.UPDATE_LCR_REPORT_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -414,5 +449,6 @@ export {
   getWeaherSaga,
   getMethodsaga,
   savelcrreport,
-  getlcrlistsaga
+  getlcrlistsaga,
+  UpdateLcrReportsaga
 };

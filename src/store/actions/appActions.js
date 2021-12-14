@@ -85,6 +85,13 @@ const getlcrlist = (payload, cb) => {
     cb,
   };
 };
+const updatelcrreport = (payload, cb) => {
+  return {
+    type: actionTypes.UPDATE_LCR_REPORT_REQUESTED,
+    payload,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -98,4 +105,5 @@ export {
   getMethod,
   savelcrreport,
   getlcrlist,
+  updatelcrreport,
 };

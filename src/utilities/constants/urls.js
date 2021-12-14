@@ -43,6 +43,7 @@ const urls = {
   method: 'method',
   save_lcr_report: 'save-lcr-report',
   lcr_list : 'lcr-list',
+  update_lcr_report: 'update-lcr-report',
 };
 
 export {urls};

@@ -44,6 +44,7 @@ const urls = {
   save_lcr_report: 'save-lcr-report',
   lcr_list : 'lcr-list',
   update_lcr_report: 'update-lcr-report',
+  comment_lcr:'add-comment-to-lcr'
 };
 
 export {urls};

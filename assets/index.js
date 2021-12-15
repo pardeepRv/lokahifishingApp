@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import ic_active_activity from './icons/active-activity.png';
 import ic_active_explore from './icons/active-explore.png';
 import ic_active_female from './icons/active-female.png';
@@ -81,7 +81,11 @@ import ic_photoVideoPlayBT from './icons/photoSharingImages/photoVideoPlayBT.png
 import photoVideo from './icons/photoSharingImages/photoVideo.png';
 import photoUploadPhoto from './icons/photoSharingImages/photoUploadPhoto.png';
 import sharearrow from './icons/photoSharingImages/share-arrow.png';
+
 import like from './icons/photoSharingImages/like.png';
+import like_me from './icons/photoSharingImages/like_me.png';
+import like_u from './icons/photoSharingImages/like_u.png';
+
 import photoComment from './icons/photoSharingImages/photoComment.png';
 import ic_donex from './icons/ic_donex.png';
 import ic_not_donex from './icons/ic_not_donex.png';
@@ -130,6 +134,7 @@ import Ono from './icons/leaderboardImages/OnoFish.png';
 import Aku from './icons/leaderboardImages/AkuFish.png';
 import Ulua from './icons/leaderboardImages/UluaFish.png';
 import omilu from './icons/leaderboardImages/omilu.png';
+import plane from './icons/plane.png';
 import OnagaFish from './icons/leaderboardImages/OnagaFish.png';
 import OpakapakaFish from './icons/leaderboardImages/OpakapakaFish.png';
 import EhuFish from './icons/leaderboardImages/EhuFish.png';
@@ -179,6 +184,9 @@ import TermsandConditionpdf from './icons/TermsandConditionpdf.pdf';
 import ProfilePlaceholder from './icons/drawer/ProfilePlaceholder.jpg';
 
 const icons = {
+  like_me,
+  like_u,
+  plane,
   ic_downA,
   like,
   TidesIcon2,
@@ -377,4 +385,4 @@ const fonts = Platform.select({
   },
 });
 
-export {fonts, icons};
+export { fonts, icons };

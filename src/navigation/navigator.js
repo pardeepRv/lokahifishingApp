@@ -1,5 +1,5 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useLinkBuilder} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -94,6 +94,8 @@ import Webviewer from '../components/common/Webviewer';
 import ExtraFishingType from '../screens/NavigationScreens/SelectBoatFishing/ExtraFishingType';
 import PhotosScreen from '../screens/NavigationScreens/PhotoSharing/PhotosScreen/PhotosScreen';
 import Videoscreen from '../screens/NavigationScreens/PhotoSharing/Videos/Videos';
+import Comment from '../screens/Drawerscreens/LCRlist/Comment/Comment';
+import Like from '../screens/Drawerscreens/LCRlist/Like/like';
 
 
 const Stack = createNativeStackNavigator();
@@ -350,6 +352,9 @@ const LcrListStack = props => {
       <Stack.Screen name="LCRDetails" component={LCRDetails} />
       <Stack.Screen name="EditLCRDetails" component={EditLCRDetails} />
       <Stack.Screen name="UploadImage" component={UploadImage} />
+      <Stack.Screen name="Comment" component={Comment} />
+      <Stack.Screen name="Like" component={Like} />
+
     </Stack.Navigator>
   );
 };

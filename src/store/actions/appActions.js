@@ -1,4 +1,4 @@
-import {actionTypes} from '../../utilities/constants';
+import { actionTypes } from '../../utilities/constants';
 
 const getvideo = params => ({
   type: actionTypes.GET_VIDEO_REQUESTED,
@@ -92,6 +92,15 @@ const updatelcrreport = (payload, cb) => {
     cb,
   };
 };
+
+const addComment = (params, cb) => {
+  return {
+    type: actionTypes.ADD_COMMENT_REQUESTED,
+    params,
+    cb,
+  };
+};
+
 export {
   getvideo,
   getNewsFromAdmin,
@@ -106,4 +115,5 @@ export {
   savelcrreport,
   getlcrlist,
   updatelcrreport,
+  addComment
 };

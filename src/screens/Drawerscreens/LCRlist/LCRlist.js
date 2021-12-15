@@ -183,6 +183,7 @@ const LCRlist = ({ navigation }) => {
           </TouchableOpacity>
           <View style={styles.viewStyle}>
             <TouchableOpacity
+
               style={{ flexDirection: 'row', top: moderateScale(10) }}>
               <Image
                 source={icons.like}
@@ -203,6 +204,7 @@ const LCRlist = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={() => { navigation.navigate('Comment', { lcr_id: item.id }) }}
               style={{ flexDirection: 'row', top: moderateScale(10) }}>
               <Image
                 source={icons.photoComment}

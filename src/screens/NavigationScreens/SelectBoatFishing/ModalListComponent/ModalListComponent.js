@@ -80,7 +80,7 @@ const ModalListComponent = props => {
       });
       array[index].isSelected = !array[index].isSelected;
       setpositionarr(array);
-    }else if (val == 3) {
+    } else if (val == 3) {
       array = weateherArr.map(v => {
         const newItem = Object.assign({}, v);
         newItem.isSelected = false;
@@ -163,9 +163,12 @@ const ModalListComponent = props => {
       getWeather(token, cb => {
         if (cb) {
           console.log(cb, 'callback weather>>>>>>>>>>');
-          if (cb?.data?.data) {
-            setWeatherAr(cb?.data?.data?.weather);
+          if (cb?.data) {
+            setWeatherAr(cb?.data);
           }
+          // if (cb?.data?.data) {
+          //   setWeatherAr(cb?.data?.data?.weather);
+          // }
         }
       }),
     );
@@ -267,7 +270,7 @@ const ModalListComponent = props => {
 
         {value == 2 && <Method navigation={navigation} />}
         {value == 3 && weateherArr && weateherArr.length > 0 ? (
-          <Accordian weateherArr={weateherArr} navigation={navigation}/>
+          <Accordian weateherArr={weateherArr} navigation={navigation} />
         ) : null}
 
         {value == 4 && (

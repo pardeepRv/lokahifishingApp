@@ -18,7 +18,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import {useDispatch, useSelector} from 'react-redux';
 
 import GetLocation from 'react-native-get-location';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../../assets';
 import {Header} from '../../../../components/common/Header';
@@ -469,7 +469,9 @@ const FishData = ({navigation, route}) => {
             </View>
             <View style={styles.mapContainer}>
               <MapView
-                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                provider={
+                  Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
+                } // remove if not using Google Maps
                 style={styles.map}
                 region={{
                   latitude:

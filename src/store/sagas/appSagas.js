@@ -296,10 +296,18 @@ function* getWeaherSaga(params) {
     const response = yield request(config);
     console.log(response, '<<<<<<<< weather response  >>>>>>>>>>>>>>>>>');
 
-    if (response?.data?.status) {
+    // if (response?.data?.status) {
+    //   yield put({
+    //     type: actionTypes.GET_WEATHER_SUCCEEDED,
+    //     payload: response?.data?.data?.weather,
+    //   });
+
+    //   params.cb(response);
+    // }
+    if (response?.data) {
       yield put({
         type: actionTypes.GET_WEATHER_SUCCEEDED,
-        payload: response?.data?.data?.weather,
+        payload: response?.data,
       });
 
       params.cb(response);

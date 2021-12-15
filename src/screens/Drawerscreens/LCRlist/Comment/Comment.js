@@ -157,7 +157,6 @@ const Comment = ({navigation, route}) => {
           backgroundColor: colors.secondry,
           height: moderateScale(60),
         }}
-        title={name}
         titleStyle={{fontFamily: fonts.bold}}
         leftIconSource={icons.ic_back_white}
         leftButtonStyle={{

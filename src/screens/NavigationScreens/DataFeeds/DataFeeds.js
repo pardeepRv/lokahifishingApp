@@ -106,7 +106,7 @@ const DataFeeds = ({navigation}) => {
             backgroundColor: 'transparent',
             height: moderateScale(60),
           }}
-          title={'Data Feeds'}
+          title={'Tides and Weather'}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -119,7 +119,7 @@ const DataFeeds = ({navigation}) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Webviewer', {
-              url: 'https://tides4fishing.com/',
+              url: 'https://tides4fishing.com/us/hawaii/honolulu',
               title: 'Tide',
             })
           }
@@ -165,7 +165,7 @@ const DataFeeds = ({navigation}) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Webviewer', {
-              url: 'https://www.windy.com/19.627/-155.565?19.034,-155.566,8,m:edRaPS',
+              url: 'https://www.windy.com/? {latitude} , {longitude} , 5',
               title: 'Wind',
             })
           }
@@ -211,7 +211,7 @@ const DataFeeds = ({navigation}) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Webviewer', {
-              url: 'http://www.pacioos.hawaii.edu/currents/model-hawaii/',
+              url: 'https://capeweather.com/hawaii-doppler-radar.html',
               title: 'Radar',
             })
           }

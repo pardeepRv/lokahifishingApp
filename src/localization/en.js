@@ -65,7 +65,7 @@ export default {
 
   //Home screen
   Catch_report_h: 'Catch report',
-  Tids_weather: 'Tids and weather',
+  Tids_weather: 'Tides and weather',
   Photo_sharing: 'Photo sharing',
   News: 'News',
   LeaderBoard: 'LeaderBoard',

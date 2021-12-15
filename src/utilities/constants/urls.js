@@ -39,12 +39,15 @@ const urls = {
   lcr_Second: 'lcr-second-level-category',
   lcr_third: 'lcr-third-level-category',
   lcr_fishes: 'lcr-fishes',
-  weather:'weather',
+  weather: 'weather',
   method: 'method',
   save_lcr_report: 'save-lcr-report',
-  lcr_list : 'lcr-list',
+  lcr_list: 'lcr-list',
   update_lcr_report: 'update-lcr-report',
-  comment_lcr:'add-comment-to-lcr'
+  comment_lcr: 'lcr-addComment',
+  lcr_comments_listing: 'lcr-comments-listing',
+  lcr_likes_listing: 'lcr-likes-listing',
+  lcr_addlike: 'lcr-addlike',
 };
 
 export {urls};

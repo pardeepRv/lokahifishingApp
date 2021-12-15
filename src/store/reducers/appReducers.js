@@ -1,4 +1,4 @@
-import { actionTypes } from '../../utilities/constants';
+import {actionTypes} from '../../utilities/constants';
 
 const initialState = {
   loading: false,
@@ -225,7 +225,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        // lcrlistarray: action.payload,
       };
 
     case actionTypes.LCR_LIST_FAIL:
@@ -268,6 +267,25 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
+
+    case actionTypes.GET_LCR_LIKES_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.GET_LCR_LIKES_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.GET_LCR_LIKES_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
     default:
       return state;
   }

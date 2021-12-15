@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
   FlatList,
@@ -10,16 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
+import {moderateScale} from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
-import { fonts, icons } from '../../../../assets';
-import { Header } from '../../../components/common/Header';
-import { colors, screenNames } from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
+import {fonts, icons} from '../../../../assets';
+import {Header} from '../../../components/common/Header';
+import {colors, screenNames} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
 import styles from './styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from '../../../components/common/Loader';
-import { getlcrlist } from '../../../store/actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {Loader} from '../../../components/common/Loader';
+import {addLikeUnlike, getlcrlist} from '../../../store/actions';
 
 let members = [
   {
@@ -52,10 +52,9 @@ let members = [
   },
 ];
 
-const LCRlist = ({ navigation }) => {
+const LCRlist = ({navigation}) => {
   const [membersList, setMembersList] = useState([]);
   const [allDropDown, setAllDropDown] = useState({});
-
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -94,8 +93,7 @@ const LCRlist = ({ navigation }) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message:
-          'Shating post of lokahi',
+        message: 'Share post of lokahi',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -111,8 +109,27 @@ const LCRlist = ({ navigation }) => {
     }
   };
 
-  const _renderView = ({ item, index }) => (
-    <View style={{ flex: 1 }}>
+  // /like dislike
+  const likeAdded = lcr_id => {
+    let obj = {};
+
+    obj.token = auth && auth?.userDetails?.access_token;
+    obj.lcr_id = lcr_id;
+
+    dispatch(
+      addLikeUnlike(obj, cb => {
+        if (cb) {
+          console.log(cb, 'callback list like arr>>>>>>>>>>');
+          // if (cb?.data?.data) {
+          //   setAllDropDown(cb?.data?.dropdowns);
+          // }
+        }
+      }),
+    );
+  };
+
+  const _renderView = ({item, index}) => (
+    <View style={{flex: 1}}>
       <View
         style={[
           styles.listView,
@@ -145,13 +162,15 @@ const LCRlist = ({ navigation }) => {
           <TouchableOpacity
             style={styles.viewStyle}
             onPress={() =>
-              navigation.navigate(screenNames.LCRDetails, { item: item, allDropDown: allDropDown })
-            }
-          >
+              navigation.navigate(screenNames.LCRDetails, {
+                item: item,
+                allDropDown: allDropDown,
+              })
+            }>
             <Image
               // source={item.user.profile_picture}
               source={{
-                uri: item && item.user && item.user.profile_picture
+                uri: item && item.user && item.user.profile_picture,
                 // uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
               }}
               resizeMode="cover"
@@ -182,36 +201,44 @@ const LCRlist = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <View style={styles.viewStyle}>
-            <TouchableOpacity
-
-              style={{ flexDirection: 'row', top: moderateScale(10) }}>
-              <Image
-                source={icons.like}
-                style={{
-                  height: 25,
-                  width: 25,
-                  tintColor: colors.white1,
-                }}
-              />
-              <Text
-                style={{
-                  fontFamily: fonts.semiBold,
-                  fontSize: moderateScale(15),
-                  color: colors.white1,
+            <View style={{flexDirection: 'row', top: moderateScale(10)}}>
+              <TouchableOpacity style={{}} onPress={() => likeAdded(item.id)}>
+                <Image
+                  source={icons.like}
+                  style={{
+                    height: 25,
+                    width: 25,
+                    tintColor: colors.white1,
+                  }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Like', {lcr_id: item.id});
                 }}>
-                {' '}
-                0 likes
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    fontFamily: fonts.semiBold,
+                    fontSize: moderateScale(15),
+                    color: colors.white1,
+                  }}>
+                  {' '}
+                  {item.likes_count} likes
+                </Text>
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity
-              onPress={() => { navigation.navigate('Comment', { lcr_id: item.id }) }}
-              style={{ flexDirection: 'row', top: moderateScale(10) }}>
+              onPress={() => {
+                navigation.navigate('Comment', {lcr_id: item.id});
+              }}
+              style={{flexDirection: 'row', top: moderateScale(10)}}>
               <Image
                 source={icons.photoComment}
                 style={{
                   tintColor: colors.white1,
                 }}
               />
+
               <Text
                 style={{
                   fontFamily: fonts.semiBold,
@@ -219,7 +246,7 @@ const LCRlist = ({ navigation }) => {
                   color: colors.white1,
                 }}>
                 {' '}
-                0 comments
+                {item.comments_count} comments
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -249,7 +276,7 @@ const LCRlist = ({ navigation }) => {
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
-      style={{ flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -260,7 +287,7 @@ const LCRlist = ({ navigation }) => {
             height: moderateScale(60),
           }}
           title={'Recent Local Catches'}
-          titleStyle={{ fontFamily: fonts.bold, color: colors.black1 }}
+          titleStyle={{fontFamily: fonts.bold, color: colors.black1}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,

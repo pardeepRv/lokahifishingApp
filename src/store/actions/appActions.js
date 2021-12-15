@@ -1,4 +1,4 @@
-import { actionTypes } from '../../utilities/constants';
+import {actionTypes} from '../../utilities/constants';
 
 const getvideo = params => ({
   type: actionTypes.GET_VIDEO_REQUESTED,
@@ -101,6 +101,30 @@ const addComment = (params, cb) => {
   };
 };
 
+const getLcrComments = (params, cb) => {
+  return {
+    type: actionTypes.GET_LCR_COMMENTS_REQUESTED,
+    params,
+    cb,
+  };
+};
+
+const getLcrLikes = (params, cb) => {
+  return {
+    type: actionTypes.GET_LCR_LIKES_REQUESTED,
+    params,
+    cb,
+  };
+};
+
+const addLikeUnlike = (params, cb) => {
+  return {
+    type: actionTypes.ADD_LCR_LIKE_REQUESTED,
+    params,
+    cb,
+  };
+};
+
 export {
   getvideo,
   getNewsFromAdmin,
@@ -115,5 +139,8 @@ export {
   savelcrreport,
   getlcrlist,
   updatelcrreport,
-  addComment
+  addComment,
+  getLcrComments,
+  getLcrLikes,
+  addLikeUnlike,
 };

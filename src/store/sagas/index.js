@@ -1,7 +1,9 @@
-import { takeLatest } from 'redux-saga/effects';
-import { actionTypes } from '../../utilities/constants';
+import {takeLatest} from 'redux-saga/effects';
+import {actionTypes} from '../../utilities/constants';
 import {
   addCommentSaga,
+  addLikeInSaga,
+  commentListLcr,
   getAllFishesSaga,
   getLcrFirstsaga,
   getlcrlistsaga,
@@ -13,6 +15,7 @@ import {
   getSignsSaga,
   getvediosaga,
   getWeaherSaga,
+  likesListLcr,
   savelcrreport,
   UpdateLcrReportsaga,
 } from './appSagas';
@@ -69,7 +72,12 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_METHOD_REQUESTED, getMethodsaga);
   yield takeLatest(actionTypes.SAVE_LCR_REPORT_REQUESTED, savelcrreport);
   yield takeLatest(actionTypes.LCR_LIST_REQUESTED, getlcrlistsaga);
-  yield takeLatest(actionTypes.UPDATE_LCR_REPORT_REQUESTED, UpdateLcrReportsaga);
+  yield takeLatest(
+    actionTypes.UPDATE_LCR_REPORT_REQUESTED,
+    UpdateLcrReportsaga,
+  );
   yield takeLatest(actionTypes.ADD_COMMENT_REQUESTED, addCommentSaga);
-
+  yield takeLatest(actionTypes.GET_LCR_COMMENTS_REQUESTED, commentListLcr);
+  yield takeLatest(actionTypes.GET_LCR_LIKES_REQUESTED, likesListLcr);
+  yield takeLatest(actionTypes.ADD_LCR_LIKE_REQUESTED, addLikeInSaga);
 }

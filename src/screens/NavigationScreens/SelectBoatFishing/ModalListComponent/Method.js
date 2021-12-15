@@ -100,7 +100,7 @@ const Bait = props => {
                     height: moderateScale(35),
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    backgroundColor: 'red',
+
                   }}>
                   <Text
                     style={{

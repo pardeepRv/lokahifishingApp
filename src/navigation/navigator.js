@@ -92,6 +92,9 @@ import Circular from '../components/common/Circular';
 import VideoTips from '../screens/Drawerscreens/VideoTips/VideoTips';
 import Webviewer from '../components/common/Webviewer';
 import ExtraFishingType from '../screens/NavigationScreens/SelectBoatFishing/ExtraFishingType';
+import PhotosScreen from '../screens/NavigationScreens/PhotoSharing/PhotosScreen/PhotosScreen';
+import Videoscreen from '../screens/NavigationScreens/PhotoSharing/Videos/Videos';
+
 
 const Stack = createNativeStackNavigator();
 const MainStack = createNativeStackNavigator();
@@ -135,7 +138,7 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="MYprofile" component={MYprofileStack} />
       <Drawer.Screen name="DataFeeds" component={DataFeedsStack} />
       <Drawer.Screen name="catchReportStack" component={catchReportStack} />
-      <Drawer.Screen name="PhotoSharing" component={PhotoSharing} />
+      <Drawer.Screen name="PhotoSharing" component={PhotoSharingStack} />
       <Drawer.Screen name="LCRFilter" component={LcrFilterStack} />
       <Drawer.Screen name="LCRlist" component={LcrListStack} />
       <Drawer.Screen name="LeaderBoard" component={LeaderBoardStack} />
@@ -229,6 +232,19 @@ const GallerytStack = props => {
   );
 };
 
+const PhotoSharingStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'PhotoSharingScreen'}>
+      <Stack.Screen name="PhotoSharingScreen" component={PhotoSharing} />
+      <Stack.Screen name="PhotosScreen" component={PhotosScreen} />
+      <Stack.Screen name="Videoscreen" component={Videoscreen} />
+    </Stack.Navigator>
+  );
+};
 const LeaderBoardStack = props => {
   return (
     <Stack.Navigator

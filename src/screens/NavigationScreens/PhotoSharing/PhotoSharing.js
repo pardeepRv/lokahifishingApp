@@ -191,7 +191,8 @@ const PhotoSharing = ({ navigation }) => {
                                 flexDirection: 'row',
                                 alignItems: 'center'
                             }}
-                            onPress={() => alert('photos')}
+                            onPress={() => navigation.navigate('PhotosScreen')}
+                            
                         >
                             <Image source={icons.photoUploadPhoto}
                                 style={{
@@ -213,7 +214,8 @@ const PhotoSharing = ({ navigation }) => {
                                 flexDirection: 'row',
                                 alignItems: 'center'
                             }}
-                            onPress={() => alert('Videos')}
+                            onPress={() => navigation.navigate('Videoscreen')}
+
 
                         >
                             <Image source={icons.photoVideo}

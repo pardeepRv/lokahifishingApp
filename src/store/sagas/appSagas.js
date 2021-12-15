@@ -393,6 +393,10 @@ function* getlcrlistsaga(params) {
         type: actionTypes.LCR_LIST_SUCCEEDED,
       });
       params.cb(response);
+    } else {
+      yield put({
+        type: actionTypes.LCR_LIST_FAIL,
+      });
     }
   } catch (error) {
     showErrorAlert(getAPIError(error));
@@ -529,7 +533,7 @@ function* addLikeInSaga(params) {
     const config = {
       url: urls.lcr_addlike,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id},
+      data: {lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -541,6 +545,7 @@ function* addLikeInSaga(params) {
       yield put({
         type: actionTypes.ADD_LCR_LIKE_SUCCEEDED,
       });
+      params.cb(response);
     }
   } catch (error) {
     showErrorAlert(getAPIError(error));

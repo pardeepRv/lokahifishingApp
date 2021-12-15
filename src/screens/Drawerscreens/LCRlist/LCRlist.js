@@ -115,14 +115,15 @@ const LCRlist = ({navigation}) => {
 
     obj.token = auth && auth?.userDetails?.access_token;
     obj.lcr_id = lcr_id;
+    obj.user_id = auth && auth?.userDetails?.id;
 
     dispatch(
       addLikeUnlike(obj, cb => {
         if (cb) {
           console.log(cb, 'callback list like arr>>>>>>>>>>');
-          // if (cb?.data?.data) {
-          //   setAllDropDown(cb?.data?.dropdowns);
-          // }
+          if (cb?.data?.status) {
+            getlcrlistfunc();
+          }
         }
       }),
     );
@@ -202,16 +203,29 @@ const LCRlist = ({navigation}) => {
           </TouchableOpacity>
           <View style={styles.viewStyle}>
             <View style={{flexDirection: 'row', top: moderateScale(10)}}>
-              <TouchableOpacity style={{}} onPress={() => likeAdded(item.id)}>
-                <Image
-                  source={icons.like}
-                  style={{
-                    height: 25,
-                    width: 25,
-                    tintColor: colors.white1,
-                  }}
-                />
-              </TouchableOpacity>
+              {item && item.lcr_liked ? (
+                <TouchableOpacity style={{}} onPress={() => likeAdded(item.id)}>
+                  <Image
+                    source={icons.like_me}
+                    style={{
+                      height: 25,
+                      width: 25,
+                    }}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity style={{}} onPress={() => likeAdded(item.id)}>
+                  <Image
+                    source={icons.like}
+                    style={{
+                      height: 25,
+                      width: 25,
+                      tintColor: colors.white1,
+                    }}
+                  />
+                </TouchableOpacity>
+              )}
+
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('Like', {lcr_id: item.id});

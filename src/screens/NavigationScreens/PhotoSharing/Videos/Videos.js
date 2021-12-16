@@ -105,7 +105,7 @@ const Videoscreen = ({ navigation }) => {
             backgroundColor: 'transparent',
             height: moderateScale(60),
           }}
-          title={'Upload Videoshring Post'}
+          title={'Upload video'}
           titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{

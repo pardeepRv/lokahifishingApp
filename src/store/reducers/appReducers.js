@@ -304,6 +304,24 @@ export default (state = initialState, action) => {
           loading: false,
         };
 
+        case actionTypes.SAVE_PHOTO_SHARING_REQUESTED:
+          return {
+            ...state,
+            loading: true,
+          };
+    
+        case actionTypes.SAVE_PHOTO_SHARING_SUCCEEDED:
+          return {
+            ...state,
+            loading: false,
+          };
+    
+        case actionTypes.SAVE_PHOTO_SHARING_FAIL:
+          return {
+            ...state,
+            loading: false,
+          };
+          
     default:
       return state;
   }

@@ -594,6 +594,39 @@ function* saveVideosaga(params) {
   }
 }
 
+function* savephotosharingsaga(params) {
+   console.log(params, 'params in photo scren in photo sharing ???????????????????????');
+  try {
+    const config = {
+      url: urls.save_photo_sharing,
+      method: 'POST',
+      data: params && params.params,
+      headers: {
+        Authorization: `Bearer ${params && params.cb}`,
+      },
+    };
+    const response = yield request(config);
+    return console.log(response ,'response in api ?>>>>>>>>>>>>>>>>>>>>>>>>');
+    if (response && response.data && response.data.success) {
+      yield put({
+        type: actionTypes.SAVE_PHOTO_SHARING_SUCCEEDED,
+      });
+      showSuccessAlert(response?.data?.message);
+      NavigationService.goBack();
+    } else {
+      showErrorAlert(response?.data?.message);
+      yield put({
+        type: actionTypes.SAVE_PHOTO_SHARING_FAIL,
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.SAVE_PHOTO_SHARING_FAIL,
+    });
+  }
+}
+
 export {
   fetchAll,
   getvediosaga,
@@ -614,4 +647,5 @@ export {
   likesListLcr,
   addLikeInSaga,
   saveVideosaga,
+  savephotosharingsaga
 };

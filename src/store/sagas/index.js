@@ -17,6 +17,7 @@ import {
   getWeaherSaga,
   likesListLcr,
   savelcrreport,
+  savephotosharingsaga,
   saveVideosaga,
   UpdateLcrReportsaga,
 } from './appSagas';
@@ -82,4 +83,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_LCR_LIKES_REQUESTED, likesListLcr);
   yield takeLatest(actionTypes.ADD_LCR_LIKE_REQUESTED, addLikeInSaga);
   yield takeLatest(actionTypes.SAVE_VIDEO_REQUESTED, saveVideosaga);
+  yield takeLatest(actionTypes.SAVE_PHOTO_SHARING_REQUESTED, savephotosharingsaga);
+  
 }

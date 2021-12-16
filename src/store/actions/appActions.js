@@ -132,7 +132,13 @@ const savevideo = (params, cb) => {
     cb,
   };
 };
-
+const savephoto = (params, cb) => {
+  return {
+    type: actionTypes.SAVE_PHOTO_SHARING_REQUESTED,
+    params,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -151,5 +157,6 @@ export {
   getLcrComments,
   getLcrLikes,
   addLikeUnlike,
-  savevideo
+  savevideo,
+  savephoto
 };

@@ -99,7 +99,7 @@ const LCRDetails = ({ navigation, route }) => {
               </Text>
               <Text style={[styles.comment]}>Effort: {item.effort}hrs</Text>
               <Text style={styles.comment}>
-                Fishing type : {item.fish.lcr_second_category_id},{item.fish.lcr_second_category_id}, {item.fish.lcr_third_category_id}
+                Fishing type : {item.fish.first_category ? item.fish.first_category.title  : item.fish.first_category },{item.fish.second_categor ? item.fish.second_category.title  : item.fish.second_categor }, {item.fish.third_category ? item.fish.third_category.title  : item.fish.third_category}
               </Text>
             </View>
             <View style={styles.likecommentview}>

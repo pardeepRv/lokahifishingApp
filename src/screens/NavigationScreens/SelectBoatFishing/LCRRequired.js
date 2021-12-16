@@ -75,33 +75,41 @@ const LCRRequired = props => {
 
   function _doOpenCamera() {
     ImagePicker.openCamera({
-      width: 300,
-      height: 400,
+      width: 200,
+      height: 200,
       cropping: true,
+      includeBase64: true,
       compressImageQuality: 0.2,
     }).then(response => {
       console.log(`ress`, response);
-      if (Platform.OS == 'ios') {
-        setFishphoto(response.path);
-      } else {
-        setFishphoto(response.path);
-      }
+      setFishphoto(`data:${response.mime};base64,${response.data}`);
+
+      // if (Platform.OS == 'ios') {
+      //   console.log(`data:${response.mime};base64,${response.data}`);
+      //   setFishphoto(response.path);
+      // } else {
+      //   setFishphoto(response.path);
+      // }
     });
   }
 
   function _doOpenGallery() {
     ImagePicker.openPicker({
-      width: 300,
-      height: 400,
+      width: 200,
+      height: 200,
       cropping: true,
       compressImageQuality: 0.2,
+      includeBase64: true,
     }).then(image => {
       console.log(`images`, image);
-      if (Platform.OS == 'ios') {
-        setFishphoto(image.sourceURL);
-      } else {
-        setFishphoto(image.path);
-      }
+      setFishphoto(`data:${image.mime};base64,${image.data}`);
+      // if (Platform.OS == 'ios') {
+      //   console.log(`data:${image.mime};base64,${image.data}`, 'jgcyrc');
+
+      //   setFishphoto(image.sourceURL);
+      // } else {
+      //   setFishphoto(image.path);
+      // }
     });
   }
 
@@ -174,18 +182,19 @@ const LCRRequired = props => {
             />
           </View>
         ) : null}
-
-        <View style={styles.section}>
-          <Text style={styles.title}>Enter Fish Weight</Text>
-          <TextInput
-            style={styles.weightInput}
-            onChangeText={setWeight}
-            keyboardType="numeric"
-            value={weight}
-            placeholder="Enter fish weight here"
-            placeholderTextColor="lightgray"
-          />
-        </View>
+        {props.fishType != 'No Fish' ? (
+          <View style={styles.section}>
+            <Text style={styles.title}>Enter Fish Weight</Text>
+            <TextInput
+              style={styles.weightInput}
+              onChangeText={setWeight}
+              keyboardType="numeric"
+              value={weight}
+              placeholder="Enter fish weight here"
+              placeholderTextColor="lightgray"
+            />
+          </View>
+        ) : null}
         <View style={styles.section}>
           <Text style={styles.title}>Upload Image</Text>
           <TouchableOpacity

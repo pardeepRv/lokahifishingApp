@@ -1,12 +1,11 @@
 import {put} from 'redux-saga/effects';
+import * as NavigationService from '../../store/NavigationService';
 import {actionTypes, screenNames, urls} from '../../utilities/constants';
 import {
   getAPIError,
   showErrorAlert,
   showSuccessAlert,
 } from '../../utilities/helperFunctions';
-import * as NavigationService from '../../store/NavigationService';
-
 import {request} from '../../utilities/request';
 
 function* fetchAll({params}) {
@@ -563,6 +562,38 @@ function* addLikeInSaga(params) {
   }
 }
 
+function* saveVideosaga(params) {
+  try {
+    const config = {
+      url: urls.save_video,
+      method: 'POST',
+      data: params && params.params,
+      headers: {
+        Authorization: `Bearer ${params && params.cb}`,
+      },
+    };
+    const response = yield request(config);
+
+    if (response && response.data && response.data.success) {
+      yield put({
+        type: actionTypes.SAVE_VIDEO_SUCCEEDED,
+      });
+      showSuccessAlert(response?.data?.message);
+      NavigationService.goBack();
+    } else {
+      showErrorAlert(response?.data?.message);
+      yield put({
+        type: actionTypes.SAVE_VIDEO_FAIL,
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.SAVE_VIDEO_FAIL,
+    });
+  }
+}
+
 export {
   fetchAll,
   getvediosaga,
@@ -582,4 +613,5 @@ export {
   commentListLcr,
   likesListLcr,
   addLikeInSaga,
+  saveVideosaga,
 };

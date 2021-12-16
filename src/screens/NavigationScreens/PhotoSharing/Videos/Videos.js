@@ -1,27 +1,32 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
-  Alert,
-  ImageBackground,
+  Alert, Image, ImageBackground,
   Keyboard,
   SafeAreaView,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
-  Image,
+  View
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import Video from 'react-native-video';
-import {fonts, icons} from '../../../../../assets';
-import {Header} from '../../../../components/common';
-import {colors} from '../../../../utilities/constants';
-import {layout} from '../../../../utilities/layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../../assets';
+import { Header } from '../../../../components/common';
+import { savevideo } from '../../../../store/actions';
+import { colors } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
 import styles from './styles';
 
-const Videoscreen = ({navigation}) => {
-  const [additionalNotes, setAdditionalNotes] = useState('');
+const Videoscreen = ({ navigation }) => {
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+
+  console.log(auth, 'auth>>>>>>>>>>>>', app, 'app>>>>>>>>>>>>>>>>');
+  const dispatch = useDispatch();
+  const [additionalTittle, setadditionalTittle] = useState('');
   const [VideoPost, setVideoPost] = useState('');
   const [status, setStatus] = React.useState({});
   const [isPlaying, setIsPlaying] = React.useState(false);
@@ -31,14 +36,14 @@ const Videoscreen = ({navigation}) => {
       '',
       'Please Select',
       [
-        {text: 'Gallery', onPress: () => _doOpenGallery()},
+        { text: 'Gallery', onPress: () => _doOpenGallery() },
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   }
   function _doOpenGallery() {
@@ -53,23 +58,44 @@ const Videoscreen = ({navigation}) => {
     }).then(video => {
       console.log(`ress`, video);
       if (Platform.OS == 'ios') {
-        setVideoPost(video.sourceURL);
+        setVideoPost(video.path);
       } else {
         setVideoPost(video.path);
       }
     });
   }
-
   const videoBuffer = isBuffer => {
     console.log(isBuffer);
     //here you could set the isBuffer value to the state and then do something with it
     //such as show a loading icon
   };
 
+  const Save = () => {
+    Keyboard.dismiss();
+
+    //email error
+    let token = auth && auth.userDetails.access_token;
+
+
+    let formData = new FormData();
+
+    if (VideoPost && VideoPost != '') {
+      formData.append('video', {
+        uri: VideoPost,
+        type: 'video/mp4',
+        name: 'video1',
+      });
+    }
+
+    formData.append('title_vid', additionalTittle);
+    console.log(formData, 'sending to aApi');
+    dispatch(savevideo(formData, token));
+  }
+
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -80,7 +106,7 @@ const Videoscreen = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Upload Videoshring Post'}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -101,11 +127,11 @@ const Videoscreen = ({navigation}) => {
             <View style={styles.uploadContainer} activeOpacity={0.5}>
               {VideoPost != '' ? (
                 <Video
-                  source={{uri: VideoPost}}
+                  source={{ uri: VideoPost }}
                   paused={false}
                   repeat={true}
                   controls={true}
-                  style={{width: '100%', height: '100%'}}
+                  style={{ width: '100%', height: '100%' }}
                 />
               ) : (
                 <TouchableOpacity
@@ -160,9 +186,9 @@ const Videoscreen = ({navigation}) => {
               onSubmitEditing={() => {
                 Keyboard.dismiss();
               }}
-              value={additionalNotes}
-              onChangeText={additionalNotes =>
-                setAdditionalNotes(additionalNotes)
+              value={additionalTittle}
+              onChangeText={additionalTittle =>
+                setadditionalTittle(additionalTittle)
               }
             />
           </View>
@@ -173,9 +199,8 @@ const Videoscreen = ({navigation}) => {
             }}>
             <TouchableOpacity
               style={styles.postView}
-              onPress={() => {
-                navigation.goBack();
-              }}>
+              onPress={() => Save()}
+            >
               <Text
                 style={{
                   fontSize: 18,

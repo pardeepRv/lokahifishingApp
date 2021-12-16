@@ -191,7 +191,13 @@ const FishData = ({navigation, route}) => {
 
     formData.append('fish_id', previousScreen && previousScreen.selectedFish);
     formData.append('image', previousScreen && previousScreen.fishphoto);
-    // formData.append('image', 'file:///Users/user/Library/Developer/CoreSimulator/Devices/BA2665E5-90D5-41E6-8F6F-97E99BEE6817/data/Containers/Data/Application/C2C4B907-C395-44BC-9AFD-410C476A719D/tmp/react-native-image-crop-picker/FC66A229-0B72-41CF-8637-6FCE812D71E9.jpg');
+
+    // formData.append('image', {
+    //   uri: previousScreen && previousScreen.fishphoto,
+    //   type: 'image/jpeg',
+    //   name: 'profilePic',
+    // });
+
     formData.append('fish_weight', previousScreen && previousScreen.weight);
     formData.append('lcr_date_time', previousScreen && previousScreen.date);
     formData.append('effort', price);

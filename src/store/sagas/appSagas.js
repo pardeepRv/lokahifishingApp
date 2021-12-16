@@ -1,5 +1,5 @@
-import {put} from 'redux-saga/effects';
-import {actionTypes, screenNames, urls} from '../../utilities/constants';
+import { put } from 'redux-saga/effects';
+import { actionTypes, screenNames, urls } from '../../utilities/constants';
 import {
   getAPIError,
   showErrorAlert,
@@ -7,9 +7,9 @@ import {
 } from '../../utilities/helperFunctions';
 import * as NavigationService from '../../store/NavigationService';
 
-import {request} from '../../utilities/request';
+import { request } from '../../utilities/request';
 
-function* fetchAll({params}) {
+function* fetchAll({ params }) {
   try {
     const config = {
       url: 'https://dog.ceo/api/breeds/image/random',
@@ -27,7 +27,7 @@ function* fetchAll({params}) {
   }
 }
 
-function* getvediosaga({params}) {
+function* getvediosaga({ params }) {
   try {
     const config = {
       url: urls.videos,
@@ -58,7 +58,7 @@ function* getvediosaga({params}) {
   }
 }
 
-function* getNewsSaga({params}) {
+function* getNewsSaga({ params }) {
   console.log(params, 'params in news api ');
   try {
     const config = {
@@ -173,14 +173,12 @@ function* getLcrSecondsaga(params) {
   console.log(params, 'params in LCR second api ');
   try {
     const config = {
-      url: `${urls.lcr_Second}/${
-        params && params.payload && params.payload.first_id
-      }`,
+      url: `${urls.lcr_Second}/${params && params.payload && params.payload.first_id
+        }`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${
-          params && params.payload && params.payload.token
-        }`,
+        Authorization: `Bearer ${params && params.payload && params.payload.token
+          }`,
       },
     };
 
@@ -205,14 +203,12 @@ function* getLcrThirdsaga(params) {
   console.log(params, 'params in LCR third api ');
   try {
     const config = {
-      url: `${urls.lcr_third}/${
-        params && params.payload && params.payload.first_id
-      }/${params && params.payload && params.payload.second}`,
+      url: `${urls.lcr_third}/${params && params.payload && params.payload.first_id
+        }/${params && params.payload && params.payload.second}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${
-          params && params.payload && params.payload.token
-        }`,
+        Authorization: `Bearer ${params && params.payload && params.payload.token
+          }`,
       },
     };
 
@@ -240,28 +236,23 @@ function* getAllFishesSaga(params) {
 
     if (params && params.payload && params.payload.extraFish) {
       config = {
-        url: `${urls.lcr_fishes}/${
-          params && params.payload && params.payload.first_id
-        }/${params && params.payload && params.payload.second}/${
-          params && params.payload && params.payload.third
-        }`,
+        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
+          }/${params && params.payload && params.payload.second}/${params && params.payload && params.payload.third
+          }`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${
-            params && params.payload && params.payload.token
-          }`,
+          Authorization: `Bearer ${params && params.payload && params.payload.token
+            }`,
         },
       };
     } else {
       config = {
-        url: `${urls.lcr_fishes}/${
-          params && params.payload && params.payload.first_id
-        }/${params && params.payload && params.payload.second}`,
+        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
+          }/${params && params.payload && params.payload.second}`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${
-            params && params.payload && params.payload.token
-          }`,
+          Authorization: `Bearer ${params && params.payload && params.payload.token
+            }`,
         },
       };
     }
@@ -483,7 +474,7 @@ function* commentListLcr(params) {
     const config = {
       url: urls.lcr_comments_listing,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id},
+      data: { lcr_id: params?.params?.lcr_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -512,7 +503,7 @@ function* likesListLcr(params) {
     const config = {
       url: urls.lcr_likes_listing,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id},
+      data: { lcr_id: params?.params?.lcr_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -541,7 +532,7 @@ function* addLikeInSaga(params) {
     const config = {
       url: urls.lcr_addlike,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id},
+      data: { lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -559,6 +550,40 @@ function* addLikeInSaga(params) {
     showErrorAlert(getAPIError(error));
     yield put({
       type: actionTypes.ADD_LCR_LIKE_FAIL,
+    });
+  }
+}
+
+function* saveVideosaga(params) {
+  console.log('params in videos', params);
+  try {
+    const config = {
+      url: urls.save_video,
+      method: 'POST',
+      data: params && params.params,
+      headers: {
+        Authorization: `Bearer ${params && params.cb}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting video Api  ');
+
+    if (response && response.data && response.data.success) {
+      yield put({
+        type: actionTypes.SAVE_VIDEO_SUCCEEDED,
+      });
+      showSuccessAlert(response?.data?.message);
+    }
+    else {
+      showErrorAlert(response?.data?.message);
+      yield put({
+        type: actionTypes.SAVE_VIDEO_FAIL,
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.SAVE_VIDEO_FAIL,
     });
   }
 }
@@ -582,4 +607,5 @@ export {
   commentListLcr,
   likesListLcr,
   addLikeInSaga,
+  saveVideosaga
 };

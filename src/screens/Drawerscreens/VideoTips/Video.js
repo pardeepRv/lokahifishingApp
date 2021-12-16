@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   FlatList,
   Image,
@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import YoutubePlayer from 'react-native-youtube-iframe';
-import {fonts, icons} from '../../../../assets';
-import {Header} from '../../../components/common/Header';
-import {colors} from '../../../utilities/constants';
+import { fonts, icons } from '../../../../assets';
+import { Header } from '../../../components/common/Header';
+import { colors } from '../../../utilities/constants';
 import styles from './styles';
 
 const DATA = [
@@ -59,20 +59,24 @@ const DATA = [
 ];
 
 const videoArr = [
-  {videoId: 'iee2TATGMyI', title: 'Posting a Catch report'},
-  {videoId: 'JmSXo0XdWoA', title: 'Lokhai Kona Gaffing'},
-  {videoId: 'wop3B3bsSx8', title: 'Lokhai NothernLights Leadring'},
+  { videoId: 'iee2TATGMyI', title: 'Posting a Catch report' },
+  { videoId: 'JmSXo0XdWoA', title: 'Lokhai Kona Gaffing' },
+  { videoId: 'wop3B3bsSx8', title: 'Lokhai NothernLights Leadring' },
 ];
 
-const Item = ({title}) => (
+const Item = ({ title }) => (
   <TouchableOpacity style={styles.item}>
     <Image source={icons.ic_photoVideoPlayBT} />
     <Text style={styles.title}>{title}</Text>
   </TouchableOpacity>
 );
 
-const Video = ({navigation}) => {
-  const _renderView = ({item, index}) => (
+const Video = ({ navigation }) => {
+
+
+ 
+
+  const _renderView = ({ item, index }) => (
     <TouchableOpacity
     // style={styles.item}
     // onPress={() => navigation.navigate('VideoTips', {videoId: item.videoId})}
@@ -98,14 +102,14 @@ const Video = ({navigation}) => {
         height={220}
         play={false}
         videoId={item?.videoId}
-        // onChangeState={onStateChange}
+      // onChangeState={onStateChange}
       />
     </TouchableOpacity>
   );
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView style={styles.container}>
         <Header
           containerStyle={{
@@ -113,7 +117,7 @@ const Video = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Video Tips'}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -141,15 +145,15 @@ const Video = ({navigation}) => {
           ListEmptyComponent={() =>
             videoArr >= 0 && <Text style={{}}>No video found</Text>
           }
-          // refreshControl={
-          //   <RefreshControl
-          //     refreshing={user.loading}
-          //     onRefresh={_onRefresh.bind(this)}
-          //     title="Pull to refresh"
-          //     tintColor={colors.white1}
-          //     titleColor={colors.white1}
-          //   />
-          // }
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={user.loading}
+        //     onRefresh={_onRefresh.bind(this)}
+        //     title="Pull to refresh"
+        //     tintColor={colors.white1}
+        //     titleColor={colors.white1}
+        //   />
+        // }
         />
       </SafeAreaView>
     </ImageBackground>

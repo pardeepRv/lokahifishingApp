@@ -1,6 +1,6 @@
 // import { launchImageLibrary, launchCamera } from 'react-native-image-picker'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Dimensions,
@@ -15,8 +15,8 @@ import {
   View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../assets';
+import { moderateScale } from 'react-native-size-matters';
+import { fonts, icons } from '../../../../assets';
 var moment = require('moment');
 
 const LCRRequired = props => {
@@ -54,22 +54,22 @@ const LCRRequired = props => {
     fishphoto: '',
   });
 
-  const name_and_values = [{name: 'fishphoto', value: fishphoto}];
+  const name_and_values = [{ name: 'fishphoto', value: fishphoto }];
 
   function _doOpenOption() {
     Alert.alert(
       '',
       'Please Select',
       [
-        {text: 'Camera', onPress: () => _doOpenCamera()},
-        {text: 'Gallery', onPress: () => _doOpenGallery()},
+        { text: 'Camera', onPress: () => _doOpenCamera() },
+        { text: 'Gallery', onPress: () => _doOpenGallery() },
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   }
 
@@ -123,7 +123,7 @@ const LCRRequired = props => {
 
     console.log(dataTobeSendOnNext, 'dataTobeSendOnNext');
 
-    props.navigation.navigate('FishData', {previousScreen: dataTobeSendOnNext});
+    props.navigation.navigate('FishData', { previousScreen: dataTobeSendOnNext });
   };
 
   return (
@@ -133,7 +133,7 @@ const LCRRequired = props => {
         nestedScrollEnabled
         style={styles.scrollView}>
         {props.fishType === 'Multiple' ? (
-          <View style={{zIndex: 1, paddingHorizontal: 20, width: '100%'}}>
+          <View style={{ zIndex: 1, paddingHorizontal: 20, width: '100%' }}>
             <TextInput
               style={{
                 borderWidth: 1,
@@ -154,7 +154,7 @@ const LCRRequired = props => {
           </View>
         ) : null}
         {props.fishType === 'Other' ? (
-          <View style={{zIndex: 1, paddingHorizontal: 20, width: '100%'}}>
+          <View style={{ zIndex: 1, paddingHorizontal: 20, width: '100%' }}>
             <TextInput
               style={{
                 borderWidth: 1,
@@ -174,25 +174,26 @@ const LCRRequired = props => {
             />
           </View>
         ) : null}
-
-        <View style={styles.section}>
-          <Text style={styles.title}>Enter Fish Weight</Text>
-          <TextInput
-            style={styles.weightInput}
-            onChangeText={setWeight}
-            keyboardType="numeric"
-            value={weight}
-            placeholder="Enter fish weight here"
-            placeholderTextColor="lightgray"
-          />
-        </View>
+        {props.fishType != 'No Fish' ? (
+          <View style={styles.section}>
+            <Text style={styles.title}>Enter Fish Weight</Text>
+            <TextInput
+              style={styles.weightInput}
+              onChangeText={setWeight}
+              keyboardType="numeric"
+              value={weight}
+              placeholder="Enter fish weight here"
+              placeholderTextColor="lightgray"
+            />
+          </View>
+        ) : null}
         <View style={styles.section}>
           <Text style={styles.title}>Upload Image</Text>
           <TouchableOpacity
             style={styles.uploadContainer}
             onPress={() => _doOpenOption()}>
             <Image
-              source={fishphoto != '' ? {uri: fishphoto} : icons.uploadImage1}
+              source={fishphoto != '' ? { uri: fishphoto } : icons.uploadImage1}
               resizeMode="cover"
               style={{
                 top: 2,
@@ -227,7 +228,7 @@ const LCRRequired = props => {
                 setDateStatus(true);
                 setTimeStatus(false);
               }}>
-              <Text style={{fontFamily: fonts.bold}}>Show date</Text>
+              <Text style={{ fontFamily: fonts.bold }}>Show date</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -247,7 +248,7 @@ const LCRRequired = props => {
                 mode={'date'}
                 display="spinner"
                 onChange={onChange}
-                style={{height: windowHeight * 0.2, marginVertical: -10}}
+                style={{ height: windowHeight * 0.2, marginVertical: -10 }}
               />
             ) : Platform.OS == 'ios' ? (
               <DateTimePicker
@@ -257,7 +258,7 @@ const LCRRequired = props => {
                 display="spinner"
                 onChange={onChange}
                 maximumDate={new Date()}
-                style={{height: windowHeight * 0.2, marginVertical: -10}}
+                style={{ height: windowHeight * 0.2, marginVertical: -10 }}
               />
             ) : null}
 
@@ -293,7 +294,7 @@ const LCRRequired = props => {
         <View
           style={[
             styles.section,
-            {justifyContent: 'center', alignItems: 'center'},
+            { justifyContent: 'center', alignItems: 'center' },
           ]}>
           <TouchableOpacity onPress={onSubmit} style={styles.confirmBtn}>
             <Text style={styles.confirmText}>Confirm</Text>

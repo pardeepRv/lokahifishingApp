@@ -125,6 +125,14 @@ const addLikeUnlike = (params, cb) => {
   };
 };
 
+const savevideo = (params, cb) => {
+  return {
+    type: actionTypes.SAVE_VIDEO_REQUESTED,
+    params,
+    cb,
+  };
+};
+
 export {
   getvideo,
   getNewsFromAdmin,
@@ -143,4 +151,5 @@ export {
   getLcrComments,
   getLcrLikes,
   addLikeUnlike,
+  savevideo
 };

@@ -95,6 +95,7 @@ const LCRlist = ({navigation}) => {
       const result = await Share.share({
         message: 'Share post of lokahi',
       });
+      console.log(result , 'result on share >>>>>>>>>>>>>>>>>');
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType

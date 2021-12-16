@@ -180,7 +180,8 @@ const OffShoreFishing = ({navigation, route}) => {
     ) {
       if (
         viewableItems.viewableItems[0].item.title == 'Multiple' ||
-        viewableItems.viewableItems[0].item.title == 'Other'
+        viewableItems.viewableItems[0].item.title == 'Other' ||
+        viewableItems.viewableItems[0].item.title == 'No Fish'
       ) {
         console.log(
           viewableItems.viewableItems[0].item.title,

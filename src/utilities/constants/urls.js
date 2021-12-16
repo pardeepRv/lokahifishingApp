@@ -48,6 +48,7 @@ const urls = {
   lcr_comments_listing: 'lcr-comments-listing',
   lcr_likes_listing: 'lcr-likes-listing',
   lcr_addlike: 'lcr-addlike',
+  save_video:'save-video-sharing'
 };
 
 export {urls};

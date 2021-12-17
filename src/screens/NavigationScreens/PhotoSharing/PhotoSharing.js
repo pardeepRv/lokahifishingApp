@@ -19,8 +19,6 @@ import { savetimelinelist } from '../../../store/actions';
 import { colors } from '../../../utilities/constants';
 import { layout } from '../../../utilities/layout';
 import styles from './styles';
-
-
 let timeLineArr = [
     {
         img: icons.ic_LokahiLogo,
@@ -83,7 +81,6 @@ const PhotoSharing = ({ navigation }) => {
             }),
         );
     }
-
     const listViewForPhoto = (arr) => {
         return (
             <FlatList
@@ -92,6 +89,9 @@ const PhotoSharing = ({ navigation }) => {
                 horizontal
                 pagingEnabled
                 renderItem={_renderPhotoView}
+                indicatorActiveWidth={40}
+                contentContainerStyle={{ paddingHorizontal: 16 }}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={(item, index) => 'key' + index}
                 ListHeaderComponent={() =>
                     !arr.length ? (
@@ -103,30 +103,42 @@ const PhotoSharing = ({ navigation }) => {
     }
     const _renderPhotoView = ({ item, index }) => (
         <View
+            activeOpacity={0.8}
             style={{
-                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignSelf: 'center',
+                height: layout.size.height / 3.5,
+                alignItems: 'flex-start',
+                shadowColor: colors.primary,
             }}>
             {
                 item && item.media_type == 'img' ?
-                    <Image source={{
-                        uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
-                    }}
-                        style={{
-                            height: 150,
-                            width: layout.size.width - 2,
-                            resizeMode: 'cover',
+                    <TouchableOpacity style={{
+                        alignSelf: 'center',
+                        height: layout.size.height / 4,
+                        width: layout.size.width / 1.3,
+                        margin: 5,
+                    }}>
+                        <Image source={{
+                            uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
                         }}
-                    />
+                            style={{
+                                height: layout.size.height / 4,
+                                width: layout.size.width / 1.3,
+                                resizeMode: 'contain',
+                            }}
+                        />
+                    </TouchableOpacity>
                     :
                     <Video
                         source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
                         paused={false}
                         repeat={true}
                         controls={true}
-                        style={{ width: layout.size.width -50, height: 200 }}
+                        style={{ width: layout.size.width - 100, height: layout.size.height / 3.5, }}
                     />
             }
-
         </View>
 
     )
@@ -134,82 +146,69 @@ const PhotoSharing = ({ navigation }) => {
     const _renderView = ({ item, index }) => (
         <View style={styles.listView} >
             <View style={styles.viewStyle}>
-
-                <View
-                    style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                    }}>
-
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center'
-                    }}>
-                        <Image
-                            source={{
-                                uri: item.user_image
-                            }}
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}>
+                    <Image
+                        source={{
+                            uri: item.user_image
+                        }}
+                        style={{
+                            height: 50,
+                            width: 50,
+                            borderRadius: 25
+                        }}
+                    />
+                    <Text style={[styles.nameStyle, { fontSize: 16, fontFamily: fonts.bold }]}>{item.user_name}</Text>
+                    <TouchableOpacity
+                        onPress={() => console.log('Share')}
+                    >
+                        <Image source={icons.sharearrow}
                             style={{
-                                height: 50,
-                                width: 50,
-                                borderRadius: 25
+                                alignSelf: 'flex-end',
+                                height: 20,
+                                width: 20,
                             }}
                         />
-                        <Text style={[styles.nameStyle, { fontSize: 14, fontFamily: fonts.bold }]}>{item.user_name}</Text>
-                        <TouchableOpacity
-                            onPress={() => console.log('Share')}
-                        >
-                            <Image source={icons.sharearrow}
-                                style={{
-                                    alignSelf: 'flex-end',
-                                    height: 20,
-                                    width: 20,
-                                }}
-                            />
-                        </TouchableOpacity>
-
-                    </View>
-
-
-                    <TimeAgo time={item.created_at} />
-
-                    <View style={{
-                        margin: 10,
-                    }}>
-                        {listViewForPhoto(item && item.photosharingmedia)}
-
-                    </View>
-
-                    <TouchableOpacity style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
-                    }}
-                    onPress={()=>alert('coming soon')}
-                    >
-                        <View
-                            style={{
-                            }}
-                        >
-                            <Image source={icons.like} />
-                            <Text style={[styles.dateStyle, {
-                                fontSize: moderateScale(12),
-                                width: moderateScale(150)
-                            }]}>Liked by Pardeep and 6 others</Text>
-
-                        </View>
-                        <View>
-                            <Image source={icons.photoComment} />
-                            <Text style={[styles.dateStyle, {
-                                fontSize: moderateScale(12),
-                            }]}>2 comments</Text>
-                        </View>
                     </TouchableOpacity>
-
                 </View>
+                <TimeAgo style={{
+                    fontSize: 14, fontFamily: fonts.semiBold,
+                    color: colors.black2
+                }} ime={item.created_at} />
 
+                <View style={{
+                    margin: 10, flex: 1, height: moderateScale(200)
+                }}>
+                    {listViewForPhoto(item && item.photosharingmedia)}
+                </View>
+                <TouchableOpacity style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                }}
+                    onPress={() => alert('coming soon')}
+                >
+                    <View
+                        style={{
+                        }}
+                    >
+                        <Image source={icons.like} />
+                        <Text style={[styles.dateStyle, {
+                            fontSize: moderateScale(12),
+                            width: moderateScale(150)
+                        }]}>Liked by Pardeep and 6 others</Text>
+
+                    </View>
+                    <View>
+                        <Image source={icons.photoComment} />
+                        <Text style={[styles.dateStyle, {
+                            fontSize: moderateScale(12),
+                        }]}>2 comments</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
-
         </View>
     );
 
@@ -236,7 +235,6 @@ const PhotoSharing = ({ navigation }) => {
                         navigation.goBack();
                     }}
                 />
-
                 <View
                     style={{
                         backgroundColor: colors.white1,
@@ -271,7 +269,6 @@ const PhotoSharing = ({ navigation }) => {
 
                         </Text>
                     </View>
-
                     <View
                         style={{
                             flexDirection: 'row',
@@ -299,17 +296,13 @@ const PhotoSharing = ({ navigation }) => {
                             }}>
                                 Photos
                             </Text>
-
                         </TouchableOpacity>
-
                         <TouchableOpacity
                             style={{
                                 flexDirection: 'row',
                                 alignItems: 'center'
                             }}
                             onPress={() => navigation.navigate('Videoscreen')}
-
-
                         >
                             <Image source={icons.photoVideo}
                                 style={{
@@ -323,12 +316,10 @@ const PhotoSharing = ({ navigation }) => {
                             }}>
                                 Videos
                             </Text>
-
                         </TouchableOpacity>
                     </View>
 
                 </View>
-
                 <FlatList
                     extraData={timeline}
                     data={timeline}
@@ -342,7 +333,6 @@ const PhotoSharing = ({ navigation }) => {
                 />
             </SafeAreaView>
             <Loader isLoading={app.loading} isAbsolute />
-
         </ImageBackground>
     );
 };

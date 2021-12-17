@@ -1,5 +1,6 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import React, {useState} from 'react';
+import {ScrollView} from 'react-native';
 import {
   Image,
   Modal,
@@ -87,53 +88,68 @@ const Bait = props => {
   console.log(props, 'props in bait>>>>>>>>>>');
   const {baitMethods} = props;
   return (
-    <View style={{flex: 1}}>
-      {baitMethods &&
-      baitMethods.subcategory &&
-      baitMethods.subcategory.length > 0
-        ? baitMethods.subcategory.map((val, i) => {
-            return (
-              <>
-                <View
-                  style={{
-                    width: layout.size.width - 20,
-                    height: moderateScale(35),
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontFamily: fonts.semiBold,
-                      color: colors.black1,
-                    }}>
-                    {val.name}
-                  </Text>
-                  <Image
-                    source={icons.ic_rightArrow}
-                    style={{
-                      height: 20,
-                      width: 20,
-                      alignSelf: 'center',
-                      tintColor: colors.black1,
-                    }}
-                  />
-                </View>
+    <ScrollView
+      style={{
+        flex: 1,
+      }}>
+      <View style={{flex: 1}}>
+        {baitMethods &&
+        baitMethods.subcategory &&
+        baitMethods.subcategory.length > 0
+          ? baitMethods.subcategory.map((val, i) => {
+              return (
                 <>
-                  {val.methods.map((v, i) => {
-                    return (
-                      <View>
-                        <Text>{v.method_name}</Text>
-                      </View>
-                    );
-                  })}
+                  <TouchableOpacity
+                    style={{
+                      width: layout.size.width - 20,
+                      height: moderateScale(35),
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      padding: 10,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: fonts.semiBold,
+                        color: colors.black1,
+                      }}>
+                      {val.name}
+                    </Text>
+                    <Image
+                      source={icons.ic_rightArrow}
+                      style={{
+                        height: 20,
+                        width: 20,
+                        alignSelf: 'center',
+                        tintColor: colors.black1,
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <>
+                    {val.methods.map((v, i) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => alert(i)}
+                          style={{
+                            margin: 2,
+                            padding: 5,
+                          }}>
+                          <Text
+                            style={{
+                              fontFamily: fonts.regular,
+                            }}>
+                            {v.method_name}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </>
                 </>
-              </>
-            );
-          })
-        : null}
-    </View>
+              );
+            })
+          : null}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -141,59 +157,65 @@ const Lure = props => {
   console.log(props, 'props in bait>>>>>>>>>>');
   const {lureMethods} = props;
   return (
-    <View style={{flex: 1}}>
-      {lureMethods &&
-      lureMethods.subcategory &&
-      lureMethods.subcategory.length > 0
-        ? lureMethods.subcategory.map((val, i) => {
-            return (
-              <>
-                <TouchableOpacity
-                  style={{
-                    width: layout.size.width - 20,
-                    height: moderateScale(35),
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    padding: 10,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontFamily: fonts.semiBold,
-                      color: colors.black1,
-                    }}>
-                    {val.name}
-                  </Text>
-                  <Image
-                    source={icons.ic_rightArrow}
-                    style={{
-                      height: 20,
-                      width: 20,
-                      alignSelf: 'center',
-                      tintColor: colors.black1,
-                    }}
-                  />
-                </TouchableOpacity>
+    <ScrollView
+      style={{
+        flex: 1,
+      }}>
+      <View style={{flex: 1}}>
+        {lureMethods &&
+        lureMethods.subcategory &&
+        lureMethods.subcategory.length > 0
+          ? lureMethods.subcategory.map((val, i) => {
+              return (
                 <>
-                  {val.methods.map((v, i) => {
-                    return (
-                      <TouchableOpacity>
-                        {/* onPress={() => alert(i)} */}
-                        <Text
-                          style={{
-                            padding: 10,
-                          }}>
-                          {v.method_name}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+                  <TouchableOpacity
+                    style={{
+                      width: layout.size.width - 20,
+                      height: moderateScale(35),
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      padding: 10,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: fonts.semiBold,
+                        color: colors.black1,
+                      }}>
+                      {val.name}
+                    </Text>
+                    <Image
+                      source={icons.ic_rightArrow}
+                      style={{
+                        height: 20,
+                        width: 20,
+                        alignSelf: 'center',
+                        tintColor: colors.black1,
+                      }}
+                    />
+                  </TouchableOpacity>
+                  <>
+                    {val.methods.map((v, i) => {
+                      return (
+                        <TouchableOpacity>
+                          {/* onPress={() => alert(i)} */}
+                          <Text
+                            style={{
+                              padding: 10,
+                              fontFamily: fonts.regular,
+                            }}>
+                            {v.method_name}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </>
                 </>
-              </>
-            );
-          })
-        : null}
-    </View>
+              );
+            })
+          : null}
+      </View>
+    </ScrollView>
   );
 };
 

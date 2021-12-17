@@ -11,7 +11,6 @@ const windowHeight = Dimensions.get('window').height
 export default StyleSheet.create({
   EditLCR: {
 		position: 'relative',
-
 		width: windowWidth,
 		height: windowHeight * (1 - 0.108),
 		display: 'flex',

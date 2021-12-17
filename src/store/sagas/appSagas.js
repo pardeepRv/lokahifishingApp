@@ -295,22 +295,22 @@ function* getWeaherSaga(params) {
     const response = yield request(config);
     console.log(response, '<<<<<<<< weather response  >>>>>>>>>>>>>>>>>');
 
-    // if (response?.data?.status) {
-    //   yield put({
-    //     type: actionTypes.GET_WEATHER_SUCCEEDED,
-    //     payload: response?.data?.data?.weather,
-    //   });
-
-    //   params.cb(response);
-    // }
-    if (response?.data) {
+    if (response?.data?.status) {
       yield put({
         type: actionTypes.GET_WEATHER_SUCCEEDED,
-        payload: response?.data,
+        payload: response?.data?.data?.weather,
       });
 
       params.cb(response);
     }
+    // if (response?.data) {
+    //   yield put({
+    //     type: actionTypes.GET_WEATHER_SUCCEEDED,
+    //     payload: response?.data,
+    //   });
+
+    //   params.cb(response);
+    // }
   } catch (error) {
     showErrorAlert(getAPIError(error));
     yield put({
@@ -606,7 +606,7 @@ function* savephotosharingsaga(params) {
       },
     };
     const response = yield request(config);
-    return console.log(response ,'response in api ?>>>>>>>>>>>>>>>>>>>>>>>>');
+      console.log(response ,'response in api ?>>>>>>>>>>>>>>>>>>>>>>>>');
     if (response && response.data && response.data.success) {
       yield put({
         type: actionTypes.SAVE_PHOTO_SHARING_SUCCEEDED,

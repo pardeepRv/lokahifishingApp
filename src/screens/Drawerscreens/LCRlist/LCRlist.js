@@ -172,8 +172,8 @@ const LCRlist = ({navigation}) => {
             <Image
               // source={item.user.profile_picture}
               source={{
-                uri: item && item.user && item.user.profile_picture,
-                // uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
+                // uri: item && item.user && item.user.profile_picture,
+                uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
               }}
               resizeMode="cover"
               style={{

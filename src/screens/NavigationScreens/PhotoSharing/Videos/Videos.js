@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
-  Alert, Image, ImageBackground,
+  Alert,
+  Image,
+  ImageBackground,
   Keyboard,
   SafeAreaView,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import { moderateScale } from 'react-native-size-matters';
+import {moderateScale} from 'react-native-size-matters';
 import Video from 'react-native-video';
-import { useDispatch, useSelector } from 'react-redux';
-import { fonts, icons } from '../../../../../assets';
-import { Header } from '../../../../components/common';
-import { savevideo } from '../../../../store/actions';
-import { colors } from '../../../../utilities/constants';
-import { layout } from '../../../../utilities/layout';
+import {useDispatch, useSelector} from 'react-redux';
+import {fonts, icons} from '../../../../../assets';
+import {Header, Loader} from '../../../../components/common';
+import {savevideo} from '../../../../store/actions';
+import {colors} from '../../../../utilities/constants';
+import {layout} from '../../../../utilities/layout';
 import styles from './styles';
 
-const Videoscreen = ({ navigation }) => {
+const Videoscreen = ({navigation}) => {
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
@@ -36,25 +38,21 @@ const Videoscreen = ({ navigation }) => {
       '',
       'Please Select',
       [
-        { text: 'Gallery', onPress: () => _doOpenGallery() },
+        {text: 'Gallery', onPress: () => _doOpenGallery()},
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
       ],
-      { cancelable: true },
+      {cancelable: true},
     );
   }
   function _doOpenGallery() {
     ImagePicker.openPicker({
       mediaType: 'video',
-      maxWidth: 300,
-      maxHeight: 550,
-      quality: 1,
       videoQuality: 'low',
       durationLimit: 4000, //Video max duration in seconds
-      saveToPhotos: true,
     }).then(video => {
       console.log(`ress`, video);
       if (Platform.OS == 'ios') {
@@ -76,7 +74,6 @@ const Videoscreen = ({ navigation }) => {
     //email error
     let token = auth && auth.userDetails.access_token;
 
-
     let formData = new FormData();
 
     if (VideoPost && VideoPost != '') {
@@ -90,12 +87,12 @@ const Videoscreen = ({ navigation }) => {
     formData.append('title_vid', additionalTittle);
     console.log(formData, 'sending to aApi');
     dispatch(savevideo(formData, token));
-  }
+  };
 
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{ flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -106,7 +103,7 @@ const Videoscreen = ({ navigation }) => {
             height: moderateScale(60),
           }}
           title={'Upload video'}
-          titleStyle={{ fontFamily: fonts.bold }}
+          titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -127,11 +124,11 @@ const Videoscreen = ({ navigation }) => {
             <View style={styles.uploadContainer} activeOpacity={0.5}>
               {VideoPost != '' ? (
                 <Video
-                  source={{ uri: VideoPost }}
+                  source={{uri: VideoPost}}
                   paused={false}
                   repeat={true}
                   controls={true}
-                  style={{ width: '100%', height: '100%' }}
+                  style={{width: '100%', height: '100%'}}
                 />
               ) : (
                 <TouchableOpacity
@@ -197,10 +194,7 @@ const Videoscreen = ({ navigation }) => {
               height: layout.size.height / 4,
               alignItems: 'center',
             }}>
-            <TouchableOpacity
-              style={styles.postView}
-              onPress={() => Save()}
-            >
+            <TouchableOpacity style={styles.postView} onPress={() => Save()}>
               <Text
                 style={{
                   fontSize: 18,
@@ -212,6 +206,7 @@ const Videoscreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </ScrollView>
+        <Loader isAbsolute isLoading={app.loading} />
       </SafeAreaView>
     </ImageBackground>
   );

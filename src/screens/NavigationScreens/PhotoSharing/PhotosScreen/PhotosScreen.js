@@ -1,25 +1,28 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
-  Alert, Image,
+  Alert,
+  Image,
   ImageBackground,
   SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import { moderateScale } from 'react-native-size-matters';
-import { fonts, icons } from '../../../../../assets';
-import { Header } from '../../../../components/common';
-import { savephoto } from '../../../../store/actions';
-import { colors } from '../../../../utilities/constants';
-import { layout } from '../../../../utilities/layout';
+import {moderateScale} from 'react-native-size-matters';
+import {fonts, icons} from '../../../../../assets';
+import {Header, Loader} from '../../../../components/common';
+import {savephoto} from '../../../../store/actions';
+import {colors} from '../../../../utilities/constants';
+import {layout} from '../../../../utilities/layout';
 import styles from './styles';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-const PhotosScreen = ({ navigation }) => {
+let photosArr = [];
+
+const PhotosScreen = ({navigation}) => {
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
@@ -32,21 +35,20 @@ const PhotosScreen = ({ navigation }) => {
   const [Photopost4, setPhotopost4] = useState('');
   const [Photopost5, setPhotopost5] = useState('');
 
-
   function _doOpenOption(indx) {
     Alert.alert(
       '',
       'Please Select',
       [
-        { text: 'Camera', onPress: () => _doOpenCamera(indx) },
-        { text: 'Gallery', onPress: () => _doOpenGallery(indx) },
+        {text: 'Camera', onPress: () => _doOpenCamera(indx)},
+        {text: 'Gallery', onPress: () => _doOpenGallery(indx)},
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
       ],
-      { cancelable: true },
+      {cancelable: true},
     );
   }
   function _doOpenCamera(indx) {
@@ -56,19 +58,25 @@ const PhotosScreen = ({ navigation }) => {
       cropping: true,
       multiple: true,
       compressImageQuality: 0.2,
+      includeBase64: true,
     }).then(res => {
       console.log(`ress`, res);
       if (Platform.OS == 'ios') {
         if (indx == 1) {
-          setPhotopost1(res.path);
+          // setPhotopost1(res.path);
+          setPhotopost1(`data:${res.mime};base64,${res.data}`);
         } else if (indx == 2) {
-          setPhotopost2(res.path)
+          // setPhotopost2(res.path);
+          setPhotopost2(`data:${res.mime};base64,${res.data}`);
         } else if (indx == 3) {
-          setPhotopost3(res.path)
+          // setPhotopost3(res.path);
+          setPhotopost3(`data:${res.mime};base64,${res.data}`);
         } else if (indx == 4) {
-          setPhotopost4(res.path)
+          // setPhotopost4(res.path);
+          setPhotopost4(`data:${res.mime};base64,${res.data}`);
         } else {
-          setPhotopost5(res.path)
+          // setPhotopost5(res.path);
+          setPhotopost5(`data:${res.mime};base64,${res.data}`);
         }
       } else {
         setPhotopost1(res.path);
@@ -82,24 +90,27 @@ const PhotosScreen = ({ navigation }) => {
       height: 200,
       cropping: true,
       compressImageQuality: 0.2,
+      includeBase64: true,
     }).then(res => {
       console.log(`ress`, res);
       if (Platform.OS == 'ios') {
-
         if (index == 1) {
-          setPhotopost1(res.sourceURL);
+          // setPhotopost1(res.sourceURL);
+          setPhotopost1(`data:${res.mime};base64,${res.data}`);
         } else if (index == 2) {
-          setPhotopost2(res.sourceURL)
+          // setPhotopost2(res.sourceURL);
+          setPhotopost2(`data:${res.mime};base64,${res.data}`);
         } else if (index == 3) {
-          setPhotopost3(res.sourceURL)
+          // setPhotopost3(res.sourceURL);
+          setPhotopost3(`data:${res.mime};base64,${res.data}`);
         } else if (index == 4) {
-          setPhotopost4(res.sourceURL)
+          // setPhotopost4(res.sourceURL);
+          setPhotopost4(`data:${res.mime};base64,${res.data}`);
         } else {
-          setPhotopost5(res.sourceURL)
+          // setPhotopost5(res.sourceURL);
+          setPhotopost5(`data:${res.mime};base64,${res.data}`);
         }
-      }
-
-      else {
+      } else {
         setPhotopost1(res.path);
       }
     });
@@ -107,29 +118,57 @@ const PhotosScreen = ({ navigation }) => {
 
   //Hit api here>>>>>>>>>>>
 
-
-
   const postApi = () => {
     Keyboard.dismiss();
     let token = auth && auth.userDetails.access_token;
     let formData = new FormData();
 
-    if (Photopost1 && Photopost1 != '') {
+    if (Photopost1 != '') {
       formData.append('image[0]', {
         uri: Photopost1,
         type: 'image/jpeg', // or photo.type
         name: 'photo1',
       });
     }
+    if (Photopost2 != '') {
+      formData.append('image[1]', {
+        uri: Photopost2,
+        type: 'image/jpeg', // or photo.type
+        name: 'photo2',
+      });
+    }
+    if (Photopost3 != '') {
+      formData.append('image[3]', {
+        uri: Photopost3,
+        type: 'image/jpeg', // or photo.type
+        name: 'photo3',
+      });
+    }
+    if (Photopost4 != '') {
+      formData.append('image[4]', {
+        uri: Photopost4,
+        type: 'image/jpeg', // or photo.type
+        name: 'photo4',
+      });
+    }
+    if (Photopost5 != '') {
+      formData.append('image[5]', {
+        uri: Photopost5,
+        type: 'image/jpeg', // or photo.type
+        name: 'photo5',
+      });
+    } else {
+      console.log('do nothing');
+    }
 
     formData.append('title_img', additionalimage);
     console.log(formData, 'sending to aApi');
     dispatch(savephoto(formData, token));
-  }
+  };
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{ flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -140,7 +179,7 @@ const PhotosScreen = ({ navigation }) => {
             height: moderateScale(60),
           }}
           title={'Upload Photo'}
-          titleStyle={{ fontFamily: fonts.bold }}
+          titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -150,14 +189,18 @@ const PhotosScreen = ({ navigation }) => {
           }}
         />
         <View style={styles.viewStyle}>
-          <View style={{ margin: 10, flexDirection: 'column' }}>
-            <View style={{ margin: 5, flexDirection: 'row', justifyContent: 'space-between' }}>
-
+          <View style={{margin: 10, flexDirection: 'column'}}>
+            <View
+              style={{
+                margin: 5,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
               <TouchableOpacity
                 onPress={() => _doOpenOption(1)}
                 style={styles.uploadContainer}>
                 <Image
-                  source={Photopost1 != '' ? { uri: Photopost1 } : icons.no_image}
+                  source={Photopost1 != '' ? {uri: Photopost1} : icons.no_image}
                   resizeMode="cover"
                   style={{
                     borderRadius: moderateScale(100),
@@ -170,7 +213,7 @@ const PhotosScreen = ({ navigation }) => {
                 onPress={() => _doOpenOption(2)}
                 style={styles.uploadContainer}>
                 <Image
-                  source={Photopost2 != '' ? { uri: Photopost2 } : icons.no_image}
+                  source={Photopost2 != '' ? {uri: Photopost2} : icons.no_image}
                   resizeMode="cover"
                   style={{
                     borderRadius: moderateScale(100),
@@ -183,7 +226,7 @@ const PhotosScreen = ({ navigation }) => {
                 onPress={() => _doOpenOption(3)}
                 style={styles.uploadContainer}>
                 <Image
-                  source={Photopost3 != '' ? { uri: Photopost3 } : icons.no_image}
+                  source={Photopost3 != '' ? {uri: Photopost3} : icons.no_image}
                   resizeMode="cover"
                   style={{
                     borderRadius: moderateScale(100),
@@ -193,12 +236,17 @@ const PhotosScreen = ({ navigation }) => {
                 />
               </TouchableOpacity>
             </View>
-            <View style={{ margin: 5, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+            <View
+              style={{
+                margin: 5,
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+              }}>
               <TouchableOpacity
                 onPress={() => _doOpenOption(4)}
                 style={styles.uploadContainer}>
                 <Image
-                  source={Photopost4 != '' ? { uri: Photopost4 } : icons.no_image}
+                  source={Photopost4 != '' ? {uri: Photopost4} : icons.no_image}
                   resizeMode="cover"
                   style={{
                     borderRadius: moderateScale(100),
@@ -211,7 +259,7 @@ const PhotosScreen = ({ navigation }) => {
                 onPress={() => _doOpenOption(5)}
                 style={styles.uploadContainer}>
                 <Image
-                  source={Photopost5 != '' ? { uri: Photopost5 } : icons.no_image}
+                  source={Photopost5 != '' ? {uri: Photopost5} : icons.no_image}
                   resizeMode="cover"
                   style={{
                     borderRadius: moderateScale(100),
@@ -220,7 +268,6 @@ const PhotosScreen = ({ navigation }) => {
                   }}
                 />
               </TouchableOpacity>
-
             </View>
           </View>
           <View style={styles.lineView} activeOpacity={0.8} />
@@ -263,11 +310,7 @@ const PhotosScreen = ({ navigation }) => {
               height: layout.size.height / 4,
               alignItems: 'center',
             }}>
-            <TouchableOpacity
-              style={styles.postView}
-              onPress={() => postApi()}
-
-            >
+            <TouchableOpacity style={styles.postView} onPress={() => postApi()}>
               <Text
                 style={{
                   fontSize: 18,
@@ -279,6 +322,7 @@ const PhotosScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+        <Loader isAbsolute isLoading={app.loading} />
       </SafeAreaView>
     </ImageBackground>
   );

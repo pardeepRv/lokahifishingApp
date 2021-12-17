@@ -163,12 +163,12 @@ const ModalListComponent = props => {
       getWeather(token, cb => {
         if (cb) {
           console.log(cb, 'callback weather>>>>>>>>>>');
-          if (cb?.data) {
-            setWeatherAr(cb?.data);
-          }
-          // if (cb?.data?.data) {
-          //   setWeatherAr(cb?.data?.data?.weather);
+          // if (cb?.data) {
+          //   setWeatherAr(cb?.data);
           // }
+          if (cb?.data?.data) {
+            setWeatherAr(cb?.data?.data?.weather);
+          }
         }
       }),
     );

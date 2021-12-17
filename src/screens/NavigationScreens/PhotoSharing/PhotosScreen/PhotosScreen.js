@@ -63,19 +63,14 @@ const PhotosScreen = ({navigation}) => {
       console.log(`ress`, res);
       if (Platform.OS == 'ios') {
         if (indx == 1) {
-          // setPhotopost1(res.path);
           setPhotopost1(`data:${res.mime};base64,${res.data}`);
         } else if (indx == 2) {
-          // setPhotopost2(res.path);
           setPhotopost2(`data:${res.mime};base64,${res.data}`);
         } else if (indx == 3) {
-          // setPhotopost3(res.path);
           setPhotopost3(`data:${res.mime};base64,${res.data}`);
         } else if (indx == 4) {
-          // setPhotopost4(res.path);
           setPhotopost4(`data:${res.mime};base64,${res.data}`);
         } else {
-          // setPhotopost5(res.path);
           setPhotopost5(`data:${res.mime};base64,${res.data}`);
         }
       } else {
@@ -95,19 +90,14 @@ const PhotosScreen = ({navigation}) => {
       console.log(`ress`, res);
       if (Platform.OS == 'ios') {
         if (index == 1) {
-          // setPhotopost1(res.sourceURL);
           setPhotopost1(`data:${res.mime};base64,${res.data}`);
         } else if (index == 2) {
-          // setPhotopost2(res.sourceURL);
           setPhotopost2(`data:${res.mime};base64,${res.data}`);
         } else if (index == 3) {
-          // setPhotopost3(res.sourceURL);
           setPhotopost3(`data:${res.mime};base64,${res.data}`);
         } else if (index == 4) {
-          // setPhotopost4(res.sourceURL);
           setPhotopost4(`data:${res.mime};base64,${res.data}`);
         } else {
-          // setPhotopost5(res.sourceURL);
           setPhotopost5(`data:${res.mime};base64,${res.data}`);
         }
       } else {
@@ -117,50 +107,28 @@ const PhotosScreen = ({navigation}) => {
   }
 
   //Hit api here>>>>>>>>>>>
-
   const postApi = () => {
     Keyboard.dismiss();
     let token = auth && auth.userDetails.access_token;
     let formData = new FormData();
 
     if (Photopost1 != '') {
-      formData.append('image[0]', {
-        uri: Photopost1,
-        type: 'image/jpeg', // or photo.type
-        name: 'photo1',
-      });
+      formData.append(`image[0]`, Photopost1);
     }
     if (Photopost2 != '') {
-      formData.append('image[1]', {
-        uri: Photopost2,
-        type: 'image/jpeg', // or photo.type
-        name: 'photo2',
-      });
+      formData.append(`image[1]`, Photopost2);
     }
     if (Photopost3 != '') {
-      formData.append('image[3]', {
-        uri: Photopost3,
-        type: 'image/jpeg', // or photo.type
-        name: 'photo3',
-      });
+      formData.append(`image[2]`, Photopost3);
     }
     if (Photopost4 != '') {
-      formData.append('image[4]', {
-        uri: Photopost4,
-        type: 'image/jpeg', // or photo.type
-        name: 'photo4',
-      });
+      formData.append(`image[3]`, Photopost4);
     }
     if (Photopost5 != '') {
-      formData.append('image[5]', {
-        uri: Photopost5,
-        type: 'image/jpeg', // or photo.type
-        name: 'photo5',
-      });
+      formData.append(`image[4]`, Photopost5);
     } else {
       console.log('do nothing');
     }
-
     formData.append('title_img', additionalimage);
     console.log(formData, 'sending to aApi');
     dispatch(savephoto(formData, token));

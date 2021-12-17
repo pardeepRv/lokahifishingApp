@@ -595,7 +595,10 @@ function* saveVideosaga(params) {
 }
 
 function* savephotosharingsaga(params) {
-   console.log(params, 'params in photo scren in photo sharing ???????????????????????');
+    console.log(
+    params,
+    'params in photo scren in photo sharing ???????????????????????',
+  );
   try {
     const config = {
       url: urls.save_photo_sharing,
@@ -606,7 +609,7 @@ function* savephotosharingsaga(params) {
       },
     };
     const response = yield request(config);
-      console.log(response ,'response in api ?>>>>>>>>>>>>>>>>>>>>>>>>');
+    console.log(response, 'response in api ?>>>>>>>>>>>>>>>>>>>>>>>>');
     if (response && response.data && response.data.success) {
       yield put({
         type: actionTypes.SAVE_PHOTO_SHARING_SUCCEEDED,
@@ -647,5 +650,5 @@ export {
   likesListLcr,
   addLikeInSaga,
   saveVideosaga,
-  savephotosharingsaga
+  savephotosharingsaga,
 };

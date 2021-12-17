@@ -322,6 +322,23 @@ export default (state = initialState, action) => {
             loading: false,
           };
           
+          case actionTypes.TIMELINE_LIST_REQUESTED:
+            return {
+              ...state,
+              loading: true,
+            };
+      
+          case actionTypes.TIMELINE_LIST_SUCCEEDED:
+            return {
+              ...state,
+              loading: false,
+            };
+      
+          case actionTypes.TIMELINE_LIST_FAIL:
+            return {
+              ...state,
+              loading: false,
+            };
     default:
       return state;
   }

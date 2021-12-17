@@ -13,6 +13,7 @@ import {
   getNewsSaga,
   getPositionSaga,
   getSignsSaga,
+  gettimeline,
   getvediosaga,
   getWeaherSaga,
   likesListLcr,
@@ -84,5 +85,5 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.ADD_LCR_LIKE_REQUESTED, addLikeInSaga);
   yield takeLatest(actionTypes.SAVE_VIDEO_REQUESTED, saveVideosaga);
   yield takeLatest(actionTypes.SAVE_PHOTO_SHARING_REQUESTED, savephotosharingsaga);
-  
+  yield takeLatest(actionTypes.TIMELINE_LIST_REQUESTED, gettimeline);
 }

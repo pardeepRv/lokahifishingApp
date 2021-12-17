@@ -14,7 +14,7 @@ export default StyleSheet.create({
     },
     viewStyle: {
         flexDirection: 'row',
-        flex: 0.9,
+        flex: 1,
     },
     nameStyle: {
         fontFamily: fonts.regular,

@@ -1,14 +1,14 @@
-import {put} from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import * as NavigationService from '../../store/NavigationService';
-import {actionTypes, screenNames, urls} from '../../utilities/constants';
+import { actionTypes, screenNames, urls } from '../../utilities/constants';
 import {
   getAPIError,
   showErrorAlert,
   showSuccessAlert,
 } from '../../utilities/helperFunctions';
-import {request} from '../../utilities/request';
+import { request } from '../../utilities/request';
 
-function* fetchAll({params}) {
+function* fetchAll({ params }) {
   try {
     const config = {
       url: 'https://dog.ceo/api/breeds/image/random',
@@ -26,7 +26,7 @@ function* fetchAll({params}) {
   }
 }
 
-function* getvediosaga({params}) {
+function* getvediosaga({ params }) {
   try {
     const config = {
       url: urls.videos,
@@ -57,7 +57,7 @@ function* getvediosaga({params}) {
   }
 }
 
-function* getNewsSaga({params}) {
+function* getNewsSaga({ params }) {
   console.log(params, 'params in news api ');
   try {
     const config = {
@@ -172,14 +172,12 @@ function* getLcrSecondsaga(params) {
   console.log(params, 'params in LCR second api ');
   try {
     const config = {
-      url: `${urls.lcr_Second}/${
-        params && params.payload && params.payload.first_id
-      }`,
+      url: `${urls.lcr_Second}/${params && params.payload && params.payload.first_id
+        }`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${
-          params && params.payload && params.payload.token
-        }`,
+        Authorization: `Bearer ${params && params.payload && params.payload.token
+          }`,
       },
     };
 
@@ -204,14 +202,12 @@ function* getLcrThirdsaga(params) {
   console.log(params, 'params in LCR third api ');
   try {
     const config = {
-      url: `${urls.lcr_third}/${
-        params && params.payload && params.payload.first_id
-      }/${params && params.payload && params.payload.second}`,
+      url: `${urls.lcr_third}/${params && params.payload && params.payload.first_id
+        }/${params && params.payload && params.payload.second}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${
-          params && params.payload && params.payload.token
-        }`,
+        Authorization: `Bearer ${params && params.payload && params.payload.token
+          }`,
       },
     };
 
@@ -239,28 +235,23 @@ function* getAllFishesSaga(params) {
 
     if (params && params.payload && params.payload.extraFish) {
       config = {
-        url: `${urls.lcr_fishes}/${
-          params && params.payload && params.payload.first_id
-        }/${params && params.payload && params.payload.second}/${
-          params && params.payload && params.payload.third
-        }`,
+        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
+          }/${params && params.payload && params.payload.second}/${params && params.payload && params.payload.third
+          }`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${
-            params && params.payload && params.payload.token
-          }`,
+          Authorization: `Bearer ${params && params.payload && params.payload.token
+            }`,
         },
       };
     } else {
       config = {
-        url: `${urls.lcr_fishes}/${
-          params && params.payload && params.payload.first_id
-        }/${params && params.payload && params.payload.second}`,
+        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
+          }/${params && params.payload && params.payload.second}`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${
-            params && params.payload && params.payload.token
-          }`,
+          Authorization: `Bearer ${params && params.payload && params.payload.token
+            }`,
         },
       };
     }
@@ -393,7 +384,7 @@ function* getlcrlistsaga(params) {
       },
     };
     const response = yield request(config);
-    console.log(response, '<<<<<<<< method response  >>>>>>>>>>>>>>>>>');
+    console.log(response, '<<<<<<<< lcrlist response  >>>>>>>>>>>>>>>>>');
 
     if (response?.data?.success) {
       yield put({
@@ -482,7 +473,7 @@ function* commentListLcr(params) {
     const config = {
       url: urls.lcr_comments_listing,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id},
+      data: { lcr_id: params?.params?.lcr_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -511,7 +502,7 @@ function* likesListLcr(params) {
     const config = {
       url: urls.lcr_likes_listing,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id},
+      data: { lcr_id: params?.params?.lcr_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -540,7 +531,7 @@ function* addLikeInSaga(params) {
     const config = {
       url: urls.lcr_addlike,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id},
+      data: { lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -595,7 +586,7 @@ function* saveVideosaga(params) {
 }
 
 function* savephotosharingsaga(params) {
-    console.log(
+  console.log(
     params,
     'params in photo scren in photo sharing ???????????????????????',
   );
@@ -630,6 +621,37 @@ function* savephotosharingsaga(params) {
   }
 }
 
+function* gettimeline(params) {
+  console.log(params, 'params in timelien api ');
+  try {
+    const config = {
+      url: urls.timeline,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.params}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, '<<<<<<<< timeline  response  >>>>>>>>>>>>>>>>>');
+
+    if (response?.data?.success) {
+      yield put({
+        type: actionTypes.TIMELINE_LIST_SUCCEEDED,
+      });
+      params.cb(response);
+    } else {
+      yield put({
+        type: actionTypes.TIMELINE_LIST_FAIL,
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.TIMELINE_LIST_FAIL,
+    });
+  }
+}
+
 export {
   fetchAll,
   getvediosaga,
@@ -651,4 +673,5 @@ export {
   addLikeInSaga,
   saveVideosaga,
   savephotosharingsaga,
+  gettimeline
 };

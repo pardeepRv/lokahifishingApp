@@ -53,11 +53,11 @@ const PhotosScreen = ({navigation}) => {
   }
   function _doOpenCamera(indx) {
     ImagePicker.openCamera({
-      width: 200,
-      height: 200,
+      width: 300,
+      height: 300,
       cropping: true,
       multiple: true,
-      compressImageQuality: 0.2,
+      // compressImageQuality: 0.8,
       includeBase64: true,
     }).then(res => {
       console.log(`ress`, res);
@@ -81,10 +81,10 @@ const PhotosScreen = ({navigation}) => {
   }
   function _doOpenGallery(index) {
     ImagePicker.openPicker({
-      width: 200,
-      height: 200,
+      width: 300,
+      height: 300,
       cropping: true,
-      compressImageQuality: 0.2,
+      // compressImageQuality: 0.8,
       includeBase64: true,
     }).then(res => {
       console.log(`ress`, res);

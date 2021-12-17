@@ -139,6 +139,14 @@ const savephoto = (params, cb) => {
     cb,
   };
 };
+
+const savetimelinelist = (params, cb) => {
+  return {
+    type: actionTypes.TIMELINE_LIST_REQUESTED,
+    params,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -158,5 +166,6 @@ export {
   getLcrLikes,
   addLikeUnlike,
   savevideo,
-  savephoto
+  savephoto,
+  savetimelinelist
 };

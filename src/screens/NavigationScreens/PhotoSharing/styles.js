@@ -13,7 +13,7 @@ export default StyleSheet.create({
         paddingVertical: moderateScale(15),
     },
     viewStyle: {
-        flexDirection: 'row',
+        // flexDirection: 'row',
         flex: 1,
     },
     nameStyle: {

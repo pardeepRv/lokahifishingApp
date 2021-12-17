@@ -123,7 +123,7 @@ const PhotoSharing = ({ navigation }) => {
                         paused={false}
                         repeat={true}
                         controls={true}
-                        style={{ width: layout.size.width - 2, height: 200 }}
+                        style={{ width: layout.size.width -50, height: 200 }}
                     />
             }
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   FlatList,
@@ -10,16 +10,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
-import {fonts, icons} from '../../../../assets';
-import {Header} from '../../../components/common/Header';
-import {colors, screenNames} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import { fonts, icons } from '../../../../assets';
+import { Header } from '../../../components/common/Header';
+import { colors, screenNames } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 import styles from './styles';
-import {useDispatch, useSelector} from 'react-redux';
-import {Loader} from '../../../components/common/Loader';
-import {addLikeUnlike, getlcrlist} from '../../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '../../../components/common/Loader';
+import { addLikeUnlike, getlcrlist } from '../../../store/actions';
 
 let members = [
   {
@@ -52,7 +52,7 @@ let members = [
   },
 ];
 
-const LCRlist = ({navigation}) => {
+const LCRlist = ({ navigation }) => {
   const [membersList, setMembersList] = useState([]);
   const [allDropDown, setAllDropDown] = useState({});
 
@@ -90,12 +90,15 @@ const LCRlist = ({navigation}) => {
     );
   }
 
-  const onShare = async () => {
+  const onShare = async (imgUrl) => {
+    console.log(imgUrl,'link');
     try {
       const result = await Share.share({
-        message: 'Share post of lokahi',
+        title: 'Lokahi fishing',
+        // message: 'Sharing from lokahi',
+        url: imgUrl
       });
-      console.log(result , 'result on share >>>>>>>>>>>>>>>>>');
+      console.log(result, 'result on share >>>>>>>>>>>>>>>>>');
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType
@@ -130,8 +133,8 @@ const LCRlist = ({navigation}) => {
     );
   };
 
-  const _renderView = ({item, index}) => (
-    <View style={{flex: 1}}>
+  const _renderView = ({ item, index }) => (
+    <View style={{ flex: 1 }}>
       <View
         style={[
           styles.listView,
@@ -203,7 +206,7 @@ const LCRlist = ({navigation}) => {
             </View>
           </TouchableOpacity>
           <View style={styles.viewStyle}>
-            <View style={{flexDirection: 'row', top: moderateScale(10)}}>
+            <View style={{ flexDirection: 'row', top: moderateScale(10) }}>
               {item && item.lcr_liked ? (
                 <TouchableOpacity style={{}} onPress={() => likeAdded(item.id)}>
                   <Image
@@ -229,7 +232,7 @@ const LCRlist = ({navigation}) => {
 
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('Like', {lcr_id: item.id});
+                  navigation.navigate('Like', { lcr_id: item.id });
                 }}>
                 <Text
                   style={{
@@ -244,9 +247,9 @@ const LCRlist = ({navigation}) => {
             </View>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Comment', {lcr_id: item.id});
+                navigation.navigate('Comment', { lcr_id: item.id });
               }}
-              style={{flexDirection: 'row', top: moderateScale(10)}}>
+              style={{ flexDirection: 'row', top: moderateScale(10) }}>
               <Image
                 source={icons.photoComment}
                 style={{
@@ -270,7 +273,7 @@ const LCRlist = ({navigation}) => {
                 height: moderateScale(25),
                 width: layout.size.width / 8,
               }}
-              onPress={onShare}
+              onPress={() => onShare(`https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`)}
               title="Share">
               <Image
                 source={icons.sharearrow}
@@ -291,7 +294,7 @@ const LCRlist = ({navigation}) => {
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -302,7 +305,7 @@ const LCRlist = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Recent Local Catches'}
-          titleStyle={{fontFamily: fonts.bold, color: colors.black1}}
+          titleStyle={{ fontFamily: fonts.bold, color: colors.black1 }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,

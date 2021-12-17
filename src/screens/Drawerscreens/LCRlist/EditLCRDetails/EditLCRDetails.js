@@ -4,16 +4,15 @@ import {
   Alert,
   Dimensions,
   Image,
-  ImageBackground,
-  SafeAreaView,
+  ImageBackground, Keyboard, SafeAreaView,
   ScrollView,
   Text, TouchableOpacity,
-  View,
-  Keyboard
+  View
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
 import { fonts, icons } from '../../../../../assets';
 import { Header } from '../../../../components/common/Header';
 import { Loader } from '../../../../components/common/Loader';
@@ -22,7 +21,6 @@ import { updatelcrreport } from '../../../../store/actions';
 import { colors } from '../../../../utilities/constants';
 import { layout } from '../../../../utilities/layout';
 import styles from './styles';
-import { useDispatch, useSelector } from 'react-redux';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -206,27 +204,33 @@ const EditLCRDetails = ({ navigation, route }) => {
           }}
         />
         <SafeAreaView style={styles.EditLCR}>
-          <TouchableOpacity onPress={() => _doOpenOption()}>
-            <Image
-              source=
-              {{
-                uri: item && item.user && item.user.profile_picture ? item && item.user && item.user.profile_picture : icons.loginLogo
-                // Profilepic != '' ? { uri: Profilepic } : icons.loginLogo
-              }}
-              resizeMode="cover"
-              style={{
-                height: layout.size.height / 6,
-                width: layout.size.height / 6,
-                borderColor: '#fff',
-                borderWidth: 2,
-                borderRadius: 7,
-              }}
-            />
-          </TouchableOpacity>
-          <Text style={{ paddingTop: 5, marginBottom: 10, opacity: 0.6 }}>
-            Tap photo to change
-          </Text>
-          <ScrollView style={{ flex: 1 }}>
+          <ScrollView style={{ flex: 1, }}
+            showsVerticalScrollIndicator={false}
+          >
+            <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => _doOpenOption()}>
+              <Image
+                source={{
+                  uri:
+                    item && item.image
+                      ? `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`
+                      : icons.loginLogo,
+                  // Profilepic != '' ? { uri: Profilepic } : icons.loginLogo
+                }}
+                resizeMode="cover"
+                style={{
+                  height: layout.size.height / 6,
+                  width: layout.size.height / 6,
+                  borderColor: '#fff',
+                  borderWidth: 2,
+                  borderRadius: 7,
+                }}
+              />
+            </TouchableOpacity>
+            <Text style={{ alignSelf: 'center', paddingTop: 5, marginBottom: 10, opacity: 0.6 }}>
+              Tap photo to change
+            </Text>
+
+
             <Text style={[styles.label, { marginTop: 0 }]}>Date & Time</Text>
             <View
               style={{

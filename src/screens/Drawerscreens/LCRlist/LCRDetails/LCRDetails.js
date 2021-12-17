@@ -6,24 +6,24 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
-import {useSelector} from 'react-redux';
-import {fonts, icons} from '../../../../../assets';
-import {Loader} from '../../../../components/common';
-import {Header} from '../../../../components/common/Header';
+import { useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../../assets';
+import { Loader } from '../../../../components/common';
+import { Header } from '../../../../components/common/Header';
 import {
   colors,
   FISHES_IMAGES,
-  screenNames,
+  screenNames
 } from '../../../../utilities/constants';
-import {layout} from '../../../../utilities/layout';
+import { layout } from '../../../../utilities/layout';
 import styles from './styles';
 
-const LCRDetails = ({navigation, route}) => {
-  const {item, allDropDown} = route.params;
+const LCRDetails = ({ navigation, route }) => {
+  const { item, allDropDown } = route.params;
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
@@ -35,7 +35,7 @@ const LCRDetails = ({navigation, route}) => {
   return (
     <ImageBackground
       source={icons.signin_bg_ic}
-      style={{flex: 1, height: '100%'}}
+      style={{ flex: 1, height: '100%' }}
       blurRadius={6}
       opacity={0.8}>
       <SafeAreaView
@@ -49,7 +49,7 @@ const LCRDetails = ({navigation, route}) => {
           }}
           blackTitle
           title={'LCR Detail'}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,
@@ -72,7 +72,9 @@ const LCRDetails = ({navigation, route}) => {
             tintColor: colors.primary,
           }}
         />
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{ flex: 1 }}
+        showsVerticalScrollIndicator={false}
+        >
           <View style={styles.content}>
             <View style={styles.picView}>
               <Image
@@ -85,16 +87,15 @@ const LCRDetails = ({navigation, route}) => {
                 // onLoadEnd={() => setImgIsLoading(false)}
 
                 style={styles.pic}
-                // style={styles.pic}
+              // style={styles.pic}
               />
               {/* <ActivityIndicator size='large' color='#ffffff' style={    styles.loading } /> */}
             </View>
             <View style={styles.userInfo}>
               <Image
                 source={{
-                  uri: `${FISHES_IMAGES}${
-                    item && item.fish && item.fish.image
-                  }`,
+                  uri: `${FISHES_IMAGES}${item && item.fish && item.fish.image
+                    }`,
                 }}
                 style={styles.profilePic}
                 resizeMode="contain"
@@ -108,7 +109,7 @@ const LCRDetails = ({navigation, route}) => {
                 flexDirection: 'row',
                 justifyContent: 'space-evenly',
                 width: layout.size.width,
-                top:10
+                top: 10
               }}>
               <Text style={[styles.text, styles.date]}>Caught on:</Text>
               <TimeAgo
@@ -127,9 +128,9 @@ const LCRDetails = ({navigation, route}) => {
                   ? item.fish.first_category.title
                   : item.fish.first_category}
                 ,
-                {item.fish.second_categor
+                {item.fish.second_category
                   ? item.fish.second_category.title
-                  : item.fish.second_categor}
+                  : item.fish.second_category}
                 ,{' '}
                 {item.fish.third_category
                   ? item.fish.third_category.title
@@ -138,17 +139,30 @@ const LCRDetails = ({navigation, route}) => {
             </View>
             <View style={styles.likecommentview}>
               <View style={styles.likecomment}>
-                <TouchableOpacity>
-                  <Image
-                    source={icons.like}
-                    style={{
-                      height: 25,
-                      width: 25,
-                      tintColor: colors.white1,
-                    }}
-                  />
-                </TouchableOpacity>
-                <Text style={styles.likecommenttext}>Likes</Text>
+                {item && item.lcr_liked ? (
+                  <TouchableOpacity style={{}} >
+                    <Image
+                      source={icons.like_me}
+                      style={{
+                        height: 25,
+                        width: 25,
+                      }}
+                    />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity style={{}} >
+                    <Image
+                      source={icons.like}
+                      style={{
+                        height: 25,
+                        width: 25,
+                        tintColor: colors.white1,
+                      }}
+                    />
+                  </TouchableOpacity>
+                )}
+
+                <Text style={styles.likecommenttext}>{item.likes_count}Likes</Text>
               </View>
               <View style={styles.likecomment}>
                 <TouchableOpacity>
@@ -159,7 +173,7 @@ const LCRDetails = ({navigation, route}) => {
                     }}
                   />
                 </TouchableOpacity>
-                <Text style={styles.likecommenttext}>Comments</Text>
+                <Text style={styles.likecommenttext}>{item.comments_count} Comments</Text>
               </View>
             </View>
           </View>

@@ -6,14 +6,14 @@ import {
     SafeAreaView,
     StyleSheet,
     Text,
-    View,
+    View
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { useDispatch, useSelector } from 'react-redux';
 import { fonts, icons } from '../../../../../assets';
 import { Header } from '../../../../components/common/Header';
 import { Loader } from '../../../../components/common/Loader';
-import { getLcrLikes } from '../../../../store/actions';
+import { getLcrLikes, getphotosharelikes } from '../../../../store/actions';
 import { colors } from '../../../../utilities/constants';
 import { layout } from '../../../../utilities/layout';
 
@@ -70,7 +70,8 @@ let data = [
 ];
 
 const Like = ({ navigation, route }) => {
-    const { lcr_id } = route && route.params;
+    const { lcr_id, list } = route && route.params;
+    console.log(lcr_id, list, 'lcrlist  >>>>>>>>>>>>>>>.');
 
     let auth = useSelector(state => state.auth);
     let app = useSelector(state => state.app);
@@ -82,8 +83,13 @@ const Like = ({ navigation, route }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // console.log(list , '>>>>>>>>>>>>>>>>>>>>>>>>>>');
         const unsubscribe = navigation.addListener('focus', () => {
-            getLikesList();
+            if (list == '1') {
+                getLikesList();
+            } else if (list == '2') {
+                getlikephotosharing();
+            }
         });
         return unsubscribe;
     }, [navigation]);
@@ -100,6 +106,23 @@ const Like = ({ navigation, route }) => {
                     console.log(cb, 'callBack in likes');
                     if (cb?.data?.data) {
                         setLikeList(cb?.data?.data?.lcrlikeslisting);
+                    }
+                }
+            }),
+        );
+    }
+    function getlikephotosharing() {
+        let obj = {};
+
+        obj.token = auth && auth?.userDetails?.access_token;
+        obj.photoshare_id = lcr_id;
+
+        dispatch(
+            getphotosharelikes(obj, cb => {
+                if (cb) {
+                    console.log(cb, 'callBack in likes photosharing');
+                    if (cb?.data?.data) {
+                        setLikeList(cb?.data?.data?.photosharelikeListing);
                     }
                 }
             }),

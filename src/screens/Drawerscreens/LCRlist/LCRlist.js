@@ -232,12 +232,12 @@ const LCRlist = ({ navigation }) => {
 
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('Like', { lcr_id: item.id });
+                  navigation.navigate('Like', { lcr_id: item.id , list : '1'});
                 }}>
                 <Text
                   style={{
                     fontFamily: fonts.semiBold,
-                    fontSize: moderateScale(15),
+                    fontSize: moderateScale(15),   
                     color: colors.white1,
                   }}>
                   {' '}
@@ -247,7 +247,7 @@ const LCRlist = ({ navigation }) => {
             </View>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Comment', { lcr_id: item.id });
+                navigation.navigate('Comment', { lcr_id: item.id  , list : '1'});
               }}
               style={{ flexDirection: 'row', top: moderateScale(10) }}>
               <Image

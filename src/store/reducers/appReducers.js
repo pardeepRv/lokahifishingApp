@@ -339,6 +339,40 @@ export default (state = initialState, action) => {
               ...state,
               loading: false,
             };
+            case actionTypes.PHOTOSHARE_ADDLIKE_REQUESTED:
+              return {
+                ...state,
+                loading: true,
+              };
+        
+            case actionTypes.PHOTOSHARE_ADDLIKE_SUCCEEDED:
+              return {
+                ...state,
+                loading: false,
+              };
+        
+            case actionTypes.PHOTOSHARE_ADDLIKE_FAIL:
+              return {
+                ...state,
+                loading: false,
+              };
+               case actionTypes.PHOTO_SHARE_LIKES_REQUESTED:
+              return {
+                ...state,
+                loading: true,
+              };
+        
+            case actionTypes.PHOTO_SHARE_LIKES_SUCCEEDED:
+              return {
+                ...state,
+                loading: false,
+              };
+        
+            case actionTypes.PHOTO_SHARE_LIKES_FAIL:
+              return {
+                ...state,
+                loading: false,
+              };
     default:
       return state;
   }

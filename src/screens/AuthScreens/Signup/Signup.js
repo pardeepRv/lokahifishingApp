@@ -394,6 +394,7 @@ const Signup = ({navigation}) => {
                     onChangeText={confirmpassword =>
                       setconfirmpassword(confirmpassword)
                     }
+                    onkeypress={'Backspace'}
                     onFocus={() =>
                       setErrors({
                         ...errors,

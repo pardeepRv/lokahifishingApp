@@ -147,6 +147,21 @@ const savetimelinelist = (params, cb) => {
     cb,
   };
 };
+
+const addlikeunlikeohothsaring = (params, cb) => {
+  return {
+    type: actionTypes.PHOTOSHARE_ADDLIKE_REQUESTED,
+    params,
+    cb,
+  };
+};
+const getphotosharelikes = (params, cb) => {
+  return {
+    type: actionTypes.PHOTO_SHARE_LIKES_REQUESTED,
+    params,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -167,5 +182,7 @@ export {
   addLikeUnlike,
   savevideo,
   savephoto,
-  savetimelinelist
+  savetimelinelist,
+  addlikeunlikeohothsaring,
+  getphotosharelikes
 };

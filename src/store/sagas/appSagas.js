@@ -652,6 +652,61 @@ function* gettimeline(params) {
   }
 }
 
+function* addLikeInphotoshareSaga(params) {
+  console.log('params in photosharing like like', params);
+  try {
+    const config = {
+      url: urls.photoshareaddlike,
+      method: 'POST',
+      data: { photoshare_id: params?.params?.photoshare_id, user_id: params?.params?.user_id },
+      headers: {
+        Authorization: `Bearer ${params?.params?.token}`,
+      },
+    };
+    const response = yield request(config);
+     console.log(response, 'getting response post likes Api ');
+
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.PHOTOSHARE_ADDLIKE_SUCCEEDED,
+      });
+      params.cb(response);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.PHOTOSHARE_ADDLIKE_FAIL,
+    });
+  }
+}
+function* likesphotosharinglist(params) {
+   console.log('params in it>>>>>>>>>>', params);
+  try {
+    const config = {
+      url: urls.photoshare_like_list,
+      method: 'POST',
+      data: { photoshare_id: params?.params?.photoshare_id },
+      headers: {
+        Authorization: `Bearer ${params?.params?.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response likes Api ');
+
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.PHOTO_SHARE_LIKES_SUCCEEDED,
+      });
+      return params.cb(response);
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.PHOTO_SHARE_LIKES_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -673,5 +728,7 @@ export {
   addLikeInSaga,
   saveVideosaga,
   savephotosharingsaga,
-  gettimeline
+  gettimeline,
+  addLikeInphotoshareSaga, 
+  likesphotosharinglist
 };

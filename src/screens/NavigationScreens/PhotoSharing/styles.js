@@ -27,6 +27,7 @@ export default StyleSheet.create({
         fontSize: moderateScale(16),
         color: colors.black1,
         paddingHorizontal: moderateScale(5),
+        textAlign:'center'
     },
     rightArrow: {
         height: 30,

@@ -1,8 +1,8 @@
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer, useLinkBuilder} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer, useLinkBuilder } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 //navigation screens
 import ForgotPassword from '../screens/AuthScreens/ForgotPassword/ForgotPassword';
@@ -40,7 +40,7 @@ import CatchReport from '../screens/NavigationScreens/CatchReport/CatchReport';
 import SelectBoatFishing from '../screens/NavigationScreens/SelectBoatFishing/SelectBoatFishing';
 import ShortLineFishing from '../screens/NavigationScreens/SelectBoatFishing/ShorLineFishing';
 import PhotoSharing from '../screens/NavigationScreens/PhotoSharing/PhotoSharing';
-import {navigationRef} from '../store/NavigationService';
+import { navigationRef } from '../store/NavigationService';
 import LCRFilter from '../screens/Drawerscreens/LCRFilter/LCRFilter';
 import LCRlist from '../screens/Drawerscreens/LCRlist/LCRlist';
 import PhotoSharingPost from '../screens/Drawerscreens/PhotoSharingPost/PhotoSharingPost';
@@ -105,7 +105,7 @@ const Drawer = createDrawerNavigator();
 const commonScreensOptions = {
   headerStyle: {
     elevation: 1,
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 1,
   },
 };
@@ -119,7 +119,7 @@ const HomeStackScreen = props => {
       initialRouteName="Drawer"
       drawerContent={props => {
         props.useDetails = auth && auth.userDetails;
-        return DrawerComp({...props});
+        return DrawerComp({ ...props });
       }}
       screenOptions={{
         headerShown: false,
@@ -244,6 +244,7 @@ const PhotoSharingStack = props => {
       <Stack.Screen name="PhotoSharingScreen" component={PhotoSharing} />
       <Stack.Screen name="PhotosScreen" component={PhotosScreen} />
       <Stack.Screen name="Videoscreen" component={Videoscreen} />
+      <Stack.Screen name="Like" component={Like} />
     </Stack.Navigator>
   );
 };
@@ -285,7 +286,7 @@ const catchReportStack = props => {
       <Stack.Screen name="UploadImg" component={UploadImg} />
       <Stack.Screen name="LCRRequired" component={LCRRequired} />
       <Stack.Screen name="Circular" component={Circular} />
-      <Stack.Group screenOptions={{presentation: 'modal'}}>
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen
           name="ModalListComponent"
           component={ModalListComponent}

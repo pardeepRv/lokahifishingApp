@@ -2,6 +2,7 @@ import {takeLatest} from 'redux-saga/effects';
 import {actionTypes} from '../../utilities/constants';
 import {
   addCommentSaga,
+  addLikeInphotoshareSaga,
   addLikeInSaga,
   commentListLcr,
   getAllFishesSaga,
@@ -17,6 +18,7 @@ import {
   getvediosaga,
   getWeaherSaga,
   likesListLcr,
+  likesphotosharinglist,
   savelcrreport,
   savephotosharingsaga,
   saveVideosaga,
@@ -86,4 +88,7 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.SAVE_VIDEO_REQUESTED, saveVideosaga);
   yield takeLatest(actionTypes.SAVE_PHOTO_SHARING_REQUESTED, savephotosharingsaga);
   yield takeLatest(actionTypes.TIMELINE_LIST_REQUESTED, gettimeline);
+  yield takeLatest(actionTypes.PHOTOSHARE_ADDLIKE_REQUESTED, addLikeInphotoshareSaga);
+  yield takeLatest(actionTypes.PHOTO_SHARE_LIKES_REQUESTED, likesphotosharinglist);
+
 }

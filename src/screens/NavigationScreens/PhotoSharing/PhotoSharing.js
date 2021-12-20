@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fonts, icons } from '../../../../assets';
 import { Loader } from '../../../components/common';
 import { Header } from '../../../components/common/Header';
-import { savetimelinelist } from '../../../store/actions';
+import { addlikeunlikeohothsaring, savetimelinelist } from '../../../store/actions';
 import { colors } from '../../../utilities/constants';
 import { layout } from '../../../utilities/layout';
 import styles from './styles';
@@ -81,6 +81,26 @@ const PhotoSharing = ({ navigation }) => {
             }),
         );
     }
+
+    const likeAdded = lcr_id => {
+        let obj = {};
+
+        obj.token = auth && auth?.userDetails?.access_token;
+        obj.photoshare_id = lcr_id;
+        obj.user_id = auth && auth?.userDetails?.id;
+        dispatch(
+            addlikeunlikeohothsaring(obj, cb => {
+                console.log(obj, 'obj >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+                if (cb) {
+                    console.log(cb, 'callback timelimne list  like arr>>>>>>>>>>');
+                    if (cb?.data?.status) {
+                        gettimelinefunc();
+                    }
+                }
+            }),
+        );
+    };
+
     const listViewForPhoto = (arr) => {
         return (
             <FlatList
@@ -184,30 +204,67 @@ const PhotoSharing = ({ navigation }) => {
                 }}>
                     {listViewForPhoto(item && item.photosharingmedia)}
                 </View>
-                <TouchableOpacity style={{
+                <View style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    // backgroundColor:'black'
                 }}
-                    onPress={() => alert('coming soon')}
                 >
                     <View
                         style={{
+                            alignItems: 'center'
                         }}
                     >
-                        <Image source={icons.like} />
-                        <Text style={[styles.dateStyle, {
-                            fontSize: moderateScale(12),
-                            width: moderateScale(150)
-                        }]}>Liked by Pardeep and 6 others</Text>
+                        {item && item.photo_share_like ? (
+                            <TouchableOpacity style={{}}
+                                onPress={() => likeAdded(item.id)}
+                            // onPress={() => alert(item.id)}
+
+                            >
+                                <Image
+                                    source={icons.like_me}
+                                    style={{
+                                        height: 25,
+                                        width: 25,
+                                    }}
+                                />
+                            </TouchableOpacity>) : (<TouchableOpacity style={{}}
+                                onPress={() => likeAdded(item.id)}
+                            // onPress={() => alert(item.id)}
+
+                            >
+                                <Image
+                                    source={icons.like}
+                                    style={{
+                                        height: 25,
+                                        width: 25,
+                                    }}
+                                />
+                            </TouchableOpacity>)}
+
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.navigate('Like', { lcr_id: item.id, list: '2' });
+                            }}
+                        >
+                            <Text
+                                style={[styles.dateStyle, {
+                                    fontSize: moderateScale(12),
+                                    width: moderateScale(150)
+                                }]}>Likes {item.like_count}
+                            </Text>
+                        </TouchableOpacity>
 
                     </View>
-                    <View>
+                    <View style={{
+                        alignItems: 'center'
+                    }}>
                         <Image source={icons.photoComment} />
                         <Text style={[styles.dateStyle, {
                             fontSize: moderateScale(12),
                         }]}>2 comments</Text>
                     </View>
-                </TouchableOpacity>
+                </View>
             </View>
         </View>
     );

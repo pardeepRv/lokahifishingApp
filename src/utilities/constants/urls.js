@@ -51,6 +51,8 @@ const urls = {
   save_video:'save-video-sharing',
   save_photo_sharing:'save-photo-sharing',
   timeline: 'timeline',
+  photoshareaddlike : 'photoshare-addlike',
+  photoshare_like_list : 'photoshare-like-list',
 };
 
 export {urls};

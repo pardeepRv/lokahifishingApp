@@ -27,6 +27,7 @@ const TextInputComp = ({
   editable,
   editProfile = false,
   secureTextEntry,
+  onkeypress,
   ...props
 }) => {
   const textAlign = I18nManager.isRTL ? 'right' : 'left';
@@ -56,6 +57,9 @@ const TextInputComp = ({
         // placeholderTextColor={colors.blueDarkColor}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry ? secureTextEntry : false}
+        onKeyPress={({ nativeEvent }) => {
+          nativeEvent.key === 'Backspace' ?  nativeEvent.key === 'Backspace' : false
+        }}
         editable={editable}
         autoCapitalize="none"
         {...props}

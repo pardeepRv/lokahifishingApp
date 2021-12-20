@@ -162,6 +162,22 @@ const getphotosharelikes = (params, cb) => {
     cb,
   };
 };
+
+const photoaddcomment = (params, cb) => {
+  return {
+    type: actionTypes.PHOTO_ADDCOMMENT_REQUESTED,
+    params,
+    cb,
+  };
+};
+
+const photoaddcommentlist = (params, cb) => {
+  return {
+    type: actionTypes.PHOTOSHARE_COMMENT_LIST_REQUESTED,
+    params,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -184,5 +200,7 @@ export {
   savephoto,
   savetimelinelist,
   addlikeunlikeohothsaring,
-  getphotosharelikes
+  getphotosharelikes,
+  photoaddcomment,
+  photoaddcommentlist
 };

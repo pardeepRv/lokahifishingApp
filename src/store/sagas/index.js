@@ -1,10 +1,12 @@
 import {takeLatest} from 'redux-saga/effects';
 import {actionTypes} from '../../utilities/constants';
 import {
+  addcommentphotodharingsaga,
   addCommentSaga,
   addLikeInphotoshareSaga,
   addLikeInSaga,
   commentListLcr,
+  commentListphotoharing,
   getAllFishesSaga,
   getLcrFirstsaga,
   getlcrlistsaga,
@@ -90,5 +92,7 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.TIMELINE_LIST_REQUESTED, gettimeline);
   yield takeLatest(actionTypes.PHOTOSHARE_ADDLIKE_REQUESTED, addLikeInphotoshareSaga);
   yield takeLatest(actionTypes.PHOTO_SHARE_LIKES_REQUESTED, likesphotosharinglist);
+  yield takeLatest(actionTypes.PHOTO_ADDCOMMENT_REQUESTED, addcommentphotodharingsaga);
+  yield takeLatest(actionTypes.PHOTOSHARE_COMMENT_LIST_REQUESTED,commentListphotoharing );
 
 }

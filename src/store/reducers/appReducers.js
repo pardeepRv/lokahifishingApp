@@ -373,6 +373,41 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: false,
               };
+              case actionTypes.PHOTO_ADDCOMMENT_REQUESTED:
+                return {
+                  ...state,
+                  loading: true,
+                };
+          
+              case actionTypes.PHOTO_ADDCOMMENT_SUCCEEDED:
+                return {
+                  ...state,
+                  loading: false,
+                };
+          
+              case actionTypes.PHOTO_ADDCOMMENT_FAIL:
+                return {
+                  ...state,
+                  loading: false,
+                };
+
+                case actionTypes.PHOTOSHARE_COMMENT_LIST_REQUESTED:
+                  return {
+                    ...state,
+                    loading: true,
+                  };
+            
+                case actionTypes.PHOTOSHARE_COMMENT_LIST_SUCCEEDED:
+                  return {
+                    ...state,
+                    loading: false,
+                  };
+            
+                case actionTypes.PHOTOSHARE_COMMENT_LIST_FAIL:
+                  return {
+                    ...state,
+                    loading: false,
+                  };
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -9,15 +9,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
-import {useDispatch, useSelector} from 'react-redux';
-import {fonts, icons} from '../../../../../assets';
-import {Header} from '../../../../components/common/Header';
-import {Loader} from '../../../../components/common/Loader';
-import {addComment, getLcrComments} from '../../../../store/actions';
-import {colors} from '../../../../utilities/constants';
-import {layout} from '../../../../utilities/layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../../assets';
+import { Header } from '../../../../components/common/Header';
+import { Loader } from '../../../../components/common/Loader';
+import { addComment, getLcrComments, photoaddcomment, photoaddcommentlist } from '../../../../store/actions';
+import { colors } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
 
 let data = [
   {
@@ -71,11 +71,11 @@ let data = [
   },
 ];
 
-const Comment = ({navigation, route}) => {
+const Comment = ({ navigation, route }) => {
   console.log(route, 'receive in route>>>>');
 
-  const {lcr_id} = route && route.params;
-
+  const { lcr_id, list } = route && route.params;
+  console.log(list, lcr_id, '>>>>>>>>>>>>???');
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
@@ -87,7 +87,12 @@ const Comment = ({navigation, route}) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      getlcrCommentsList();
+      if (list == '1') {
+        getlcrCommentsList();
+
+      } else {
+        getphotodharingCommentsList();
+      }
     });
     return unsubscribe;
   }, [navigation]);
@@ -110,6 +115,24 @@ const Comment = ({navigation, route}) => {
     );
   }
 
+
+  function getphotodharingCommentsList() {
+    let obj = {};
+
+    obj.token = auth && auth?.userDetails?.access_token;
+    obj.photoshare_id = lcr_id;
+
+    dispatch(
+      photoaddcommentlist(obj, cb => {
+        if (cb) {
+          console.log(cb, 'callBack in comments');
+          if (cb?.data?.data) {
+            setCommentList(cb?.data?.data?.photosharecommentListing);
+          }
+        }
+      }),
+    );
+  }
   //hit api here
   const add_comment = () => {
     let token = auth && auth.userDetails.access_token;
@@ -118,22 +141,31 @@ const Comment = ({navigation, route}) => {
       return alert('Please enter something!');
     }
     let formData = new FormData();
+    if (list == '1') {
+      formData.append('lcr_id', lcr_id);
+      formData.append('user_id', auth && auth?.userDetails?.id);
+      formData.append('comment', comments);
+      console.log(formData, 'sending to aApi');
 
-    formData.append('lcr_id', lcr_id);
-    formData.append('user_id', auth && auth?.userDetails?.id);
-    formData.append('comment', comments);
+      dispatch(addComment(formData, token));
+      setcomments('');
+      getlcrCommentsList();
+    } else {
+      formData.append('photoshare_id', lcr_id);
+      formData.append('user_id', auth && auth?.userDetails?.id);
+      formData.append('comment', comments);
+      console.log(formData, 'sending to aApi');
 
-    console.log(formData, 'sending to aApi');
-
-    dispatch(addComment(formData, token));
-    setcomments('');
-    getlcrCommentsList();
+      dispatch(photoaddcomment(formData, token)); /// addd commnt in phot sharing
+      setcomments('');
+      getphotodharingCommentsList(); //get coooment list of photo 
+    }
   };
 
-  const _renderView = ({item, index}) => (
+  const _renderView = ({ item, index }) => (
     <View style={styles.container}>
       {item && item.user && item.user.profile_picture != null ? (
-        <Image style={styles.image} source={{uri: item.user.profile_picture}} />
+        <Image style={styles.image} source={{ uri: item.user.profile_picture }} />
       ) : null}
 
       <View style={styles.content}>
@@ -157,7 +189,7 @@ const Comment = ({navigation, route}) => {
           backgroundColor: colors.secondry,
           height: moderateScale(60),
         }}
-        titleStyle={{fontFamily: fonts.bold}}
+        titleStyle={{ fontFamily: fonts.bold }}
         leftIconSource={icons.ic_back_white}
         leftButtonStyle={{
           tintColor: colors.white1,
@@ -170,7 +202,7 @@ const Comment = ({navigation, route}) => {
         style={styles.root}
         data={commentList}
         extraData={commentList}
-        contentInset={{bottom: 60}}
+        contentInset={{ bottom: 60 }}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => {
           return <View style={styles.separator} />;

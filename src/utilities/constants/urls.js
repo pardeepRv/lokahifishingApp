@@ -53,6 +53,8 @@ const urls = {
   timeline: 'timeline',
   photoshareaddlike : 'photoshare-addlike',
   photoshare_like_list : 'photoshare-like-list',
+  photoshare_addcomment : 'photoshare-addcomment', 
+  photoshare_comment_list : 'photoshare-comment-list',
 };
 
 export {urls};

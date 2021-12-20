@@ -29,6 +29,7 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-get-location": "^2.1.2",
     "react-native-image-crop-picker": "^0.36.3",
+    "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-localization": "^2.1.7",
     "react-native-maps": "^0.29.4",

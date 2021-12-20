@@ -249,7 +249,7 @@ const LCRlist = ({ navigation }) => {
               onPress={() => {
                 navigation.navigate('Comment', { lcr_id: item.id  , list : '1'});
               }}
-              style={{ flexDirection: 'row', top: moderateScale(10) }}>
+              style={{ flexDirection: 'row', top: moderateScale(10)}}>
               <Image
                 source={icons.photoComment}
                 style={{

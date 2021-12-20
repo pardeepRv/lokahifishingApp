@@ -245,6 +245,8 @@ const PhotoSharingStack = props => {
       <Stack.Screen name="PhotosScreen" component={PhotosScreen} />
       <Stack.Screen name="Videoscreen" component={Videoscreen} />
       <Stack.Screen name="Like" component={Like} />
+      <Stack.Screen name="Comment" component={Comment} />
+
     </Stack.Navigator>
   );
 };

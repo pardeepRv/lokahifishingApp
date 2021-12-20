@@ -6,7 +6,7 @@ import {
     SafeAreaView,
     Text,
     TouchableOpacity,
-    View
+    View, Share , Modal
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
@@ -19,6 +19,8 @@ import { addlikeunlikeohothsaring, savetimelinelist } from '../../../store/actio
 import { colors } from '../../../utilities/constants';
 import { layout } from '../../../utilities/layout';
 import styles from './styles';
+// external librray 
+import ImageViewer from 'react-native-image-zoom-viewer';
 let timeLineArr = [
     {
         img: icons.ic_LokahiLogo,
@@ -53,6 +55,7 @@ const PhotoSharing = ({ navigation }) => {
     const [timeline, settimeline] = useState([]);
     let auth = useSelector(state => state.auth);
     let app = useSelector(state => state.app);
+    const [modal, setmodal] = useState('');
 
     console.log(app, 'appp in timelinelist   page>>>>>>>>>>');
     console.log(auth, 'auth in timelinelist page >>>>>>>>>>');
@@ -101,6 +104,29 @@ const PhotoSharing = ({ navigation }) => {
         );
     };
 
+    const onShare = async (imgUrl) => {
+        console.log(imgUrl, 'link');
+        try {
+            const result = await Share.share({
+                title: 'Lokahi fishing',
+                // message: 'Sharing from lokahi',
+                url: imgUrl
+            });
+            console.log(result, 'result on share >>>>>>>>>>>>>>>>>');
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
     const listViewForPhoto = (arr) => {
         return (
             <FlatList
@@ -139,7 +165,11 @@ const PhotoSharing = ({ navigation }) => {
                         height: layout.size.height / 4,
                         width: layout.size.width / 1.3,
                         margin: 5,
-                    }}>
+                        
+                    }}
+                    onPress={() => {
+                        setmodal(true);
+                      }}>
                         <Image source={{
                             uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
                         }}
@@ -149,6 +179,12 @@ const PhotoSharing = ({ navigation }) => {
                                 resizeMode: 'contain',
                             }}
                         />
+                        {/* <Modal visible={modal} transparent={true}>
+                <ImageViewer imageUrls={{
+                            uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
+                        }}
+                />
+            </Modal> */}
                     </TouchableOpacity>
                     :
                     <Video
@@ -182,17 +218,28 @@ const PhotoSharing = ({ navigation }) => {
                         }}
                     />
                     <Text style={[styles.nameStyle, { fontSize: 16, fontFamily: fonts.bold }]}>{item.user_name}</Text>
-                    <TouchableOpacity
-                        onPress={() => console.log('Share')}
-                    >
-                        <Image source={icons.sharearrow}
-                            style={{
-                                alignSelf: 'flex-end',
-                                height: 20,
-                                width: 20,
-                            }}
-                        />
-                    </TouchableOpacity>
+                    <>
+                        {item && item.photosharingmedia && (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    item.photosharingmedia[0].media_type == "video" ?
+                                        onShare(`https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.photosharingmedia[0].media_name}`)
+                                        :
+                                        onShare(`https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.photosharingmedia[0].media_name}`)
+                                }}
+                                title="Share"
+                            >
+                                <Image source={icons.sharearrow}
+                                    style={{
+                                        alignSelf: 'flex-end',
+                                        height: 20,
+                                        width: 20,
+                                    }}
+                                />
+                            </TouchableOpacity>
+                        )}
+                    </>
+
                 </View>
                 <TimeAgo style={{
                     fontSize: 14, fontFamily: fonts.semiBold,
@@ -207,12 +254,11 @@ const PhotoSharing = ({ navigation }) => {
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    // backgroundColor:'black'
                 }}
                 >
                     <View
                         style={{
-                            alignItems: 'center'
+                            alignItems: 'center',
                         }}
                     >
                         {item && item.photo_share_like ? (
@@ -256,14 +302,24 @@ const PhotoSharing = ({ navigation }) => {
                         </TouchableOpacity>
 
                     </View>
-                    <View style={{
-                        alignItems: 'center'
-                    }}>
-                        <Image source={icons.photoComment} />
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate('Comment', { lcr_id: item.id, list: '2' });
+                        }}
+                        style={{
+                            alignItems: 'center',
+
+                            right: moderateScale(15)
+                        }}>
+                        <Image source={icons.photoComment} style={{
+                            height: 25,
+                            width: 25,
+                        }} />
                         <Text style={[styles.dateStyle, {
                             fontSize: moderateScale(12),
-                        }]}>2 comments</Text>
-                    </View>
+                        }]}>{' '}
+                            {item.comment_count}  comments</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>

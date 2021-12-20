@@ -707,6 +707,64 @@ function* likesphotosharinglist(params) {
     });
   }
 }
+
+function* addcommentphotodharingsaga(params) {
+    console.log('params in it photosharing comment >>>>>>>>>>', params);
+  try {
+    const config = {
+      url: urls.photoshare_addcomment,
+      method: 'POST',
+      data: params?.params,
+      headers: {
+        Authorization: `Bearer ${params && params.cb}`,
+      },
+    };
+    const response = yield request(config);
+     console.log(response, 'getting response Add comment Api ');
+
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.PHOTO_ADDCOMMENT_SUCCEEDED,
+      });
+      return showSuccessAlert(response?.data?.message);
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.PHOTO_ADDCOMMENT_FAIL,
+    });
+  }
+}
+
+function* commentListphotoharing(params) {
+   console.log('params in it photo sharing list >>>>>>>>>>', params);
+  try {
+    const config = {
+      url: urls.photoshare_comment_list,
+      method: 'POST',
+      data: { photoshare_id: params?.params?.photoshare_id },
+      headers: {
+        Authorization: `Bearer ${params?.params?.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response Add comment Api ');
+
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.PHOTOSHARE_COMMENT_LIST_SUCCEEDED,
+      });
+      return params.cb(response);
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.PHOTOSHARE_COMMENT_LIST_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -730,5 +788,7 @@ export {
   savephotosharingsaga,
   gettimeline,
   addLikeInphotoshareSaga, 
-  likesphotosharinglist
+  likesphotosharinglist,
+  addcommentphotodharingsaga,
+  commentListphotoharing
 };

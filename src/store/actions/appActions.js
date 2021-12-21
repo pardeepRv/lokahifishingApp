@@ -178,6 +178,22 @@ const photoaddcommentlist = (params, cb) => {
     cb,
   };
 };
+
+const leaderboardfishlist = (params, cb) => {
+  return {
+    type: actionTypes.LEADERBOARD_FISH_LIST_REQUESTED,
+    params,
+    cb,
+  };
+};
+
+const leaderboardranking = (params, cb) => {
+  return {
+    type: actionTypes.LEADERBOARD_RANKING_REQUESTED,
+    params,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -202,5 +218,7 @@ export {
   addlikeunlikeohothsaring,
   getphotosharelikes,
   photoaddcomment,
-  photoaddcommentlist
+  photoaddcommentlist,
+  leaderboardfishlist,
+  leaderboardranking
 };

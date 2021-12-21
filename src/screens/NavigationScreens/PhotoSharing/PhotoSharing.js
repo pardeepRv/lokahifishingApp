@@ -3,10 +3,9 @@ import {
     FlatList,
     Image,
     ImageBackground,
-    SafeAreaView,
-    Text,
+    SafeAreaView, Share, Text,
     TouchableOpacity,
-    View, Share , Modal
+    View
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
@@ -15,12 +14,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fonts, icons } from '../../../../assets';
 import { Loader } from '../../../components/common';
 import { Header } from '../../../components/common/Header';
+import ImgViewer from '../../../components/common/ImgViewer';
 import { addlikeunlikeohothsaring, savetimelinelist } from '../../../store/actions';
 import { colors } from '../../../utilities/constants';
 import { layout } from '../../../utilities/layout';
 import styles from './styles';
-// external librray 
-import ImageViewer from 'react-native-image-zoom-viewer';
 let timeLineArr = [
     {
         img: icons.ic_LokahiLogo,
@@ -51,16 +49,26 @@ let timeLineArr = [
     },
 ];
 
+
+let images = [];
+
 const PhotoSharing = ({ navigation }) => {
     const [timeline, settimeline] = useState([]);
     let auth = useSelector(state => state.auth);
     let app = useSelector(state => state.app);
-    const [modal, setmodal] = useState('');
+    const [modal, setmodal] = useState(false);
 
     console.log(app, 'appp in timelinelist   page>>>>>>>>>>');
     console.log(auth, 'auth in timelinelist page >>>>>>>>>>');
     const dispatch = useDispatch();
 
+    const setmodalFun = (v) => {
+        setmodal(v)
+    }
+
+    const setImages=()=>{
+        images=[];
+    }
     useEffect(() => {
         console.log('coming in this on timelinelist page');
         const unsubscribe = navigation.addListener('focus', () => {
@@ -165,11 +173,12 @@ const PhotoSharing = ({ navigation }) => {
                         height: layout.size.height / 4,
                         width: layout.size.width / 1.3,
                         margin: 5,
-                        
+
                     }}
-                    onPress={() => {
-                        setmodal(true);
-                      }}>
+                        onPress={() => {
+                            images.push({ url: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}` })
+                            setmodal(true)
+                        }}>
                         <Image source={{
                             uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
                         }}
@@ -179,12 +188,6 @@ const PhotoSharing = ({ navigation }) => {
                                 resizeMode: 'contain',
                             }}
                         />
-                        {/* <Modal visible={modal} transparent={true}>
-                <ImageViewer imageUrls={{
-                            uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
-                        }}
-                />
-            </Modal> */}
                     </TouchableOpacity>
                     :
                     <Video
@@ -244,7 +247,7 @@ const PhotoSharing = ({ navigation }) => {
                 <TimeAgo style={{
                     fontSize: 14, fontFamily: fonts.semiBold,
                     color: colors.black2
-                }} ime={item.created_at} />
+                }} time={item.created_at} />
 
                 <View style={{
                     margin: 10, flex: 1, height: moderateScale(200)
@@ -263,10 +266,7 @@ const PhotoSharing = ({ navigation }) => {
                     >
                         {item && item.photo_share_like ? (
                             <TouchableOpacity style={{}}
-                                onPress={() => likeAdded(item.id)}
-                            // onPress={() => alert(item.id)}
-
-                            >
+                                onPress={() => likeAdded(item.id)} >
                                 <Image
                                     source={icons.like_me}
                                     style={{
@@ -275,10 +275,7 @@ const PhotoSharing = ({ navigation }) => {
                                     }}
                                 />
                             </TouchableOpacity>) : (<TouchableOpacity style={{}}
-                                onPress={() => likeAdded(item.id)}
-                            // onPress={() => alert(item.id)}
-
-                            >
+                                onPress={() => likeAdded(item.id)}  >
                                 <Image
                                     source={icons.like}
                                     style={{
@@ -291,8 +288,7 @@ const PhotoSharing = ({ navigation }) => {
                         <TouchableOpacity
                             onPress={() => {
                                 navigation.navigate('Like', { lcr_id: item.id, list: '2' });
-                            }}
-                        >
+                            }}   >
                             <Text
                                 style={[styles.dateStyle, {
                                     fontSize: moderateScale(12),
@@ -444,6 +440,14 @@ const PhotoSharing = ({ navigation }) => {
                         ) : null
                     }
                 />
+
+                {modal ? <ImgViewer 
+                setmodalFun={setmodalFun}
+                 modal={modal} 
+                 images={images}
+                 setImages={setImages}
+                 /> : null}
+
             </SafeAreaView>
             <Loader isLoading={app.loading} isAbsolute />
         </ImageBackground>

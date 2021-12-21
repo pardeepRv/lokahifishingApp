@@ -664,7 +664,7 @@ function* addLikeInphotoshareSaga(params) {
       },
     };
     const response = yield request(config);
-     console.log(response, 'getting response post likes Api ');
+    console.log(response, 'getting response post likes Api ');
 
     if (response && response.data && response.data.status) {
       yield put({
@@ -680,7 +680,7 @@ function* addLikeInphotoshareSaga(params) {
   }
 }
 function* likesphotosharinglist(params) {
-   console.log('params in it>>>>>>>>>>', params);
+  console.log('params in it>>>>>>>>>>', params);
   try {
     const config = {
       url: urls.photoshare_like_list,
@@ -709,7 +709,7 @@ function* likesphotosharinglist(params) {
 }
 
 function* addcommentphotodharingsaga(params) {
-    console.log('params in it photosharing comment >>>>>>>>>>', params);
+  console.log('params in it photosharing comment >>>>>>>>>>', params);
   try {
     const config = {
       url: urls.photoshare_addcomment,
@@ -720,7 +720,7 @@ function* addcommentphotodharingsaga(params) {
       },
     };
     const response = yield request(config);
-     console.log(response, 'getting response Add comment Api ');
+    console.log(response, 'getting response Add comment Api ');
 
     if (response && response.data && response.data.status) {
       yield put({
@@ -738,7 +738,7 @@ function* addcommentphotodharingsaga(params) {
 }
 
 function* commentListphotoharing(params) {
-   console.log('params in it photo sharing list >>>>>>>>>>', params);
+  console.log('params in it photo sharing list >>>>>>>>>>', params);
   try {
     const config = {
       url: urls.photoshare_comment_list,
@@ -765,6 +765,63 @@ function* commentListphotoharing(params) {
     });
   }
 }
+
+function* getleaderboardfishlist(params) {
+  console.log(params, 'params in leaderboard fish list api ');
+  try {
+    const config = {
+      url: urls.leaderboard_fish_list,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.params && params.params.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, '<<<<<<<< leader board list  response  >>>>>>>>>>>>>>>>>');
+
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.LEADERBOARD_FISH_LIST_SUCCEEDED,
+        payload: response?.data?.data?.leaderboardFishListing,
+      });
+
+      params.cb(response);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.LEADERBOARD_FISH_LIST_FAIL,
+    });
+  }
+}
+function* leaderboardrankingsaga(params) {
+    console.log('params in it>>>>>>>>>>', params);
+  try {
+    const config = {
+      url: urls.leaderboard_ranking,
+      method: 'POST',
+      data: { fish_id: params?.params?.fish_id },
+      headers: {
+        Authorization: `Bearer ${params?.params?.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response likes Api ');
+
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.LEADERBOARD_RANKING_SUCCEEDED,
+      });
+      return params.cb(response);
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.LEADERBOARD_RANKING_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -787,8 +844,10 @@ export {
   saveVideosaga,
   savephotosharingsaga,
   gettimeline,
-  addLikeInphotoshareSaga, 
+  addLikeInphotoshareSaga,
   likesphotosharinglist,
   addcommentphotodharingsaga,
-  commentListphotoharing
+  commentListphotoharing,
+  getleaderboardfishlist,
+  leaderboardrankingsaga
 };

@@ -55,6 +55,8 @@ const urls = {
   photoshare_like_list : 'photoshare-like-list',
   photoshare_addcomment : 'photoshare-addcomment', 
   photoshare_comment_list : 'photoshare-comment-list',
+  leaderboard_fish_list :'leaderboard-fishes-list',
+  leaderboard_ranking  : 'leaderboard-ranking',
 };
 
 export {urls};

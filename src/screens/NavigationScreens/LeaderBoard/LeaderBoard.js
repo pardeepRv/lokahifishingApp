@@ -1,25 +1,27 @@
-import React, {useState , useCallback} from 'react';
+import moment from 'moment';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import {
-  FlatList,
+  Dimensions, FlatList,
   Image,
   ImageBackground,
   SafeAreaView,
   Text,
   TouchableOpacity,
   View,
-  ActivityIndicator,
-  Dimensions
+  RefreshControl,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../assets';
-import {Header} from '../../../components/common/Header';
-import {colors} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import MonthPicker from 'react-native-month-year-picker';
+import { moderateScale } from 'react-native-size-matters';
+import TimeAgo from 'react-native-timeago';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../assets';
+import { Loader } from '../../../components/common';
+import { Header } from '../../../components/common/Header';
+import { leaderboardfishlist, leaderboardranking } from '../../../store/actions';
+import { colors } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 import styles from './styles';
 
-import MonthPicker from 'react-native-month-year-picker';
-import moment from 'moment';
-import LeaderboardCard from './leaderboardCard';
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -110,30 +112,114 @@ let fishingArr = [
   },
 ];
 
-const LeaderBoard = ({navigation}) => {
-  const [fishingList, setfishingList] = useState(fishingArr);
-  const [fishType, setFishType] = useState('Blue Marlin');
-  const [carousel, setCarousel] = useState('');
+let fishID = null;
+
+const LeaderBoard = ({ navigation }) => {
+  const [fishingList, setfishingList] = useState([]);
+  const [fishType, setfishType] = useState('');
   const [annual, setAnnual] = useState(true);
   const [monthly, setMonthly] = useState(false);
-  const [lcrData, setLCRData] = useState([]);
-  // const [date, setDate] = useState(new Date());
-  // const [showPicker, setShowPicker] = useState(false);
+  const [dateWiseList, setDateWiseList] = useState([]);
+  const [fishTypeId, setfishTypeId] = useState(null);
+
+ const [state, setState] = useState({
+    refreshing: false,
+  });
+  
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+  console.log(auth, 'auth in leaderboard >>>>>>>>>>>>>>');
+  console.log(app, 'app in leaderboard >>>>>>>>>>>>>>');
+
+  const dispatch = useDispatch();
 
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-
   const showPicker = useCallback((value) => setShow(value), []);
-  const [ lcrList, imgModalVisible, setImgModalVisible, modalImg, setModalImg ] = useState('')
-
   const month = date.getMonth();
   const year = date.getFullYear();
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getleaderboardFishes();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  function getleaderboardFishes() {
+    let ob = {};
+    ob.token = auth && auth?.userDetails?.access_token;
+    dispatch(
+      leaderboardfishlist(ob, cb => {
+        if (cb) {
+          console.log(cb, 'in fishing page>>>>>>>>>');
+          if (cb?.data?.data) {
+            let fishArr = cb?.data?.data?.leaderboardFishListing;
+
+            fishArr.forEach(element => {
+              element.imgUrl = cb && cb.data && cb.data.base_url;
+            });
+            setfishingList(fishArr);
+            setfishTypeId(fishArr[0].id);
+            getboardranking(fishArr[0].id)
+          } 
+        }
+      }),
+    );
+  }
+
+  const getboardranking = (fishid) => {
+    let obj = {};
+
+    obj.token = auth && auth?.userDetails?.access_token;
+    obj.fish_id = fishid;
+
+    dispatch(
+      leaderboardranking(obj, cb => {
+        console.log(cb, 'in leader card>>>>>>>>>>>>>>>>>>>');
+        if (cb) {
+          console.log(cb, 'callBack in card');
+          if (cb?.data?.data) {
+            let fishArr = cb?.data?.data?.leaderboardRankingAnually;
+            fishArr.forEach(element => {
+              element.imgUrl = cb && cb.data && cb.data.base_url;
+            });
+            setDateWiseList(fishArr);
+          }
+        }
+      }),
+    );
+  }
+
+  // function _onRefresh() {
+  //   setState({refreshing: true});
+  //   getleaderboardFishes();
+  // }
+
+  const prevStateRef = useRef();
+  useEffect(() => {
+    prevStateRef.current = fishTypeId;
+  });
+  const prevState = prevStateRef.current;
+  console.log(prevState, 'prevStateprevState');
+  console.log(fishTypeId, 'prevStateprevStatefishTypeId');
+
+  if (prevState != fishTypeId) {
+    setTimeout(() => {
+      getboardranking(fishTypeId);
+
+    }, 1000);
+  }
+
+
   //View of flatlist
-  const _renderView = ({item, index}) => (
+  const _renderView = ({ item, index }) => (
     <View style={styles.listView} activeOpacity={0.8}>
       <TouchableOpacity style={styles.viewStyle}>
         <Image
-          source={item.img}
+          source={{
+            uri: `${item.imgUrl}${item.image}`
+          }}
           resizeMode="contain"
           style={{
             height: layout.size.height / 10,
@@ -158,153 +244,35 @@ const LeaderBoard = ({navigation}) => {
             fontSize: moderateScale(20),
             fontFamily: fonts.bold,
           }}>
-          {item.text}
+          {item.title}
         </Text>
       </View>
     </View>
   );
+  const onViewRef = React.useRef(viewableItems => {
+    console.log(viewableItems, 'viewwwww>>>>>>>>>>>>>>>>');
+    if (
+      viewableItems &&
+      viewableItems.viewableItems &&
+      viewableItems.viewableItems.length > 0
+    ) {
+      if (
+        viewableItems.viewableItems[0].item.title == 'No Fish'
+      ) {
+        console.log(
+          viewableItems.viewableItems[0].item.title,
+          'viewableItems.viewableItems[0].item.text',
+        );
+        setfishType(viewableItems.viewableItems[0].item.title);
+      } else {
+        setfishType('');
+        setfishTypeId(viewableItems.viewableItems[0].item.id);
+      }
+    }
+  });
 
-  console.log(
-    'lcrData.length',
-    lcrData.length,
-    'lcrList.length',
-    lcrList.length,
-  );
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     let active = true;
-  //     (async () => {
-  //       try {
-  //         if (active) {
-  //           const ref = firestore()
-  //             .collection('LCRPosts')
-  //             .orderBy('postedAt', 'desc');
-  //           return ref.onSnapshot(querySnapshot => {
-  //             const lcrs = [];
-  //             querySnapshot.forEach(doc => {
-  //               lcrs.push({
-  //                 id: doc.id,
-  //                 ...doc.data(),
-  //               });
-  //             });
-
-  //             const lcrListArr = [];
-  //             lcrs.map((lcr, index) => {
-  //               // console.log('lcr', lcr)
-
-  //               const {postedAt} = lcr;
-  //               const {createdAt} = lcr.requiredInfo;
-  //               const createdDate = createdAt
-  //                 ? createdAt.toDate()
-  //                 : postedAt.toDate();
-  //               const typeOfFish = lcr.requiredInfo.fishType;
-  //               const lcrMonth = createdDate.getMonth();
-  //               const lcrYear = createdDate.getFullYear();
-
-  //               // console.log('createdAt', createdAt)
-  //               // console.log('postedAt', postedAt)
-  //               // console.log('createdDate', createdDate)
-  //               // console.log('month', month, typeof month)
-  //               // console.log('lcrMonth', lcrMonth, typeof lcrMonth)
-  //               // console.log('year', year)
-  //               // console.log('lcrYear', lcrYear)
-
-  //               // console.log('typeOfFish', typeOfFish)
-  //               // console.log('fishType', fishType)
-
-  //               if (typeOfFish.includes(fishType)) {
-  //                 // console.log(typeOfFish, 'includes', fishType)
-  //                 // console.log('year', year, typeof year)
-  //                 // console.log('lcrYear', lcrYear, typeof lcrYear)
-  //                 // console.log('annual:', annual, 'monthly:', monthly)
-  //                 if (annual && !monthly) {
-  //                   // console.log('year', year, typeof year)
-  //                   // console.log('lcrYear', lcrYear, typeof lcrYear)
-  //                   // console.log('annual:', annual, 'monthly:', monthly)
-  //                   if (year === lcrYear) {
-  //                     lcrListArr.push({...lcr});
-  //                     // console.log(typeOfFish, 'includes', fishType)
-  //                     // console.log('annual:', annual, 'monthly:', monthly)
-  //                     // console.log(year, '===', lcrYear)
-  //                   }
-  //                   // 	// console.log('annual')
-  //                 } else {
-  //                   // console.log(typeOfFish, 'includes', fishType)
-  //                   // console.log('annual:', annual, 'monthly:', monthly)
-  //                   // if (year === lcrYear) {
-  //                   // 	console.log(typeOfFish, 'includes', fishType)
-  //                   // 	console.log('annual:', annual, 'monthly:', monthly)
-  //                   // 	console.log(year, '===', lcrYear)
-  //                   // 	console.log('month:', month, 'lcrMonth:', lcrMonth)
-
-  //                   // 	// if (month === lcrMonth) {
-  //                   // 	// 	console.log(month, '===', lcrMonth)
-  //                   // 	// }
-  //                   // }
-  //                   if (month === lcrMonth && year === lcrYear) {
-  //                     lcrListArr.push({...lcr});
-  //                     // console.log(month, '===', lcrMonth, '&&', year, '===', lcrYear)
-  //                   }
-  //                   // 	// console.log('monthly')
-  //                 }
-  //               }
-  //             });
-
-  //             lcrListArr.sort((a, b) =>
-  //               parseFloat(a.requiredInfo.fishWeight) >
-  //               parseFloat(b.requiredInfo.fishWeight)
-  //                 ? -1
-  //                 : 1,
-  //             );
-
-  //             // console.log('lcrListArr', lcrListArr)
-
-  //             setLCRData(lcrListArr);
-  //             // setLCRData(lcrs)
-  //           });
-  //         }
-  //       } catch (e) {
-  //         console.log('this is an error', e);
-  //       }
-  //     })();
-
-  //     return () => {
-  //       active = false;
-  //     };
-  //   }, [annual, monthly, fishType, month, year]),
-  // );
-
-  // useEffect(() => {
-  // 	const lcrListArr = []
-  // 	lcrList.map((lcr, index) => {
-  // 		console.log('lcr', lcr)
-
-  // 		const { postedAt } = lcr
-  // 		const { createdAt } = lcr.requiredInfo
-  // 		const createdDate = createdAt ? createdAt.toDate() : postedAt.toDate()
-  // 		const typeOfFish = lcr.requiredInfo.fishType
-  // 		const month = date.getMonth()
-  // 		const lcrMonth = createdDate.getMonth()
-  // 		const year = date.getFullYear()
-  // 		const lcrYear = createdDate.getFullYear()
-
-  // 		if (typeOfFish.includes(fishType)) {
-  // 			if (annual && !monthly) {
-  // 				if (year === lcrYear) {
-  // 					lcrListArr.push({ ...lcr })
-  // 				}
-  // 			} else if (!annual && monthly) {
-  // 				if (month === lcrMonth && year === lcrYear) {
-  // 					lcrListArr.push({ ...lcr })
-  // 				}
-  // 			}
-  // 		}
-  // 	})
-
-  // 	lcrListArr.sort((a, b) => (parseFloat(a.requiredInfo.fishWeight) > parseFloat(b.requiredInfo.fishWeight) ? -1 : 1))
-  // 	setLCRData(lcrListArr)
-  // }, [lcrList, fishType, annual, monthly, date])
+  const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
 
   const toggleAnnual = () => {
     setAnnual(true);
@@ -336,10 +304,39 @@ const LeaderBoard = ({navigation}) => {
     },
     [date, showPicker],
   );
+
+  const _renderDateView = ({ item, index }) => (
+
+    <TouchableOpacity style={styles.LCRPost} >
+      <View style={styles.content1}>
+        <View style={styles.rankingView}>
+          <View style={styles.rankCircle}>
+            <Text style={styles.rank}># {index+1}</Text>
+          </View>
+          <Text style={styles.weight}>{item?.Weight} lb</Text>
+        </View>
+
+        <View style={styles.userInfo}>
+          <Text style={styles.fullname}>{item?.user?.full_name}</Text>
+          <Text style={styles.time}>Caught on:
+            <TimeAgo time={item?.LCR_Datetime} /></Text>
+          <Text style={styles.time}>
+            {item?.fish?.title}
+          </Text>
+        </View>
+
+        <View style={styles.imgView}>
+          <Image style={styles.image}
+
+            source={{ uri: `${item.imgUrl}${item.image}` }} />
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
   return (
     <ImageBackground
       source={icons.LeaderBoar1}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -351,7 +348,7 @@ const LeaderBoard = ({navigation}) => {
           }}
           title={'Leader Board- Bigest Fish'}
           blackTitle
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,
@@ -360,7 +357,10 @@ const LeaderBoard = ({navigation}) => {
             navigation.goBack();
           }}
         />
-        <View style={{flex: 0.38 }}>
+        <View style={{ flex: 0.38 }}>
+          {/* {app && app.loading ? (
+            <Loader isLoading={app.loading} isAbsolute />
+          ) : ( */}
           <FlatList
             extraData={fishingList}
             data={fishingList}
@@ -375,13 +375,25 @@ const LeaderBoard = ({navigation}) => {
             }
             showsHorizontalScrollIndicator={false}
             indicatorActiveWidth={40}
-            contentContainerStyle={{paddingHorizontal: 16}}
-
+            contentContainerStyle={{ paddingHorizontal: 16 }}
+            viewabilityConfig={viewConfigRef.current}
+            onViewableItemsChanged={onViewRef.current}
+            // refreshControl={
+            //   <RefreshControl
+            //     // refreshing={state.refreshing}
+            //     refreshing={app.loading}
+            //     onRefresh={_onRefresh.bind(this)}
+            //     title="Pull to refresh"
+            //     tintColor={colors.white1}
+            //     titleColor={colors.white1}
+            //   />
+            // }
           />
+          {/* )} */}
         </View>
         <View>
-          <View style={{alignItems: 'center', backgroundColor: '#fff'}}>
-            <View style={{flexDirection: 'row'}}>
+          <View style={{ alignItems: 'center', backgroundColor: '#fff' }}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 onPress={toggleAnnual}
                 style={annual === true ? styles.clickedButton : styles.button}>
@@ -406,9 +418,9 @@ const LeaderBoard = ({navigation}) => {
                   Monthly
                 </Text>
               </TouchableOpacity>
-            
+
             </View>
-            <Text style={{fontSize: 22, fontWeight: '600', marginBottom: 10}}>
+            <Text style={{ fontSize: 22, fontWeight: '600', marginBottom: 10 }}>
               {monthly === true
                 ? moment(date).format(MONTHLY_OUTPUT_FORMAT)
                 : moment(date).format(YEAR_OUTPUT_FORMAT)}{' '}
@@ -417,49 +429,22 @@ const LeaderBoard = ({navigation}) => {
           </View>
         </View>
         {/* BOTTOM THIRD */}
-        <View style={{backgroundColor: '#2c385e', flex: 1}}>
-          {/* {lcrData.length !== 0 && lcrList.length !== 0 ? (
-            <FlatList
-              data={lcrData}
-              keyExtractor={item => item.id}
-              renderItem={({item, index}) => (
-                <LeaderboardCard post={item} rank={index + 1} />
-              )}
-              style={{marginTop: 5}}
-            />
-          ) : lcrData.length === 0 && lcrList.length !== 0 ? (
-            <View
-              style={{
-                width: '100%',
-                height: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  color: '#fafafa',
-                  textAlign: 'center',
-                  marginBottom: windowHeight * 0.5,
-                  paddingHorizontal: windowWidth * 0.1,
-                }}>
-                No catches for this fish type and time period
-              </Text>
-            </View>
-          ) : (
-            lcrData.length === 0 &&
-            lcrList.length === 0
-            (
-                <ActivityIndicator
-                  size="large"
-                  style={{marginTop: windowHeight * 0.2}}
-                />,
-              )
-          )} */}
-          <LeaderboardCard 
-          navigation={navigation}/>
+        <View style={{ backgroundColor: '#2c385e', flex: 1 }}>
+
+          <FlatList
+            extraData={fishTypeId}
+            data={dateWiseList}
+            renderItem={_renderDateView}
+            keyExtractor={(item, index) => 'key' + index}
+            ListHeaderComponent={() =>
+              !dateWiseList.length ? (
+                <Text style={styles.nomatch}>No Match found</Text>
+              ) : null
+            }
+          />
+
           {show && (
-            <View style={{position: 'absolute', bottom: windowHeight * 0.01}}>
+            <View style={{ position: 'absolute', bottom: windowHeight * 0.01 }}>
               <MonthPicker
                 onChange={onValueChange}
                 value={date}
@@ -471,8 +456,9 @@ const LeaderBoard = ({navigation}) => {
                 okButton="Done"
               />
             </View>
-          ) }
+          )}
         </View>
+        <Loader isLoading={app.loading} isAbsolute />
       </SafeAreaView>
     </ImageBackground>
   );

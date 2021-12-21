@@ -1,4 +1,4 @@
-import {actionTypes} from '../../utilities/constants';
+import { actionTypes } from '../../utilities/constants';
 
 const initialState = {
   loading: false,
@@ -9,6 +9,7 @@ const initialState = {
   weatherarray: [],
   methodarray: [],
   lcrlistarray: [],
+  fishesArr: []
 };
 
 export default (state = initialState, action) => {
@@ -286,128 +287,163 @@ export default (state = initialState, action) => {
         loading: false,
       };
 
-      case actionTypes.SAVE_VIDEO_REQUESTED:
-        return {
-          ...state,
-          loading: true,
-        };
-  
-      case actionTypes.SAVE_VIDEO_SUCCEEDED:
-        return {
-          ...state,
-          loading: false,
-        };
-  
-      case actionTypes.SAVE_VIDEO_FAIL:
-        return {
-          ...state,
-          loading: false,
-        };
+    case actionTypes.SAVE_VIDEO_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
 
-        case actionTypes.SAVE_PHOTO_SHARING_REQUESTED:
-          return {
-            ...state,
-            loading: true,
-          };
-    
-        case actionTypes.SAVE_PHOTO_SHARING_SUCCEEDED:
-          return {
-            ...state,
-            loading: false,
-          };
-    
-        case actionTypes.SAVE_PHOTO_SHARING_FAIL:
-          return {
-            ...state,
-            loading: false,
-          };
-          
-          case actionTypes.TIMELINE_LIST_REQUESTED:
-            return {
-              ...state,
-              loading: true,
-            };
-      
-          case actionTypes.TIMELINE_LIST_SUCCEEDED:
-            return {
-              ...state,
-              loading: false,
-            };
-      
-          case actionTypes.TIMELINE_LIST_FAIL:
-            return {
-              ...state,
-              loading: false,
-            };
-            case actionTypes.PHOTOSHARE_ADDLIKE_REQUESTED:
-              return {
-                ...state,
-                loading: true,
-              };
-        
-            case actionTypes.PHOTOSHARE_ADDLIKE_SUCCEEDED:
-              return {
-                ...state,
-                loading: false,
-              };
-        
-            case actionTypes.PHOTOSHARE_ADDLIKE_FAIL:
-              return {
-                ...state,
-                loading: false,
-              };
-               case actionTypes.PHOTO_SHARE_LIKES_REQUESTED:
-              return {
-                ...state,
-                loading: true,
-              };
-        
-            case actionTypes.PHOTO_SHARE_LIKES_SUCCEEDED:
-              return {
-                ...state,
-                loading: false,
-              };
-        
-            case actionTypes.PHOTO_SHARE_LIKES_FAIL:
-              return {
-                ...state,
-                loading: false,
-              };
-              case actionTypes.PHOTO_ADDCOMMENT_REQUESTED:
-                return {
-                  ...state,
-                  loading: true,
-                };
-          
-              case actionTypes.PHOTO_ADDCOMMENT_SUCCEEDED:
-                return {
-                  ...state,
-                  loading: false,
-                };
-          
-              case actionTypes.PHOTO_ADDCOMMENT_FAIL:
-                return {
-                  ...state,
-                  loading: false,
-                };
+    case actionTypes.SAVE_VIDEO_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
 
-                case actionTypes.PHOTOSHARE_COMMENT_LIST_REQUESTED:
-                  return {
-                    ...state,
-                    loading: true,
-                  };
-            
-                case actionTypes.PHOTOSHARE_COMMENT_LIST_SUCCEEDED:
-                  return {
-                    ...state,
-                    loading: false,
-                  };
-            
-                case actionTypes.PHOTOSHARE_COMMENT_LIST_FAIL:
-                  return {
-                    ...state,
-                    loading: false,
-                  };
+    case actionTypes.SAVE_VIDEO_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.SAVE_PHOTO_SHARING_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.SAVE_PHOTO_SHARING_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.SAVE_PHOTO_SHARING_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.TIMELINE_LIST_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.TIMELINE_LIST_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.TIMELINE_LIST_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case actionTypes.PHOTOSHARE_ADDLIKE_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.PHOTOSHARE_ADDLIKE_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.PHOTOSHARE_ADDLIKE_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case actionTypes.PHOTO_SHARE_LIKES_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.PHOTO_SHARE_LIKES_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.PHOTO_SHARE_LIKES_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case actionTypes.PHOTO_ADDCOMMENT_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.PHOTO_ADDCOMMENT_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.PHOTO_ADDCOMMENT_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.PHOTOSHARE_COMMENT_LIST_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.PHOTOSHARE_COMMENT_LIST_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.PHOTOSHARE_COMMENT_LIST_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case actionTypes.LEADERBOARD_FISH_LIST_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.LEADERBOARD_FISH_LIST_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+        fishesArr: action.payload
+      };
+
+    case actionTypes.LEADERBOARD_FISH_LIST_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+    case actionTypes.LEADERBOARD_RANKING_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.LEADERBOARD_RANKING_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actionTypes.LEADERBOARD_RANKING_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }

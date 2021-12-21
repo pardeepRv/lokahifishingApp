@@ -12,6 +12,7 @@ import {
   getlcrlistsaga,
   getLcrSecondsaga,
   getLcrThirdsaga,
+  getleaderboardfishlist,
   getMethodsaga,
   getNewsSaga,
   getPositionSaga,
@@ -19,6 +20,7 @@ import {
   gettimeline,
   getvediosaga,
   getWeaherSaga,
+  leaderboardrankingsaga,
   likesListLcr,
   likesphotosharinglist,
   savelcrreport,
@@ -94,5 +96,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.PHOTO_SHARE_LIKES_REQUESTED, likesphotosharinglist);
   yield takeLatest(actionTypes.PHOTO_ADDCOMMENT_REQUESTED, addcommentphotodharingsaga);
   yield takeLatest(actionTypes.PHOTOSHARE_COMMENT_LIST_REQUESTED,commentListphotoharing );
-
+  yield takeLatest(actionTypes.LEADERBOARD_FISH_LIST_REQUESTED,getleaderboardfishlist );
+  yield takeLatest(actionTypes.LEADERBOARD_RANKING_REQUESTED,leaderboardrankingsaga );
 }

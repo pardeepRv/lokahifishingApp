@@ -41,7 +41,7 @@ export default class Accordian extends PureComponent {
   };
 
   sendSelectedValues = () => {
-    const { getSelectedweather, navigation } = this.props;
+    const { getSelectedweather, navigation, getWeatherSendToApi } = this.props;
 
     const { data } = this.state;
     let arr = [];
@@ -57,7 +57,11 @@ export default class Accordian extends PureComponent {
     });
 
     console.log(arr, 'arr to be send');
+    console.log(this.emptyArr, 'arr to be send 111');
+
     getSelectedweather(arr);
+    getWeatherSendToApi(this.emptyArr);
+
     navigation.goBack();
   };
 

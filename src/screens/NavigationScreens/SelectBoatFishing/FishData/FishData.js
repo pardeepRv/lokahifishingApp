@@ -77,6 +77,8 @@ const FishData = ({ navigation, route }) => {
   const [positionarr, setpositionarr] = useState([]);
   const [weateherArr, setWeatherAr] = useState([]);
 
+  const [weateherArrNeedsToSendApi, setWeateherArrNeedsToSendApi] = useState([]);
+
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   useEffect(() => {
@@ -134,6 +136,14 @@ const FishData = ({ navigation, route }) => {
       setWeatherAr(val);
     }
   };
+
+  const getWeatherSendToApi = data => {
+    console.log('data getWeatherSendToApi', data);
+    if (data && data.length > 0) {
+      setWeateherArrNeedsToSendApi(data);
+    }
+  };
+
   const getHrs = v => {
     console.log(v, ' in parnt hrs');
     if (v > 0) {
@@ -212,7 +222,7 @@ const FishData = ({ navigation, route }) => {
     formData.append('description', additionalNotes);
 
     // formData.append('sign_id', selectedSigns);
-    // formData.append('method_id', []);
+    // formData.append('method_id', weateherArrNeedsToSendApi);
     // formData.append('weather_id', []);
     // formData.append('position_id', selectedPosition);
 
@@ -229,7 +239,7 @@ const FishData = ({ navigation, route }) => {
     }
 
     formData.append('method_id[0]', 1);
-    formData.append('weather_id[0]', 1);
+    formData.append('weather_id', weateherArrNeedsToSendApi);
     // formData.append('position_id[0]', 3);
 
     formData.append('user_os', user_os);
@@ -368,6 +378,7 @@ const FishData = ({ navigation, route }) => {
                     value: 3,
                     name: 'Weather',
                     getSelectedweather: getSelectedweather,
+                    getWeatherSendToApi: getWeatherSendToApi
                   })
                 }>
                 Weather(optional)
@@ -376,18 +387,14 @@ const FishData = ({ navigation, route }) => {
                 {weateherArr && weateherArr.length > 0 ? (
                   weateherArr.map((val, index) => {
                     return (
-                      
-                  
-                        <Text
+                      <Text
                         key={index}
                         style={{
                           fontFamily: fonts.semiBold,
                         }}>
                         {/* {val.weather_type} : */}
-                         {val.value}
+                        {val.value}
                       </Text>
-                    
-                      
                     );
                   })
                 ) : (
@@ -400,6 +407,7 @@ const FishData = ({ navigation, route }) => {
                         value: 3,
                         name: 'weather',
                         getSelectedweather: getSelectedweather,
+                        getWeatherSendToApi: getWeatherSendToApi
                       })
                     }>
                     Select weather

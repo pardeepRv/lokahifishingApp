@@ -40,7 +40,7 @@ const ModalListComponent = props => {
   const { navigation, route } = props;
   const { value, name, getSelectedSigns } = route?.params;
   const { getSelectedposition } = route?.params;
-  const { getSelectedweather } = route?.params;
+  const { getSelectedweather, getWeatherSendToApi } = route?.params;
 
 
   const [weateherArr, setWeatherAr] = useState(app && app.weatherarray);
@@ -287,7 +287,12 @@ const ModalListComponent = props => {
 
         {value == 2 && <Method navigation={navigation} />}
         {value == 3 && weateherArr && weateherArr.length > 0 ? (
-          <Accordian weateherArr={weateherArr} navigation={navigation} getSelectedweather={getSelectedweather} />
+          <Accordian
+            weateherArr={weateherArr}
+            navigation={navigation}
+            getSelectedweather={getSelectedweather}
+            getWeatherSendToApi={getWeatherSendToApi}
+          />
         ) : null}
 
         {value == 4 && (

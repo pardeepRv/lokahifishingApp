@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   FlatList,
   Image,
@@ -8,62 +8,62 @@ import {
   Text,
   TouchableOpacity,
   UIManager,
-  View,
+  View
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../../assets';
-import {Button} from '../../../../components/common';
-import {strings} from '../../../../localization';
-import {colors} from '../../../../utilities/constants';
-import {layout} from '../../../../utilities/layout';
+import { moderateScale } from 'react-native-size-matters';
+import { fonts, icons } from '../../../../../assets';
+import { Button } from '../../../../components/common';
+import { strings } from '../../../../localization';
+import { colors } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
 
 export default class Accordian extends PureComponent {
   constructor(props) {
     console.log(props, 'props on accordian>>>>>>>>>>');
-  // const {getSelectedweather} = props?.params;
+
 
     super(props);
     this.state = {
       data: props.weateherArr,
       expanded: false,
       isLoading: false,
-      // data: [],
-    };
-
-    this.componentDidMount = () => {
-      this.setState({
-        data: this.props.weateherArr,
-      });
     };
 
     if (Platform.OS === 'android') {
       UIManager.setLayoutAnimationEnabledExperimental(true);
     }
+    this.emptyArr = [];
   }
+  componentDidMount = () => {
+    this.setState({
+      data: this.props.weateherArr,
+    });
+  };
 
   sendSelectedValues = () => {
-   return this.props.navigation.goBack();
+    const { getSelectedweather, navigation } = this.props;
 
-    const {data} = this.state;
+    const { data } = this.state;
     let arr = [];
 
     data.forEach(element => {
       if (element && element.weather_type && element.weather_type.length > 0) {
         element.weather_type.map((value, i) => {
           if (value && value.isSelected) {
-            // arr.push(element);
-            console.log(value, 'is selected');
+            arr.push(value);
           }
         });
       }
     });
+
+    console.log(arr, 'arr to be send');
     getSelectedweather(arr);
     navigation.goBack();
   };
 
-  _renderItem = ({item, index}) => {
+  _renderItem = ({ item, index }) => {
     return (
-      <View style={{flex: 1, backgroundColor: colors.white1}}>
+      <View style={{ flex: 1, backgroundColor: colors.white1 }}>
         <TouchableOpacity
           style={[styles.childRow]}
           onPress={() => this.onClick(index)}>
@@ -82,46 +82,46 @@ export default class Accordian extends PureComponent {
             )}
           </View>
           {item &&
-          item.selected &&
-          item.weather_type &&
-          item.weather_type.length
+            item.selected &&
+            item.weather_type &&
+            item.weather_type.length
             ? item.weather_type.map((val, i) => {
-                return (
-                  <TouchableOpacity
-                    style={styles.childRow1}
-                    key={i}
-                    onPress={() => this.onClickInner(index, i)}>
-                    <Text style={[styles.font, styles.itemInActive]}>
-                      {val.value}
-                    </Text>
+              return (
+                <TouchableOpacity
+                  style={styles.childRow1}
+                  key={i}
+                  onPress={() => this.onClickInner(index, i, val.isSelected)}>
+                  <Text style={[styles.font, styles.itemInActive]}>
+                    {val.value}
+                  </Text>
 
-                    {val && val.isSelected ? (
-                      <Image
-                        source={icons.ic_done}
-                        style={{
-                          tintColor: colors.secondry,
-                        }}
-                      />
-                    ) : (
-                      <Image source={icons.ic_not_done} />
-                    )}
-                  </TouchableOpacity>
-                );
-              })
+                  {val && val.isSelected ? (
+                    <Image
+                      source={icons.ic_done}
+                      style={{
+                        tintColor: colors.secondry,
+                      }}
+                    />
+                  ) : (
+                    <Image source={icons.ic_not_done} />
+                  )}
+                </TouchableOpacity>
+              );
+            })
             : null}
         </TouchableOpacity>
       </View>
     );
   };
   render() {
-    const {data} = this.state;
+    const { data } = this.state;
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <FlatList
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           data={data}
-          contentInset={{bottom: 40}}
+          contentInset={{ bottom: 40 }}
           extraData={data}
           renderItem={this._renderItem}
           removeClippedSubviews={true}
@@ -150,21 +150,50 @@ export default class Accordian extends PureComponent {
   onClick = index => {
     const temp = this.state.data.slice();
     temp[index].selected = !temp[index].selected;
-    this.setState({data: temp});
+    this.setState({ data: temp });
   };
 
-  onClickInner = (index, idx) => {
+  onClickInner = (index, idx, status) => {
+
+    console.log(index, idx, status, 'index1', 'idx', "status");
+
+    console.log(this.emptyArr, 'before this.emptyArr');
+
+    if (status == false) {
+      this.emptyArr.push([index]);
+
+      this.emptyArr.forEach(elements => {
+        console.log(elements, 'in loop 166');
+        if (elements && elements.length <= 1) {
+          return elements.push(idx);
+        }
+      });
+    }
+    else {
+      // this.emptyArr.pop();
+      // this.emptyArr.splice(1, 1);
+      this.emptyArr.forEach((elements, i) => {
+        console.log(elements, 'in loop 176');
+
+        if (elements[0] == index && elements[1] == idx) {
+          console.log('coming in else loop2', i);
+          this.emptyArr.splice(i, 1);
+        }
+      });
+    }
+
+    console.log(this.emptyArr, 'after this.emptyArr');
+
     const temp = this.state.data.slice();
-    console.log(temp , '???????????');
     temp[index].weather_type[idx].isSelected =
       !temp[index].weather_type[idx].isSelected;
     // temp[index].weather_type[idx].isSelected = true;
-    this.setState({data: temp});
+    this.setState({ data: temp });
   };
 
   toggleExpand = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({expanded: !this.state.expanded});
+    this.setState({ expanded: !this.state.expanded });
   };
 }
 

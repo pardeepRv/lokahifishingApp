@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -11,20 +11,20 @@ import {
   UIManager,
   View,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {useDispatch, useSelector} from 'react-redux';
-import {fonts, icons} from '../../../../../assets';
-import {Button, Loader} from '../../../../components/common';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../../assets';
+import { Button, Loader } from '../../../../components/common';
 import Circular from '../../../../components/common/Circular';
-import {Header} from '../../../../components/common/Header';
-import {strings} from '../../../../localization';
+import { Header } from '../../../../components/common/Header';
+import { strings } from '../../../../localization';
 import {
   getMethod,
   getposition,
   getsigns,
   getWeather,
 } from '../../../../store/actions';
-import {colors} from '../../../../utilities/constants';
+import { colors } from '../../../../utilities/constants';
 import Accordian from './Accordian';
 import Method from './Method';
 import styles from './styles.js';
@@ -37,9 +37,11 @@ const ModalListComponent = props => {
   console.log(props, 'props in modal>>>>>>>.');
 
   const dispatch = useDispatch();
-  const {navigation, route} = props;
-  const {value, name, getSelectedSigns} = route?.params;
-  const {getSelectedposition} = route?.params;
+  const { navigation, route } = props;
+  const { value, name, getSelectedSigns } = route?.params;
+  const { getSelectedposition } = route?.params;
+  const { getSelectedweather } = route?.params;
+
 
   const [weateherArr, setWeatherAr] = useState(app && app.weatherarray);
   const [methodarr, setmethodarr] = useState([]);
@@ -115,6 +117,7 @@ const ModalListComponent = props => {
     navigation.goBack();
   };
 
+
   useEffect(() => {
     console.log('in useEfectof modallistComponent >>>>>>>>>>>.');
     const unsubscribe = navigation.addListener('focus', () => {
@@ -166,6 +169,20 @@ const ModalListComponent = props => {
           // if (cb?.data) {
           //   setWeatherAr(cb?.data);
           // }
+          let newArr = cb && cb.data && cb.data.data && cb.data.data.weather;
+
+          newArr.forEach((val, index) => {
+            val.selected = false;
+            let arr = val && val.weather_type;
+
+            if (arr.length > 0) {
+              arr.forEach((v, i) => {
+                v.isSelected = false
+              })
+            }
+          })
+
+          console.log(newArr, 'updated Arr is');
           if (cb?.data?.data) {
             setWeatherAr(cb?.data?.data?.weather);
           }
@@ -187,7 +204,7 @@ const ModalListComponent = props => {
     );
   }
 
-  const _renderView = ({item, index}) => (
+  const _renderView = ({ item, index }) => (
     <TouchableOpacity
       style={[
         styles.listItem,
@@ -215,7 +232,7 @@ const ModalListComponent = props => {
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView style={styles.content}>
         <Header
           containerStyle={{
@@ -223,7 +240,7 @@ const ModalListComponent = props => {
             height: moderateScale(60),
           }}
           title={name}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -238,7 +255,7 @@ const ModalListComponent = props => {
             data={signs}
             showsVerticalScrollIndicator={false}
             renderItem={_renderView}
-            contentInset={{bottom: 20}}
+            contentInset={{ bottom: 20 }}
             keyExtractor={(item, index) => 'key' + index}
             ListEmptyComponent={() =>
               signs >= 0 && (
@@ -270,7 +287,7 @@ const ModalListComponent = props => {
 
         {value == 2 && <Method navigation={navigation} />}
         {value == 3 && weateherArr && weateherArr.length > 0 ? (
-          <Accordian weateherArr={weateherArr} navigation={navigation} />
+          <Accordian weateherArr={weateherArr} navigation={navigation} getSelectedweather={getSelectedweather} />
         ) : null}
 
         {value == 4 && (
@@ -279,7 +296,7 @@ const ModalListComponent = props => {
             data={position}
             showsVerticalScrollIndicator={false}
             renderItem={_renderView}
-            contentInset={{bottom: 20}}
+            contentInset={{ bottom: 20 }}
             keyExtractor={(item, index) => 'key' + index}
             ListEmptyComponent={() =>
               position >= 0 && (

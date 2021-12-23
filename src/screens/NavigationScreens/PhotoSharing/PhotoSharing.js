@@ -192,8 +192,8 @@ const PhotoSharing = ({ navigation }) => {
                     :
                     <Video
                         source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
-                        paused={false}
-                        repeat={true}
+                        paused={true}
+                        repeat={false}
                         controls={true}
                         style={{ width: layout.size.width - 100, height: layout.size.height / 3.5, }}
                     />

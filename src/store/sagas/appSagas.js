@@ -811,6 +811,8 @@ function* leaderboardrankingsaga(params) {
     if (response && response.data && response.data.status) {
       yield put({
         type: actionTypes.LEADERBOARD_RANKING_SUCCEEDED,
+        payload: response?.data?.data?.leaderboardRankingAnually,
+
       });
       return params.cb(response);
     }
@@ -821,6 +823,36 @@ function* leaderboardrankingsaga(params) {
       type: actionTypes.LEADERBOARD_RANKING_FAIL,
     });
   }
+}
+
+function* leaderboardfiltersaga(params) {
+    console.log('params in it>>>>>>>>>>', params);
+try {
+  const config = {
+    url: urls.leaderboard_filter,
+    method: 'POST',
+    data: { fish_id: params?.params?.fish_id , month : params?.params?.month , year : params?.params?.year },
+    headers: {
+      Authorization: `Bearer ${params?.params?.token}`,
+    },
+  };
+  const response = yield request(config);
+   console.log(response, 'getting response leaderboard filter  Api ');
+
+  if (response && response.data && response.data.status) {
+    yield put({
+      type: actionTypes.LEADERBOARD_FILTER_SUCCEEDED,
+      payload: response?.data?.data?.leaderboardRankingAnually,
+    }); 
+    return params.cb(response);
+  }
+} catch (error) {
+  console.log(error, 'coming in catch');
+  showErrorAlert(getAPIError(error));
+  yield put({
+    type: actionTypes.LEADERBOARD_FILTER_FAIL,
+  });
+}
 }
 export {
   fetchAll,
@@ -849,5 +881,6 @@ export {
   addcommentphotodharingsaga,
   commentListphotoharing,
   getleaderboardfishlist,
-  leaderboardrankingsaga
+  leaderboardrankingsaga,
+  leaderboardfiltersaga
 };

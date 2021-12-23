@@ -9,7 +9,9 @@ const initialState = {
   weatherarray: [],
   methodarray: [],
   lcrlistarray: [],
-  fishesArr: []
+  fishesArr: [],
+  rankinglist : [],
+  filterlist :[],
 };
 
 export default (state = initialState, action) => {
@@ -437,9 +439,29 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        rankinglist: action.payload
       };
 
     case actionTypes.LEADERBOARD_RANKING_FAIL:
+      return {
+        ...state,
+        loading: false,
+      };
+      case actionTypes.LEADERBOARD_FILTER_REQUESTED:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case actionTypes.LEADERBOARD_FILTER_SUCCEEDED:
+      return {
+        ...state,
+        loading: false,
+       filterlist: action.payload
+
+      };
+
+    case actionTypes.LEADERBOARD_FILTER_FAIL:
       return {
         ...state,
         loading: false,

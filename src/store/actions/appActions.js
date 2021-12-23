@@ -194,6 +194,14 @@ const leaderboardranking = (params, cb) => {
     cb,
   };
 };
+
+const leaderboardfilter = (params, cb) => {
+  return {
+    type: actionTypes.LEADERBOARD_FILTER_REQUESTED,
+    params,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -220,5 +228,6 @@ export {
   photoaddcomment,
   photoaddcommentlist,
   leaderboardfishlist,
-  leaderboardranking
+  leaderboardranking,
+  leaderboardfilter,
 };

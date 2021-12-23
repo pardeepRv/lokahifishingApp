@@ -20,6 +20,7 @@ import {
   gettimeline,
   getvediosaga,
   getWeaherSaga,
+  leaderboardfiltersaga,
   leaderboardrankingsaga,
   likesListLcr,
   likesphotosharinglist,
@@ -98,4 +99,7 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.PHOTOSHARE_COMMENT_LIST_REQUESTED,commentListphotoharing );
   yield takeLatest(actionTypes.LEADERBOARD_FISH_LIST_REQUESTED,getleaderboardfishlist );
   yield takeLatest(actionTypes.LEADERBOARD_RANKING_REQUESTED,leaderboardrankingsaga );
+  yield takeLatest(actionTypes.LEADERBOARD_FILTER_REQUESTED,leaderboardfiltersaga );
+
+
 }

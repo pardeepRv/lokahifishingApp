@@ -155,6 +155,7 @@ export default class Accordian extends PureComponent {
 
   onClickInner = (index, idx) => {
     const temp = this.state.data.slice();
+    console.log(temp , '???????????');
     temp[index].weather_type[idx].isSelected =
       !temp[index].weather_type[idx].isSelected;
     // temp[index].weather_type[idx].isSelected = true;

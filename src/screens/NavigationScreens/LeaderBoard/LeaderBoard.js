@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Dimensions, FlatList,
   Image,
@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   RefreshControl,
+  refreshControl
 } from 'react-native';
 import MonthPicker from 'react-native-month-year-picker';
 import { moderateScale } from 'react-native-size-matters';
@@ -17,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fonts, icons } from '../../../../assets';
 import { Loader } from '../../../components/common';
 import { Header } from '../../../components/common/Header';
-import { leaderboardfishlist, leaderboardranking } from '../../../store/actions';
+import { leaderboardfilter, leaderboardfishlist, leaderboardranking } from '../../../store/actions';
 import { colors } from '../../../utilities/constants';
 import { layout } from '../../../utilities/layout';
 import styles from './styles';
@@ -117,15 +118,19 @@ let fishID = null;
 const LeaderBoard = ({ navigation }) => {
   const [fishingList, setfishingList] = useState([]);
   const [fishType, setfishType] = useState('');
-  const [annual, setAnnual] = useState(true);
+  const [annual, setAnnual] = useState(false);
   const [monthly, setMonthly] = useState(false);
   const [dateWiseList, setDateWiseList] = useState([]);
-  const [fishTypeId, setfishTypeId] = useState(null);
+  const [filterWiseList, setfilterWiseList] = useState([]);
 
- const [state, setState] = useState({
+  const [fishTypeId, setfishTypeId] = useState(null);
+  const [fishId, setfishId] = useState(null);
+
+
+  const [state, setState] = useState({
     refreshing: false,
   });
-  
+
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
   console.log(auth, 'auth in leaderboard >>>>>>>>>>>>>>');
@@ -134,6 +139,10 @@ const LeaderBoard = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [date, setDate] = useState(new Date());
+
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(null);
+
   const [show, setShow] = useState(false);
   const showPicker = useCallback((value) => setShow(value), []);
   const month = date.getMonth();
@@ -142,6 +151,7 @@ const LeaderBoard = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getleaderboardFishes();
+
     });
     return unsubscribe;
   }, [navigation]);
@@ -161,8 +171,8 @@ const LeaderBoard = ({ navigation }) => {
             });
             setfishingList(fishArr);
             setfishTypeId(fishArr[0].id);
-            getboardranking(fishArr[0].id)
-          } 
+            getboardranking(fishArr[0].id);
+          }
         }
       }),
     );
@@ -170,13 +180,46 @@ const LeaderBoard = ({ navigation }) => {
 
   const getboardranking = (fishid) => {
     let obj = {};
-
+    console.log(fishid, '???"""???""???"??"');
     obj.token = auth && auth?.userDetails?.access_token;
     obj.fish_id = fishid;
 
     dispatch(
       leaderboardranking(obj, cb => {
         console.log(cb, 'in leader card>>>>>>>>>>>>>>>>>>>');
+        if (cb) {
+          console.log(cb, 'callBack in ranking card card');
+          if (cb?.data?.data) {
+            let fishArr = cb?.data?.data?.leaderboardRankingAnually;
+            fishArr.forEach(element => {
+              element.imgUrl = cb && cb.data && cb.data.base_url;
+            });
+            setDateWiseList(fishArr);
+
+          }
+        }
+      }),
+    );
+  }
+  const getfilter = () => {
+
+    let obj = {};
+
+    obj.token = auth && auth?.userDetails?.access_token;
+    console.log(fishType, 'fishtype name with  id>>>>>>>>>>>>');
+    console.log(fishTypeId, 'fishtype name with  id>>>>>>>>>>>>');
+
+
+    obj.fish_id = fishTypeId;
+    obj.year = selectedYear;
+    obj.month = selectedMonth;
+
+    console.log(obj, 'sending to api');
+
+
+    dispatch(
+      leaderboardfilter(obj, cb => {
+        console.log(cb, 'in leader month yearcard>>>>>>>>>>>>>>>>>>>');
         if (cb) {
           console.log(cb, 'callBack in card');
           if (cb?.data?.data) {
@@ -191,10 +234,32 @@ const LeaderBoard = ({ navigation }) => {
     );
   }
 
-  // function _onRefresh() {
-  //   setState({refreshing: true});
-  //   getleaderboardFishes();
-  // }
+  const onValueChange = useCallback(
+    (event, newDate) => {
+      const selectedDate = newDate || date;
+
+
+      console.log(selectedDate, '>>>>?????');
+      console.log(moment(selectedDate).format('L'), 'moment>>>>');
+      let finalDate = moment(selectedDate).format('L');
+
+      let valueAre = finalDate.split('/');
+      console.log(valueAre, 'console value');
+      if (annual == true) {
+        setSelectedYear(valueAre[2]);
+      }
+      else {
+        setSelectedMonth(valueAre[0]);
+      }
+
+      showPicker(false)
+      // return
+
+      setDate(selectedDate);
+      _onRefresh();
+    },
+    [date, showPicker],
+  );
 
   const prevStateRef = useRef();
   useEffect(() => {
@@ -207,10 +272,20 @@ const LeaderBoard = ({ navigation }) => {
   if (prevState != fishTypeId) {
     setTimeout(() => {
       getboardranking(fishTypeId);
-
+      getfilter(fishTypeId)
     }, 1000);
   }
 
+  function _onRefresh(idfish) {
+    console.log(idfish, 'fishtypeif=d');
+    // console.log(ID , '??::?:?"?:');
+    setState({ refreshing: true });
+    getfilter();
+  }
+  function onRefresh() {
+    setState({ refreshing: true });
+    getleaderboardFishes();
+  }
 
   //View of flatlist
   const _renderView = ({ item, index }) => (
@@ -265,7 +340,7 @@ const LeaderBoard = ({ navigation }) => {
         );
         setfishType(viewableItems.viewableItems[0].item.title);
       } else {
-        setfishType('');
+        setfishType(viewableItems.viewableItems[0].item.title);
         setfishTypeId(viewableItems.viewableItems[0].item.id);
       }
     }
@@ -275,12 +350,15 @@ const LeaderBoard = ({ navigation }) => {
   const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
 
   const toggleAnnual = () => {
+    let fishid = app && app.rankinglist[0] && app.rankinglist[0].Fish_id
+    console.log(fishid, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>in toogle annually');
     setAnnual(true);
-    setMonthly(false);
-    showPicker(true);
+    showPicker(true, fishid);
   };
 
   const toggleMonthly = () => {
+    let fishid = app && app.rankinglist[0] && app.rankinglist[0].Fish_id
+    console.log(fishid, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>in toogle monthly');
     setAnnual(false);
     setMonthly(true);
     showPicker(true);
@@ -295,15 +373,7 @@ const LeaderBoard = ({ navigation }) => {
   //   },
   //   [date, setShowPicker],
   // );
-  const onValueChange = useCallback(
-    (event, newDate) => {
-      const selectedDate = newDate || date;
 
-      showPicker(false);
-      setDate(selectedDate);
-    },
-    [date, showPicker],
-  );
 
   const _renderDateView = ({ item, index }) => (
 
@@ -311,7 +381,7 @@ const LeaderBoard = ({ navigation }) => {
       <View style={styles.content1}>
         <View style={styles.rankingView}>
           <View style={styles.rankCircle}>
-            <Text style={styles.rank}># {index+1}</Text>
+            <Text style={styles.rank}># {index + 1}</Text>
           </View>
           <Text style={styles.weight}>{item?.Weight} lb</Text>
         </View>
@@ -357,17 +427,20 @@ const LeaderBoard = ({ navigation }) => {
             navigation.goBack();
           }}
         />
-        <View style={{ flex: 0.38 }}>
-          {/* {app && app.loading ? (
+
+        <View style={{ flex: 0.4 }}>
+          {/* {app.fishesArr== true ? (
             <Loader isLoading={app.loading} isAbsolute />
+           
           ) : ( */}
-          <FlatList
+            
+            <FlatList
             extraData={fishingList}
             data={fishingList}
             renderItem={_renderView}
             keyExtractor={(item, index) => 'key' + index}
             horizontal
-            pagingEnabled={true}
+            pagingEnabled
             ListEmptyComponent={() =>
               !fishingList.length ? (
                 <Text style={styles.nomatch}>No Match found</Text>
@@ -378,18 +451,11 @@ const LeaderBoard = ({ navigation }) => {
             contentContainerStyle={{ paddingHorizontal: 16 }}
             viewabilityConfig={viewConfigRef.current}
             onViewableItemsChanged={onViewRef.current}
-            // refreshControl={
-            //   <RefreshControl
-            //     // refreshing={state.refreshing}
-            //     refreshing={app.loading}
-            //     onRefresh={_onRefresh.bind(this)}
-            //     title="Pull to refresh"
-            //     tintColor={colors.white1}
-            //     titleColor={colors.white1}
-            //   />
-            // }
           />
-          {/* )} */}
+         {/* )}  */}
+
+
+
         </View>
         <View>
           <View style={{ alignItems: 'center', backgroundColor: '#fff' }}>
@@ -441,7 +507,21 @@ const LeaderBoard = ({ navigation }) => {
                 <Text style={styles.nomatch}>No Match found</Text>
               ) : null
             }
+            refreshControl={
+              <RefreshControl
+                // refreshing={state.refreshing}
+                refreshing={app.loading}
+                onRefresh={_onRefresh.bind(this)}
+                title="Pull to refresh"
+                tintColor={colors.white1}
+                titleColor={colors.white1}
+              />
+            }
           />
+
+
+
+
 
           {show && (
             <View style={{ position: 'absolute', bottom: windowHeight * 0.01 }}>

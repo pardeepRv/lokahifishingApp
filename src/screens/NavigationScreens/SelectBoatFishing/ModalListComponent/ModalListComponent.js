@@ -44,7 +44,7 @@ const ModalListComponent = props => {
 
 
   const [weateherArr, setWeatherAr] = useState(app && app.weatherarray);
-  const [methodarr, setmethodarr] = useState([]);
+  const [methodarr, setmethodarr] = useState(app && app.methodarray);
 
   const [open, setopen] = useState(false);
   const [signs, setSignArr] = useState(app && app.signarray);
@@ -90,6 +90,14 @@ const ModalListComponent = props => {
       });
       array[index].isSelected = !array[index].isSelected;
       setWeatherAr(array);
+    } else if (val == 2) {
+      array = methodarr.map(v => {
+        const newItem = Object.assign({}, v);
+        newItem.isSelected = false;
+        return newItem;
+      });
+      array[index].isSelected = !array[index].isSelected;
+      setmethodarr(array);
     }
   };
 
@@ -285,7 +293,11 @@ const ModalListComponent = props => {
           />
         )}
 
-        {value == 2 && <Method navigation={navigation} />}
+        {value == 2 && methodarr && methodarr.length > 0 ? (
+        <Method navigation={navigation}
+          methodarr={methodarr}
+        />
+        ) : null}
         {value == 3 && weateherArr && weateherArr.length > 0 ? (
           <Accordian
             weateherArr={weateherArr}

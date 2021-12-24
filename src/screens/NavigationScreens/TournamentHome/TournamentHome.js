@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import {
   FlatList,
   Image,
@@ -15,6 +15,9 @@ import {fonts, icons} from '../../../../assets';
 import {Header} from '../../../components/common/Header';
 import {colors} from '../../../utilities/constants';
 import styles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { tournamentlisting } from '../../../store/actions';
+import TimeAgo from 'react-native-timeago';
 
 const source = require('./4th_July_Tournamnt.pdf');
 
@@ -58,22 +61,56 @@ let tournaMents = [
 ];
 
 const TournamentHome = ({navigation}) => {
-  const [tournamentList, settournamentList] = useState(tournaMents);
+  const [tournamentList, settournamentList] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [pdfPath, setPdfPath] = useState('');
 
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+
+  console.log(app, 'appp in tournament page   page>>>>>>>>>>');
+  console.log(auth, 'auth in tournament page >>>>>>>>>>');
+
+  const dispatch = useDispatch();
+
+
+
+  useEffect(() => {
+    console.log('coming in this on lcrlist page');
+    const unsubscribe = navigation.addListener('focus', () => {
+      gettournamentfunc();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  function gettournamentfunc() {
+    let token = auth && auth?.userDetails?.access_token;
+ 
+    dispatch(
+      tournamentlisting(token, cb => {
+        if (cb) {
+           console.log(cb, 'callback list arr>>>>>>>>>>');
+          if (cb?.data?.data) {
+            let updatedLcrList = cb?.data?.data?.leaderboardRankingAnually;
+            updatedLcrList.reverse();
+            settournamentList(updatedLcrList);
+          }
+        }
+      }),
+    );
+  }
   //View of flatlist
   const _renderView = ({item, index}) => (
     <TouchableOpacity
       onPress={() => {
-        setPdfPath(item.src);
+        setPdfPath(item.doc);
         setModalVisible(true);
       }}
       style={styles.listView}
       activeOpacity={0.8}>
       <View style={styles.viewStyle}>
         <Image
-          source={item.img}
+          source={icons.ic_LokahiLogo}
           style={{
             height: 70,
             width: 70,
@@ -84,8 +121,10 @@ const TournamentHome = ({navigation}) => {
             justifyContent: 'center',
             left: 10,
           }}>
-          <Text style={styles.nameStyle}>{item.name}</Text>
-          <Text style={styles.dateStyle}>{item.date}</Text>
+          <Text style={styles.nameStyle}>{item.title}</Text>
+          {/* <Text>
+          <TimeAgo style={styles.dateStyle} time={item.created_at} />
+          </Text> */}
         </View>
       </View>
       <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
@@ -155,7 +194,10 @@ const TournamentHome = ({navigation}) => {
                 />
               </TouchableOpacity>
             </View>
-            <Pdf source={pdfPath} style={styles.pdf} loading="Loading PDF..." />
+            <Pdf 
+            source={{uri:pdfPath}} 
+            // source={{uri:'http://www.africau.edu/images/default/sample.pdf'}}
+            style={styles.pdf} loading="Loading PDF..." />
           </SafeAreaView>
         </Modal>
       </SafeAreaView>

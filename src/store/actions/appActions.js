@@ -202,6 +202,14 @@ const leaderboardfilter = (params, cb) => {
     cb,
   };
 };
+
+const tournamentlisting = (params, cb) => {
+  return {
+    type: actionTypes.TOURNAMENT_LISTING_REQUESTED,
+    params,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -230,4 +238,5 @@ export {
   leaderboardfishlist,
   leaderboardranking,
   leaderboardfilter,
+  tournamentlisting
 };

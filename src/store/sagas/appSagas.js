@@ -854,6 +854,37 @@ try {
   });
 }
 }
+
+function* gettournamentlistingsaga(params) {
+   console.log(params, 'params in signs api ');
+  try {
+    const config = {
+      url: urls.tournament_listing,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.params}`,
+      },
+    };
+    const response = yield request(config);
+     console.log(response, '<<<<<<<< tournament response  >>>>>>>>>>>>>>>>>');
+
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.TOURNAMENT_LISTING_SUCCEEDED,
+      });
+      params.cb(response);
+    } else {
+      yield put({
+        type: actionTypes.TOURNAMENT_LISTING_FAIL,
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.TOURNAMENT_LISTING_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -882,5 +913,6 @@ export {
   commentListphotoharing,
   getleaderboardfishlist,
   leaderboardrankingsaga,
-  leaderboardfiltersaga
+  leaderboardfiltersaga,
+  gettournamentlistingsaga
 };

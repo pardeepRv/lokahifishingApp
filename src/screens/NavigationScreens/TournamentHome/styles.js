@@ -26,12 +26,16 @@ export default StyleSheet.create({
     fontSize: moderateScale(16),
     color: colors.black1,
     paddingHorizontal: moderateScale(5),
+    textAlign:'left',
+    width:layout.size.width/2
   },
   dateStyle: {
     fontFamily: fonts.regular,
     fontSize: moderateScale(16),
     color: colors.black1,
     paddingHorizontal: moderateScale(5),
+    textAlign:'center',
+    width:layout.size.width/1.8
   },
   rightArrow: {
     height: 30,

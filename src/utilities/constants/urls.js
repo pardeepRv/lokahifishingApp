@@ -58,6 +58,7 @@ const urls = {
   leaderboard_fish_list :'leaderboard-fishes-list',
   leaderboard_ranking  : 'leaderboard-ranking',
   leaderboard_filter : 'leaderboard-filter' , 
+  tournament_listing : 'tournament-listing',
 };
 
 export {urls};

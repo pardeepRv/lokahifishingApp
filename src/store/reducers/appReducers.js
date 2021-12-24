@@ -466,6 +466,23 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
+      case actionTypes.TOURNAMENT_LISTING_REQUESTED:
+        return {
+          ...state,
+          loading: true,
+        };
+  
+      case actionTypes.TOURNAMENT_LISTING_SUCCEEDED:
+        return {
+          ...state,
+          loading: false,
+        };
+  
+      case actionTypes.TOURNAMENT_LISTING_FAIL:
+        return {
+          ...state,
+          loading: false,
+        };
     default:
       return state;
   }

@@ -57,6 +57,7 @@ const PhotoSharing = ({ navigation }) => {
     let auth = useSelector(state => state.auth);
     let app = useSelector(state => state.app);
     const [modal, setmodal] = useState(false);
+    const [paused, setpaused] = useState(true);
 
     console.log(app, 'appp in timelinelist   page>>>>>>>>>>');
     console.log(auth, 'auth in timelinelist page >>>>>>>>>>');
@@ -66,15 +67,20 @@ const PhotoSharing = ({ navigation }) => {
         setmodal(v)
     }
 
-    const setImages=()=>{
-        images=[];
+    const setImages = () => {
+        images = [];
     }
     useEffect(() => {
         console.log('coming in this on timelinelist page');
         const unsubscribe = navigation.addListener('focus', () => {
             gettimelinefunc();
+
         });
-        return unsubscribe;
+        const blur = navigation.addListener('blur', () => {
+            setpaused(true)
+            return unsubscribe, blur;
+
+        })
     }, [navigation]);
 
     function gettimelinefunc() {
@@ -192,9 +198,11 @@ const PhotoSharing = ({ navigation }) => {
                     :
                     <Video
                         source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
-                        paused={true}
+                        paused={paused}
                         repeat={false}
                         controls={true}
+                        playInBackground={false}
+                        playWhenInactive={false}
                         style={{ width: layout.size.width - 100, height: layout.size.height / 3.5, }}
                     />
             }
@@ -441,12 +449,12 @@ const PhotoSharing = ({ navigation }) => {
                     }
                 />
 
-                {modal ? <ImgViewer 
-                setmodalFun={setmodalFun}
-                 modal={modal} 
-                 images={images}
-                 setImages={setImages}
-                 /> : null}
+                {modal ? <ImgViewer
+                    setmodalFun={setmodalFun}
+                    modal={modal}
+                    images={images}
+                    setImages={setImages}
+                /> : null}
 
             </SafeAreaView>
             <Loader isLoading={app.loading} isAbsolute />

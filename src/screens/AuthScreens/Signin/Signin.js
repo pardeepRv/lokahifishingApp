@@ -1,5 +1,5 @@
 //import liraries
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   ImageBackground,
   Keyboard,
@@ -11,20 +11,20 @@ import {
   KeyboardAvoidingView,
   Image,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {useDispatch, useSelector} from 'react-redux';
-import {fonts, icons} from '../../../../assets';
-import {Button} from '../../../components/common/Button';
-import {Loader} from '../../../components/common/Loader';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../assets';
+import { Button } from '../../../components/common/Button';
+import { Loader } from '../../../components/common/Loader';
 import TextInputComp from '../../../components/common/TextInputComp';
-import {strings} from '../../../localization';
-import {loginWithEmail} from '../../../store/actions';
+import { strings } from '../../../localization';
+import { loginWithEmail } from '../../../store/actions';
 //intrnal libraries
-import {colors, screenNames} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import { colors, screenNames } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 import styles from './styles';
 
-const Signin = ({navigation}) => {
+const Signin = ({ navigation }) => {
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in signin page>>>>>>>>>>');
   const dispatch = useDispatch();
@@ -34,9 +34,9 @@ const Signin = ({navigation}) => {
     // email: 'myname@yopmail.com',
     // password: 'qwerty123',
   });
-  const {email, password} = state;
+  const { email, password } = state;
   const _onChangeText = key => val => {
-    setState({...state, [key]: val});
+    setState({ ...state, [key]: val });
   };
 
   const [errors, setErrors] = useState({
@@ -45,8 +45,8 @@ const Signin = ({navigation}) => {
     isLoading: false,
   });
   const name_and_values = [
-    {name: 'email', value: email},
-    {name: 'password', value: password},
+    { name: 'email', value: email },
+    { name: 'password', value: password },
   ];
 
   function Done() {
@@ -85,19 +85,14 @@ const Signin = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white1 }}>
       <View
         style={{
           flex: 1,
         }}>
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
-          <ScrollView>
-            <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
-              style={styles.subContainer}
-              contentContainerStyle={styles.subContentContainer}
-              keyboardShouldPersistTaps={'always'}
-              showsVerticalScrollIndicator={false}>
+          <ScrollView style={{ paddingHorizontal: moderateScale(25), flex: 1 }}>
+            
               <View style={styles.uploadContainer}>
                 <Image
                   source={icons.loginLogo}
@@ -113,7 +108,12 @@ const Signin = ({navigation}) => {
                 style={{
                   marginTop: layout.size.width / 15,
                 }}></View>
-
+              <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+              style={styles.subContainer}
+              contentContainerStyle={styles.subContentContainer}
+              keyboardShouldPersistTaps={'always'}
+              showsVerticalScrollIndicator={false}>
               <View
                 style={{
                   marginTop: moderateScale(40),
@@ -135,7 +135,7 @@ const Signin = ({navigation}) => {
                   {errors.email ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
                       {errors.email}
                     </Text>
                   ) : null}
@@ -158,7 +158,7 @@ const Signin = ({navigation}) => {
                   {errors.password ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
                       {errors.password}
                     </Text>
                   ) : null}
@@ -169,26 +169,31 @@ const Signin = ({navigation}) => {
                 onPress={() => navigation.navigate(screenNames.ForgotPassword)}>
                 <Text style={styles.forgotStyle}>{strings.forgotpassword}</Text>
               </TouchableOpacity>
-
+             
               <View
                 style={{
                   marginTop: moderateScale(50),
+
                 }}>
                 <Button
                   style={styles.btnStyles}
                   label={strings.login}
                   onPress={() => Done()}
                 />
-              </View>
+              
 
               <TouchableOpacity
+               style={{
+                marginBottom: moderateScale(100),
+              }}
                 onPress={() => navigation.navigate(screenNames.Signup)}>
                 <Text style={styles.createAccount}>
                   {strings.createAccount}
                   <Text style={styles.signuptext}>{strings.signup}</Text>
                 </Text>
               </TouchableOpacity>
-            </KeyboardAvoidingView>
+              </View>
+              </KeyboardAvoidingView>
           </ScrollView>
           <Loader
             isLoading={auth.loading}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -15,24 +15,24 @@ import {
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import GetLocation from 'react-native-get-location';
-import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
-import { moderateScale } from 'react-native-size-matters';
-import { fonts, icons } from '../../../../../assets';
-import { Header } from '../../../../components/common/Header';
+import MapView, {PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps';
+import {moderateScale} from 'react-native-size-matters';
+import {fonts, icons} from '../../../../../assets';
+import {Header} from '../../../../components/common/Header';
 import * as NavigationService from '../../../../store/NavigationService';
-import { colors, screenNames } from '../../../../utilities/constants';
+import {colors, screenNames} from '../../../../utilities/constants';
 import styles from './styles';
-import { savelcrreport } from '../../../../store/actions';
-import { Loader } from '../../../../components/common';
+import {savelcrreport} from '../../../../store/actions';
+import {Loader} from '../../../../components/common';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const FishData = ({ navigation, route }) => {
-  const { previousScreen } = route && route.params;
+const FishData = ({navigation, route}) => {
+  const {previousScreen} = route && route.params;
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -46,10 +46,10 @@ const FishData = ({ navigation, route }) => {
     title: '',
     isPrivate: '',
   });
-  const { isGPS, title, isPrivate } = state;
+  const {isGPS, title, isPrivate} = state;
 
   const _onChangeText = key => val => {
-    setState({ ...state, [key]: val });
+    setState({...state, [key]: val});
   };
 
   const [price, setPrice] = useState(0);
@@ -66,18 +66,20 @@ const FishData = ({ navigation, route }) => {
     longitude: '',
   });
   const [harborItems, setHarborItems] = useState([
-    { label: 'Hawaii Kai', value: 'Hawaii Kai' },
-    { label: 'Keehi', value: 'Keehi' },
-    { label: 'Kaneohe', value: 'Kaneohe' },
-    { label: 'Haleiwa', value: 'Haleiwa' },
-    { label: 'Waianae', value: 'Waianae' },
+    {label: 'Hawaii Kai', value: 'Hawaii Kai'},
+    {label: 'Keehi', value: 'Keehi'},
+    {label: 'Kaneohe', value: 'Kaneohe'},
+    {label: 'Haleiwa', value: 'Haleiwa'},
+    {label: 'Waianae', value: 'Waianae'},
   ]);
 
   const [selectedSignArr, setselectedSignArr] = useState([]);
   const [positionarr, setpositionarr] = useState([]);
   const [weateherArr, setWeatherAr] = useState([]);
-
-  const [weateherArrNeedsToSendApi, setWeateherArrNeedsToSendApi] = useState([]);
+  const [baitUI, setBaitForUI] = useState([]);
+  const [weateherArrNeedsToSendApi, setWeateherArrNeedsToSendApi] = useState(
+    [],
+  );
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -93,7 +95,7 @@ const FishData = ({ navigation, route }) => {
         setLocation(location);
       })
       .catch(error => {
-        const { code, message } = error;
+        const {code, message} = error;
         console.log(code, message);
       });
     // I set this so that the region could update as we move the map around and it seems to break the map. Setting the actual <MapView> region to this seems to work but then the pin only stays at the users current location. Maybe the map will be good if they make the post at the spot of location and use the other method if it is created later.
@@ -108,7 +110,7 @@ const FishData = ({ navigation, route }) => {
 
   const onChangeLatitude = text => {
     console.log(text, 'coming in thisss');
-    setLocation({ ...location, latitude: text === '-' ? 1 : parseFloat(text) });
+    setLocation({...location, latitude: text === '-' ? 1 : parseFloat(text)});
   };
 
   const onChangeLongitude = text => {
@@ -141,6 +143,13 @@ const FishData = ({ navigation, route }) => {
     console.log('data getWeatherSendToApi', data);
     if (data && data.length > 0) {
       setWeateherArrNeedsToSendApi(data);
+    }
+  };
+
+  const getSelectedBaits = data => {
+    console.log('data getSelectedBaits me', data);
+    if (data && data.length > 0) {
+      setBaitForUI(data);
     }
   };
 
@@ -256,7 +265,7 @@ const FishData = ({ navigation, route }) => {
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
-      style={{ flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <Header
         containerStyle={{
           backgroundColor: 'transparent',
@@ -264,7 +273,7 @@ const FishData = ({ navigation, route }) => {
         }}
         blackTitle
         title={'Catch Report'}
-        titleStyle={{ fontFamily: fonts.bold }}
+        titleStyle={{fontFamily: fonts.bold}}
         leftIconSource={icons.ic_back_white}
         leftButtonStyle={{
           tintColor: colors.black1,
@@ -283,7 +292,7 @@ const FishData = ({ navigation, route }) => {
       <SafeAreaView style={styles.safeAreaView}>
         <KeyboardAvoidingView>
           <ScrollView>
-            <View style={[styles.textSection, { justifyContent: 'center' }]}>
+            <View style={[styles.textSection, {justifyContent: 'center'}]}>
               <Text>Info below is optional & will be private to user only</Text>
             </View>
             <View
@@ -297,7 +306,7 @@ const FishData = ({ navigation, route }) => {
               ]}>
               <Text>Post Catch Report to Photo Sharing?</Text>
               <Switch
-                trackColor={{ false: '#767577', true: '#34C759' }}
+                trackColor={{false: '#767577', true: '#34C759'}}
                 thumbColor={'#f4f3f4'}
                 ios_backgroundColor="#767577"
                 onValueChange={toggleSwitch}
@@ -316,7 +325,7 @@ const FishData = ({ navigation, route }) => {
                 }>
                 Sign(optional)
               </Text>
-              <View style={{ flex: 0.5 }}>
+              <View style={{flex: 0.5}}>
                 {selectedSignArr && selectedSignArr.length > 0 ? (
                   selectedSignArr.map((val, index) => {
                     return (
@@ -353,22 +362,40 @@ const FishData = ({ navigation, route }) => {
                   navigation.navigate('ModalListComponent', {
                     value: 2,
                     name: 'Method',
+                    getSelectedBaits: getSelectedBaits,
                   })
                 }>
                 Method(optional)
               </Text>
-              <Text
-                style={{
-                  fontFamily: fonts.semiBold,
-                }}
-                onPress={() =>
-                  navigation.navigate('ModalListComponent', {
-                    value: 2,
-                    name: 'Method',
+              <View style={{flex: 0.5}}>
+                {baitUI && baitUI.length > 0 ? (
+                  baitUI.map((val, index) => {
+                    return (
+                      <Text
+                        key={index}
+                        style={{
+                          fontFamily: fonts.semiBold,
+                        }}>
+                        {val.method_name}
+                      </Text>
+                    );
                   })
-                }>
-                Select Method
-              </Text>
+                ) : (
+                  <Text
+                    style={{
+                      fontFamily: fonts.semiBold,
+                    }}
+                    onPress={() =>
+                      navigation.navigate('ModalListComponent', {
+                        value: 2,
+                        name: 'Method',
+                        getSelectedBaits: getSelectedBaits,
+                      })
+                    }>
+                    Select Method
+                  </Text>
+                )}
+              </View>
             </View>
             <View style={styles.textSection}>
               <Text
@@ -378,12 +405,12 @@ const FishData = ({ navigation, route }) => {
                     value: 3,
                     name: 'Weather',
                     getSelectedweather: getSelectedweather,
-                    getWeatherSendToApi: getWeatherSendToApi
+                    getWeatherSendToApi: getWeatherSendToApi,
                   })
                 }>
                 Weather(optional)
               </Text>
-              <View style={{ flex: 0.5 }}>
+              <View style={{flex: 0.5}}>
                 {weateherArr && weateherArr.length > 0 ? (
                   weateherArr.map((val, index) => {
                     return (
@@ -407,7 +434,7 @@ const FishData = ({ navigation, route }) => {
                         value: 3,
                         name: 'weather',
                         getSelectedweather: getSelectedweather,
-                        getWeatherSendToApi: getWeatherSendToApi
+                        getWeatherSendToApi: getWeatherSendToApi,
                       })
                     }>
                     Select weather
@@ -428,7 +455,7 @@ const FishData = ({ navigation, route }) => {
                 Position(optional)
               </Text>
 
-              <View style={{ flex: 0.5 }}>
+              <View style={{flex: 0.5}}>
                 {positionarr && positionarr.length > 0 ? (
                   positionarr.map((val, index) => {
                     return (
@@ -537,13 +564,13 @@ const FishData = ({ navigation, route }) => {
                       ? 'numbers-and-punctuation'
                       : 'default'
                   }
-                // value={location?.latitude?.toString()}
+                  // value={location?.latitude?.toString()}
                 />
-                <Text style={{ fontSize: 16, marginRight: 10, paddingBottom: 2 }}>
+                <Text style={{fontSize: 16, marginRight: 10, paddingBottom: 2}}>
                   latitude
                 </Text>
                 <TextInput
-                  style={{ fontSize: 16 }}
+                  style={{fontSize: 16}}
                   returnKeyType="done"
                   blurOnSubmit={true}
                   onSubmitEditing={() => {
@@ -557,9 +584,9 @@ const FishData = ({ navigation, route }) => {
                       ? 'numbers-and-punctuation'
                       : 'default'
                   }
-                // value={location?.longitude?.toString()}
+                  // value={location?.longitude?.toString()}
                 />
-                <Text style={{ fontSize: 16, paddingBottom: 2 }}>longitude</Text>
+                <Text style={{fontSize: 16, paddingBottom: 2}}>longitude</Text>
               </View>
             ) : (
               <View
@@ -569,14 +596,14 @@ const FishData = ({ navigation, route }) => {
                   paddingHorizontal: 10,
                 }}>
                 <ActivityIndicator />
-                <Text style={{ fontSize: 16, marginLeft: 10 }}>
+                <Text style={{fontSize: 16, marginLeft: 10}}>
                   getting location...
                 </Text>
               </View>
             )}
             <Text style={styles.or}>OR</Text>
-            <View style={{ zIndex: 1, paddingHorizontal: 10 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+            <View style={{zIndex: 1, paddingHorizontal: 10}}>
+              <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                 <TextInput
                   returnKeyType="done"
                   blurOnSubmit={true}
@@ -588,7 +615,7 @@ const FishData = ({ navigation, route }) => {
                   onChangeText={text => setDegrees(text)}
                   keyboardType="decimal-pad"
                 />
-                <Text style={{ fontSize: 16, marginRight: 5, paddingBottom: 2 }}>
+                <Text style={{fontSize: 16, marginRight: 5, paddingBottom: 2}}>
                   {' '}
                   degree(s) and{' '}
                 </Text>
@@ -603,16 +630,16 @@ const FishData = ({ navigation, route }) => {
                   onChangeText={text => setMiles(text)}
                   keyboardType="decimal-pad"
                 />
-                <Text style={{ fontSize: 16, paddingBottom: 2 }}>
+                <Text style={{fontSize: 16, paddingBottom: 2}}>
                   {' '}
                   miles from:{' '}
                 </Text>
               </View>
-              <View style={{ zIndex: 1 }}>
+              <View style={{zIndex: 1}}>
                 <DropDownPicker
-                  style={{ backgroundColor: '#fafafa' }}
+                  style={{backgroundColor: '#fafafa'}}
                   theme="LIGHT"
-                  containerStyle={{ width: '50%', marginVertical: 10 }}
+                  containerStyle={{width: '50%', marginVertical: 10}}
                   labelStyle={{
                     fontWeight: 'bold',
                     fontSize: 16,

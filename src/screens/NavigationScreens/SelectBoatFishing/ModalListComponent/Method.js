@@ -1,10 +1,11 @@
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import React, {useState} from 'react';
-import {ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import {
+  FlatList,
   Image,
   Modal,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -18,85 +19,82 @@ import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
 import {colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
+const cloneDeep = require('clone-deep');
 
 const Tab = createMaterialTopTabNavigator();
-let Methodlist = [
-  {
-    name: 'Live',
-    value: [
-      {label: 'Hawaii Kai', value: 'Hawaii Kai'},
-      {label: 'Keehi', value: 'Keehi'},
-      {label: 'Kaneohe', value: 'Kaneohe'},
-      {label: 'Haleiwa', value: 'Haleiwa'},
-      {label: 'Waianae', value: 'Waianae'},
-    ],
-  },
-  {
-    name: 'dead',
-    value: [
-      {label: 'Hawaii Kai', value: 'Hawaii Kai'},
-      {label: 'Keehi', value: 'Keehi'},
-      {label: 'Kaneohe', value: 'Kaneohe'},
-      {label: 'Haleiwa', value: 'Haleiwa'},
-      {label: 'Waianae', value: 'Waianae'},
-    ],
-  },
-];
-let lurelist = [
-  {
-    name: 'color',
-    value: [
-      {label: 'Hawaii Kai', value: 'Hawaii Kai'},
-      {label: 'Keehi', value: 'Keehi'},
-      {label: 'Kaneohe', value: 'Kaneohe'},
-      {label: 'Haleiwa', value: 'Haleiwa'},
-      {label: 'Waianae', value: 'Waianae'},
-    ],
-  },
-  {
-    name: 'type',
-    value: [
-      {label: 'Hawaii Kai', value: 'Hawaii Kai'},
-      {label: 'Keehi', value: 'Keehi'},
-      {label: 'Kaneohe', value: 'Kaneohe'},
-      {label: 'Haleiwa', value: 'Haleiwa'},
-      {label: 'Waianae', value: 'Waianae'},
-    ],
-  },
-  {
-    name: 'Lure Maker',
-    value: [
-      {label: 'Hawaii Kai', value: 'Hawaii Kai'},
-      {label: 'Keehi', value: 'Keehi'},
-      {label: 'Kaneohe', value: 'Kaneohe'},
-      {label: 'Haleiwa', value: 'Haleiwa'},
-      {label: 'Waianae', value: 'Waianae'},
-    ],
-  },
-  {
-    name: 'size',
-    value: [
-      {label: 'Hawaii Kai', value: 'Hawaii Kai'},
-      {label: 'Keehi', value: 'Keehi'},
-      {label: 'Kaneohe', value: 'Kaneohe'},
-      {label: 'Haleiwa', value: 'Haleiwa'},
-      {label: 'Waianae', value: 'Waianae'},
-    ],
-  },
-];
 const Bait = props => {
   console.log(props, 'props in bait>>>>>>>>>>');
-  const {baitMethods} = props;
-  return (
-    <ScrollView
-      style={{
-        flex: 1,
-      }}>
-      <View style={{flex: 1}}>
-        {baitMethods &&
-        baitMethods.subcategory &&
-        baitMethods.subcategory.length > 0
-          ? baitMethods.subcategory.map((val, i) => {
+  const {baitMethods, getSelectedbaits} = props;
+
+  console.log(baitMethods, 'baitMethods');
+  let emptyArr = [];
+  const [baitArry, setBaitArry] = useState([]);
+
+  useEffect(() => {
+    setBaitArry(baitMethods);
+  }, []);
+
+  const onClickInner = (index, idx1, idx2, first, second, third, status) => {
+    console.log(
+      index,
+      idx1,
+      idx2,
+      first,
+      second,
+      third,
+      status,
+      'index',
+      'idx1',
+      'idx2',
+      'first',
+      'second',
+      'third',
+      'status',
+    );
+
+    console.log(baitArry, 'baitArrybaitArry');
+
+    // console.log(emptyArr, 'before this.emptyArr');
+
+    // if (status == false) {
+    //   emptyArr.push([index]);
+
+    //   emptyArr.forEach(elements => {
+    //     console.log(elements, 'in loop 166');
+    //     if (elements && elements.length <= 1) {
+    //       elements.push(idx1);
+    //       if (elements && elements.length <= 2) {
+    //         elements.push(idx2);
+    //       }
+    //     }
+    //   });
+    // } else {
+    //   emptyArr.forEach((elements, i) => {
+    //     return console.log(elements, 'in loop 176');
+
+    //     if (elements[0] == index && elements[1] == idx) {
+    //       console.log('coming in else loop2', i);
+    //       emptyArr.splice(i, 1);
+    //     }
+    //   });
+    // }
+
+    // console.log(emptyArr, 'after emptyArr');
+
+    const temp = baitArry.slice();
+    temp[index].subcategory[idx1].methods[idx2].isSelected =
+      !temp[index].subcategory[idx1].methods[idx2].isSelected;
+
+    setBaitArry(temp);
+    getSelectedbaits(temp);
+  };
+
+  const _renderItem = ({item, index}) => {
+    return (
+      <>
+        {item.name == 'Bait' && (
+          <>
+            {item.subcategory.map((val, idx1) => {
               return (
                 <>
                   <TouchableOpacity
@@ -125,11 +123,27 @@ const Bait = props => {
                       }}
                     />
                   </TouchableOpacity>
-                  <>
-                    {val.methods.map((v, i) => {
-                      return (
-                        <TouchableOpacity
-                          onPress={() => alert(i)}
+                  {val.methods.map((v, idx2) => {
+                    return (
+                      <TouchableOpacity
+                        key={idx2}
+                        style={{
+                          padding: 10,
+                          justifyContent: 'space-between',
+                          flexDirection: 'row',
+                        }}
+                        onPress={() =>
+                          onClickInner(
+                            index,
+                            idx1,
+                            idx2,
+                            item,
+                            val,
+                            v,
+                            v.isSelected,
+                          )
+                        }>
+                        <View
                           style={{
                             margin: 2,
                             padding: 5,
@@ -140,16 +154,42 @@ const Bait = props => {
                             }}>
                             {v.method_name}
                           </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </>
+                        </View>
+                        {v && v.isSelected ? (
+                          <Image
+                            source={icons.ic_done}
+                            style={{
+                              tintColor: colors.secondry,
+                            }}
+                          />
+                        ) : (
+                          <Image source={icons.ic_not_done} />
+                        )}
+                      </TouchableOpacity>
+                    );
+                  })}
                 </>
               );
-            })
-          : null}
-      </View>
-    </ScrollView>
+            })}
+          </>
+        )}
+      </>
+    );
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        data={baitArry}
+        contentInset={{bottom: 40}}
+        extraData={baitArry}
+        renderItem={_renderItem}
+        removeClippedSubviews={true}
+        keyExtractor={item => item.id}
+      />
+    </View>
   );
 };
 
@@ -328,6 +368,10 @@ const Other = props => {
 const Method = props => {
   console.log(props, 'props in methoddd');
   const [modalVisible, setModalVisible] = useState(false);
+  const [Index, setIndex] = useState(0);
+
+  const [allBait, setAllBait] = useState([]);
+
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
@@ -338,12 +382,44 @@ const Method = props => {
     setModalVisible(state);
   };
 
+  const submitAllSelctedThings = selectedIndex => {
+    if (selectedIndex == 0) {
+      props.baiArr(allBait && allBait.length > 0 ? allBait : []);
+    }
+    props.navigation.goBack();
+  };
+
+  //get selected baits
+  const getSelectedbaits = vals => {
+    console.log(vals, 'value in me');
+    let arr = [];
+    if (vals && vals.length > 0) {
+      vals.forEach(element => {
+        if (element && element.subcategory) {
+          element.subcategory.forEach(val => {
+            if (val && val.methods) {
+              val.methods.forEach(v => {
+                if (v.isSelected) {
+                  v.mainName = 'Bait';
+                  arr.push(v);
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+    console.log(arr, 'vals in arrarr');
+    return setAllBait(arr);
+  };
+
   return (
     <SafeAreaView style={styles.content}>
       <Tab.Navigator
         screenListeners={({navigation}) => ({
           state: e => {
             console.log('state changed', e.data);
+            setIndex(e.data.state.index);
             if (e && e.data && e.data.state && e.data.state.index == 2) {
               setModalVisible(false);
             } else {
@@ -374,7 +450,12 @@ const Method = props => {
         }}>
         <Tab.Screen
           name="Bait"
-          children={() => <Bait baitMethods={app.methodarray[0]} />}
+          children={() => (
+            <Bait
+              baitMethods={app.methodarray}
+              getSelectedbaits={getSelectedbaits}
+            />
+          )}
         />
         <Tab.Screen
           name="Lure"
@@ -408,7 +489,7 @@ const Method = props => {
             alignSelf: 'center',
           }}
           label={strings.submit}
-          onPress={() => props.navigation.goBack()}
+          onPress={() => submitAllSelctedThings(Index)}
         />
       </View>
     </SafeAreaView>
@@ -466,7 +547,6 @@ const styles = StyleSheet.create({
   },
   modalbuttonstyle: {
     backgroundColor: colors.lightTransparent,
-    // borderColor: colors.black15,
     borderRadius: moderateScale(6),
     width: moderateScale(100),
     height: moderateScale(40),

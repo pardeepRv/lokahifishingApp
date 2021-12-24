@@ -94,7 +94,8 @@ export default class Accordian extends PureComponent {
                 <TouchableOpacity
                   style={styles.childRow1}
                   key={i}
-                  onPress={() => this.onClickInner(index, i, val.isSelected)}>
+                  onPress={() => this.onClickInner(index, i, val.isSelected)}
+                  >
                   <Text style={[styles.font, styles.itemInActive]}>
                     {val.value}
                   </Text>

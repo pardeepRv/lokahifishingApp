@@ -1,14 +1,14 @@
-import { put } from 'redux-saga/effects';
+import {put} from 'redux-saga/effects';
 import * as NavigationService from '../../store/NavigationService';
-import { actionTypes, screenNames, urls } from '../../utilities/constants';
+import {actionTypes, screenNames, urls} from '../../utilities/constants';
 import {
   getAPIError,
   showErrorAlert,
   showSuccessAlert,
 } from '../../utilities/helperFunctions';
-import { request } from '../../utilities/request';
+import {request} from '../../utilities/request';
 
-function* fetchAll({ params }) {
+function* fetchAll({params}) {
   try {
     const config = {
       url: 'https://dog.ceo/api/breeds/image/random',
@@ -26,7 +26,7 @@ function* fetchAll({ params }) {
   }
 }
 
-function* getvediosaga({ params }) {
+function* getvediosaga({params}) {
   try {
     const config = {
       url: urls.videos,
@@ -57,7 +57,7 @@ function* getvediosaga({ params }) {
   }
 }
 
-function* getNewsSaga({ params }) {
+function* getNewsSaga({params}) {
   console.log(params, 'params in news api ');
   try {
     const config = {
@@ -172,12 +172,14 @@ function* getLcrSecondsaga(params) {
   console.log(params, 'params in LCR second api ');
   try {
     const config = {
-      url: `${urls.lcr_Second}/${params && params.payload && params.payload.first_id
-        }`,
+      url: `${urls.lcr_Second}/${
+        params && params.payload && params.payload.first_id
+      }`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params && params.payload && params.payload.token
-          }`,
+        Authorization: `Bearer ${
+          params && params.payload && params.payload.token
+        }`,
       },
     };
 
@@ -202,12 +204,14 @@ function* getLcrThirdsaga(params) {
   console.log(params, 'params in LCR third api ');
   try {
     const config = {
-      url: `${urls.lcr_third}/${params && params.payload && params.payload.first_id
-        }/${params && params.payload && params.payload.second}`,
+      url: `${urls.lcr_third}/${
+        params && params.payload && params.payload.first_id
+      }/${params && params.payload && params.payload.second}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params && params.payload && params.payload.token
-          }`,
+        Authorization: `Bearer ${
+          params && params.payload && params.payload.token
+        }`,
       },
     };
 
@@ -235,23 +239,28 @@ function* getAllFishesSaga(params) {
 
     if (params && params.payload && params.payload.extraFish) {
       config = {
-        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
-          }/${params && params.payload && params.payload.second}/${params && params.payload && params.payload.third
-          }`,
+        url: `${urls.lcr_fishes}/${
+          params && params.payload && params.payload.first_id
+        }/${params && params.payload && params.payload.second}/${
+          params && params.payload && params.payload.third
+        }`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${params && params.payload && params.payload.token
-            }`,
+          Authorization: `Bearer ${
+            params && params.payload && params.payload.token
+          }`,
         },
       };
     } else {
       config = {
-        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
-          }/${params && params.payload && params.payload.second}`,
+        url: `${urls.lcr_fishes}/${
+          params && params.payload && params.payload.first_id
+        }/${params && params.payload && params.payload.second}`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${params && params.payload && params.payload.token
-            }`,
+          Authorization: `Bearer ${
+            params && params.payload && params.payload.token
+          }`,
         },
       };
     }
@@ -323,10 +332,24 @@ function* getMethodsaga(params) {
     const response = yield request(config);
     console.log(response, '<<<<<<<< method response  >>>>>>>>>>>>>>>>>');
 
+    let gettingArr = response?.data?.data?.category;
+
+    gettingArr.forEach(element => {
+      element.subcategory.forEach(e => {
+        e.selected = false;
+        e.methods.forEach(v => {
+          v.isSelected = false;
+        });
+      });
+    });
+
+    console.log(gettingArr, 'gettingArrgettingArrgettingArrgettingArr');
+
     if (response?.data?.status) {
       yield put({
         type: actionTypes.GET_METHOD_SUCCEEDED,
-        payload: response?.data?.data?.category,
+        // payload: response?.data?.data?.category,
+        payload: gettingArr,
       });
 
       params.cb(response);
@@ -473,7 +496,7 @@ function* commentListLcr(params) {
     const config = {
       url: urls.lcr_comments_listing,
       method: 'POST',
-      data: { lcr_id: params?.params?.lcr_id },
+      data: {lcr_id: params?.params?.lcr_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -502,7 +525,7 @@ function* likesListLcr(params) {
     const config = {
       url: urls.lcr_likes_listing,
       method: 'POST',
-      data: { lcr_id: params?.params?.lcr_id },
+      data: {lcr_id: params?.params?.lcr_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -531,7 +554,7 @@ function* addLikeInSaga(params) {
     const config = {
       url: urls.lcr_addlike,
       method: 'POST',
-      data: { lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id },
+      data: {lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -658,7 +681,10 @@ function* addLikeInphotoshareSaga(params) {
     const config = {
       url: urls.photoshareaddlike,
       method: 'POST',
-      data: { photoshare_id: params?.params?.photoshare_id, user_id: params?.params?.user_id },
+      data: {
+        photoshare_id: params?.params?.photoshare_id,
+        user_id: params?.params?.user_id,
+      },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -685,7 +711,7 @@ function* likesphotosharinglist(params) {
     const config = {
       url: urls.photoshare_like_list,
       method: 'POST',
-      data: { photoshare_id: params?.params?.photoshare_id },
+      data: {photoshare_id: params?.params?.photoshare_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -743,7 +769,7 @@ function* commentListphotoharing(params) {
     const config = {
       url: urls.photoshare_comment_list,
       method: 'POST',
-      data: { photoshare_id: params?.params?.photoshare_id },
+      data: {photoshare_id: params?.params?.photoshare_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -773,11 +799,16 @@ function* getleaderboardfishlist(params) {
       url: urls.leaderboard_fish_list,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params && params.params && params.params.token}`,
+        Authorization: `Bearer ${
+          params && params.params && params.params.token
+        }`,
       },
     };
     const response = yield request(config);
-    console.log(response, '<<<<<<<< leader board list  response  >>>>>>>>>>>>>>>>>');
+    console.log(
+      response,
+      '<<<<<<<< leader board list  response  >>>>>>>>>>>>>>>>>',
+    );
 
     if (response?.data?.status) {
       yield put({
@@ -795,12 +826,12 @@ function* getleaderboardfishlist(params) {
   }
 }
 function* leaderboardrankingsaga(params) {
-    console.log('params in it>>>>>>>>>>', params);
+  console.log('params in it>>>>>>>>>>', params);
   try {
     const config = {
       url: urls.leaderboard_ranking,
       method: 'POST',
-      data: { fish_id: params?.params?.fish_id },
+      data: {fish_id: params?.params?.fish_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -812,7 +843,6 @@ function* leaderboardrankingsaga(params) {
       yield put({
         type: actionTypes.LEADERBOARD_RANKING_SUCCEEDED,
         payload: response?.data?.data?.leaderboardRankingAnually,
-
       });
       return params.cb(response);
     }
@@ -826,37 +856,41 @@ function* leaderboardrankingsaga(params) {
 }
 
 function* leaderboardfiltersaga(params) {
-    console.log('params in it>>>>>>>>>>', params);
-try {
-  const config = {
-    url: urls.leaderboard_filter,
-    method: 'POST',
-    data: { fish_id: params?.params?.fish_id , month : params?.params?.month , year : params?.params?.year },
-    headers: {
-      Authorization: `Bearer ${params?.params?.token}`,
-    },
-  };
-  const response = yield request(config);
-   console.log(response, 'getting response leaderboard filter  Api ');
+  console.log('params in it>>>>>>>>>>', params);
+  try {
+    const config = {
+      url: urls.leaderboard_filter,
+      method: 'POST',
+      data: {
+        fish_id: params?.params?.fish_id,
+        month: params?.params?.month,
+        year: params?.params?.year,
+      },
+      headers: {
+        Authorization: `Bearer ${params?.params?.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response leaderboard filter  Api ');
 
-  if (response && response.data && response.data.status) {
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.LEADERBOARD_FILTER_SUCCEEDED,
+        payload: response?.data?.data?.leaderboardRankingAnually,
+      });
+      return params.cb(response);
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
     yield put({
-      type: actionTypes.LEADERBOARD_FILTER_SUCCEEDED,
-      payload: response?.data?.data?.leaderboardRankingAnually,
-    }); 
-    return params.cb(response);
+      type: actionTypes.LEADERBOARD_FILTER_FAIL,
+    });
   }
-} catch (error) {
-  console.log(error, 'coming in catch');
-  showErrorAlert(getAPIError(error));
-  yield put({
-    type: actionTypes.LEADERBOARD_FILTER_FAIL,
-  });
-}
 }
 
 function* gettournamentlistingsaga(params) {
-   console.log(params, 'params in signs api ');
+  console.log(params, 'params in signs api ');
   try {
     const config = {
       url: urls.tournament_listing,
@@ -866,7 +900,7 @@ function* gettournamentlistingsaga(params) {
       },
     };
     const response = yield request(config);
-     console.log(response, '<<<<<<<< tournament response  >>>>>>>>>>>>>>>>>');
+    console.log(response, '<<<<<<<< tournament response  >>>>>>>>>>>>>>>>>');
 
     if (response?.data?.status) {
       yield put({
@@ -914,5 +948,5 @@ export {
   getleaderboardfishlist,
   leaderboardrankingsaga,
   leaderboardfiltersaga,
-  gettournamentlistingsaga
+  gettournamentlistingsaga,
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -11,20 +11,20 @@ import {
   UIManager,
   View,
 } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import { useDispatch, useSelector } from 'react-redux';
-import { fonts, icons } from '../../../../../assets';
-import { Button, Loader } from '../../../../components/common';
+import {moderateScale} from 'react-native-size-matters';
+import {useDispatch, useSelector} from 'react-redux';
+import {fonts, icons} from '../../../../../assets';
+import {Button, Loader} from '../../../../components/common';
 import Circular from '../../../../components/common/Circular';
-import { Header } from '../../../../components/common/Header';
-import { strings } from '../../../../localization';
+import {Header} from '../../../../components/common/Header';
+import {strings} from '../../../../localization';
 import {
   getMethod,
   getposition,
   getsigns,
   getWeather,
 } from '../../../../store/actions';
-import { colors } from '../../../../utilities/constants';
+import {colors} from '../../../../utilities/constants';
 import Accordian from './Accordian';
 import Method from './Method';
 import styles from './styles.js';
@@ -37,15 +37,14 @@ const ModalListComponent = props => {
   console.log(props, 'props in modal>>>>>>>.');
 
   const dispatch = useDispatch();
-  const { navigation, route } = props;
-  const { value, name, getSelectedSigns } = route?.params;
-  const { getSelectedposition } = route?.params;
-  const { getSelectedweather, getWeatherSendToApi } = route?.params;
-
+  const {navigation, route} = props;
+  const {value, name, getSelectedSigns} = route?.params;
+  const {getSelectedposition} = route?.params;
+  const {getSelectedweather, getWeatherSendToApi, getSelectedBaits} =
+    route?.params;
 
   const [weateherArr, setWeatherAr] = useState(app && app.weatherarray);
   const [methodarr, setmethodarr] = useState(app && app.methodarray);
-
   const [open, setopen] = useState(false);
   const [signs, setSignArr] = useState(app && app.signarray);
   const [position, setpositionarr] = useState(app && app.positionarray);
@@ -101,6 +100,15 @@ const ModalListComponent = props => {
     }
   };
 
+  //getting slected baits from metohod
+  const getBaitMethod = vals => {
+    console.log(vals, 'vals in parant class');
+
+    if (vals && vals.length > 0) {
+      getSelectedBaits(vals);
+    }
+  };
+
   const sendSelectedValues = () => {
     let arr = [];
 
@@ -124,7 +132,6 @@ const ModalListComponent = props => {
     getSelectedposition(arr);
     navigation.goBack();
   };
-
 
   useEffect(() => {
     console.log('in useEfectof modallistComponent >>>>>>>>>>>.');
@@ -185,10 +192,10 @@ const ModalListComponent = props => {
 
             if (arr.length > 0) {
               arr.forEach((v, i) => {
-                v.isSelected = false
-              })
+                v.isSelected = false;
+              });
             }
-          })
+          });
 
           console.log(newArr, 'updated Arr is');
           if (cb?.data?.data) {
@@ -212,7 +219,7 @@ const ModalListComponent = props => {
     );
   }
 
-  const _renderView = ({ item, index }) => (
+  const _renderView = ({item, index}) => (
     <TouchableOpacity
       style={[
         styles.listItem,
@@ -240,7 +247,7 @@ const ModalListComponent = props => {
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{ flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <SafeAreaView style={styles.content}>
         <Header
           containerStyle={{
@@ -248,7 +255,7 @@ const ModalListComponent = props => {
             height: moderateScale(60),
           }}
           title={name}
-          titleStyle={{ fontFamily: fonts.bold }}
+          titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -263,7 +270,7 @@ const ModalListComponent = props => {
             data={signs}
             showsVerticalScrollIndicator={false}
             renderItem={_renderView}
-            contentInset={{ bottom: 20 }}
+            contentInset={{bottom: 20}}
             keyExtractor={(item, index) => 'key' + index}
             ListEmptyComponent={() =>
               signs >= 0 && (
@@ -294,9 +301,11 @@ const ModalListComponent = props => {
         )}
 
         {value == 2 && methodarr && methodarr.length > 0 ? (
-        <Method navigation={navigation}
-          methodarr={methodarr}
-        />
+          <Method
+            navigation={navigation}
+            methodarr={methodarr}
+            baiArr={getBaitMethod}
+          />
         ) : null}
         {value == 3 && weateherArr && weateherArr.length > 0 ? (
           <Accordian
@@ -313,7 +322,7 @@ const ModalListComponent = props => {
             data={position}
             showsVerticalScrollIndicator={false}
             renderItem={_renderView}
-            contentInset={{ bottom: 20 }}
+            contentInset={{bottom: 20}}
             keyExtractor={(item, index) => 'key' + index}
             ListEmptyComponent={() =>
               position >= 0 && (

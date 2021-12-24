@@ -9,8 +9,7 @@ export default StyleSheet.create({
     backgroundColor: colors.white1,
   },
   subContainer: {
-    paddingHorizontal: moderateScale(15),
-    marginLeft: 15,
+    height: layout.size.height / 1.1,
   },
   subContentContainer: {
     paddingBottom: moderateScale(40),
@@ -55,6 +54,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     fontFamily: fonts.extraBold,
     marginTop: moderateScale(5),
+    marginBottom:moderateScale(56),
     color: colors.primary,
   },
   btnStyles: {

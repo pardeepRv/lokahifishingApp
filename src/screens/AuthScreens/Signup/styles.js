@@ -1,22 +1,22 @@
-import {StyleSheet} from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts} from '../../../../assets';
-import {colors} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import { StyleSheet } from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
+import { fonts } from '../../../../assets';
+import { colors } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 
 //external libraries
-import {RFValue} from 'react-native-responsive-fontsize';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default StyleSheet.create({
   container: {
     backgroundColor: colors.white1,
   },
   subContainer: {
-    paddingHorizontal: moderateScale(15),
-    marginLeft: 15,
+    height: layout.size.height / 1.1,
   },
   subContentContainer: {
-    paddingBottom: moderateScale(40),
+    paddingBottom: moderateScale(10),
+    backgroundColor: colors.black1,
   },
   textInputStyles: {
     height: 50,

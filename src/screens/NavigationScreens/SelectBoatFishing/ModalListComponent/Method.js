@@ -19,7 +19,6 @@ import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
 import {colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
-const cloneDeep = require('clone-deep');
 
 const Tab = createMaterialTopTabNavigator();
 const Bait = props => {
@@ -194,18 +193,48 @@ const Bait = props => {
 };
 
 const Lure = props => {
-  console.log(props, 'props in bait>>>>>>>>>>');
-  const {lureMethods} = props;
-  return (
-    <ScrollView
-      style={{
-        flex: 1,
-      }}>
-      <View style={{flex: 1}}>
-        {lureMethods &&
-        lureMethods.subcategory &&
-        lureMethods.subcategory.length > 0
-          ? lureMethods.subcategory.map((val, i) => {
+  console.log(props, 'props in Lure>>>>>>>>>>');
+  const {lureMethods, getSelectedlure} = props;
+  const [lureArry, setlureArry] = useState([]);
+
+  useEffect(() => {
+    setlureArry(lureMethods);
+  }, []);
+
+  const onClickInner = (index, idx1, idx2, first, second, third, status) => {
+    console.log(
+      index,
+      idx1,
+      idx2,
+      first,
+      second,
+      third,
+      status,
+      'index',
+      'idx1',
+      'idx2',
+      'first',
+      'second',
+      'third',
+      'status',
+    );
+
+    console.log(lureArry, 'lureArrylureArry');
+
+    const temp = lureArry.slice();
+    temp[index].subcategory[idx1].methods[idx2].isSelected =
+      !temp[index].subcategory[idx1].methods[idx2].isSelected;
+
+    setlureArry(temp);
+    getSelectedlure(temp);
+  };
+
+  const _renderItem = ({item, index}) => {
+    return (
+      <>
+        {item.name == 'Lure' && (
+          <>
+            {item.subcategory.map((val, idx1) => {
               return (
                 <>
                   <TouchableOpacity
@@ -234,28 +263,73 @@ const Lure = props => {
                       }}
                     />
                   </TouchableOpacity>
-                  <>
-                    {val.methods.map((v, i) => {
-                      return (
-                        <TouchableOpacity>
-                          {/* onPress={() => alert(i)} */}
+                  {val.methods.map((v, idx2) => {
+                    return (
+                      <TouchableOpacity
+                        key={idx2}
+                        style={{
+                          padding: 10,
+                          justifyContent: 'space-between',
+                          flexDirection: 'row',
+                        }}
+                        onPress={() =>
+                          onClickInner(
+                            index,
+                            idx1,
+                            idx2,
+                            item,
+                            val,
+                            v,
+                            v.isSelected,
+                          )
+                        }>
+                        <View
+                          style={{
+                            margin: 2,
+                            padding: 5,
+                          }}>
                           <Text
                             style={{
-                              padding: 10,
                               fontFamily: fonts.regular,
                             }}>
                             {v.method_name}
                           </Text>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </>
+                        </View>
+                        {v && v.isSelected ? (
+                          <Image
+                            source={icons.ic_done}
+                            style={{
+                              tintColor: colors.secondry,
+                            }}
+                          />
+                        ) : (
+                          <Image source={icons.ic_not_done} />
+                        )}
+                      </TouchableOpacity>
+                    );
+                  })}
                 </>
               );
-            })
-          : null}
-      </View>
-    </ScrollView>
+            })}
+          </>
+        )}
+      </>
+    );
+  };
+
+  return (
+    <View style={{flex: 1}}>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        data={lureArry}
+        contentInset={{bottom: 40}}
+        extraData={lureArry}
+        renderItem={_renderItem}
+        removeClippedSubviews={true}
+        keyExtractor={item => item.id}
+      />
+    </View>
   );
 };
 
@@ -371,6 +445,7 @@ const Method = props => {
   const [Index, setIndex] = useState(0);
 
   const [allBait, setAllBait] = useState([]);
+  const [allLure, setAllLure] = useState([]);
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -385,6 +460,9 @@ const Method = props => {
   const submitAllSelctedThings = selectedIndex => {
     if (selectedIndex == 0) {
       props.baiArr(allBait && allBait.length > 0 ? allBait : []);
+    }
+    if (selectedIndex == 1) {
+      props.lureArr(allLure && allLure.length > 0 ? allLure : []);
     }
     props.navigation.goBack();
   };
@@ -411,6 +489,30 @@ const Method = props => {
     }
     console.log(arr, 'vals in arrarr');
     return setAllBait(arr);
+  };
+
+  //get selected lure
+  const getSelectedlure = vals => {
+    console.log(vals, 'value in me lure');
+    let arr = [];
+    if (vals && vals.length > 0) {
+      vals.forEach(element => {
+        if (element && element.subcategory) {
+          element.subcategory.forEach(val => {
+            if (val && val.methods) {
+              val.methods.forEach(v => {
+                if (v.isSelected) {
+                  v.mainName = 'Lure';
+                  arr.push(v);
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+    console.log(arr, 'vals in arrarr lure');
+    return setAllLure(arr);
   };
 
   return (
@@ -459,7 +561,13 @@ const Method = props => {
         />
         <Tab.Screen
           name="Lure"
-          children={() => <Lure lureMethods={app.methodarray[1]} />}
+          children={() => (
+            <Lure
+              //  lureMethods={app.methodarray[1]}
+              lureMethods={app.methodarray}
+              getSelectedlure={getSelectedlure}
+            />
+          )}
         />
         <Tab.Screen
           name="Other"

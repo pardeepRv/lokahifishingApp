@@ -77,6 +77,8 @@ const FishData = ({navigation, route}) => {
   const [positionarr, setpositionarr] = useState([]);
   const [weateherArr, setWeatherAr] = useState([]);
   const [baitUI, setBaitForUI] = useState([]);
+  const [lureUI, setlureForUI] = useState([]);
+
   const [weateherArrNeedsToSendApi, setWeateherArrNeedsToSendApi] = useState(
     [],
   );
@@ -150,6 +152,13 @@ const FishData = ({navigation, route}) => {
     console.log('data getSelectedBaits me', data);
     if (data && data.length > 0) {
       setBaitForUI(data);
+    }
+  };
+
+  const getSelectedLures = data => {
+    console.log('data getSelectedLures me', data);
+    if (data && data.length > 0) {
+      setlureForUI(data);
     }
   };
 
@@ -363,24 +372,35 @@ const FishData = ({navigation, route}) => {
                     value: 2,
                     name: 'Method',
                     getSelectedBaits: getSelectedBaits,
+                    getSelectedLures: getSelectedLures,
                   })
                 }>
                 Method(optional)
               </Text>
               <View style={{flex: 0.5}}>
-                {baitUI && baitUI.length > 0 ? (
-                  baitUI.map((val, index) => {
-                    return (
-                      <Text
-                        key={index}
-                        style={{
-                          fontFamily: fonts.semiBold,
-                        }}>
-                        {val.method_name}
-                      </Text>
-                    );
-                  })
-                ) : (
+                {baitUI.map((val, index) => {
+                  return (
+                    <Text
+                      key={index}
+                      style={{
+                        fontFamily: fonts.semiBold,
+                      }}>
+                      {val.method_name}
+                    </Text>
+                  );
+                })}
+                {lureUI.map((val, index) => {
+                  return (
+                    <Text
+                      key={index}
+                      style={{
+                        fontFamily: fonts.semiBold,
+                      }}>
+                      {val.method_name}
+                    </Text>
+                  );
+                })}
+                {lureUI.length == 0 && baitUI.length == 0 ? (
                   <Text
                     style={{
                       fontFamily: fonts.semiBold,
@@ -390,11 +410,12 @@ const FishData = ({navigation, route}) => {
                         value: 2,
                         name: 'Method',
                         getSelectedBaits: getSelectedBaits,
+                        getSelectedLures: getSelectedLures,
                       })
                     }>
                     Select Method
                   </Text>
-                )}
+                ) : null}
               </View>
             </View>
             <View style={styles.textSection}>

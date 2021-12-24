@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -11,54 +11,13 @@ import {
 } from 'react-native';
 import Pdf from 'react-native-pdf';
 import {moderateScale} from 'react-native-size-matters';
+import {useDispatch, useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../assets';
+import {Loader} from '../../../components/common';
 import {Header} from '../../../components/common/Header';
+import {tournamentlisting} from '../../../store/actions';
 import {colors} from '../../../utilities/constants';
 import styles from './styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { tournamentlisting } from '../../../store/actions';
-import TimeAgo from 'react-native-timeago';
-
-const source = require('./4th_July_Tournamnt.pdf');
-
-let tournaMents = [
-  {
-    img: icons.ic_LokahiLogo,
-    name: 'Annual Leaderboard',
-    date: 'Winners 2020',
-    src: require('../../../../assets/tournament_pdfs/August2020TournamentResults.pdf'),
-  },
-  {
-    img: icons.ic_LokahiLogo,
-    name: 'WBC Labour',
-    date: 'Day tournament',
-    src: require('../../../../assets/tournament_pdfs/AugustTournamentResult.pdf'),
-  },
-  {
-    img: icons.ic_LokahiLogo,
-    name: 'September 2020 Lokahi',
-    date: 'App Winners',
-    src: require('../../../../assets/tournament_pdfs/July2020LokahiVirtualAppTournamentWinners.pdf'),
-  },
-  {
-    img: icons.ic_LokahiLogo,
-    name: 'dev_pardeep',
-    date: 'App Tournament Winners',
-    src: require('../../../../assets/tournament_pdfs/LeaderboardWinners2020.pdf'),
-  },
-  {
-    img: icons.ic_LokahiLogo,
-    name: 'September 2020 Lokahi',
-    date: 'App Winners',
-    src: require('../../../../assets/tournament_pdfs/LokahiSeptemberWinners.pdf'),
-  },
-  {
-    img: icons.ic_LokahiLogo,
-    name: 'dev_pardeep',
-    date: 'App Tournament Winners',
-    src: require('../../../../assets/tournament_pdfs/WBC_Labor_Day_Tournament.pdf'),
-  },
-];
 
 const TournamentHome = ({navigation}) => {
   const [tournamentList, settournamentList] = useState([]);
@@ -68,12 +27,7 @@ const TournamentHome = ({navigation}) => {
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
-  console.log(app, 'appp in tournament page   page>>>>>>>>>>');
-  console.log(auth, 'auth in tournament page >>>>>>>>>>');
-
   const dispatch = useDispatch();
-
-
 
   useEffect(() => {
     console.log('coming in this on lcrlist page');
@@ -85,11 +39,11 @@ const TournamentHome = ({navigation}) => {
 
   function gettournamentfunc() {
     let token = auth && auth?.userDetails?.access_token;
- 
+
     dispatch(
       tournamentlisting(token, cb => {
         if (cb) {
-           console.log(cb, 'callback list arr>>>>>>>>>>');
+          console.log(cb, 'callback list arr>>>>>>>>>>');
           if (cb?.data?.data) {
             let updatedLcrList = cb?.data?.data?.leaderboardRankingAnually;
             updatedLcrList.reverse();
@@ -194,13 +148,17 @@ const TournamentHome = ({navigation}) => {
                 />
               </TouchableOpacity>
             </View>
-            <Pdf 
-            source={{uri:pdfPath}} 
-            // source={{uri:'http://www.africau.edu/images/default/sample.pdf'}}
-            style={styles.pdf} loading="Loading PDF..." />
+            <Pdf
+              source={{uri: pdfPath}}
+              // source={{uri:'http://www.africau.edu/images/default/sample.pdf'}}
+              style={styles.pdf}
+              loading="Loading PDF..."
+            />
           </SafeAreaView>
         </Modal>
       </SafeAreaView>
+
+      <Loader isAbsolute isLoading={app.isLoading} />
     </ImageBackground>
   );
 };

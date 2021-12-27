@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,8 +13,32 @@ import {Header} from '../../../components/common/Header';
 import { strings } from '../../../localization';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { termsandcondition } from '../../../store/actions';
 
 const PrivacyPolicy = ({navigation}) => {
+
+  let auth = useSelector(state => state.auth);
+    let app = useSelector(state => state.app);
+
+
+    console.log(app, 'appp in TERMS_AND_CONDITION   page>>>>>>>>>>');
+    console.log(auth, 'auth in TERMS_AND_CONDITION page >>>>>>>>>>');
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+      console.log('coming in this on lcrlist page');
+      const unsubscribe = navigation.addListener('focus', () => {
+        gettermsfunc();
+      });
+      return unsubscribe;
+    }, [navigation]);
+  
+    function gettermsfunc() {
+      let token = auth && auth?.userDetails?.access_token;
+      dispatch(termsandcondition(token));
+    }
   return (
     <SafeAreaView style={styles.content}>
       <Header
@@ -33,7 +57,7 @@ const PrivacyPolicy = ({navigation}) => {
         }}
       />
       <Pdf
-        source={require('./privacyPolicypdf.pdf')}
+        source={{uri: app && app.pagelist && app.pagelist.doc}}
         style={styles.pdf}
         loading="Loading PDF..."
       />

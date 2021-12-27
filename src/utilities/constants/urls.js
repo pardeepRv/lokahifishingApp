@@ -59,6 +59,7 @@ const urls = {
   leaderboard_ranking  : 'leaderboard-ranking',
   leaderboard_filter : 'leaderboard-filter' , 
   tournament_listing : 'tournament-listing',
+  terms_and_condition : 'terms-and-condition',
 };
 
 export {urls};

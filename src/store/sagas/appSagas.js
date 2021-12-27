@@ -919,6 +919,33 @@ function* gettournamentlistingsaga(params) {
     });
   }
 }
+
+function* gettermsconditionsaga(params) {
+   console.log(params, 'params in terms and condition api ');
+  try {
+    const config = {
+      url: urls.terms_and_condition,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.params}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, '<<<<<<<< terms and condition  response  >>>>>>>>>>>>>>>>>');
+
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.TERMS_AND_CONDITION_SUCCEEDED,
+        payload: response?.data?.data?.page,
+      });
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.TERMS_AND_CONDITION_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -949,4 +976,5 @@ export {
   leaderboardrankingsaga,
   leaderboardfiltersaga,
   gettournamentlistingsaga,
+  gettermsconditionsaga
 };

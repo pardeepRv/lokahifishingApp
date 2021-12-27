@@ -81,12 +81,10 @@ const Importantlinks = ({ navigation }) => {
               backgroundColor: colors.white1,
             },
           ]}>
-       
           <View style={styles.viewStyle}>
             <View
               style={{
                 justifyContent: 'center',
-
               }}>
               <Text style={styles.nameStyle}>{strings.HawaiState}</Text>
               <Text style={styles.dateStyle}>{strings.HawaiLegislature}</Text>
@@ -96,14 +94,12 @@ const Importantlinks = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate('HawaiiLegislatureWebsite')}
-
           style={[
             styles.listView,
             {
               backgroundColor: colors.white1,
             },
           ]}>
-         
          <View style={styles.viewStyle}>
             <View
               style={{
@@ -115,11 +111,8 @@ const Importantlinks = ({ navigation }) => {
             </View>
           </View>
         </TouchableOpacity>
-
         </ScrollView>
       </SafeAreaView>
-
-
     </ImageBackground>
   );
 };

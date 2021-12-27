@@ -17,6 +17,7 @@ import {
   getNewsSaga,
   getPositionSaga,
   getSignsSaga,
+  gettermsconditionsaga,
   gettimeline,
   gettournamentlistingsaga,
   getvediosaga,
@@ -102,6 +103,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.LEADERBOARD_RANKING_REQUESTED,leaderboardrankingsaga );
   yield takeLatest(actionTypes.LEADERBOARD_FILTER_REQUESTED,leaderboardfiltersaga );
   yield takeLatest(actionTypes.TOURNAMENT_LISTING_REQUESTED, gettournamentlistingsaga);
-
+  yield takeLatest(actionTypes.TERMS_AND_CONDITION_REQUESTED, gettermsconditionsaga);
 
 }

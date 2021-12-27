@@ -414,11 +414,11 @@ const menu = [
 ];
 
 const data = [
-  {
-    name: strings.pending_lcr,
-    navigate: 'PendingLCR',
-    img: icons.ic_pending_lcr,
-  },
+  // {
+  //   name: strings.pending_lcr,
+  //   navigate: 'PendingLCR',
+  //   img: icons.ic_pending_lcr,
+  // },
   {
     name: strings.lcr_list,
     navigate: 'LCRlist',
@@ -429,11 +429,11 @@ const data = [
     navigate: 'TournamentRules',
     img: icons.ic_pending_lcr,
   },
-  {
-    name: strings.Tag,
-    navigate: 'TagR',
-    img: icons.ic_fisherman,
-  },
+  // {
+  //   name: strings.Tag,
+  //   navigate: 'TagR',
+  //   img: icons.ic_fisherman,
+  // },
   {
     name: strings.Video_tips,
     // navigate: 'VideoTips',
@@ -445,11 +445,11 @@ const data = [
     navigate: 'LCRFilter',
     img: icons.ic_filter,
   },
-  {
-    name: strings.Catch_report,
-    navigate: 'aboutUs',
-    img: icons.ic_map,
-  },
+  // {
+  //   name: strings.Catch_report,
+  //   navigate: 'aboutUs',
+  //   img: icons.ic_map,
+  // },
   {
     name: strings.FriendsRequest,
     navigate: 'FriendRequests',
@@ -475,11 +475,11 @@ const data = [
     navigate: 'Friends',
     img: icons.ic_Notifications,
   },
-  {
-    name: strings.Gallery,
-    navigate: 'Gallery',
-    img: icons.ic_Gallery,
-  },
+  // {
+  //   name: strings.Gallery,
+  //   navigate: 'Gallery',
+  //   img: icons.ic_Gallery,
+  // },
   {
     name: strings.My_Profile,
     navigate: 'MYprofile',

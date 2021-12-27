@@ -210,6 +210,14 @@ const tournamentlisting = (params, cb) => {
     cb,
   };
 };
+
+const termsandcondition = (params, cb) => {
+  return {
+    type: actionTypes.TERMS_AND_CONDITION_REQUESTED,
+    params,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -238,5 +246,6 @@ export {
   leaderboardfishlist,
   leaderboardranking,
   leaderboardfilter,
-  tournamentlisting
+  tournamentlisting,
+  termsandcondition
 };

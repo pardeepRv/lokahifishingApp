@@ -12,6 +12,7 @@ const initialState = {
   fishesArr: [],
   rankinglist : [],
   filterlist :[],
+  pagelist:[],
 };
 
 export default (state = initialState, action) => {
@@ -479,6 +480,26 @@ export default (state = initialState, action) => {
         };
   
       case actionTypes.TOURNAMENT_LISTING_FAIL:
+        return {
+          ...state,
+          loading: false,
+        };
+
+        case actionTypes.TERMS_AND_CONDITION_REQUESTED:
+        return {
+          ...state,
+          loading: true,
+        };
+  
+      case actionTypes.TERMS_AND_CONDITION_SUCCEEDED:
+        return {
+          ...state,
+          loading: false,
+        pagelist: action.payload,
+
+        };
+  
+      case actionTypes.TERMS_AND_CONDITION_FAIL:
         return {
           ...state,
           loading: false,

@@ -13,6 +13,7 @@ const initialState = {
   rankinglist : [],
   filterlist :[],
   pagelist:[],
+  memberlist:[],
 };
 
 export default (state = initialState, action) => {
@@ -496,7 +497,6 @@ export default (state = initialState, action) => {
           ...state,
           loading: false,
         pagelist: action.payload,
-
         };
   
       case actionTypes.TERMS_AND_CONDITION_FAIL:
@@ -504,6 +504,24 @@ export default (state = initialState, action) => {
           ...state,
           loading: false,
         };
+        case actionTypes.MEMBER_LISTING_REQUESTED:
+          return {
+            ...state,
+            loading: true,
+          };
+    
+        case actionTypes.MEMBER_LISTING_SUCCEEDED:
+          return {
+            ...state,
+            loading: false,
+            memberlist: action.payload,
+          };
+    
+        case actionTypes.MEMBER_LISTING_FAIL:
+          return {
+            ...state,
+            loading: false,
+          };
     default:
       return state;
   }

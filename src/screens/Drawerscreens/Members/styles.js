@@ -16,16 +16,15 @@ export default StyleSheet.create({
     flex: 0.9,
   },
   nameStyle: {
-    fontFamily: fonts.regular,
-    fontSize: moderateScale(16),
+    fontFamily: fonts.semiBold,
+    fontSize: moderateScale(14),
     color: colors.black1,
-    paddingHorizontal: moderateScale(5),
+    bottom:moderateScale(8)
   },
   dateStyle: {
-    fontFamily: fonts.regular,
+    fontFamily: fonts.semiBold,
     fontSize: moderateScale(16),
     color: colors.black1,
-    paddingHorizontal: moderateScale(5),
   },
   rightArrow: {
     height: moderateScale(20),

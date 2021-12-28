@@ -440,11 +440,11 @@ const data = [
     navigate: 'Video',
     img: icons.ic_videoTips,
   },
-  {
-    name: strings.LCR_filter,
-    navigate: 'LCRFilter',
-    img: icons.ic_filter,
-  },
+  // {
+  //   name: strings.LCR_filter,
+  //   navigate: 'LCRFilter',
+  //   img: icons.ic_filter,
+  // },
   // {
   //   name: strings.Catch_report,
   //   navigate: 'aboutUs',

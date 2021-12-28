@@ -946,6 +946,34 @@ function* gettermsconditionsaga(params) {
     });
   }
 }
+
+function* getmemberlist(params) {
+   console.log(params, 'params in members .....api ');
+  try {
+    const config = {
+      url: urls.member_listing,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.params}`,
+      },
+    };
+    const response = yield request(config);
+      console.log(response, '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>');
+
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.MEMBER_LISTING_SUCCEEDED,
+        payload: response?.data?.data?.memberListing,
+      });
+      params.cb(response);
+    } 
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.MEMBER_LISTING_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -976,5 +1004,6 @@ export {
   leaderboardrankingsaga,
   leaderboardfiltersaga,
   gettournamentlistingsaga,
-  gettermsconditionsaga
+  gettermsconditionsaga,
+  getmemberlist
 };

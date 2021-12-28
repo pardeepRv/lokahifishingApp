@@ -218,6 +218,13 @@ const termsandcondition = (params, cb) => {
     cb,
   };
 };
+const memberlisting = (params, cb) => {
+  return {
+    type: actionTypes.MEMBER_LISTING_REQUESTED,
+    params,
+    cb,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -247,5 +254,6 @@ export {
   leaderboardranking,
   leaderboardfilter,
   tournamentlisting,
-  termsandcondition
+  termsandcondition,
+  memberlisting
 };

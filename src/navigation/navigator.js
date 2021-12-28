@@ -131,7 +131,7 @@ const HomeStackScreen = props => {
       <Drawer.Screen name="PdfViewer" component={PdfViewer} />
       <Drawer.Screen name="TournamentRules" component={TournamentRules} />
       <Drawer.Screen name="Survey" component={SurveyStack} />
-      <Drawer.Screen name="Members" component={Members} />
+      <Drawer.Screen name="Members" component={MemberStack} />
       <Drawer.Screen name="Tournament" component={TournamentHome} />
       <Drawer.Screen name="Settings" component={settingsStack} />
       <Drawer.Screen name="News" component={News} />
@@ -197,7 +197,24 @@ const authStack = props => {
     </Stack.Navigator>
   );
 };
-
+const MemberStack = props => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'SurveyScreen'}>
+      <Stack.Screen name="Members" component={Members} />
+      <Stack.Screen name="FriendProfileScreen" component={FriendProfileScreen} />
+      <Stack.Screen name="FriendBoatInfo" component={FriendBoatInfo} />
+      <Stack.Screen
+        name="FriendEmergencyContacts"
+        component={FriendEmergencyContacts}
+      />
+      <Stack.Screen name="FriendLCR" component={FriendLCR} />
+    </Stack.Navigator>
+  );
+};
 const SurveyStack = props => {
   return (
     <Stack.Navigator

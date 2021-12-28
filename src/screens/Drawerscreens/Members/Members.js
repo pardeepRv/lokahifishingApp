@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -8,14 +8,19 @@ import {
   Text,
   TouchableOpacity,
   View,
+  RefreshControl,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import SegmentedControl from 'rn-segmented-control';
 import {fonts, icons} from '../../../../assets';
 import {Header} from '../../../components/common/Header';
 import TextInputComp from '../../../components/common/TextInputComp';
-import {colors} from '../../../utilities/constants';
+import {colors, screenNames} from '../../../utilities/constants';
 import styles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { memberlisting } from '../../../store/actions';
+import TimeAgo from 'react-native-timeago';
+import { layout } from '../../../utilities/layout';
 
 let members = [
   {
@@ -48,16 +53,57 @@ let members = [
 ];
 
 const Members = ({navigation}) => {
-  const [membersList, setMembersList] = useState(members);
+  const [membersList, setMembersList] = useState([]);
   const [searchMember, setSearchMember] = useState('');
   const [tabIndex, setTabIndex] = React.useState(0);
   const [tabAscDscIndex, settabAscDscIndex] = React.useState(0);
 
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+  console.log(app, 'appp in timelinelist   page>>>>>>>>>>');
+  console.log(auth, 'auth in timelinelist page >>>>>>>>>>');
+
+  const [state, setState] = useState({
+    refreshing: false,
+  });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('coming in this on timelinelist page');
+    const unsubscribe = navigation.addListener('focus', () => {
+        getmemberfunc();
+
+    });
+}, [navigation]);
+
+function getmemberfunc() {
+    let token = auth && auth?.userDetails?.access_token;
+    dispatch(
+      memberlisting(token, cb => {
+            if (cb) {
+                console.log(cb, 'callback list arr>>>>>>>>>>');
+                if (cb?.data?.data) {
+                    let memberList = cb?.data?.data?.memberListing;
+                    memberList.reverse();
+                    setMembersList(memberList)
+                }
+            }
+        }),
+    );
+}
+
+function _onRefresh() {
+  setState({refreshing: true});
+  getmemberfunc(app?.memberListing);
+}
   const _renderView = ({item, index}) => (
     <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('FriendProfileScreen');
-      }}
+      onPress={() => 
+        navigation.navigate(screenNames.FriendProfileScreen , {
+          item:item
+        })  
+      }
       style={[
         styles.listView,
         {
@@ -67,7 +113,7 @@ const Members = ({navigation}) => {
       activeOpacity={0.8}>
       <View style={styles.viewStyle}>
         <Image
-          source={icons.fish2}
+          source={{uri: item.profile_picture}}
           style={{
             height: moderateScale(70),
             width: moderateScale(70),
@@ -77,9 +123,16 @@ const Members = ({navigation}) => {
         <View
           style={{
             justifyContent: 'center',
+            left:moderateScale(20),
+            width:layout.size.width/2,
+            margin:10,
           }}>
-          <Text style={styles.nameStyle}>{item.username}</Text>
-          <Text style={styles.dateStyle}>{item.date}</Text>
+             <Text style={styles.nameStyle}>{item.user_name}</Text>
+          {/* <Text style={styles.nameStyle}>FullName :{item.full_name}</Text> */}
+          <Text>Member Since :
+          <TimeAgo
+                time={item.created_at}
+              /></Text>
         </View>
       </View>
       <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
@@ -92,6 +145,26 @@ const Members = ({navigation}) => {
 
   const handleTabsChangeAscDsc = index => {
     settabAscDscIndex(index);
+  };
+
+  const searchText = e => {
+    setSearchMember(e);
+    let text = e.toLowerCase();
+    // let members = app?.memberListing;
+    let members = app?.memberlisting;
+    let memberfiltername = members.filter(item=> {
+      return console.log(item , 'console on filter ');
+      return item && item.user_name.toLowerCase().match(text);
+    });
+
+   return  console.log(memberfiltername, 'dbwdvewduyv');
+    // if (!text || text === '') {
+    //   setMembersList(user?.allFriendslist);
+    // } else if (!Array.isArray(filteredName) && !filteredName.length) {
+    //   setMembersList(user?.allFriendslist);
+    // } else if (Array.isArray(filteredName)) {
+    //   setMembersList(filteredName);
+    // }
   };
 
   return (
@@ -174,6 +247,16 @@ const Members = ({navigation}) => {
                 <Text style={styles.nomatch}>No Match found</Text>
               ) : null
             }
+            refreshControl={
+              <RefreshControl
+                refreshing={app.loading}
+                onRefresh={_onRefresh.bind(this)}
+                title="Pull to refresh"
+                tintColor={colors.white1}
+                titleColor={colors.white1}
+              />
+            }
+
           />
         ) : tabIndex == 2 ? (
           <FlatList
@@ -185,6 +268,15 @@ const Members = ({navigation}) => {
               !membersList.length ? (
                 <Text style={styles.nomatch}>No Match found</Text>
               ) : null
+            }
+            refreshControl={
+              <RefreshControl
+                refreshing={app.loading}
+                onRefresh={_onRefresh.bind(this)}
+                title="Pull to refresh"
+                tintColor={colors.white1}
+                titleColor={colors.white1}
+              />
             }
           />
         ) : null}

@@ -47,7 +47,6 @@ export default StyleSheet.create({
     borderRadius: moderateScale(100),
     height: layout.size.height / 4.2,
     width: layout.size.height / 4.2,
-    tintColor: colors.primary,
   },
   buttonView:{
     flexDirection: 'column',
@@ -89,7 +88,7 @@ export default StyleSheet.create({
     backgroundColor: colors.black4,
   },
   modalcontainer: {
-    height: layout.size.height / 5.,
+    height: layout.size.height / 6,
     width: layout.size.width / 1.5,
     // top: 60,
     backgroundColor: colors.lightTransparent,

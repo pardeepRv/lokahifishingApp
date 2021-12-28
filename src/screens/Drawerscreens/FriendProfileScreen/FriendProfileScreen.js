@@ -27,10 +27,19 @@ import { fonts, icons } from '../../../../assets';
 import { colors } from '../../../utilities/constants';
 import { strings } from '../../../localization';
 import { layout } from '../../../utilities/layout';
+import { useSelector } from 'react-redux';
+import TimeAgo from 'react-native-timeago';
 
 const Tab = createMaterialTopTabNavigator();
 
-const FriendProfileScreen = ({navigation}) => {
+const FriendProfileScreen = ({navigation , route}) => {
+  const { item } = route.params;
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+
+  console.log(app, 'appp in friendprofile   page>>>>>>>>>>');
+  console.log(auth, 'auth in friendprofile page >>>>>>>>>>');
+  console.log(item, 'memberlist on friendprofile screen  >>>>>>>>>>');
   const [state, setState] = useState({
     color: {
       box1: colors.primary,
@@ -49,16 +58,26 @@ const FriendProfileScreen = ({navigation}) => {
     if (value === true) {
       // Change box1 to red, and box2 to blue
       setState({
-        color: {box1: colors.green1, box2: colors.primary},
-      });
-    } else {
-      // box2 pressed
-      // Change box1 to blue, and box2 to blue
-      setState({
-        color: {box1: colors.primary, box2: colors.red1},
+        color: {box1: colors.primary},
         onPress: setModalVisible1(true),
       });
+      if (value === true) {
+      setTimeout(() => {
+        setModalVisible1(false)
+        setState({
+          color : {box1 : colors.green1}
+        })
+      }, 1000);
     }
+    }
+    //  else {
+    //   // box2 pressed
+    //   // Change box1 to blue, and box2 to blue
+    //   setState({
+    //     color: {box1: colors.primary, box2: colors.red1},
+       
+    //   });
+    // }
   }
   return (
     <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
@@ -75,33 +94,37 @@ const FriendProfileScreen = ({navigation}) => {
           onLeftPress={() => {
             navigation.goBack();
           }}
-          onRightPress={() => {
-            navigation.navigate('Edit');
-          }}
-          rightIconSource={icons.location}
-          rightIconStyle={{
-            tintColor: colors.white1,
-            position: 'absolute',
-          }}
+          // onRightPress={() => {
+          //   navigation.navigate('Edit');
+          // }}
+          // rightIconSource={icons.location}
+          // rightIconStyle={{
+          //   tintColor: colors.white1,
+          //   position: 'absolute',
+          // }}
         />
         <ScrollView style={{flex: 1}}>
           <View style={styles.contentcontainer}>
             <View style={styles.uploadContainer}>
               <Image
-                source={icons.inactivetestimonial}
-                resizeMode="contain"
+                source={{uri: item.profile_picture}}
+                resizeMode="cover"
                 style={styles.big}
               />
             </View>
-            <Text style={styles.nameStyle}>hello</Text>
-            <Text style={styles.nameStyle}>KC</Text>
-            {modalVisible1 !== true ||  setModalVisible2 == false? (
+            <Text style={styles.nameStyle}>{item.full_name}</Text>
+            <Text style={styles.nameStyle}>{item.user_name}</Text>
+            
               <View
               style={styles.buttonView}>
-                <Text style={styles.nameStyle1}>{strings.memberssince}</Text>
+                <Text style={styles.nameStyle1}>MembersSince :
+                <TimeAgo
+                time={item.created_at}
+              />
+                  </Text>
                 <View
                   style={styles.buttonviewstyle}>
-                  <TouchableHighlight
+                    {onButtonPressed !== true ? ( <TouchableHighlight
                     style={{
                       backgroundColor: state.color.box1,
                       borderColor: colors.black15,
@@ -139,91 +162,12 @@ const FriendProfileScreen = ({navigation}) => {
                           fontWeight: 'bold',
                           margin: moderateScale(10),
                         }}>
-                        {strings.add}
+                       requested
                       </Text>
                     )}
-                  </TouchableHighlight>
-                  <TouchableHighlight
-                    style={{
-                      backgroundColor: state.color.box2,
-                      borderColor: colors.black15,
-                      borderRadius: moderateScale(10),
-                      width: layout.size.width / 3,
-                      height: moderateScale(40),
-                      shadowOffset: {
-                        width: 0,
-                        height: 1,
-                      },
-                      shadowOpacity: 0.4,
-                      elevation: 3,
-                    }}
-                    underlayColor={colors.red1}
-                    onPress={() => onButtonPressed(false)}>
-                    {state.color.box2 === colors.primary ? (
-                      <Text
-                        style={{
-                          color: colors.white1,
-                          fontFamily: fonts.bold,
-                          fontSize: moderateScale(16),
-                          alignSelf: 'center',
-                          fontWeight: 'bold',
-                          margin: moderateScale(10),
-                        }}>
-                        {strings.block}
-                      </Text>
-                    ) : (
-                      <Text
-                        style={{
-                          color: colors.black1,
-                          fontFamily: fonts.bold,
-                          fontSize: moderateScale(16),
-                          alignSelf: 'center',
-                          fontWeight: 'bold',
-                          margin: moderateScale(10),
-                        }}>
-                        {strings.block}
-                      </Text>
-                    )}
-                  </TouchableHighlight>
+                  </TouchableHighlight>) : null }
                 </View>
               </View>
-            ) : (
-              <View
-                style={styles.buttonView}>
-                <Text style={styles.nameStyle1}>{strings.memberssince}</Text>
-                <View
-                                   style={styles.buttonviewstyle}>
-
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: colors.red1,
-                      borderRadius: moderateScale(10),
-                      width: layout.size.width / 2.5,
-                      height: moderateScale(40),
-                      shadowOffset: {
-                        width: 0,
-                        height: 1,
-                      },
-                      shadowOpacity: 0.4,
-                      elevation: 3,
-                    }}
-                    underlayColor={colors.red1}
-                    onPress={() => setModalVisible2(true)}>
-                    <Text
-                      style={{
-                        color: colors.white1,
-                        fontFamily: fonts.bold,
-                        fontSize: moderateScale(16),
-                        alignSelf: 'center',
-                        fontWeight: 'bold',
-                        margin: moderateScale(10),
-                      }}>
-                      Unblock
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            )}
           </View>
         </ScrollView>
 
@@ -267,14 +211,14 @@ const FriendProfileScreen = ({navigation}) => {
                   {strings.areyouwant}
                 </Text>
                 <View style={styles.modalbuttonviewstyle}>
-                  <TouchableOpacity
+                  {/* <TouchableOpacity
                     style={styles.modalbuttonstyle}
                     underlayColor={colors.white1}
                     // onPress={() => onButtonPressed(true)}
                     onPress={() => {
                       setModalVisible1(false);
                     }}>
-                    <Text style={styles.modalbuttontextstyle}>Block</Text>
+                    <Text style={styles.modalbuttontextstyle}>Add</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.modalbuttonstyle}
@@ -284,7 +228,7 @@ const FriendProfileScreen = ({navigation}) => {
                       setModalVisible1(false);
                     }}>
                     <Text style={styles.modalbuttontextstyle}>cancel</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </View>
             </View>

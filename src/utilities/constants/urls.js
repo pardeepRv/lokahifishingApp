@@ -60,6 +60,7 @@ const urls = {
   leaderboard_filter : 'leaderboard-filter' , 
   tournament_listing : 'tournament-listing',
   terms_and_condition : 'terms-and-condition',
+  member_listing : 'member-listing',
 };
 
 export {urls};

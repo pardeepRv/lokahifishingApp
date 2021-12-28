@@ -13,6 +13,7 @@ import {
   getLcrSecondsaga,
   getLcrThirdsaga,
   getleaderboardfishlist,
+  getmemberlist,
   getMethodsaga,
   getNewsSaga,
   getPositionSaga,
@@ -104,5 +105,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.LEADERBOARD_FILTER_REQUESTED,leaderboardfiltersaga );
   yield takeLatest(actionTypes.TOURNAMENT_LISTING_REQUESTED, gettournamentlistingsaga);
   yield takeLatest(actionTypes.TERMS_AND_CONDITION_REQUESTED, gettermsconditionsaga);
+  yield takeLatest(actionTypes.MEMBER_LISTING_REQUESTED, getmemberlist);
 
 }

@@ -43,7 +43,8 @@ const screenNames = {
   BottomFishing: 'BottomFishing',
   LCRlist:'LCRlist',
   LCRDetails:'LCRDetails',
-  EditLCRDetails:'EditLCRDetails'
+  EditLCRDetails:'EditLCRDetails',
+  FriendProfileScreen :'FriendProfileScreen'
 };
 
 export { transitionConfig, screenNames };

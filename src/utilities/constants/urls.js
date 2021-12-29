@@ -61,6 +61,8 @@ const urls = {
   tournament_listing : 'tournament-listing',
   terms_and_condition : 'terms-and-condition',
   member_listing : 'member-listing',
+  send_friend_request : 'send-friend-request',
+  unblock_user : 'unblock-user',
 };
 
 export {urls};

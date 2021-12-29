@@ -30,6 +30,8 @@ import {
   savelcrreport,
   savephotosharingsaga,
   saveVideosaga,
+  sendfriendrequestsaga,
+  unblockusersaga,
   UpdateLcrReportsaga,
 } from './appSagas';
 import {
@@ -106,5 +108,7 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.TOURNAMENT_LISTING_REQUESTED, gettournamentlistingsaga);
   yield takeLatest(actionTypes.TERMS_AND_CONDITION_REQUESTED, gettermsconditionsaga);
   yield takeLatest(actionTypes.MEMBER_LISTING_REQUESTED, getmemberlist);
+  yield takeLatest(actionTypes.SEND_FRIEND_REQUESTS_REQUESTED, sendfriendrequestsaga);
+  yield takeLatest(actionTypes.UNBLOCK_USER_REQUESTED, unblockusersaga);
 
 }

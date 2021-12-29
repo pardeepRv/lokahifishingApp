@@ -225,6 +225,21 @@ const memberlisting = (params, cb) => {
     cb,
   };
 };
+
+const sendfriendsrequests = (params) => {
+  return {
+    type: actionTypes.SEND_FRIEND_REQUESTS_REQUESTED,
+    params,
+   
+  };
+};
+const unblockuserrequest = (params) => {
+  return {
+    type: actionTypes.UNBLOCK_USER_REQUESTED,
+    params,
+   
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -255,5 +270,7 @@ export {
   leaderboardfilter,
   tournamentlisting,
   termsandcondition,
-  memberlisting
+  memberlisting,
+  sendfriendsrequests,
+  unblockuserrequest
 };

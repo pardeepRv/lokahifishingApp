@@ -23,16 +23,19 @@ import { layout } from '../../../utilities/layout';
 
 
 
-const FriendEmergencyContacts = () => {
-
+const FriendEmergencyContacts = Props => {
+  console.log(Props, 'props in EmergencyContacts>>>>>>>>>>');
+  const { item, EmergencyContacts } = Props;
+  console.log(item, 'item in EmergencyContacts>>>>>>>>>>');
+  console.log(EmergencyContacts, 'EmergencyContacts lcr  ');
   const [addContact, setAllContact] = useState([1, 2, 3])
   const [state, setState] = useState({
-    name: '',
-    relation: '',
-    phoneNo: '',
-    secondName: '',
-    secondRelation: '',
-    secondPhoneNo: ''
+    name:  EmergencyContacts[0].name ? EmergencyContacts[0].name : '',
+    relation: EmergencyContacts[0].relation ? EmergencyContacts[0].relation : '',
+    phoneNo: EmergencyContacts[0].phone_number ? EmergencyContacts[0].phone_number : '',
+    secondName: EmergencyContacts[1].name ? EmergencyContacts[1].name : '',
+    secondRelation:  EmergencyContacts[1].relation ? EmergencyContacts[1].relation : '',
+    secondPhoneNo:EmergencyContacts[1].phone_number ? EmergencyContacts[1].phone_number : ''
   });
   const { name,
     relation,
@@ -119,6 +122,7 @@ const FriendEmergencyContacts = () => {
           </Text>
 
           <TextInputComp
+            editable={false}
             label={'Name'}
             value={name}
             placeholder={'Please enter name here.'}
@@ -131,6 +135,7 @@ const FriendEmergencyContacts = () => {
           />
 
           <TextInputComp
+            editable={false}
             label={'Relation'}
             value={relation}
             placeholder={'Please enter Relation here.'}
@@ -142,6 +147,7 @@ const FriendEmergencyContacts = () => {
             onChangeText={_onChangeText('relation')}
           />
           <TextInputComp
+            editable={false}
             label={'Phone no.'}
             value={phoneNo}
             placeholder={'Please Phone no. here.'}
@@ -174,6 +180,7 @@ const FriendEmergencyContacts = () => {
           </Text>
 
           <TextInputComp
+          editable={false}
             label={'Name'}
             value={secondName}
             placeholder={'Please enter name here.'}
@@ -186,6 +193,7 @@ const FriendEmergencyContacts = () => {
           />
 
           <TextInputComp
+            editable={false}
             label={'Relation'}
             value={secondRelation}
             placeholder={'Please relation here.'}
@@ -198,6 +206,7 @@ const FriendEmergencyContacts = () => {
           />
 
           <TextInputComp
+            editable={false}
             label={'Phone no.'}
             value={secondPhoneNo}
             placeholder={'Please phone no. here.'}
@@ -209,46 +218,6 @@ const FriendEmergencyContacts = () => {
             onChangeText={_onChangeText('secondPhoneNo')}
           />
         </View>
-
-        <Button
-          style={{
-            backgroundColor: colors.primary,
-            borderRadius: 20,
-            width: layout.size.width - 50,
-            alignSelf: 'center',
-            marginBottom: 30
-          }}
-          label={'Save'}
-        // onPress={() => Done()}
-        />
-
-        {/* <FlatList
-        extraData={addContact}
-        data={addContact}
-        renderItem={_renderView}
-        keyExtractor={(item, index) => 'key' + index}
-        showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() =>
-          !addContact.length ? (
-            <Text style={styles.nomatch}>No Match found</Text>
-          ) : null
-        }
-
-        ListFooterComponent={() =>
-          <Button
-            style={{
-              backgroundColor: colors.primary,
-              borderRadius: 20,
-              width: layout.size.width - 50,
-              alignSelf: 'center',
-              marginBottom: 30
-            }}
-            label={'Save'}
-          // onPress={() => Done()}
-          />
-        }
-
-      /> */}
 
       </View>
     </ScrollView>

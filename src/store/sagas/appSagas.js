@@ -974,6 +974,65 @@ function* getmemberlist(params) {
     });
   }
 }
+function* sendfriendrequestsaga({params}) {
+   console.log('params in it>>>>>>>>>>', params);
+  try {
+    const config = {
+      url: urls.send_friend_request,
+      method: 'POST',
+      data: params?.formData,
+      headers: {
+        Authorization: `Bearer ${params && params?.token}`,
+      },
+    };
+    const response = yield request(config);
+     console.log(response, 'getting response from send friend request  api ');
+
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.SEND_FRIEND_REQUESTS_SUCCEEDED,
+      });
+       showSuccessAlert(response?.data?.message);
+       NavigationService.goBack();
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.SEND_FRIEND_REQUESTS_FAIL,
+    });
+  }
+}
+
+function* unblockusersaga({params}) {
+   console.log('params in it>>>>>>>>>>', params);
+ try {
+   const config = {
+     url: urls.unblock_user,
+     method: 'POST',
+     data: params?.formData,
+     headers: {
+       Authorization: `Bearer ${params && params?.token}`,
+     },
+   };
+   const response = yield request(config);
+     console.log(response, 'getting response from send friend request  api ');
+
+   if (response && response.data && response.data.status) {
+     yield put({
+       type: actionTypes.UNBLOCK_USER_SUCCEEDED,
+     });
+      showSuccessAlert(response?.data?.message);
+      NavigationService.goBack();
+   }
+ } catch (error) {
+   console.log(error, 'coming in catch');
+   showErrorAlert(getAPIError(error));
+   yield put({
+     type: actionTypes.UNBLOCK_USER_FAIL,
+   });
+ }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -1005,5 +1064,7 @@ export {
   leaderboardfiltersaga,
   gettournamentlistingsaga,
   gettermsconditionsaga,
-  getmemberlist
+  getmemberlist,
+  sendfriendrequestsaga, 
+  unblockusersaga
 };

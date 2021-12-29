@@ -190,11 +190,11 @@ const LCRlist = ({ navigation }) => {
               style={{
                 justifyContent: 'center',
               }}>
-              <Text style={styles.nameStyle}>{item.user.user_name}</Text>
-              <Text style={styles.dateStyle}>{item.fish.title}</Text>
+              <Text style={styles.nameStyle}>{item?.user?.user_name}</Text>
+              <Text style={styles.dateStyle}>{item?.fish?.title}</Text>
 
               {/* <Text style={styles.dateStyle}>{item.date}</Text> */}
-              <TimeAgo style={styles.dateStyle} time={item.created_at} />
+              <TimeAgo style={styles.dateStyle} time={item?.created_at} />
             </View>
             <View
               style={{

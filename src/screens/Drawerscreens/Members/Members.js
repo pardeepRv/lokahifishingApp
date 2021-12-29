@@ -14,13 +14,14 @@ import {moderateScale} from 'react-native-size-matters';
 import SegmentedControl from 'rn-segmented-control';
 import {fonts, icons} from '../../../../assets';
 import {Header} from '../../../components/common/Header';
-import TextInputComp from '../../../components/common/TextInputComp';
+
 import {colors, screenNames} from '../../../utilities/constants';
 import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { memberlisting } from '../../../store/actions';
 import TimeAgo from 'react-native-timeago';
 import { layout } from '../../../utilities/layout';
+import TextInputComp from '../../../components/common/TextInputComp';
 
 let members = [
   {
@@ -53,8 +54,15 @@ let members = [
 ];
 
 const Members = ({navigation}) => {
-  const [membersList, setMembersList] = useState([]);
-  const [searchMember, setSearchMember] = useState('');
+  const [membersList, setMembersList] = useState( app && app.memberlist && app.memberlist.length > 0
+    ? app.memberlist
+    : [],);
+  const [filterdata, setfilterdata] = useState([]);
+
+
+
+  const [Search, setSearchMember] = useState('');
+
   const [tabIndex, setTabIndex] = React.useState(0);
   const [tabAscDscIndex, settabAscDscIndex] = React.useState(0);
 
@@ -73,7 +81,7 @@ const Members = ({navigation}) => {
     console.log('coming in this on timelinelist page');
     const unsubscribe = navigation.addListener('focus', () => {
         getmemberfunc();
-
+setfilterdata(membersList)
     });
 }, [navigation]);
 
@@ -95,9 +103,10 @@ function getmemberfunc() {
 
 function _onRefresh() {
   setState({refreshing: true});
-  getmemberfunc(app?.memberListing);
+  getmemberfunc();
 }
   const _renderView = ({item, index}) => (
+   
     <TouchableOpacity
       onPress={() => 
         navigation.navigate(screenNames.FriendProfileScreen , {
@@ -147,25 +156,45 @@ function _onRefresh() {
     settabAscDscIndex(index);
   };
 
+  // const searchfilter = (text) => {
+  //   if (text && tabIndex == 0 ){
+  //     const newData = membersList.filter((item) =>{
+  //         console.log(item , 'itemm ');
+  //       const itemData = item.full_name ? item.full_name.toUppercase() : ''.toUpperCase();
+  //       const textData = text.toUpperCase();
+  //       return itemData.indexOf(textData) > -1;
+  //     })
+  //     setfilterdata(newData);
+  //     setSearchMember(text);
+  //   } else {
+  //     setfilterdata(membersList);
+  //     setSearchMember(text);
+  //   }
+  // }
+
   const searchText = e => {
     setSearchMember(e);
     let text = e.toLowerCase();
-    // let members = app?.memberListing;
-    let members = app?.memberlisting;
-    let memberfiltername = members.filter(item=> {
-      return console.log(item , 'console on filter ');
+    let member = membersList;
+    let filteredName = member.filter(item => {
+       console.log(item, 'consile ');
+       if(tabIndex==0){
       return item && item.user_name.toLowerCase().match(text);
+    } else if (tabIndex==2){
+      return item && item.full_name.toLowerCase().match(text);
+    }
     });
-
-   return  console.log(memberfiltername, 'dbwdvewduyv');
-    // if (!text || text === '') {
-    //   setMembersList(user?.allFriendslist);
-    // } else if (!Array.isArray(filteredName) && !filteredName.length) {
-    //   setMembersList(user?.allFriendslist);
-    // } else if (Array.isArray(filteredName)) {
-    //   setMembersList(filteredName);
-    // }
+     console.log(filteredName, 'dbwdvewduyv');
+    if (!text || text === '' ) {
+      setMembersList(app?.memberlist);
+    } else if (!Array.isArray(filteredName) && !filteredName.length) {
+      setMembersList(app?.memberlist);
+    } else if (Array.isArray(filteredName)) {
+      setMembersList(filteredName);
+    }
   };
+
+ 
 
   return (
     <ImageBackground
@@ -192,14 +221,14 @@ function _onRefresh() {
         />
 
         <TextInputComp
-          value={searchMember}
+        value={Search}
           placeholder={'Please enter something!'}
           labelTextStyle={{
             fontFamily: fonts.semiBold,
             fontSize: moderateScale(16),
             color: colors.white1,
           }}
-          onChangeText={text => setSearchMember(text)}
+          onChangeText={text => searchText(text)}
         />
 
         <View

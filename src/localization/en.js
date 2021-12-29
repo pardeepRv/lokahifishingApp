@@ -131,7 +131,7 @@ describeyourCatchHere: 'Describe your catch here(optional)',
 includegpsinlcr :'Include GPS IN LCR',
 private:'Private',
 next:'Next',
-add:'Add',
+addfriend:'Add Friend',
 block:'Block',
 //Leaderboard
 annualy:'Annual',

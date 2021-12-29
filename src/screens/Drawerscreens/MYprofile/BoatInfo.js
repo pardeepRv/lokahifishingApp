@@ -53,7 +53,6 @@ const BoatInfo = ({navigation}) => {
                     left: 10,
                     marginTop: 5,
                     borderRadius: 50,
-                    backgroundColor: '#000',
                   }}
                 />
                 <View style={styles.rowContent2}>

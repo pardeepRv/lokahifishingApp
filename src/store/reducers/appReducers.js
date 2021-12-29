@@ -522,6 +522,36 @@ export default (state = initialState, action) => {
             ...state,
             loading: false,
           };
+          case actionTypes.SEND_FRIEND_REQUESTS_REQUESTED:
+            return {
+              ...state,
+              loading: true,
+            };
+          case actionTypes.SEND_FRIEND_REQUESTS_SUCCEEDED:
+            return {
+              ...state,
+              loading: false,
+            };
+          case actionTypes.SEND_FRIEND_REQUESTS_FAIL:
+            return {
+              ...state,
+              loading: false,
+            };
+            case actionTypes.UNBLOCK_USER_REQUESTED:
+              return {
+                ...state,
+                loading: true,
+              };
+            case actionTypes.UNBLOCK_USER_SUCCEEDED:
+              return {
+                ...state,
+                loading: false,
+              };
+            case actionTypes.UNBLOCK_USER_FAIL:
+              return {
+                ...state,
+                loading: false,
+              };
     default:
       return state;
   }

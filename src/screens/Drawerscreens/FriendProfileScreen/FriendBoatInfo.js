@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 
 import {
   ImageBackground,
@@ -10,8 +10,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import { Props } from 'react-native-image-zoom-viewer/built/image-viewer.type';
 // import Pdf from 'react-native-pdf';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import { fonts, icons } from '../../../../assets';
 import { strings } from '../../../localization';
 import { colors } from '../../../utilities/constants';
@@ -19,13 +20,17 @@ import { layout } from '../../../utilities/layout';
 
 
 
-const FriendBoatInfo = () => {
+const FriendBoatInfo = Props => {
+  console.log(Props, 'props in friendboatinfo>>>>>>>>>>');
+  const { item, boatdata } = Props;
+  console.log(item, boatdata, 'boat infoo ', 'item in friendboatinfo>>>>>>>>>>');
+
   const [state, setState] = useState({
     iscbradio: '',
   });
-  const {iscbradio, password} = state;
+  const { iscbradio, password } = state;
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white1 }}>
       <View
         style={{
           flex: 1,
@@ -39,47 +44,59 @@ const FriendBoatInfo = () => {
             <View style={styles.Container}>
               <View style={styles.rowContent}>
                 <Image
-                  source={icons.signin_bg_ic}
-                  resizeMode="contain"
+
+                  source={
+                    boatdata?.boat_image
+                      ? { uri: boatdata?.boat_image }
+                      : icons.loginLogo
+                  }
+                  resizeMode="cover"
                   style={{
                     height: moderateScale(100),
                     width: moderateScale(100),
                     left: 10,
-                    marginTop: 5,
                     borderRadius: 100 / 1,
                   }}
                 />
                 <View style={styles.rowContent2}>
-                  <Text style={styles.nameStyle}>{strings.boatmaker}</Text>
-                  <Text style={{height: moderateScale(2),
-    width: layout.size.width/1.8,
-backgroundColor:colors.white1}}></Text>
+                  <Text style={styles.nameStyle}>{boatdata?.boat_maker ? boatdata?.boat_maker : strings.boatmaker}</Text>
+                  <Text style={{
+                    height: moderateScale(2),
+                    width: layout.size.width / 1.8,
+                    backgroundColor: colors.white1
+                  }}></Text>
 
-                  <Text style={styles.nameStyle}>{strings.boatlength}</Text>
+                  <Text style={styles.nameStyle}>{boatdata?.boat_length ? boatdata?.boat_length : strings.boatlength}</Text>
                 </View>
               </View>
             </View>
             <View style={styles.Containertable}>
-              <TouchableOpacity style={styles.rowContent3}>
-                <Text style={styles.textstyle}>{strings.homeport}</Text>
+              <TouchableOpacity style={{flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'}}>
+                <Text style={styles.textstyle1}>{strings.homeport}</Text>
+                <Text style={styles.textstyle2} numberOfLines={2}>{boatdata.home_port ? boatdata?.home_port : ''}</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.vhfradio}</Text>
-                <Image source={icons.ic_donex} style={styles.checkIcon} />
+                <Image source={boatdata.VHF_Radio ? icons.ic_donex
+                  : icons.ic_not_donex} style={styles.checkIcon} />
               </View>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.cbradio}</Text>
-                <Image source={icons.ic_donex} style={styles.checkIcon} />
+                <Image source={boatdata.CB_Radio ? icons.ic_donex
+                  : icons.ic_not_donex} style={styles.checkIcon} />
               </View>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.epirb}</Text>
-                <Image source={icons.ic_donex} style={styles.checkIcon} />
+                <Image source={boatdata.EPIRB ? icons.ic_donex
+                  : icons.ic_not_donex} style={styles.checkIcon} />
               </View>
             </View>
 
@@ -87,7 +104,7 @@ backgroundColor:colors.white1}}></Text>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.liferaft}</Text>
                 <Image
-                  source={iscbradio ? icons.ic_donex : icons.ic_not_donex}
+                  source={boatdata.Life_Raft ? icons.ic_donex : icons.ic_not_donex}
                   style={styles.checkIcon}
                 />
               </View>
@@ -98,7 +115,7 @@ backgroundColor:colors.white1}}></Text>
                   {strings.visualdistressignal}
                 </Text>
                 <Image
-                  source={iscbradio ? icons.ic_donex : icons.ic_not_donex}
+                  source={boatdata.Visual_Distress_Signals ? icons.ic_donex : icons.ic_not_donex}
                   style={styles.checkIcon}
                 />
               </View>
@@ -151,16 +168,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   rowContent2: {
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
-    alignSelf:'center',
-    alignItems:'center',
+    alignSelf: 'center',
+    alignItems: 'center',
 
   },
   rowContent3: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent:'space-between'
+    justifyContent: 'space-between'
   },
   subContainer: {
     paddingHorizontal: moderateScale(15),
@@ -171,8 +188,8 @@ const styles = StyleSheet.create({
   nameStyle: {
 
     height: moderateScale(35),
-    width: layout.size.width/2,
-top:2,
+    width: layout.size.width / 2,
+    top: 2,
     fontFamily: fonts.bold,
     fontSize: moderateScale(22),
     color: colors.primary,
@@ -199,17 +216,31 @@ top:2,
     textAlign: 'left',
     fontWeight: 'bold',
     padding: 5,
-    backgroundColor: colors.transparent,
-  },
 
+  },
+  textstyle1: {
+    fontSize: 20,
+    width: layout.size.width / 2.5,
+    color: colors.white1,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    padding: 10,
+  },
+  textstyle2: {
+    fontSize: 18,
+    width: layout.size.width / 2,
+    color: colors.white1,
+    textAlign: 'left',
+    flexWrap: 'wrap',
+    padding: 10,
+
+  },
   checkIcon: {
     right: 15,
     borderColor: colors.white1,
     borderWidth: 0,
     borderRadius: 16,
     top: moderateScale(2),
-
-
   },
 });
 

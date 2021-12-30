@@ -240,6 +240,21 @@ const unblockuserrequest = (params) => {
    
   };
 };
+const memberloadmore = (params, cb) => {
+  return {
+    type: actionTypes.MEMBER_LOADMORE_REQUESTED,
+    params,
+    cb,
+  };
+};
+const linksimportant = (params) => {
+  return {
+    type: actionTypes.IMPORTANT_LINKS_REQUESTED,
+    params,
+   
+  };
+};
+
 export {
   getvideo,
   getNewsFromAdmin,
@@ -272,5 +287,7 @@ export {
   termsandcondition,
   memberlisting,
   sendfriendsrequests,
-  unblockuserrequest
+  unblockuserrequest,
+  memberloadmore,
+  linksimportant
 };

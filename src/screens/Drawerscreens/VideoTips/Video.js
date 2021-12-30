@@ -14,6 +14,9 @@ import { fonts, icons } from '../../../../assets';
 import { Header } from '../../../components/common/Header';
 import { colors } from '../../../utilities/constants';
 import styles from './styles';
+import {useDispatch, useSelector} from 'react-redux';
+import { getvideo } from '../../../store/actions';
+
 
 const DATA = [
   {
@@ -59,7 +62,7 @@ const DATA = [
 ];
 
 const videoArr = [
-  { videoId: 'iee2TATGMyI', title: 'Posting a Catch report' },
+  { videoId: 'i3mgx2W7Cok', title: 'Posting a Catch report' },
   { videoId: 'JmSXo0XdWoA', title: 'Lokhai Kona Gaffing' },
   { videoId: 'wop3B3bsSx8', title: 'Lokhai NothernLights Leadring' },
 ];
@@ -73,8 +76,26 @@ const Item = ({ title }) => (
 
 const Video = ({ navigation }) => {
 
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
 
+  console.log(auth, 'auth>>>>>>>>>>>>', app, 'app>>>>>>>>>>>>>>>>');
+
+  const dispatch = useDispatch();
  
+  useEffect(() => {
+    console.log('in useEfectof news>>>>>>>>>>>.');
+    const unsubscribe = navigation.addListener('focus', () => {
+      videofunc();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  //get news taken list
+  function videofunc() {
+    let token = auth && auth?.userDetails?.access_token;
+    dispatch(getvideo(token));
+  }
 
   const _renderView = ({ item, index }) => (
     <TouchableOpacity
@@ -101,7 +122,7 @@ const Video = ({ navigation }) => {
       <YoutubePlayer
         height={220}
         play={false}
-        videoId={item?.videoId}
+        videoId={item?.video_id}
       // onChangeState={onStateChange}
       />
     </TouchableOpacity>
@@ -138,12 +159,12 @@ const Video = ({ navigation }) => {
       /> */}
 
         <FlatList
-          extraData={videoArr}
-          data={videoArr}
+          extraData={app?.allVideolist}
+          data={app?.allVideolist}
           renderItem={_renderView}
           keyExtractor={(item, index) => 'key' + index}
           ListEmptyComponent={() =>
-            videoArr >= 0 && <Text style={{}}>No video found</Text>
+            app?.allVideolist >= 0 && <Text style={{}}>No video found</Text>
           }
         // refreshControl={
         //   <RefreshControl

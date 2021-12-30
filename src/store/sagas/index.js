@@ -8,6 +8,7 @@ import {
   commentListLcr,
   commentListphotoharing,
   getAllFishesSaga,
+  getimprtantlinks,
   getLcrFirstsaga,
   getlcrlistsaga,
   getLcrSecondsaga,
@@ -27,6 +28,7 @@ import {
   leaderboardrankingsaga,
   likesListLcr,
   likesphotosharinglist,
+  postmemberlistsaga,
   savelcrreport,
   savephotosharingsaga,
   saveVideosaga,
@@ -110,5 +112,7 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.MEMBER_LISTING_REQUESTED, getmemberlist);
   yield takeLatest(actionTypes.SEND_FRIEND_REQUESTS_REQUESTED, sendfriendrequestsaga);
   yield takeLatest(actionTypes.UNBLOCK_USER_REQUESTED, unblockusersaga);
+  yield takeLatest(actionTypes.MEMBER_LOADMORE_REQUESTED, postmemberlistsaga);
+  yield takeLatest(actionTypes.IMPORTANT_LINKS_REQUESTED, getimprtantlinks);
 
 }

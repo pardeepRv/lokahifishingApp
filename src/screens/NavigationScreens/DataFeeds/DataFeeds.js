@@ -81,7 +81,7 @@ const DataFeeds = ({navigation}) => {
         navigation.navigate('Webviewer', {title: item.title, url: item.url})
       }>
       <Image
-        style={{
+        style={{ 
           width: layout.size.width,
           flex: 1,
           marginTop: layout.size.height / 9,
@@ -143,7 +143,7 @@ const DataFeeds = ({navigation}) => {
           onPress={() =>
             navigation.navigate('Webviewer', {
               url: 'http://www.pacioos.hawaii.edu/water/model-temperature-hawaii/',
-              title: 'Sea temp',
+              title: 'See Surface Temp',
             })
           }
           style={[

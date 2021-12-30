@@ -63,6 +63,8 @@ const urls = {
   member_listing : 'member-listing',
   send_friend_request : 'send-friend-request',
   unblock_user : 'unblock-user',
+  member_loadmore : "member-loadmore",
+  important_links :'important_links',
 };
 
 export {urls};

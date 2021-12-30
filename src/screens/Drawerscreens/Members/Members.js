@@ -135,8 +135,8 @@ function _onRefresh() {
             left:moderateScale(20),
             width:layout.size.width/2,
             margin:10,
-          }}>
-             <Text style={styles.nameStyle}>{item.user_name}</Text>
+          }}>{tabIndex == 2 ? (<Text style={styles.nameStyle}>{item.full_name}</Text>):(
+             <Text style={styles.nameStyle}>{item.user_name}</Text>)}
           {/* <Text style={styles.nameStyle}>FullName :{item.full_name}</Text> */}
           <Text>Member Since :
           <TimeAgo

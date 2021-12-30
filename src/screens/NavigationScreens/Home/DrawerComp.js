@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Linking
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
@@ -35,6 +36,9 @@ const DrawerComp = ({navigation, ...props}) => {
     store.dispatch(logout());
   };
 
+  const handleEmail = () => {
+    Linking.openURL('mailto:info@lokahifishing.com?subject=SendMail&body=Description')
+  }
   const reset = () => {
     return signOut();
     return navigation.dispatch(
@@ -69,11 +73,15 @@ const DrawerComp = ({navigation, ...props}) => {
                 flexDirection: 'row',
                 margin: 10,
               }}
-              onPress={
-                val.name == strings.Logout
-                  ? () => reset()
-                  : () => pressHnadler(val.navigate)
-              }>
+              onPress={() => {
+                if ( val.name == strings.Logout){
+                  reset()
+                }else if (val.name == strings.Contact){
+                  handleEmail()
+                }else{
+                  pressHnadler(val.navigate)
+                }
+              }}>
               <Image source={val.img} style={styles.imgStyle} />
               <Text style={styles.nameStyle}>{val.name}</Text>
             </TouchableOpacity>

@@ -38,4 +38,10 @@ export default StyleSheet.create({
     marginTop: 20,
     fontFamily: fonts.semiBold,
   },
+  footer: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
 });

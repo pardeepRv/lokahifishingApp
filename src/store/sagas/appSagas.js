@@ -1033,6 +1033,60 @@ function* unblockusersaga({params}) {
    });
  }
 }
+function* postmemberlistsaga(params) {
+  console.log(params, 'params in members .....api ');
+ try {
+   const config = {
+     url: urls.member_loadmore,
+     method: 'POST',
+     data: params?.params?.formData,
+     headers: {
+       Authorization: `Bearer ${params && params.params && params.params.token}`,
+     },
+   };
+   const response = yield request(config);
+   return  console.log(response, '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>');
+
+   if (response?.data?.status) {
+     yield put({
+       type: actionTypes.MEMBER_LOADMORE_SUCCEEDED,
+       payload: response?.data?.data?.memberListing,
+     });
+     params.cb(response);
+   } 
+ } catch (error) {
+   showErrorAlert(getAPIError(error));
+   yield put({
+     type: actionTypes.MEMBER_LOADMORE_FAIL,
+   });
+ }
+}
+
+function* getimprtantlinks({params}) {
+  try {
+    const config = {
+      url: urls.important_links,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params}`,
+      },
+    };
+    const response = yield request(config);
+     console.log(response, 'important links  >>>>>> api ');
+
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.IMPORTANT_LINKS_SUCCEEDED,
+        payload: response?.data?.data?.important_links,
+      });
+    } 
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.IMPORTANT_LINKS_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -1066,5 +1120,7 @@ export {
   gettermsconditionsaga,
   getmemberlist,
   sendfriendrequestsaga, 
-  unblockusersaga
+  unblockusersaga,
+  postmemberlistsaga,
+  getimprtantlinks
 };

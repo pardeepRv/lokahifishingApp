@@ -11,9 +11,10 @@ import {RFValue} from 'react-native-responsive-fontsize';
 
 export default StyleSheet.create({
   listView: {
-    backgroundColor: colors.white1,
+    backgroundColor: colors.grey12,
     flexDirection: 'row',
     padding: 10,
+    margin:5,
     paddingVertical: moderateScale(5),
     justifyContent:'space-between'
   },
@@ -22,7 +23,7 @@ export default StyleSheet.create({
     flex: 0.9,
   },
   nameStyle: {
-    fontFamily: fonts.regular,
+    fontFamily: fonts.semiBold,
     fontSize: moderateScale(16),
     color: colors.black1,
     paddingHorizontal: moderateScale(5),

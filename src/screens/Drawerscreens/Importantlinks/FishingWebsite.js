@@ -7,66 +7,41 @@ import { Header } from '../../../components/common';
 import { colors } from '../../../utilities/constants';
 import { layout } from '../../../utilities/layout';
 
-const FishingWebsite = ({ navigation, route }) => {
-	const [webPage, setWebPage] = useState('https://lokahifishing.com/');
-	const [prevWebPage, setPrevWebPage] = useState(null);
-	const webEl = useRef(null);
+const FishingWebsite = ({navigation, route}) => {
+  console.log(route, 'route>>>>>>>>>>>>.url');
 
-	useEffect(() => {
-		setWebPage('https://lokahifishing.com/');
-	}, []);
+  const {title, url} = route.params;
 
-	const handleWebViewNavChange = newState => {
-		let { url } = newState;
-		if (url !== prevWebPage) {
-			setPrevWebPage(webPage);
-			setWebPage(url);
-		}
-	};
-	return (
-		<ImageBackground source={icons.ic_signup_bg} style={styles.bgImg}>
+  console.log(url, 'route>>>>>>>>>>>>.url');
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: colors.white1,
+      }}>
       <Header
-          containerStyle={{
-            backgroundColor: 'transparent',
-            height: moderateScale(60),
-          }}
-          title={'Fishing Website'}
-          titleStyle={{fontFamily: fonts.bold}}
-          leftIconSource={icons.ic_back_white}
-          leftButtonStyle={{
-            tintColor: colors.white1,
-          }}
-          onLeftPress={() => {
-            navigation.goBack();
-          }}
-        />
-			<View style={styles.content}>
-				<WebView
-					startInLoadingState={true}
-					ref={webEl}
-					onNavigationStateChange={handleWebViewNavChange}
-          mediaPlaybackRequiresUserAction={true}
-					originWhitelist={['*']}
-					source={{ uri: webPage }}
-					style={{  width: layout.size.width, marginBottom: 0 }}
-				/>
-			</View>
-		</ImageBackground>
-	);
+        containerStyle={{
+          backgroundColor: colors.secondry,
+          height: moderateScale(60),
+        }}
+        title={title}
+        titleStyle={{fontFamily: fonts.bold}}
+        leftIconSource={icons.ic_back_white}
+        leftButtonStyle={{
+          tintColor: colors.white1,
+        }}
+        onLeftPress={() => {
+          navigation.goBack();
+        }}
+      />
+      <WebView
+        startInLoadingState={true}
+        originWhitelist={['*']}
+        source={{uri: url}}
+        style={{width: layout.size.width, marginBottom: 0}}
+      />
+    </View>
+  );
 };
-
 export default FishingWebsite;
-
-
-const styles = StyleSheet.create({
-	bgImg: {
-		width: '100%',
-		height: '100%',
-		flexDirection: 'column',
-		alignItems: 'center',
-	},
-	content: {
-		position: 'relative',
-
-	},
-});

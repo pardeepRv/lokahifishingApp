@@ -14,6 +14,8 @@ const initialState = {
   filterlist :[],
   pagelist:[],
   memberlist:[],
+  memberlistdata:[],
+  linkslist: [],
 };
 
 export default (state = initialState, action) => {
@@ -552,6 +554,43 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: false,
               };
+              case actionTypes.MEMBER_LOADMORE_REQUESTED:
+                return {
+                  ...state,
+                  loading: true,
+                };
+          
+              case actionTypes.MEMBER_LOADMORE_SUCCEEDED:
+                return {
+                  ...state,
+                  loading: false,
+                  memberlistdata: action.payload,
+                };
+          
+              case actionTypes.MEMBER_LOADMORE_FAIL:
+                return {
+                  ...state,
+                  loading: false,
+                };
+                case actionTypes.IMPORTANT_LINKS_REQUESTED:
+                  return {
+                    ...state,
+                    loading: true,
+                  };
+            
+                case actionTypes.IMPORTANT_LINKS_SUCCEEDED:
+                  return {
+                    ...state,
+                    loading: false,
+                    linkslist: action.payload,
+                  };
+            
+                case actionTypes.IMPORTANT_LINKS_FAIL:
+                  return {
+                    ...state,
+                    loading: false,
+                  };
+            
     default:
       return state;
   }

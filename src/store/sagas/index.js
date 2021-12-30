@@ -19,6 +19,7 @@ import {
   getNewsSaga,
   getPositionSaga,
   getSignsSaga,
+  getsurveyquestion,
   gettermsconditionsaga,
   gettimeline,
   gettournamentlistingsaga,
@@ -114,5 +115,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.UNBLOCK_USER_REQUESTED, unblockusersaga);
   yield takeLatest(actionTypes.MEMBER_LOADMORE_REQUESTED, postmemberlistsaga);
   yield takeLatest(actionTypes.IMPORTANT_LINKS_REQUESTED, getimprtantlinks);
+  yield takeLatest(actionTypes.SURVEY_QUESTION_REQUESTED, getsurveyquestion);
 
 }

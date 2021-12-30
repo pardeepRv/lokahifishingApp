@@ -254,6 +254,13 @@ const linksimportant = (params) => {
    
   };
 };
+const questionsurvey = (params, cb) => {
+  return {
+    type: actionTypes.SURVEY_QUESTION_REQUESTED,
+    params,
+   cb,
+  };
+};
 
 export {
   getvideo,
@@ -289,5 +296,6 @@ export {
   sendfriendsrequests,
   unblockuserrequest,
   memberloadmore,
-  linksimportant
+  linksimportant,
+  questionsurvey
 };

@@ -16,6 +16,7 @@ const initialState = {
   memberlist:[],
   memberlistdata:[],
   linkslist: [],
+  questionlist:[],
 };
 
 export default (state = initialState, action) => {
@@ -590,7 +591,22 @@ export default (state = initialState, action) => {
                     ...state,
                     loading: false,
                   };
-            
+                  case actionTypes.SURVEY_QUESTION_REQUESTED:
+                    return {
+                      ...state,
+                      loading: true,
+                    };
+                  case actionTypes.SURVEY_QUESTION_SUCCEEDED:
+                    return {
+                      ...state,
+                      loading: false,
+                      questionlist: action.payload,
+                    };           
+                  case actionTypes.SURVEY_QUESTION_FAIL:
+                    return {
+                      ...state,
+                      loading: false,
+                    };
     default:
       return state;
   }

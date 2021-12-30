@@ -1087,6 +1087,34 @@ function* getimprtantlinks({params}) {
     });
   }
 }
+function* getsurveyquestion (params) {
+   console.log('params in it>>>>>>>>>>', params);
+
+  try {
+    const config = {
+      url: urls.survey_questions,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${params && params.params && params.params.token}`,
+      },
+    };
+    const response = yield request(config);
+     console.log(response, 'surevey imppppp   >>>>>> api ');
+
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.SURVEY_QUESTION_SUCCEEDED,
+        payload: response?.data?.data?.questions,
+      });
+      params.cb(response);
+    } 
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.SURVEY_QUESTION_FAIL,
+    });
+  }
+}
 export {
   fetchAll,
   getvediosaga,
@@ -1122,5 +1150,6 @@ export {
   sendfriendrequestsaga, 
   unblockusersaga,
   postmemberlistsaga,
-  getimprtantlinks
+  getimprtantlinks,
+  getsurveyquestion
 };

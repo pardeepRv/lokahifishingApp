@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import {
   FlatList,
   Image,
@@ -17,6 +17,8 @@ import {strings} from '../../../localization';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import styles from './styles';
+import {useDispatch, useSelector} from 'react-redux';
+import { questionsurvey } from '../../../store/actions';
 
 let members = [
   {
@@ -50,12 +52,49 @@ let members = [
 ];
 
 const QuestionAnswer = ({navigation}) => {
-  const [membersList, setMembersList] = useState(members);
+  const [membersList, setMembersList] = useState([]);
   const [tabIndex, setTabIndex] = React.useState(1);
   const [theme, setTheme] = React.useState('LIGHT');
+
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
+  console.log(auth, 'auth>>>>>>>>>>>>', app, 'app>>>>>>>>>>>>>>>>');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('in useEfectof news>>>>>>>>>>>.');
+    const unsubscribe = navigation.addListener('focus', () => {
+      surevyfunc();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  //get news taken list
+  function surevyfunc() {
+    let ob = {};
+    ob.token = auth && auth?.userDetails?.access_token;
+    dispatch
+    // (questionsurvey(token));
+   ( questionsurvey(ob, cb => {
+      if (cb) {
+        console.log(cb, 'in Questionpage  page>>>>>>>>>');
+        if (cb?.data?.data) {
+          let fishArr = cb?.data?.data?.questions;
+
+          // fishArr.forEach(element => {
+          //   element.imgUrl = cb && cb.data && cb.data.base_url;
+          // });
+          setMembersList(fishArr);
+          // setTabIndex(fishArr)
+        }
+      }
+    }),
+   )
+  }
   const toggleTheme = () =>
     theme === 'LIGHT' ? setTheme('DARK') : setTheme('LIGHT');
-  const handleTabsChange = index => {
+  const handleTabsChange = (index) => {
+    console.log(index , 'mmmmmmmmmmmmmmmmmm');
     setTabIndex(index);
   };
 
@@ -83,13 +122,13 @@ const QuestionAnswer = ({navigation}) => {
         <View style={styles.viewStyle}>
           <View style={{alignSelf: 'center'}}>
             <View style={{flexDirection: 'row', bottom: moderateScale(10)}}>
-              <Text style={styles.nameStyle1}>{item.srno}</Text>
-              <Text style={styles.nameStyle}>{item.name}</Text>
+              <Text style={styles.nameStyle1}>Q.{index + 1}</Text>
+              <Text style={styles.nameStyle}>{item.question}</Text>
             </View>
           </View>
         </View>
         <View style={{flexDirection:'row'}}>
-        <SegmentedControl
+          <SegmentedControl
           tabs={['Yes', 'No']}
           onChange={() => {}}
           paddingVertical={6}
@@ -112,6 +151,8 @@ const QuestionAnswer = ({navigation}) => {
           onChange={handleTabsChange}
           theme={theme}
         />
+         
+        
         </View>
       </TouchableOpacity>
       <View

@@ -65,6 +65,7 @@ const urls = {
   unblock_user : 'unblock-user',
   member_loadmore : "member-loadmore",
   important_links :'important_links',
+  survey_questions : 'survey-questions',
 };
 
 export {urls};

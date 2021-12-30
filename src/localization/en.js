@@ -56,7 +56,7 @@ export default {
   Settings: 'Settings',
   Logout: 'Logout',
   tide:'Tide/Sun/Moon',
-  sst:'SST',
+  sst:'Sea Surface Temperature',
   wind:'Wind',
   cureent:'Current',
   radar:'Radar',
@@ -65,8 +65,8 @@ export default {
 
   //Home screen
   Catch_report_h: 'Catch report',
-  Tids_weather: 'Tides and weather',
-  Photo_sharing: 'Photo sharing',
+  Tids_weather: 'Tides and Weather',
+  Photo_sharing: 'Photo Sharing',
   News: 'News',
   LeaderBoard: 'LeaderBoard',
   Tournament: 'Tournament',

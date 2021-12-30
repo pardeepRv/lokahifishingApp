@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {moderateScale} from 'react-native-size-matters';
@@ -114,6 +115,11 @@ const Videoscreen = ({navigation}) => {
         />
 
         <ScrollView style={styles.viewStyle}>
+        <KeyboardAvoidingView    behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+              style={styles.subContainer}
+              contentContainerStyle={styles.subContentContainer}
+              keyboardShouldPersistTaps={'always'}
+              showsVerticalScrollIndicator={false}>
           <View
             style={{
               margin: moderateScale(10),
@@ -205,6 +211,7 @@ const Videoscreen = ({navigation}) => {
               </Text>
             </TouchableOpacity>
           </View>
+          </KeyboardAvoidingView>
         </ScrollView>
         <Loader isAbsolute isLoading={app.loading} />
       </SafeAreaView>

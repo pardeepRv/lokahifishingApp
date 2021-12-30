@@ -8,7 +8,9 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { moderateScale } from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
 import { useDispatch, useSelector } from 'react-redux';
@@ -198,6 +200,12 @@ const Comment = ({ navigation, route }) => {
           navigation.goBack();
         }}
       />
+      
+     <KeyboardAvoidingView    behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+              style={styles.subContainer}
+              contentContainerStyle={styles.subContentContainer}
+              keyboardShouldPersistTaps={'always'}
+              showsVerticalScrollIndicator={false}>
       <FlatList
         style={styles.root}
         data={commentList}
@@ -224,10 +232,10 @@ const Comment = ({ navigation, route }) => {
           return item.id;
         }}
       />
+      
       <View
         style={{
-          position: 'absolute',
-          bottom: 0,
+          bottom:10,
           width: layout.size.width,
           margin: 0,
           flexDirection: 'row',
@@ -265,6 +273,9 @@ const Comment = ({ navigation, route }) => {
           />
         </TouchableOpacity>
       </View>
+    
+      </KeyboardAvoidingView>
+   
       <Loader isLoading={app.loading} isAbsolute />
     </SafeAreaView>
   );
@@ -283,6 +294,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     flexDirection: 'row',
     alignItems: 'flex-start',
+  },
+  containerStyle: {
+    flex: 1,
+
   },
   content: {
     marginLeft: 16,
@@ -310,5 +325,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  subContainer: {
+    height: layout.size.height -79,
+    backgroundColor:colors.secondry
+  },
+  subContentContainer: {
+    paddingBottom: moderateScale(20),
   },
 });

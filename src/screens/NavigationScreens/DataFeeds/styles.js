@@ -45,11 +45,19 @@ export default StyleSheet.create({
     flex: 0.9,
   },
   nameStyle: {
-    fontFamily: fonts.regular,
-    fontSize: moderateScale(20),
+    fontFamily: fonts.bold,
+    fontSize: moderateScale(18),
     color: colors.white1,
     paddingHorizontal: moderateScale(15),
-    fontWeight: 'bold',
+
+  },
+  namestyleSeaSurfaceTemperature: {
+    fontFamily: fonts.bold,
+    fontSize: moderateScale(18),
+    color: colors.white1,
+    paddingHorizontal: moderateScale(15),
+
+
   },
   dateStyle: {
     fontFamily: fonts.regular,

@@ -52,5 +52,12 @@ export default StyleSheet.create({
         height: 2, width: layout.size.width / 1.2,
         margin: 8, backgroundColor: colors.black5, alignSelf: 'center'
 
-    }
+    },
+    subContainer: {
+        height: layout.size.height /1,
+
+      },
+      subContentContainer: {
+        paddingBottom: moderateScale(20),
+      },
 });

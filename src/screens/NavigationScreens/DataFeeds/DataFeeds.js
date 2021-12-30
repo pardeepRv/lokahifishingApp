@@ -143,7 +143,7 @@ const DataFeeds = ({navigation}) => {
           onPress={() =>
             navigation.navigate('Webviewer', {
               url: 'http://www.pacioos.hawaii.edu/water/model-temperature-hawaii/',
-              title: 'See Surface Temp',
+              title: 'Sea Surface Temperature',
             })
           }
           style={[

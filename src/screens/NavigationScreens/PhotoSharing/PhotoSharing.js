@@ -342,7 +342,7 @@ const PhotoSharing = ({ navigation }) => {
                         backgroundColor: 'transparent',
                         height: moderateScale(60),
                     }}
-                    title={'Lokahi Timeline'}
+                    title={'Photo Sharing'}
                     titleStyle={{ fontFamily: fonts.bold }}
                     leftIconSource={icons.ic_back_white}
                     leftButtonStyle={{

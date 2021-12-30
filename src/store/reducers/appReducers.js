@@ -607,6 +607,22 @@ export default (state = initialState, action) => {
                       ...state,
                       loading: false,
                     };
+                    case actionTypes.SAVE_SURVEY_QUESTION_REQUESTED:
+                    return {
+                      ...state,
+                      loading: true,
+                    };
+                  case actionTypes.SAVE_SURVEY_QUESTION_SUCCEEDED:
+                    return {
+                      ...state,
+                      loading: false,
+                     
+                    };           
+                  case actionTypes.SAVE_SURVEY_QUESTION_FAIL:
+                    return {
+                      ...state,
+                      loading: false,
+                    };
     default:
       return state;
   }

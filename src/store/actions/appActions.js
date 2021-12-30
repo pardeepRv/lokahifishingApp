@@ -1,4 +1,4 @@
-import {actionTypes} from '../../utilities/constants';
+import { actionTypes } from '../../utilities/constants';
 
 const getvideo = params => ({
   type: actionTypes.GET_VIDEO_REQUESTED,
@@ -230,14 +230,14 @@ const sendfriendsrequests = (params) => {
   return {
     type: actionTypes.SEND_FRIEND_REQUESTS_REQUESTED,
     params,
-   
+
   };
 };
 const unblockuserrequest = (params) => {
   return {
     type: actionTypes.UNBLOCK_USER_REQUESTED,
     params,
-   
+
   };
 };
 const memberloadmore = (params, cb) => {
@@ -251,17 +251,24 @@ const linksimportant = (params) => {
   return {
     type: actionTypes.IMPORTANT_LINKS_REQUESTED,
     params,
-   
+
   };
 };
 const questionsurvey = (params, cb) => {
   return {
     type: actionTypes.SURVEY_QUESTION_REQUESTED,
     params,
-   cb,
+    cb,
   };
 };
 
+const postsurvey = (params, token) => {
+  return {
+    type: actionTypes.SAVE_SURVEY_QUESTION_REQUESTED,
+    params,
+    token,
+  };
+};
 export {
   getvideo,
   getNewsFromAdmin,
@@ -297,5 +304,5 @@ export {
   unblockuserrequest,
   memberloadmore,
   linksimportant,
-  questionsurvey
+  questionsurvey, postsurvey
 };

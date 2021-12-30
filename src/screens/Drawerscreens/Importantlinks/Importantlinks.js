@@ -52,11 +52,10 @@ const Importantlinks = ({ navigation }) => {
     let token = auth && auth?.userDetails?.access_token;
     dispatch(linksimportant(token));
   }
-
-
+  
   const _renderView = ({ item, index }) => (
     <TouchableOpacity
-    onPress={() => navigation.navigate('FishingWebsite',  {title: item.title, url: item.url})}
+    onPress={() => navigation.navigate('FishingWebsite',{title: item.title, url: item.url})}
     style={[
       styles.listView,
       {

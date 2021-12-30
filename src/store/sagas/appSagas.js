@@ -1,14 +1,14 @@
-import {put} from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import * as NavigationService from '../../store/NavigationService';
-import {actionTypes, screenNames, urls} from '../../utilities/constants';
+import { actionTypes, screenNames, urls } from '../../utilities/constants';
 import {
   getAPIError,
   showErrorAlert,
-  showSuccessAlert,
+  showSuccessAlert
 } from '../../utilities/helperFunctions';
-import {request} from '../../utilities/request';
+import { request } from '../../utilities/request';
 
-function* fetchAll({params}) {
+function* fetchAll({ params }) {
   try {
     const config = {
       url: 'https://dog.ceo/api/breeds/image/random',
@@ -26,7 +26,7 @@ function* fetchAll({params}) {
   }
 }
 
-function* getvediosaga({params}) {
+function* getvediosaga({ params }) {
   try {
     const config = {
       url: urls.videos,
@@ -57,7 +57,7 @@ function* getvediosaga({params}) {
   }
 }
 
-function* getNewsSaga({params}) {
+function* getNewsSaga({ params }) {
   console.log(params, 'params in news api ');
   try {
     const config = {
@@ -172,14 +172,12 @@ function* getLcrSecondsaga(params) {
   console.log(params, 'params in LCR second api ');
   try {
     const config = {
-      url: `${urls.lcr_Second}/${
-        params && params.payload && params.payload.first_id
-      }`,
+      url: `${urls.lcr_Second}/${params && params.payload && params.payload.first_id
+        }`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${
-          params && params.payload && params.payload.token
-        }`,
+        Authorization: `Bearer ${params && params.payload && params.payload.token
+          }`,
       },
     };
 
@@ -204,14 +202,12 @@ function* getLcrThirdsaga(params) {
   console.log(params, 'params in LCR third api ');
   try {
     const config = {
-      url: `${urls.lcr_third}/${
-        params && params.payload && params.payload.first_id
-      }/${params && params.payload && params.payload.second}`,
+      url: `${urls.lcr_third}/${params && params.payload && params.payload.first_id
+        }/${params && params.payload && params.payload.second}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${
-          params && params.payload && params.payload.token
-        }`,
+        Authorization: `Bearer ${params && params.payload && params.payload.token
+          }`,
       },
     };
 
@@ -239,28 +235,23 @@ function* getAllFishesSaga(params) {
 
     if (params && params.payload && params.payload.extraFish) {
       config = {
-        url: `${urls.lcr_fishes}/${
-          params && params.payload && params.payload.first_id
-        }/${params && params.payload && params.payload.second}/${
-          params && params.payload && params.payload.third
-        }`,
+        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
+          }/${params && params.payload && params.payload.second}/${params && params.payload && params.payload.third
+          }`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${
-            params && params.payload && params.payload.token
-          }`,
+          Authorization: `Bearer ${params && params.payload && params.payload.token
+            }`,
         },
       };
     } else {
       config = {
-        url: `${urls.lcr_fishes}/${
-          params && params.payload && params.payload.first_id
-        }/${params && params.payload && params.payload.second}`,
+        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
+          }/${params && params.payload && params.payload.second}`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${
-            params && params.payload && params.payload.token
-          }`,
+          Authorization: `Bearer ${params && params.payload && params.payload.token
+            }`,
         },
       };
     }
@@ -496,7 +487,7 @@ function* commentListLcr(params) {
     const config = {
       url: urls.lcr_comments_listing,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id},
+      data: { lcr_id: params?.params?.lcr_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -525,7 +516,7 @@ function* likesListLcr(params) {
     const config = {
       url: urls.lcr_likes_listing,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id},
+      data: { lcr_id: params?.params?.lcr_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -554,7 +545,7 @@ function* addLikeInSaga(params) {
     const config = {
       url: urls.lcr_addlike,
       method: 'POST',
-      data: {lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id},
+      data: { lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -711,7 +702,7 @@ function* likesphotosharinglist(params) {
     const config = {
       url: urls.photoshare_like_list,
       method: 'POST',
-      data: {photoshare_id: params?.params?.photoshare_id},
+      data: { photoshare_id: params?.params?.photoshare_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -769,7 +760,7 @@ function* commentListphotoharing(params) {
     const config = {
       url: urls.photoshare_comment_list,
       method: 'POST',
-      data: {photoshare_id: params?.params?.photoshare_id},
+      data: { photoshare_id: params?.params?.photoshare_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -799,9 +790,8 @@ function* getleaderboardfishlist(params) {
       url: urls.leaderboard_fish_list,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${
-          params && params.params && params.params.token
-        }`,
+        Authorization: `Bearer ${params && params.params && params.params.token
+          }`,
       },
     };
     const response = yield request(config);
@@ -831,7 +821,7 @@ function* leaderboardrankingsaga(params) {
     const config = {
       url: urls.leaderboard_ranking,
       method: 'POST',
-      data: {fish_id: params?.params?.fish_id},
+      data: { fish_id: params?.params?.fish_id },
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -921,7 +911,7 @@ function* gettournamentlistingsaga(params) {
 }
 
 function* gettermsconditionsaga(params) {
-   console.log(params, 'params in terms and condition api ');
+  console.log(params, 'params in terms and condition api ');
   try {
     const config = {
       url: urls.terms_and_condition,
@@ -948,7 +938,7 @@ function* gettermsconditionsaga(params) {
 }
 
 function* getmemberlist(params) {
-   console.log(params, 'params in members .....api ');
+  console.log(params, 'params in members .....api ');
   try {
     const config = {
       url: urls.member_listing,
@@ -958,7 +948,7 @@ function* getmemberlist(params) {
       },
     };
     const response = yield request(config);
-      console.log(response, '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>');
+    console.log(response, '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>');
 
     if (response?.data?.status) {
       yield put({
@@ -966,7 +956,7 @@ function* getmemberlist(params) {
         payload: response?.data?.data?.memberListing,
       });
       params.cb(response);
-    } 
+    }
   } catch (error) {
     showErrorAlert(getAPIError(error));
     yield put({
@@ -974,8 +964,8 @@ function* getmemberlist(params) {
     });
   }
 }
-function* sendfriendrequestsaga({params}) {
-   console.log('params in it>>>>>>>>>>', params);
+function* sendfriendrequestsaga({ params }) {
+  console.log('params in it>>>>>>>>>>', params);
   try {
     const config = {
       url: urls.send_friend_request,
@@ -986,14 +976,14 @@ function* sendfriendrequestsaga({params}) {
       },
     };
     const response = yield request(config);
-     console.log(response, 'getting response from send friend request  api ');
+    console.log(response, 'getting response from send friend request  api ');
 
     if (response && response.data && response.data.status) {
       yield put({
         type: actionTypes.SEND_FRIEND_REQUESTS_SUCCEEDED,
       });
-       showSuccessAlert(response?.data?.message);
-       NavigationService.goBack();
+      showSuccessAlert(response?.data?.message);
+      NavigationService.goBack();
     }
   } catch (error) {
     console.log(error, 'coming in catch');
@@ -1004,65 +994,65 @@ function* sendfriendrequestsaga({params}) {
   }
 }
 
-function* unblockusersaga({params}) {
-   console.log('params in it>>>>>>>>>>', params);
- try {
-   const config = {
-     url: urls.unblock_user,
-     method: 'POST',
-     data: params?.formData,
-     headers: {
-       Authorization: `Bearer ${params && params?.token}`,
-     },
-   };
-   const response = yield request(config);
-     console.log(response, 'getting response from send friend request  api ');
+function* unblockusersaga({ params }) {
+  console.log('params in it>>>>>>>>>>', params);
+  try {
+    const config = {
+      url: urls.unblock_user,
+      method: 'POST',
+      data: params?.formData,
+      headers: {
+        Authorization: `Bearer ${params && params?.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response from send friend request  api ');
 
-   if (response && response.data && response.data.status) {
-     yield put({
-       type: actionTypes.UNBLOCK_USER_SUCCEEDED,
-     });
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.UNBLOCK_USER_SUCCEEDED,
+      });
       showSuccessAlert(response?.data?.message);
       NavigationService.goBack();
-   }
- } catch (error) {
-   console.log(error, 'coming in catch');
-   showErrorAlert(getAPIError(error));
-   yield put({
-     type: actionTypes.UNBLOCK_USER_FAIL,
-   });
- }
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.UNBLOCK_USER_FAIL,
+    });
+  }
 }
 function* postmemberlistsaga(params) {
   console.log(params, 'params in members .....api ');
- try {
-   const config = {
-     url: urls.member_loadmore,
-     method: 'POST',
-     data: params?.params?.formData,
-     headers: {
-       Authorization: `Bearer ${params && params.params && params.params.token}`,
-     },
-   };
-   const response = yield request(config);
-   return  console.log(response, '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>');
+  try {
+    const config = {
+      url: urls.member_loadmore,
+      method: 'POST',
+      data: params?.params?.formData,
+      headers: {
+        Authorization: `Bearer ${params && params.params && params.params.token}`,
+      },
+    };
+    const response = yield request(config);
+    return console.log(response, '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>');
 
-   if (response?.data?.status) {
-     yield put({
-       type: actionTypes.MEMBER_LOADMORE_SUCCEEDED,
-       payload: response?.data?.data?.memberListing,
-     });
-     params.cb(response);
-   } 
- } catch (error) {
-   showErrorAlert(getAPIError(error));
-   yield put({
-     type: actionTypes.MEMBER_LOADMORE_FAIL,
-   });
- }
+    if (response?.data?.status) {
+      yield put({
+        type: actionTypes.MEMBER_LOADMORE_SUCCEEDED,
+        payload: response?.data?.data?.memberListing,
+      });
+      params.cb(response);
+    }
+  } catch (error) {
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.MEMBER_LOADMORE_FAIL,
+    });
+  }
 }
 
-function* getimprtantlinks({params}) {
+function* getimprtantlinks({ params }) {
   try {
     const config = {
       url: urls.important_links,
@@ -1072,14 +1062,14 @@ function* getimprtantlinks({params}) {
       },
     };
     const response = yield request(config);
-     console.log(response, 'important links  >>>>>> api ');
+    console.log(response, 'important links  >>>>>> api ');
 
     if (response?.data?.status) {
       yield put({
         type: actionTypes.IMPORTANT_LINKS_SUCCEEDED,
         payload: response?.data?.data?.important_links,
       });
-    } 
+    }
   } catch (error) {
     showErrorAlert(getAPIError(error));
     yield put({
@@ -1087,8 +1077,8 @@ function* getimprtantlinks({params}) {
     });
   }
 }
-function* getsurveyquestion (params) {
-   console.log('params in it>>>>>>>>>>', params);
+function* getsurveyquestion(params) {
+  console.log('params in it>>>>>>>>>>', params);
 
   try {
     const config = {
@@ -1099,7 +1089,7 @@ function* getsurveyquestion (params) {
       },
     };
     const response = yield request(config);
-     console.log(response, 'surevey imppppp   >>>>>> api ');
+    console.log(response, 'surevey imppppp   >>>>>> api ');
 
     if (response?.data?.status) {
       yield put({
@@ -1107,11 +1097,46 @@ function* getsurveyquestion (params) {
         payload: response?.data?.data?.questions,
       });
       params.cb(response);
-    } 
+    }
   } catch (error) {
     showErrorAlert(getAPIError(error));
     yield put({
       type: actionTypes.SURVEY_QUESTION_FAIL,
+    });
+  }
+}
+function* postquestioninarry(params) {
+  console.log('params in surbey>>>>>>>>>>', params);
+  console.log(params?.params, 'params?.params?.formData');
+  try {
+    const config = {
+      url: urls.save_survey_questions,
+      method: 'POST',
+      data: params?.params,
+      headers: {
+        Authorization: `Bearer ${params && params?.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response from save servey api ');
+
+    if (response && response.data && response.data.status) {
+      yield put({
+        type: actionTypes.SAVE_SURVEY_QUESTION_SUCCEEDED,
+      });
+      showSuccessAlert(response?.data?.message);
+      NavigationService.goBack();
+
+    } else {
+      yield put({
+        type: actionTypes.SAVE_SURVEY_QUESTION_FAIL,
+      });
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.SAVE_SURVEY_QUESTION_FAIL,
     });
   }
 }
@@ -1147,9 +1172,10 @@ export {
   gettournamentlistingsaga,
   gettermsconditionsaga,
   getmemberlist,
-  sendfriendrequestsaga, 
+  sendfriendrequestsaga,
   unblockusersaga,
   postmemberlistsaga,
   getimprtantlinks,
-  getsurveyquestion
+  getsurveyquestion,
+  postquestioninarry
 };

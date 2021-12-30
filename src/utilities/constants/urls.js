@@ -66,6 +66,7 @@ const urls = {
   member_loadmore : "member-loadmore",
   important_links :'important_links',
   survey_questions : 'survey-questions',
+  save_survey_questions : 'save-survey-questions', 
 };
 
 export {urls};

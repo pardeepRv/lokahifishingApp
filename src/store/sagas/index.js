@@ -30,6 +30,7 @@ import {
   likesListLcr,
   likesphotosharinglist,
   postmemberlistsaga,
+  postquestioninarry,
   savelcrreport,
   savephotosharingsaga,
   saveVideosaga,
@@ -116,5 +117,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.MEMBER_LOADMORE_REQUESTED, postmemberlistsaga);
   yield takeLatest(actionTypes.IMPORTANT_LINKS_REQUESTED, getimprtantlinks);
   yield takeLatest(actionTypes.SURVEY_QUESTION_REQUESTED, getsurveyquestion);
+  yield takeLatest(actionTypes.SAVE_SURVEY_QUESTION_REQUESTED, postquestioninarry);
 
 }

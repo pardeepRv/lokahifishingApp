@@ -44,9 +44,9 @@ const QuestionAnswer = ({ navigation }) => {
           if (cb?.data?.data) {
             let questionArr = cb?.data?.data?.questions;
 
-            questionArr.forEach(element => {
-              element.isAns = 0;
-            });
+            // questionArr.forEach(element => {
+            //   element.isAns = 0;
+            // });
             console.log(questionArr, 'questionArrquestionArrquestionArr');
             setquestionList(questionArr);
           }
@@ -130,7 +130,7 @@ const QuestionAnswer = ({ navigation }) => {
         </View>
         <View style={{ flexDirection: 'row' }}>
           <SegmentedControl
-            tabs={['Yes', 'No']}
+            tabs={['No', 'Yes']}
             paddingVertical={6}
             segmentedControlBackgroundColor="#86c4fD"
             activeSegmentBackgroundColor="#0482f7"

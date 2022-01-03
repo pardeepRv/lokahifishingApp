@@ -18,6 +18,7 @@
 		66D41B30339749AAAD7365C1 /* circular-book.otf in Resources */ = {isa = PBXBuildFile; fileRef = B857343C565E446596DB50D9 /* circular-book.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B4D90E4442999FEF6BBE7457 /* libPods-lokahifishinglatest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 985BE0BF772BB551BB195253 /* libPods-lokahifishinglatest.a */; };
+		CE12386B2783042800904A8A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE12386A2783042800904A8A /* GoogleService-Info.plist */; };
 		D551B2CCBEBC4F59AE4E498E /* circular-black.otf in Resources */ = {isa = PBXBuildFile; fileRef = DB98604B13E849139A584282 /* circular-black.otf */; };
 		E29E3EDB8C5744BEB0D9B526 /* circular-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F8E0127BCCCD4572B98396AF /* circular-bold.otf */; };
 		E3ACEEBAEDFB4132872FAF5B /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA1557C2922749A8A94A5CA7 /* Montserrat-Black.ttf */; };
@@ -44,6 +45,7 @@
 		B383070C0DB2478F95218D53 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		B857343C565E446596DB50D9 /* circular-book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "circular-book.otf"; path = "../assets/fonts/circular-book.otf"; sourceTree = "<group>"; };
 		CA1557C2922749A8A94A5CA7 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Black.ttf"; path = "../assets/fonts/Montserrat-Black.ttf"; sourceTree = "<group>"; };
+		CE12386A2783042800904A8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "lokahifishinglatest/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CEBF100927145D7600A9A9C0 /* lokahifishinglatest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = lokahifishinglatest.entitlements; path = lokahifishinglatest/lokahifishinglatest.entitlements; sourceTree = "<group>"; };
 		DB25DD8A84604253B2411A04 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		DB98604B13E849139A584282 /* circular-black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "circular-black.otf"; path = "../assets/fonts/circular-black.otf"; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				CEBF100927145D7600A9A9C0 /* lokahifishinglatest.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				CE12386A2783042800904A8A /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -220,6 +223,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE12386B2783042800904A8A /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				D551B2CCBEBC4F59AE4E498E /* circular-black.otf in Resources */,

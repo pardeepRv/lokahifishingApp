@@ -15,6 +15,8 @@ target 'lokahifishinglatest' do
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
   # target 'lokahifishinglatestTests' do
   #   inherit! :complete
   #   # Pods for testing

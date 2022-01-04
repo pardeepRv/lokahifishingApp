@@ -52,6 +52,7 @@ function* loginViaEmail({params}) {
     let dataToBesend = {
       email: params.email,
       password: params.password,
+      device_token: params.device_token,
     };
 
     console.log('dataToBesend', JSON.stringify(dataToBesend));

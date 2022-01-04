@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import <Firebase.h>
+#import "RNFBMessagingModule.h"
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -28,16 +29,23 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+   if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  }
+
   [GMSServices provideAPIKey:@"AIzaSyDFGH3e0XzWwVN0LzqoNZwjy2mC2bv0hsQ"];
   // [GMSServices provideAPIKey:@"AIzaSyDFGH3e0XzWwVN0LzqoNZwjy2mC2bv0hsQ"]; // add this line using the api key obtained from Google Console
 #ifdef FB_SONARKIT_ENABLED
-  InitializeFlipper(application);
+  // InitializeFlipper(application);
 #endif
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  NSDictionary *appProperties = [RNFBMessagingModule addCustomPropsToUserProps:nil withLaunchOptions:launchOptions];
+
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"lokahifishinglatest"
-                                            initialProperties:nil];
+                                            initialProperties:appProperties];
 
   if (@available(iOS 13.0, *)) {
       rootView.backgroundColor = [UIColor systemBackgroundColor];
@@ -49,8 +57,7 @@ static void InitializeFlipper(UIApplication *application) {
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
-  [FIRApp configure];
+  [self.window makeKeyAndVisible]; 
   return YES;
 }
 

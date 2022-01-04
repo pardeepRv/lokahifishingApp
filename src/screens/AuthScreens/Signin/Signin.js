@@ -1,30 +1,31 @@
 //import liraries
-import React, { useRef, useState } from 'react';
+import messaging from '@react-native-firebase/messaging';
+import React, {useState} from 'react';
 import {
+  Image,
   ImageBackground,
   Keyboard,
+  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-  KeyboardAvoidingView,
-  Image,
 } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import { useDispatch, useSelector } from 'react-redux';
-import { fonts, icons } from '../../../../assets';
-import { Button } from '../../../components/common/Button';
-import { Loader } from '../../../components/common/Loader';
+import {moderateScale} from 'react-native-size-matters';
+import {useDispatch, useSelector} from 'react-redux';
+import {icons} from '../../../../assets';
+import {Button} from '../../../components/common/Button';
+import {Loader} from '../../../components/common/Loader';
 import TextInputComp from '../../../components/common/TextInputComp';
-import { strings } from '../../../localization';
-import { loginWithEmail } from '../../../store/actions';
+import {strings} from '../../../localization';
+import {loginWithEmail} from '../../../store/actions';
 //intrnal libraries
-import { colors, screenNames } from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
+import {colors, screenNames} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
 import styles from './styles';
 
-const Signin = ({ navigation }) => {
+const Signin = ({navigation}) => {
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in signin page>>>>>>>>>>');
   const dispatch = useDispatch();
@@ -34,9 +35,9 @@ const Signin = ({ navigation }) => {
     // email: 'myname@yopmail.com',
     // password: 'qwerty123',
   });
-  const { email, password } = state;
+  const {email, password} = state;
   const _onChangeText = key => val => {
-    setState({ ...state, [key]: val });
+    setState({...state, [key]: val});
   };
 
   const [errors, setErrors] = useState({
@@ -45,11 +46,13 @@ const Signin = ({ navigation }) => {
     isLoading: false,
   });
   const name_and_values = [
-    { name: 'email', value: email },
-    { name: 'password', value: password },
+    {name: 'email', value: email},
+    {name: 'password', value: password},
   ];
 
-  function Done() {
+  async function Done() {
+    const fcmToken = await messaging().getToken();
+
     Keyboard.dismiss();
     //  navigation.navigate('HomeStack');
 
@@ -74,10 +77,12 @@ const Signin = ({ navigation }) => {
       let formData = new FormData();
       formData.append('email', email);
       formData.append('password', password);
+      formData.append('device_token', fcmToken);
 
       let obj = {};
       obj.email = email;
       obj.password = password;
+      obj.device_token = fcmToken;
 
       dispatch(loginWithEmail(obj));
     }
@@ -85,30 +90,29 @@ const Signin = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white1 }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
       <View
         style={{
           flex: 1,
         }}>
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
-          <ScrollView style={{ paddingHorizontal: moderateScale(25), flex: 1 }}>
-            
-              <View style={styles.uploadContainer}>
-                <Image
-                  source={icons.loginLogo}
-                  resizeMode="contain"
-                  style={{
-                    borderRadius: moderateScale(100),
-                    height: layout.size.height / 4,
-                    width: layout.size.height / 4,
-                  }}
-                />
-              </View>
-              <View
+          <ScrollView style={{paddingHorizontal: moderateScale(25), flex: 1}}>
+            <View style={styles.uploadContainer}>
+              <Image
+                source={icons.loginLogo}
+                resizeMode="contain"
                 style={{
-                  marginTop: layout.size.width / 15,
-                }}></View>
-              <KeyboardAvoidingView
+                  borderRadius: moderateScale(100),
+                  height: layout.size.height / 4,
+                  width: layout.size.height / 4,
+                }}
+              />
+            </View>
+            <View
+              style={{
+                marginTop: layout.size.width / 15,
+              }}></View>
+            <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
               style={styles.subContainer}
               contentContainerStyle={styles.subContentContainer}
@@ -135,7 +139,7 @@ const Signin = ({ navigation }) => {
                   {errors.email ? (
                     <Text
                       transparent
-                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
+                      style={{color: colors.primary, bottom: 13, left: 4}}>
                       {errors.email}
                     </Text>
                   ) : null}
@@ -158,7 +162,7 @@ const Signin = ({ navigation }) => {
                   {errors.password ? (
                     <Text
                       transparent
-                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
+                      style={{color: colors.primary, bottom: 13, left: 4}}>
                       {errors.password}
                     </Text>
                   ) : null}
@@ -169,31 +173,29 @@ const Signin = ({ navigation }) => {
                 onPress={() => navigation.navigate(screenNames.ForgotPassword)}>
                 <Text style={styles.forgotStyle}>{strings.forgotpassword}</Text>
               </TouchableOpacity>
-             
+
               <View
                 style={{
                   marginTop: moderateScale(50),
-
                 }}>
                 <Button
                   style={styles.btnStyles}
                   label={strings.login}
                   onPress={() => Done()}
                 />
-              
 
-              <TouchableOpacity
-               style={{
-                marginBottom: moderateScale(100),
-              }}
-                onPress={() => navigation.navigate(screenNames.Signup)}>
-                <Text style={styles.createAccount}>
-                  {strings.createAccount}
-                  <Text style={styles.signuptext}>{strings.signup}</Text>
-                </Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    marginBottom: moderateScale(100),
+                  }}
+                  onPress={() => navigation.navigate(screenNames.Signup)}>
+                  <Text style={styles.createAccount}>
+                    {strings.createAccount}
+                    <Text style={styles.signuptext}>{strings.signup}</Text>
+                  </Text>
+                </TouchableOpacity>
               </View>
-              </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
           </ScrollView>
           <Loader
             isLoading={auth.loading}

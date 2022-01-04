@@ -1,11 +1,14 @@
-import React, { PureComponent } from 'react';
-import { SafeAreaView, Text, View, TextInput } from 'react-native';
+import React, {PureComponent} from 'react';
+import {SafeAreaView, Text, View, TextInput} from 'react-native';
 import FlashMessage from 'react-native-flash-message';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import MainNavigator from './navigation/navigator';
 import AuthLoading from './screens/AuthScreens/AuthLoading';
 import store from './store';
 
+import {requestUserPermission} from './service/FcmService';
+import {createNotificationListener} from './service/notificationListener';
+import checkPermission from './service/notificationServices';
 
 class App extends PureComponent {
   constructor(props) {
@@ -20,9 +23,15 @@ class App extends PureComponent {
     super(props);
   }
 
+  componentDidMount() {
+    checkPermission();
+    requestUserPermission();
+    createNotificationListener();
+  }
+
   render() {
     if (!__DEV__) {
-      console.log = () => { };
+      console.log = () => {};
     }
     return (
       <Provider store={store}>

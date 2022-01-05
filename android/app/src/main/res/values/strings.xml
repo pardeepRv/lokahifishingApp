@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">lokahi fishing</string>
+        <string name="default_notification_channel_id">com.lokahifishinglatest.urgent</string>
 </resources>

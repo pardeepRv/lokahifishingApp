@@ -46,7 +46,7 @@ const Survey = ({navigation}) => {
             automaticallyAdjustContentInsets={false}
             javaScriptEnabled={true}
             source={{
-              uri: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+              uri: 'http://192.168.1.61/LokahiFishing_API/CML_1.pdf',
             }}
             domStorageEnabled={true}
           />

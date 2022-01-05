@@ -403,7 +403,7 @@ const menu = [
     name: strings.LeaderBoard,
     navigate: 'LeaderBoard',
     img: icons.LeaderIcon,
-    bgColor: '#fafafa',
+    bgColor: '#C0C0C0',
   },
   {
     name: strings.Tournament,

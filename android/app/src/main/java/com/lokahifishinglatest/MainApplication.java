@@ -1,5 +1,7 @@
 package com.lokahifishinglatest;
 
+import com.facebook.react.bridge.JSIModulePackage;
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
@@ -15,6 +17,8 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
+        @Override protected JSIModulePackage getJSIModulePackage() { return new ReanimatedJSIModulePackage(); }
+        
         @Override
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;

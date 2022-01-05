@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "527485414997",
+    "project_id": "lokahifishing-524a7",
+    "storage_bucket": "lokahifishing-524a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527485414997:android:5cf37351fd2cfe03172edc",
+        "android_client_info": {
+          "package_name": "com.lokahifishinglatest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "527485414997-pghfnsvqkthjshmlj28dtu4s2khbsriu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPQ0LWg_hGEiO033T8Mv7Jl25dWbdkG9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "527485414997-pghfnsvqkthjshmlj28dtu4s2khbsriu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "527485414997-0ac7ua35bkqnfegi7m0033rpnklqk0dt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rvtech.lokahi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

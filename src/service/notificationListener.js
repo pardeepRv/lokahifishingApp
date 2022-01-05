@@ -18,11 +18,11 @@ export const createNotificationListener = async () => {
     //     NavigationService,
     //     'hte +++++++++++++++++++++++++++++++++++++++++++',
     //   );
-    //   remoteMessage.data?.type == 'chat_message'
-    //     ? NavigationService.navigate('MYprofile')
-    //     : remoteMessage.data?.type == 'haulage_type'
-    //     ? NavigationService.navigate('MYprofile')
-    //     : NavigationService.navigate('MYprofile');
+    //   remoteMessage.data?.type == '1'
+    //     ? NavigationService.navigate('FriendRequests')
+    //     : remoteMessage.data?.type == '2'
+    //     ? NavigationService.navigate('Like')
+    //     : NavigationService.navigate('Home');
     // }, 3000);
   });
 

@@ -235,20 +235,23 @@ const Comment = ({ navigation, route }) => {
       
       <View
         style={{
-          bottom:10,
+          height:layout.size.height/9.3,
+          // bottom:20,
           width: layout.size.width,
           margin: 0,
           flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          backgroundColor: colors.secondry,
+          justifyContent: 'space-around',
+          // backgroundColor: colors.secondry,
         }}>
         <TextInput
           style={{
-            height: moderateScale(50),
+          height:layout.size.height/12,
+          // height: moderateScale(60),
             borderWidth: 1,
-            padding: 10,
+            padding: 9,
             backgroundColor: colors.white1,
             width: layout.size.width - 50,
+            top:5
           }}
           onChangeText={comments => setcomments(comments)}
           value={comments}
@@ -260,15 +263,18 @@ const Comment = ({ navigation, route }) => {
           onPress={add_comment}
           style={{
             justifyContent: 'center',
-            alignItems: 'center',
+            // height: moderateScale(60),
+          height:layout.size.height/12
+
+
           }}>
           <Image
             source={icons.plane}
             style={{
               alignSelf: 'center',
               tintColor: colors.white1,
-              height: 30,
-              width: 30,
+              height: 38,
+              width: 38,
             }}
           />
         </TouchableOpacity>
@@ -327,8 +333,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   subContainer: {
-    height: layout.size.height -79,
-    backgroundColor:colors.secondry
+flex:1,
+backgroundColor:colors.secondry
   },
   subContentContainer: {
     paddingBottom: moderateScale(20),

@@ -50,7 +50,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        newsList: action.payload,
+        // newsList: action.payload,
       };
 
     case actionTypes.GET_NEWS_FAIL:

@@ -5,9 +5,10 @@ const getvideo = params => ({
   params,
 });
 
-const getNewsFromAdmin = params => ({
+const getNewsFromAdmin = (payload, cb) => ({
   type: actionTypes.GET_NEWS_REQUESTED,
-  params,
+  payload,
+    cb,
 });
 
 const getsigns = (payload, cb) => {

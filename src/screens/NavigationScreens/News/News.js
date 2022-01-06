@@ -42,7 +42,7 @@ let members = [
 
 const News = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [membersList, setMembersList] = useState(members);
+  const [Newslist, setNewslist] = useState([]);
   const [saveHtml, setHtml] = useState(null);
 
   let auth = useSelector(state => state.auth);
@@ -64,6 +64,18 @@ const News = ({navigation}) => {
   function newsFun() {
     let token = auth && auth?.userDetails?.access_token;
     dispatch(getNewsFromAdmin(token));
+    dispatch(
+      getNewsFromAdmin(token, cb => {
+        if (cb) {
+          console.log(cb, 'callback list arr>>>>>>>>>>');
+          if (cb?.data?.data) {
+            let updatedLcrList = cb?.data?.data?.news;
+            updatedLcrList.reverse();
+            setNewslist(updatedLcrList);
+          }
+        }
+      }),
+    );
   }
 
   const _renderView = ({item, index}) => (
@@ -131,12 +143,12 @@ const News = ({navigation}) => {
         />
 
         <FlatList
-          extraData={app?.newsList}
-          data={app?.newsList}
+          extraData={Newslist}
+          data={Newslist}
           renderItem={_renderView}
           keyExtractor={(item, index) => 'key' + index}
           ListHeaderComponent={() =>
-            !app?.newsList.length ? (
+            !Newslist.length ? (
               <Text style={styles.nomatch}>No Match found</Text>
             ) : null
           }

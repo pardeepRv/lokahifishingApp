@@ -168,17 +168,22 @@ const PhotoSharing = ({ navigation }) => {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignSelf: 'center',
-                height: layout.size.height / 3.5,
+                height: layout.size.height / 3,
                 alignItems: 'flex-start',
                 shadowColor: colors.primary,
+                // backgroundColor:colors.blue1
+                
             }}>
             {
                 item && item.media_type == 'img' ?
                     <TouchableOpacity style={{
                         alignSelf: 'center',
-                        height: layout.size.height / 4,
-                        width: layout.size.width / 1.3,
-                        margin: 5,
+                        height: layout.size.height / 3.1,
+                        width: layout.size.width / 1.2,
+                        // marginRight:15,
+                        margin:3,
+                        marginTop:moderateScale(50),
+                        // backgroundColor:'black'
 
                     }}
                         onPress={() => {
@@ -189,10 +194,11 @@ const PhotoSharing = ({ navigation }) => {
                             uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
                         }}
                             style={{
-                                height: layout.size.height / 4,
-                                width: layout.size.width / 1.3,
-                                resizeMode: 'contain',
+                                height: layout.size.height / 3.6,
+                                width: layout.size.width / 1.2,
+
                             }}
+                             resizeMode= 'contain'
                         />
                     </TouchableOpacity>
                     :
@@ -203,7 +209,7 @@ const PhotoSharing = ({ navigation }) => {
                         controls={true}
                         playInBackground={false}
                         playWhenInactive={false}
-                        style={{ width: layout.size.width - 100, height: layout.size.height / 3.5, }}
+                        style={{ width: layout.size.width -90,  height: layout.size.height / 3.9, backgroundColor:'black', top:10 , marginVertical:10}}
                     />
             }
         </View>

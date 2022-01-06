@@ -57,14 +57,14 @@ function* getvediosaga({ params }) {
   }
 }
 
-function* getNewsSaga({ params }) {
+function* getNewsSaga(params) {
   console.log(params, 'params in news api ');
   try {
     const config = {
       url: urls.news,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params}`,
+        Authorization: `Bearer ${params && params.payload}`,
       },
     };
     const response = yield request(config);
@@ -73,8 +73,8 @@ function* getNewsSaga({ params }) {
     if (response?.data?.status) {
       yield put({
         type: actionTypes.GET_NEWS_SUCCEEDED,
-        payload: response?.data?.data?.news,
       });
+      params.cb(response);
     }
   } catch (error) {
     showErrorAlert(getAPIError(error));

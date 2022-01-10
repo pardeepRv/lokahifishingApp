@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { fonts } from '../../../../assets';
 import { colors } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 
 
 export default StyleSheet.create({
@@ -40,4 +41,10 @@ export default StyleSheet.create({
         marginTop: 20,
         fontFamily: fonts.semiBold,
     },
+    videoContainerAndroid:{  width: layout.size.width -80,
+         backgroundColor:'black', 
+         height: layout.size.height / 3.9, 
+         top:20 , marginVertical:10
+        },
+    videoContainerIOS:{ width: layout.size.width -80, backgroundColor:'black', height: layout.size.height / 3.9, top:20 , marginVertical:10},
 });

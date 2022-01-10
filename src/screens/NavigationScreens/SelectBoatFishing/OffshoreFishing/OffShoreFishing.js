@@ -143,7 +143,7 @@ const OffShoreFishing = ({navigation, route}) => {
             top: moderateScale(20),
             fontSize: moderateScale(25),
             fontFamily: fonts.bold,
-            color: colors.secondry,
+            // color: colors.secondry,
           }}>
           {item.title}
         </Text>

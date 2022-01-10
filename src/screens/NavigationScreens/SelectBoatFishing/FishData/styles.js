@@ -1,6 +1,7 @@
 import {StyleSheet , Dimensions} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import { colors } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
 
 
 const windowWidth = Dimensions.get('window').width
@@ -8,7 +9,6 @@ const windowHeight = Dimensions.get('window').height
 
 export default StyleSheet.create({
   safeAreaView: {
-
 
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -123,5 +123,13 @@ export default StyleSheet.create({
     borderColor: colors.white1,
     borderWidth: 1,
     borderRadius: 16,
+  },
+  subContainer: {
+    height: layout.size.height / .50,
+	// flex:1
+	// backgroundColor:'black'
+  },
+  subContentContainer: {
+    paddingBottom: moderateScale(20),
   },
 });

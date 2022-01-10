@@ -24,7 +24,6 @@ export default StyleSheet.create({
     alignSelf: 'center',
     height: layout.size.height / 10,
     width: layout.size.width / 1.1,
-    shadowColor: colors.primary,
     borderRadius: 20,
     shadowOffset: {
       width: 0,
@@ -33,7 +32,6 @@ export default StyleSheet.create({
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
 
-    elevation: 10,
   },
   nomatch: {
     alignSelf: 'center',

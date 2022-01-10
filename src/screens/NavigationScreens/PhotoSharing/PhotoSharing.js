@@ -181,7 +181,7 @@ const PhotoSharing = ({ navigation }) => {
                         height: layout.size.height / 3.1,
                         width: layout.size.width / 1.2,
                         // marginRight:15,
-                        margin:3,
+                        margin:4,
                         marginTop:moderateScale(50),
                         // backgroundColor:'black'
 
@@ -202,15 +202,21 @@ const PhotoSharing = ({ navigation }) => {
                         />
                     </TouchableOpacity>
                     :
+                    <TouchableOpacity style={{flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center"}}>
                     <Video
                         source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
                         paused={paused}
                         repeat={false}
                         controls={true}
+        resizeMode={'contain'}
                         playInBackground={false}
                         playWhenInactive={false}
-                        style={{ width: layout.size.width -90,  height: layout.size.height / 3.9, backgroundColor:'black', top:10 , marginVertical:10}}
+                        style={Platform.OS === "android" ? styles.videoContainerAndroid : styles.videoContainerIOS}
+                        // style={{ width: layout.size.width -80, backgroundColor:'black', height: layout.size.height / 3.9, top:10 , marginVertical:10}}
                     />
+                    </TouchableOpacity>
             }
         </View>
 

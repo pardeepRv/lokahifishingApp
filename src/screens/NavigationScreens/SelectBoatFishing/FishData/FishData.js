@@ -299,8 +299,14 @@ const FishData = ({navigation, route}) => {
         }}
       />
       <SafeAreaView style={styles.safeAreaView}>
-        <KeyboardAvoidingView>
-          <ScrollView>
+        
+          <ScrollView >
+          <KeyboardAvoidingView
+             behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+             style={styles.subContainer}
+             contentContainerStyle={styles.subContentContainer}
+             keyboardShouldPersistTaps={'always'}
+             showsVerticalScrollIndicator={false}>
             <View style={[styles.textSection, {justifyContent: 'center'}]}>
               <Text>Info below is optional & will be private to user only</Text>
             </View>
@@ -564,6 +570,7 @@ const FishData = ({navigation, route}) => {
                 />
               </MapView>
             </View>
+           
             {location ? (
               <View
                 style={{
@@ -623,6 +630,7 @@ const FishData = ({navigation, route}) => {
               </View>
             )}
             <Text style={styles.or}>OR</Text>
+           
             <View style={{zIndex: 1, paddingHorizontal: 10}}>
               <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                 <TextInput
@@ -694,7 +702,7 @@ const FishData = ({navigation, route}) => {
                 borderColor: 'lightgray',
                 paddingTop: 15,
                 paddingBottom: 15,
-                height: windowHeight * 0.25,
+                height: windowHeight * 0.90,
               }}
               returnKeyType="done"
               multiline={true}
@@ -705,8 +713,8 @@ const FishData = ({navigation, route}) => {
               value={additionalNotes}
               onChangeText={text => setAdditionalNotes(text)}
             />
-          </ScrollView>
         </KeyboardAvoidingView>
+          </ScrollView>
         <Loader isLoading={app.loading} isAbsolute />
       </SafeAreaView>
     </ImageBackground>

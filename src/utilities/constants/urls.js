@@ -1,4 +1,5 @@
-let baseUrl = 'https://server3.rvtechnologies.in/LokahiFishing_API/public/api/';
+// let baseUrl = 'https://server3.rvtechnologies.in/LokahiFishing_API/public/api/';
+let baseUrl = 'https://server3.rvtechnologies.in/lokahi-fishing/LokahiFishing_API/public/api/';
 
 let imageUrl1 = 'http://54.74.233.110/storage/';
 let imageUrl = 'http://54.74.233.110/';

@@ -9,7 +9,10 @@ import {
   View,
   Modal,
   Dimensions,
+  Alert,
 } from 'react-native';
+import Pdf from 'react-native-pdf';
+import {RFValue} from 'react-native-responsive-fontsize';
 import {moderateScale} from 'react-native-size-matters';
 import WebView from 'react-native-webview';
 import {useDispatch, useSelector} from 'react-redux';
@@ -42,8 +45,10 @@ let members = [
 
 const News = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(false);
   const [Newslist, setNewslist] = useState([]);
   const [saveHtml, setHtml] = useState(null);
+  const [pdfPath, setPdfPath] = useState(null);
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -59,6 +64,31 @@ const News = ({navigation}) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  function webViewTextSize(data) {
+    return `
+       <!DOCTYPE html>
+       <html>
+       <head>
+         <style type="text/css">
+           body {
+             font-family: Helvetica;
+             font-size: 3rem;
+             color: black;
+             padding: 20px 20px 20px 20px;
+           } 
+           p {
+             text-align: center;
+           }
+         </style>
+       </head>
+       <meta name="viewport" content="initial-scale=0.1, maximum-scale=0.1">
+       <body>
+         ${data}
+       </body>
+       </html>
+       `;
+  }
 
   //get news taken list
   function newsFun() {
@@ -88,12 +118,14 @@ const News = ({navigation}) => {
       ]}
       activeOpacity={0.8}
       onPress={() => {
+        setPdfPath(item.doc);
         setHtml(item.body);
         setModalVisible(true);
       }}>
       <View style={styles.viewStyle}>
         <Image
-          source={{uri: `${item.image_folder}/${item.image}`}}       
+          source={{uri: `${item.image_folder}/${item.image}`}}
+          // source={item.image}
           style={{
             height: moderateScale(70),
             width: moderateScale(70),
@@ -198,10 +230,77 @@ const News = ({navigation}) => {
           <WebView
             startInLoadingState={true}
             originWhitelist={['*']}
-            source={{html: saveHtml}}
-            style={{width: layout.size.width, marginBottom: 0}}
+            source={{html: webViewTextSize(saveHtml)}}
+            javaScriptEnabled={true}
+            // source={{ html: '<h1>Hellogdfgdfgfdgdgdgdgggdggdgdfggdgdggdfgdfgdfgdfgdgdg </h1>' }}
+            style={{
+              width: layout.size.width,
+              marginTop: 15,
+              textAlign: 'center',
+            }}
+            height={300}
           />
+
+          <View
+            style={[
+              styles.section,
+              {justifyContent: 'center', alignItems: 'center'},
+            ]}>
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible1(true);
+              }}
+              style={styles.confirmBtn}>
+              <Text style={styles.confirmText}>You want to see pdf</Text>
+            </TouchableOpacity>
+          </View>
         </SafeAreaView>
+        <Modal
+          animationType="slide"
+          animationType={'slide'}
+          transparent={true}
+          visible={modalVisible1}
+          onRequestClose={() => {}}>
+          <SafeAreaView
+            style={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: colors.white1,
+            }}>
+            <View
+              style={[
+                {
+                  width: Dimensions.get('window').width,
+                  backgroundColor: colors.secondry,
+                  height: moderateScale(50),
+                },
+                {flexDirection: 'row', justifyContent: 'space-between'},
+              ]}>
+              <TouchableOpacity
+                style={{width: 100}}
+                onPress={() => {
+                  setModalVisible1(false);
+                }}>
+                <Image
+                  source={icons.ic_back_white}
+                  style={{
+                    top: 15,
+                    left: 10,
+                    tintColor: colors.white1,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+            <Pdf
+              source={{uri: pdfPath}}
+              // source={{uri:'http://www.africau.edu/images/default/sample.pdf'}}
+              style={styles.pdf}
+              loading="Loading PDF..."
+            />
+          </SafeAreaView>
+        </Modal>
       </Modal>
     </ImageBackground>
   );

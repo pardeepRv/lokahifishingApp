@@ -12,9 +12,11 @@ import {
   Text,
   TextInput,
   View,
+  Modal,
+  TouchableOpacity
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-
+import { useIsFocused } from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import GetLocation from 'react-native-get-location';
@@ -33,10 +35,11 @@ const windowHeight = Dimensions.get('window').height;
 
 const FishData = ({navigation, route}) => {
   const {previousScreen} = route && route.params;
+  const [modalVisible1, setModalVisible1] = useState(false);
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
-
+  const isFocused = useIsFocused();
   console.log(auth, 'auth fish page');
 
   const dispatch = useDispatch();
@@ -100,8 +103,14 @@ const FishData = ({navigation, route}) => {
         const {code, message} = error;
         console.log(code, message);
       });
+     
+    //   if(isFocused){ 
+    //     setModalVisible1(true);
+    // }
     // I set this so that the region could update as we move the map around and it seems to break the map. Setting the actual <MapView> region to this seems to work but then the pin only stays at the users current location. Maybe the map will be good if they make the post at the spot of location and use the other method if it is created later.
-  }, []);
+  // }, [isFocused]);
+}, []);
+
 
   const [region, setRegion] = useState({
     latitude: location?.latitude,
@@ -299,7 +308,12 @@ const FishData = ({navigation, route}) => {
         }}
       />
       <SafeAreaView style={styles.safeAreaView}>
-        <KeyboardAvoidingView>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+            style={styles.subContainer}
+            contentContainerStyle={styles.subContentContainer}
+            keyboardShouldPersistTaps={'always'}
+            showsVerticalScrollIndicator={false}>
           <ScrollView>
             <View style={[styles.textSection, {justifyContent: 'center'}]}>
               <Text>Info below is optional & will be private to user only</Text>
@@ -690,11 +704,9 @@ const FishData = ({navigation, route}) => {
                 fontSize: 16,
                 paddingHorizontal: 10,
                 borderTopWidth: 1,
-                borderBottomWidth: 1,
                 borderColor: 'lightgray',
                 paddingTop: 15,
-                paddingBottom: 15,
-                height: windowHeight * 0.25,
+                height: windowHeight * 0.35,
               }}
               returnKeyType="done"
               multiline={true}
@@ -709,6 +721,38 @@ const FishData = ({navigation, route}) => {
         </KeyboardAvoidingView>
         <Loader isLoading={app.loading} isAbsolute />
       </SafeAreaView>
+      <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={modalVisible1}
+          onRequestClose={() => { }}>
+          <SafeAreaView>
+            <View style={styles.modalcontent}>
+              <View style={styles.modalcontainer}>
+                <Text style={styles.modaltextlogo}>Lokahi</Text>
+                <Text style={styles.modalbuttontextstyle1}>You need to download Hawaii marine map</Text>
+                {/* <Text
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                  style={styles.modaltextstyle}>
+                  {strings.areyouwant}
+                </Text> */}
+                <View style={styles.modalbuttonviewstyle}>
+                  <TouchableOpacity
+                    style={styles.modalbuttonstyle}
+                    underlayColor={colors.white1}
+                    // onPress={() => onButtonPressed(true)}
+                    onPress={() => {
+                      setModalVisible1(false);
+                    }}>
+                    <Text style={styles.modalbuttontextstyle}>OK</Text>
+                  </TouchableOpacity>
+                  
+                </View>
+              </View>
+            </View>
+          </SafeAreaView>
+        </Modal>
     </ImageBackground>
   );
 };

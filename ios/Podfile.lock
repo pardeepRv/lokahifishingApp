@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.5.0)
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.65.1)
@@ -479,6 +480,7 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
+  - Alamofire
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -536,6 +538,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - boost-for-react-native
     - Firebase
     - FirebaseAnalytics
@@ -656,6 +659,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: 33c82491102f20ecddb6c6a2c273696ace3191e0
@@ -723,6 +727,6 @@ SPEC CHECKSUMS:
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4
 
-PODFILE CHECKSUM: d6a9a04f25cb2f9703b66b2d331c657fa7ddc3a6
+PODFILE CHECKSUM: cda7c23cb6eb92131aa91e18a0a859695f16a4a3
 
 COCOAPODS: 1.11.2

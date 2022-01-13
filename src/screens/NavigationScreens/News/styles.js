@@ -1,9 +1,11 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet , Dimensions} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts} from '../../../../assets';
 import {colors} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 export default StyleSheet.create({
   listView: {
     margin:moderateScale(12),
@@ -38,5 +40,30 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginTop: 20,
     fontFamily: fonts.semiBold,
+  },
+  pdf: {
+		flex: 1,
+		width: Dimensions.get('window').width * 0.9,
+  },
+  section: {
+    marginVertical: 15,
+    // backgroundColor:'black'
+  },
+  confirmBtn: {
+    // backgroundColor: '#2c385e',
+    borderRadius: 7,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: layout.size.width/1.5,
+    marginTop: 10,
+    backgroundColor:colors.secondry
+
+  },
+  confirmText: {
+    fontSize: 16,
+    color: colors.white1,
+    fontWeight: '700',
+    textDecorationLine: 'underline',
   },
 });

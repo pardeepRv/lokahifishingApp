@@ -18,6 +18,12 @@
 		66D41B30339749AAAD7365C1 /* circular-book.otf in Resources */ = {isa = PBXBuildFile; fileRef = B857343C565E446596DB50D9 /* circular-book.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B4D90E4442999FEF6BBE7457 /* libPods-lokahifishinglatest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 985BE0BF772BB551BB195253 /* libPods-lokahifishinglatest.a */; };
+		CE87A9E1278EFCF600C3C0A2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CE87A9DD278EFCF200C3C0A2 /* Reachability.m */; };
+		CE87A9E2278EFCF600C3C0A2 /* MBXMBTilesOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = CE87A9E0278EFCF500C3C0A2 /* MBXMBTilesOverlay.m */; };
+		CE87A9E6278EFE3C00C3C0A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE87A9E4278EFE3B00C3C0A2 /* ViewController.m */; };
+		CE87A9ED278EFF4200C3C0A2 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE87A9EA278EFF3E00C3C0A2 /* SwitchView.swift */; };
+		CE87A9EE278EFF4200C3C0A2 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE87A9EB278EFF4000C3C0A2 /* Switch.swift */; };
+		CE87A9EF278EFF4200C3C0A2 /* Switch.m in Sources */ = {isa = PBXBuildFile; fileRef = CE87A9EC278EFF4100C3C0A2 /* Switch.m */; };
 		CEEABBF32784242D00C5C3CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEEABBF22784242D00C5C3CD /* GoogleService-Info.plist */; };
 		D551B2CCBEBC4F59AE4E498E /* circular-black.otf in Resources */ = {isa = PBXBuildFile; fileRef = DB98604B13E849139A584282 /* circular-black.otf */; };
 		E29E3EDB8C5744BEB0D9B526 /* circular-bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F8E0127BCCCD4572B98396AF /* circular-bold.otf */; };
@@ -45,6 +51,16 @@
 		B383070C0DB2478F95218D53 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		B857343C565E446596DB50D9 /* circular-book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "circular-book.otf"; path = "../assets/fonts/circular-book.otf"; sourceTree = "<group>"; };
 		CA1557C2922749A8A94A5CA7 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Black.ttf"; path = "../assets/fonts/Montserrat-Black.ttf"; sourceTree = "<group>"; };
+		CE87A9DD278EFCF200C3C0A2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		CE87A9DE278EFCF300C3C0A2 /* MBXMBTilesOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBXMBTilesOverlay.h; sourceTree = "<group>"; };
+		CE87A9DF278EFCF400C3C0A2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		CE87A9E0278EFCF500C3C0A2 /* MBXMBTilesOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBXMBTilesOverlay.m; sourceTree = "<group>"; };
+		CE87A9E4278EFE3B00C3C0A2 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		CE87A9E5278EFE3C00C3C0A2 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		CE87A9E9278EFF3800C3C0A2 /* lokahifishinglatest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "lokahifishinglatest-Bridging-Header.h"; sourceTree = "<group>"; };
+		CE87A9EA278EFF3E00C3C0A2 /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchView.swift; sourceTree = "<group>"; };
+		CE87A9EB278EFF4000C3C0A2 /* Switch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Switch.swift; sourceTree = "<group>"; };
+		CE87A9EC278EFF4100C3C0A2 /* Switch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Switch.m; sourceTree = "<group>"; };
 		CEBF100927145D7600A9A9C0 /* lokahifishinglatest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = lokahifishinglatest.entitlements; path = lokahifishinglatest/lokahifishinglatest.entitlements; sourceTree = "<group>"; };
 		CEEABBF1278415F800C5C3CD /* lokahifishinglatestDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = lokahifishinglatestDebug.entitlements; path = lokahifishinglatest/lokahifishinglatestDebug.entitlements; sourceTree = "<group>"; };
 		CEEABBF22784242D00C5C3CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "lokahifishinglatest/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -90,7 +106,9 @@
 				CEBF100927145D7600A9A9C0 /* lokahifishinglatest.entitlements */,
 				CEEABBF22784242D00C5C3CD /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				CE87A9E3278EFCFB00C3C0A2 /* OverlayHelper */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				CE87A9E7278EFE6700C3C0A2 /* BridgingFiles */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -156,6 +174,30 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		CE87A9E3278EFCFB00C3C0A2 /* OverlayHelper */ = {
+			isa = PBXGroup;
+			children = (
+				CE87A9DE278EFCF300C3C0A2 /* MBXMBTilesOverlay.h */,
+				CE87A9E0278EFCF500C3C0A2 /* MBXMBTilesOverlay.m */,
+				CE87A9DF278EFCF400C3C0A2 /* Reachability.h */,
+				CE87A9DD278EFCF200C3C0A2 /* Reachability.m */,
+				CE87A9E5278EFE3C00C3C0A2 /* ViewController.h */,
+				CE87A9E4278EFE3B00C3C0A2 /* ViewController.m */,
+			);
+			name = OverlayHelper;
+			sourceTree = "<group>";
+		};
+		CE87A9E7278EFE6700C3C0A2 /* BridgingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				CE87A9EC278EFF4100C3C0A2 /* Switch.m */,
+				CE87A9EB278EFF4000C3C0A2 /* Switch.swift */,
+				CE87A9EA278EFF3E00C3C0A2 /* SwitchView.swift */,
+				CE87A9E9278EFF3800C3C0A2 /* lokahifishinglatest-Bridging-Header.h */,
+			);
+			name = BridgingFiles;
+			sourceTree = "<group>";
+		};
 		FDEBDF16D77D76565A2B7255 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,7 +241,7 @@
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1320;
 					};
 				};
 			};
@@ -338,7 +380,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				CE87A9E1278EFCF600C3C0A2 /* Reachability.m in Sources */,
+				CE87A9ED278EFF4200C3C0A2 /* SwitchView.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				CE87A9E2278EFCF600C3C0A2 /* MBXMBTilesOverlay.m in Sources */,
+				CE87A9EF278EFF4200C3C0A2 /* Switch.m in Sources */,
+				CE87A9E6278EFE3C00C3C0A2 /* ViewController.m in Sources */,
+				CE87A9EE278EFF4200C3C0A2 /* Switch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +420,7 @@
 				PRODUCT_NAME = lokahifishinglatest;
 				PROVISIONING_PROFILE_SPECIFIER = Lokahi_Fishing_Development;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "lokahifishinglatest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -406,6 +455,7 @@
 				PRODUCT_NAME = lokahifishinglatest;
 				PROVISIONING_PROFILE_SPECIFIER = Adhoc_lokahi;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "lokahifishinglatest-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

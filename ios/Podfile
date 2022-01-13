@@ -17,6 +17,7 @@ target 'lokahifishinglatest' do
   pod 'react-native-google-maps', :path => rn_maps_path
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod 'Alamofire'
   # target 'lokahifishinglatestTests' do
   #   inherit! :complete
   #   # Pods for testing

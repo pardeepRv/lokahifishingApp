@@ -48,7 +48,7 @@ export default StyleSheet.create({
     paddingHorizontal: moderateScale(5),
     alignSelf: 'center',
     textAlign:'center',
-    shadowOpacity:.5,
+    // shadowOpacity:.5,
   },
   image: {
     flex: 1,

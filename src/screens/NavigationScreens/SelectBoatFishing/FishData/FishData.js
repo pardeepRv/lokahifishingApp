@@ -12,9 +12,12 @@ import {
   Text,
   TextInput,
   View,
+  Modal,
+  TouchableOpacity,
+  requireNativeComponent,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-
+import { useIsFocused } from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import GetLocation from 'react-native-get-location';
@@ -30,13 +33,14 @@ import {Loader} from '../../../../components/common';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
+const ApplmapNoaa = requireNativeComponent('Switch');
 const FishData = ({navigation, route}) => {
   const {previousScreen} = route && route.params;
+  const [modalVisible1, setModalVisible1] = useState(false);
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
-
+  const isFocused = useIsFocused();
   console.log(auth, 'auth fish page');
 
   const dispatch = useDispatch();
@@ -100,8 +104,14 @@ const FishData = ({navigation, route}) => {
         const {code, message} = error;
         console.log(code, message);
       });
+     
+    //   if(isFocused){ 
+    //     setModalVisible1(true);
+    // }
     // I set this so that the region could update as we move the map around and it seems to break the map. Setting the actual <MapView> region to this seems to work but then the pin only stays at the users current location. Maybe the map will be good if they make the post at the spot of location and use the other method if it is created later.
-  }, []);
+  // }, [isFocused]);
+}, []);
+
 
   const [region, setRegion] = useState({
     latitude: location?.latitude,
@@ -271,454 +281,488 @@ const FishData = ({navigation, route}) => {
     NavigationService.resetRoute(screenNames.HomeStack);
   };
 
-  return (
-    <ImageBackground
-      source={icons.LeaderBoard1}
-      style={{flex: 1, height: '100%'}}>
-      <Header
-        containerStyle={{
-          backgroundColor: 'transparent',
-          height: moderateScale(60),
-        }}
-        blackTitle
-        title={'Catch Report'}
-        titleStyle={{fontFamily: fonts.bold}}
-        leftIconSource={icons.ic_back_white}
-        leftButtonStyle={{
-          tintColor: colors.black1,
-        }}
-        onLeftPress={() => {
-          navigation.goBack();
-        }}
-        onRightPress={_postCatchReport}
-        rightIconSource={icons.post}
-        rightIconStyle={{
-          height: 30,
-          width: 30,
-          tintColor: colors.green1,
-        }}
-      />
-      <SafeAreaView style={styles.safeAreaView}>
-        
-          <ScrollView >
+  
+    return (
+      <ImageBackground
+        source={icons.LeaderBoard1}
+        style={{flex: 1, height: '100%'}}>
+        <Header
+          containerStyle={{
+            backgroundColor: 'transparent',
+            height: moderateScale(60),
+          }}
+          blackTitle
+          title={'Catch Report'}
+          titleStyle={{fontFamily: fonts.bold}}
+          leftIconSource={icons.ic_back_white}
+          leftButtonStyle={{
+            tintColor: colors.black1,
+          }}
+          onLeftPress={() => {
+            navigation.goBack();
+          }}
+          onRightPress={_postCatchReport}
+          rightIconSource={icons.post}
+          rightIconStyle={{
+            height: 30,
+            width: 30,
+            tintColor: colors.green1,
+          }}
+        />
+        <SafeAreaView style={styles.safeAreaView}>
           <KeyboardAvoidingView
-             behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
-             style={styles.subContainer}
-             contentContainerStyle={styles.subContentContainer}
-             keyboardShouldPersistTaps={'always'}
-             showsVerticalScrollIndicator={false}>
-            <View style={[styles.textSection, {justifyContent: 'center'}]}>
-              <Text>Info below is optional & will be private to user only</Text>
-            </View>
-            <View
-              style={[
-                styles.textSection,
-                {
-                  justifyContent: 'space-evenly',
-                  alignItems: 'center',
-                  paddingVertical: 5,
-                },
-              ]}>
-              <Text>Post Catch Report to Photo Sharing?</Text>
-              <Switch
-                trackColor={{false: '#767577', true: '#34C759'}}
-                thumbColor={'#f4f3f4'}
-                ios_backgroundColor="#767577"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-              />
-            </View>
-            <View style={styles.textSection}>
-              <Text
-                style={styles.title}
-                onPress={() =>
-                  navigation.navigate('ModalListComponent', {
-                    value: 1,
-                    name: 'Sign',
-                    getSelectedSigns: getSelectedSigns,
-                  })
-                }>
-                Sign(optional)
-              </Text>
-              <View style={{flex: 0.5}}>
-                {selectedSignArr && selectedSignArr.length > 0 ? (
-                  selectedSignArr.map((val, index) => {
-                    return (
-                      <Text
-                        key={index}
-                        style={{
-                          fontFamily: fonts.semiBold,
-                        }}>
-                        {val.name}
-                      </Text>
-                    );
-                  })
-                ) : (
-                  <Text
-                    style={{
-                      fontFamily: fonts.semiBold,
-                    }}
-                    onPress={() =>
-                      navigation.navigate('ModalListComponent', {
-                        value: 1,
-                        name: 'Sign',
-                        getSelectedSigns: getSelectedSigns,
-                      })
-                    }>
-                    Select sign
-                  </Text>
-                )}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+              style={styles.subContainer}
+              contentContainerStyle={styles.subContentContainer}
+              keyboardShouldPersistTaps={'always'}
+              showsVerticalScrollIndicator={false}>
+            <ScrollView>
+              <View style={[styles.textSection, {justifyContent: 'center'}]}>
+                <Text>Info below is optional & will be private to user only</Text>
               </View>
-            </View>
-            <View style={styles.textSection}>
-              <Text
-                style={styles.title}
-                onPress={() =>
-                  navigation.navigate('ModalListComponent', {
-                    value: 2,
-                    name: 'Method',
-                    getSelectedBaits: getSelectedBaits,
-                    getSelectedLures: getSelectedLures,
-                  })
-                }>
-                Method(optional)
-              </Text>
-              <View style={{flex: 0.5}}>
-                {baitUI.map((val, index) => {
-                  return (
-                    <Text
-                      key={index}
-                      style={{
-                        fontFamily: fonts.semiBold,
-                      }}>
-                      {val.method_name}
-                    </Text>
-                  );
-                })}
-                {lureUI.map((val, index) => {
-                  return (
-                    <Text
-                      key={index}
-                      style={{
-                        fontFamily: fonts.semiBold,
-                      }}>
-                      {val.method_name}
-                    </Text>
-                  );
-                })}
-                {lureUI.length == 0 && baitUI.length == 0 ? (
-                  <Text
-                    style={{
-                      fontFamily: fonts.semiBold,
-                    }}
-                    onPress={() =>
-                      navigation.navigate('ModalListComponent', {
-                        value: 2,
-                        name: 'Method',
-                        getSelectedBaits: getSelectedBaits,
-                        getSelectedLures: getSelectedLures,
-                      })
-                    }>
-                    Select Method
-                  </Text>
-                ) : null}
+              <View
+                style={[
+                  styles.textSection,
+                  {
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    paddingVertical: 5,
+                  },
+                ]}>
+                <Text>Post Catch Report to Photo Sharing?</Text>
+                <Switch
+                  trackColor={{false: '#767577', true: '#34C759'}}
+                  thumbColor={'#f4f3f4'}
+                  ios_backgroundColor="#767577"
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                />
               </View>
-            </View>
-            <View style={styles.textSection}>
-              <Text
-                style={styles.title}
-                onPress={() =>
-                  navigation.navigate('ModalListComponent', {
-                    value: 3,
-                    name: 'Weather',
-                    getSelectedweather: getSelectedweather,
-                    getWeatherSendToApi: getWeatherSendToApi,
-                  })
-                }>
-                Weather(optional)
-              </Text>
-              <View style={{flex: 0.5}}>
-                {weateherArr && weateherArr.length > 0 ? (
-                  weateherArr.map((val, index) => {
-                    return (
-                      <Text
-                        key={index}
-                        style={{
-                          fontFamily: fonts.semiBold,
-                        }}>
-                        {/* {val.weather_type} : */}
-                        {val.value}
-                      </Text>
-                    );
-                  })
-                ) : (
-                  <Text
-                    style={{
-                      fontFamily: fonts.semiBold,
-                    }}
-                    onPress={() =>
-                      navigation.navigate('ModalListComponent', {
-                        value: 3,
-                        name: 'weather',
-                        getSelectedweather: getSelectedweather,
-                        getWeatherSendToApi: getWeatherSendToApi,
-                      })
-                    }>
-                    Select weather
-                  </Text>
-                )}
-              </View>
-            </View>
-            <View style={styles.textSection}>
-              <Text
-                style={styles.title}
-                onPress={() =>
-                  navigation.navigate('ModalListComponent', {
-                    value: 4,
-                    name: 'Position',
-                    getSelectedposition: getSelectedposition,
-                  })
-                }>
-                Position(optional)
-              </Text>
-
-              <View style={{flex: 0.5}}>
-                {positionarr && positionarr.length > 0 ? (
-                  positionarr.map((val, index) => {
-                    return (
-                      <Text
-                        key={index}
-                        style={{
-                          fontFamily: fonts.semiBold,
-                        }}>
-                        {val.name}
-                      </Text>
-                    );
-                  })
-                ) : (
-                  <Text
-                    style={{
-                      fontFamily: fonts.semiBold,
-                    }}
-                    onPress={() =>
-                      navigation.navigate('ModalListComponent', {
-                        value: 4,
-                        name: 'position',
-                        getSelectedposition: getSelectedposition,
-                      })
-                    }>
-                    Select position
-                  </Text>
-                )}
-              </View>
-            </View>
-            <View style={styles.textSection}>
-              <Text
-                style={styles.title}
-                onPress={() =>
-                  navigation.navigate('Circular', {
-                    value: 5,
-                    getHrs: getHrs,
-                  })
-                }>
-                Efforts
-              </Text>
-              {price > 0 && (
+              <View style={styles.textSection}>
                 <Text
+                  style={styles.title}
+                  onPress={() =>
+                    navigation.navigate('ModalListComponent', {
+                      value: 1,
+                      name: 'Sign',
+                      getSelectedSigns: getSelectedSigns,
+                    })
+                  }>
+                  Sign(optional)
+                </Text>
+                <View style={{flex: 0.5}}>
+                  {selectedSignArr && selectedSignArr.length > 0 ? (
+                    selectedSignArr.map((val, index) => {
+                      return (
+                        <Text
+                          key={index}
+                          style={{
+                            fontFamily: fonts.semiBold,
+                          }}>
+                          {val.name}
+                        </Text>
+                      );
+                    })
+                  ) : (
+                    <Text
+                      style={{
+                        fontFamily: fonts.semiBold,
+                      }}
+                      onPress={() =>
+                        navigation.navigate('ModalListComponent', {
+                          value: 1,
+                          name: 'Sign',
+                          getSelectedSigns: getSelectedSigns,
+                        })
+                      }>
+                      Select sign
+                    </Text>
+                  )}
+                </View>
+              </View>
+              <View style={styles.textSection}>
+                <Text
+                  style={styles.title}
+                  onPress={() =>
+                    navigation.navigate('ModalListComponent', {
+                      value: 2,
+                      name: 'Method',
+                      getSelectedBaits: getSelectedBaits,
+                      getSelectedLures: getSelectedLures,
+                    })
+                  }>
+                  Method(optional)
+                </Text>
+                <View style={{flex: 0.5}}>
+                  {baitUI.map((val, index) => {
+                    return (
+                      <Text
+                        key={index}
+                        style={{
+                          fontFamily: fonts.semiBold,
+                        }}>
+                        {val.method_name}
+                      </Text>
+                    );
+                  })}
+                  {lureUI.map((val, index) => {
+                    return (
+                      <Text
+                        key={index}
+                        style={{
+                          fontFamily: fonts.semiBold,
+                        }}>
+                        {val.method_name}
+                      </Text>
+                    );
+                  })}
+                  {lureUI.length == 0 && baitUI.length == 0 ? (
+                    <Text
+                      style={{
+                        fontFamily: fonts.semiBold,
+                      }}
+                      onPress={() =>
+                        navigation.navigate('ModalListComponent', {
+                          value: 2,
+                          name: 'Method',
+                          getSelectedBaits: getSelectedBaits,
+                          getSelectedLures: getSelectedLures,
+                        })
+                      }>
+                      Select Method
+                    </Text>
+                  ) : null}
+                </View>
+              </View>
+              <View style={styles.textSection}>
+                <Text
+                  style={styles.title}
+                  onPress={() =>
+                    navigation.navigate('ModalListComponent', {
+                      value: 3,
+                      name: 'Weather',
+                      getSelectedweather: getSelectedweather,
+                      getWeatherSendToApi: getWeatherSendToApi,
+                    })
+                  }>
+                  Weather(optional)
+                </Text>
+                <View style={{flex: 0.5}}>
+                  {weateherArr && weateherArr.length > 0 ? (
+                    weateherArr.map((val, index) => {
+                      return (
+                        <Text
+                          key={index}
+                          style={{
+                            fontFamily: fonts.semiBold,
+                          }}>
+                          {/* {val.weather_type} : */}
+                          {val.value}
+                        </Text>
+                      );
+                    })
+                  ) : (
+                    <Text
+                      style={{
+                        fontFamily: fonts.semiBold,
+                      }}
+                      onPress={() =>
+                        navigation.navigate('ModalListComponent', {
+                          value: 3,
+                          name: 'weather',
+                          getSelectedweather: getSelectedweather,
+                          getWeatherSendToApi: getWeatherSendToApi,
+                        })
+                      }>
+                      Select weather
+                    </Text>
+                  )}
+                </View>
+              </View>
+              <View style={styles.textSection}>
+                <Text
+                  style={styles.title}
+                  onPress={() =>
+                    navigation.navigate('ModalListComponent', {
+                      value: 4,
+                      name: 'Position',
+                      getSelectedposition: getSelectedposition,
+                    })
+                  }>
+                  Position(optional)
+                </Text>
+  
+                <View style={{flex: 0.5}}>
+                  {positionarr && positionarr.length > 0 ? (
+                    positionarr.map((val, index) => {
+                      return (
+                        <Text
+                          key={index}
+                          style={{
+                            fontFamily: fonts.semiBold,
+                          }}>
+                          {val.name}
+                        </Text>
+                      );
+                    })
+                  ) : (
+                    <Text
+                      style={{
+                        fontFamily: fonts.semiBold,
+                      }}
+                      onPress={() =>
+                        navigation.navigate('ModalListComponent', {
+                          value: 4,
+                          name: 'position',
+                          getSelectedposition: getSelectedposition,
+                        })
+                      }>
+                      Select position
+                    </Text>
+                  )}
+                </View>
+              </View>
+              <View style={styles.textSection}>
+                <Text
+                  style={styles.title}
                   onPress={() =>
                     navigation.navigate('Circular', {
                       value: 5,
                       getHrs: getHrs,
                     })
-                  }
-                  style={styles.title}>
-                  {price} hrs.
+                  }>
+                  Efforts
                 </Text>
-              )}
-            </View>
-
-            <View style={styles.textSection}>
-              <Text style={styles.title}>Location</Text>
-            </View>
-            <View style={styles.mapContainer}>
-              <MapView
-                provider={
-                  Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
-                } // remove if not using Google Maps
-                style={styles.map}
-                region={{
-                  latitude:
-                    location && location.latitude ? location.latitude : 31.9311,
-                  longitude:
-                    location && location.longitude
-                      ? location.longitude
-                      : 75.8941,
-                  latitudeDelta: 0.015,
-                  longitudeDelta: 0.0121,
-                }}>
-                <MapView.Marker
-                  coordinate={{
+                {price > 0 && (
+                  <Text
+                    onPress={() =>
+                      navigation.navigate('Circular', {
+                        value: 5,
+                        getHrs: getHrs,
+                      })
+                    }
+                    style={styles.title}>
+                    {price} hrs.
+                  </Text>
+                )}
+              </View>
+  
+              <View style={styles.textSection}>
+                <Text style={styles.title}>Location</Text>
+              </View>
+              <View style={styles.mapContainer}>
+              <ApplmapNoaa 
+      style={{
+        height: 280,
+        width: windowWidth,
+          backgroundColor:'black'
+      }}/>
+                {/* <MapView
+                  provider={
+                    Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
+                  } // remove if not using Google Maps
+                  style={styles.map}
+                  region={{
                     latitude:
-                      location && location.latitude
-                        ? location.latitude
-                        : 31.9311,
+                      location && location.latitude ? location.latitude : 31.9311,
                     longitude:
                       location && location.longitude
                         ? location.longitude
                         : 75.8941,
-                  }}
-                />
-              </MapView>
-            </View>
-           
-            {location ? (
-              <View
+                    latitudeDelta: 0.015,
+                    longitudeDelta: 0.0121,
+                  }}>
+                  <MapView.Marker
+                    coordinate={{
+                      latitude:
+                        location && location.latitude
+                          ? location.latitude
+                          : 31.9311,
+                      longitude:
+                        location && location.longitude
+                          ? location.longitude
+                          : 75.8941,
+                    }}
+                  />
+                </MapView> */}
+              </View>
+              {location ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'flex-end',
+                    paddingHorizontal: 10,
+                  }}>
+                  <TextInput
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                    onSubmitEditing={() => {
+                      Keyboard.dismiss();
+                    }}
+                    style={styles.locationTextInput}
+                    placeholder={location?.latitude?.toString()}
+                    onChangeText={text => onChangeLatitude(text)}
+                    keyboardType={
+                      Platform.OS === 'ios'
+                        ? 'numbers-and-punctuation'
+                        : 'default'
+                    }
+                    // value={location?.latitude?.toString()}
+                  />
+                  <Text style={{fontSize: 16, marginRight: 10, paddingBottom: 2}}>
+                    latitude
+                  </Text>
+                  <TextInput
+                    style={{fontSize: 16}}
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                    onSubmitEditing={() => {
+                      Keyboard.dismiss();
+                    }}
+                    style={styles.locationTextInput}
+                    placeholder={location?.longitude?.toString()}
+                    onChangeText={text => onChangeLongitude(text)}
+                    keyboardType={
+                      Platform.OS === 'ios'
+                        ? 'numbers-and-punctuation'
+                        : 'default'
+                    }
+                    // value={location?.longitude?.toString()}
+                  />
+                  <Text style={{fontSize: 16, paddingBottom: 2}}>longitude</Text>
+                </View>
+              ) : (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 20,
+                    paddingHorizontal: 10,
+                  }}>
+                  <ActivityIndicator />
+                  <Text style={{fontSize: 16, marginLeft: 10}}>
+                    getting location...
+                  </Text>
+                </View>
+              )}
+              <Text style={styles.or}>OR</Text>
+              <View style={{zIndex: 1, paddingHorizontal: 10}}>
+                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                  <TextInput
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                    onSubmitEditing={() => {
+                      Keyboard.dismiss();
+                    }}
+                    style={styles.degreesTextInput}
+                    placeholder="#"
+                    onChangeText={text => setDegrees(text)}
+                    keyboardType="decimal-pad"
+                  />
+                  <Text style={{fontSize: 16, marginRight: 5, paddingBottom: 2}}>
+                    {' '}
+                    degree(s) and{' '}
+                  </Text>
+                  <TextInput
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                    onSubmitEditing={() => {
+                      Keyboard.dismiss();
+                    }}
+                    style={styles.degreesTextInput}
+                    placeholder="#"
+                    onChangeText={text => setMiles(text)}
+                    keyboardType="decimal-pad"
+                  />
+                  <Text style={{fontSize: 16, paddingBottom: 2}}>
+                    {' '}
+                    miles from:{' '}
+                  </Text>
+                </View>
+                <View style={{zIndex: 1}}>
+                  <DropDownPicker
+                    style={{backgroundColor: '#fafafa'}}
+                    theme="LIGHT"
+                    containerStyle={{width: '50%', marginVertical: 10}}
+                    labelStyle={{
+                      fontWeight: 'bold',
+                      fontSize: 16,
+                    }}
+                    textStyle={{
+                      fontSize: 16,
+                    }}
+                    dropDownContainerStyle={{
+                      backgroundColor: '#fafafa',
+                    }}
+                    zIndex={1000}
+                    open={open}
+                    value={harbor}
+                    items={harborItems}
+                    setOpen={setOpen}
+                    setValue={setHarbor}
+                    setItems={setHarborItems}
+                    placeholder={'Choose Harbor'}
+                    dropDownDirection="AUTO"
+                  />
+                </View>
+              </View>
+              <TextInput
+                placeholder="Add any additional notes you would like"
+                autoCapitalize="sentences"
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'flex-end',
+                  fontSize: 16,
                   paddingHorizontal: 10,
-                }}>
-                <TextInput
-                  returnKeyType="done"
-                  blurOnSubmit={true}
-                  onSubmitEditing={() => {
-                    Keyboard.dismiss();
-                  }}
-                  style={styles.locationTextInput}
-                  placeholder={location?.latitude?.toString()}
-                  onChangeText={text => onChangeLatitude(text)}
-                  keyboardType={
-                    Platform.OS === 'ios'
-                      ? 'numbers-and-punctuation'
-                      : 'default'
-                  }
-                  // value={location?.latitude?.toString()}
-                />
-                <Text style={{fontSize: 16, marginRight: 10, paddingBottom: 2}}>
-                  latitude
-                </Text>
-                <TextInput
-                  style={{fontSize: 16}}
-                  returnKeyType="done"
-                  blurOnSubmit={true}
-                  onSubmitEditing={() => {
-                    Keyboard.dismiss();
-                  }}
-                  style={styles.locationTextInput}
-                  placeholder={location?.longitude?.toString()}
-                  onChangeText={text => onChangeLongitude(text)}
-                  keyboardType={
-                    Platform.OS === 'ios'
-                      ? 'numbers-and-punctuation'
-                      : 'default'
-                  }
-                  // value={location?.longitude?.toString()}
-                />
-                <Text style={{fontSize: 16, paddingBottom: 2}}>longitude</Text>
+                  borderTopWidth: 1,
+                  borderColor: 'lightgray',
+                  paddingTop: 15,
+                  height: windowHeight * 0.35,
+                }}
+                returnKeyType="done"
+                multiline={true}
+                blurOnSubmit={true}
+                onSubmitEditing={() => {
+                  Keyboard.dismiss();
+                }}
+                value={additionalNotes}
+                onChangeText={text => setAdditionalNotes(text)}
+              />
+            </ScrollView>
+          </KeyboardAvoidingView>
+          <Loader isLoading={app.loading} isAbsolute />
+        </SafeAreaView>
+        <Modal
+            animationType={'none'}
+            transparent={true}
+            visible={modalVisible1}
+            onRequestClose={() => { }}>
+            <SafeAreaView>
+              <View style={styles.modalcontent}>
+                <View style={styles.modalcontainer}>
+                  <Text style={styles.modaltextlogo}>Lokahi</Text>
+                  <Text style={styles.modalbuttontextstyle1}>You need to download Hawaii marine map</Text>
+                  {/* <Text
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                    style={styles.modaltextstyle}>
+                    {strings.areyouwant}
+                  </Text> */}
+                  <View style={styles.modalbuttonviewstyle}>
+                    <TouchableOpacity
+                      style={styles.modalbuttonstyle}
+                      underlayColor={colors.white1}
+                      // onPress={() => onButtonPressed(true)}
+                      onPress={() => {
+                        setModalVisible1(false);
+                      }}>
+                      <Text style={styles.modalbuttontextstyle}>OK</Text>
+                    </TouchableOpacity>
+                    
+                  </View>
+                </View>
               </View>
-            ) : (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 20,
-                  paddingHorizontal: 10,
-                }}>
-                <ActivityIndicator />
-                <Text style={{fontSize: 16, marginLeft: 10}}>
-                  getting location...
-                </Text>
-              </View>
-            )}
-            <Text style={styles.or}>OR</Text>
-           
-            <View style={{zIndex: 1, paddingHorizontal: 10}}>
-              <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-                <TextInput
-                  returnKeyType="done"
-                  blurOnSubmit={true}
-                  onSubmitEditing={() => {
-                    Keyboard.dismiss();
-                  }}
-                  style={styles.degreesTextInput}
-                  placeholder="#"
-                  onChangeText={text => setDegrees(text)}
-                  keyboardType="decimal-pad"
-                />
-                <Text style={{fontSize: 16, marginRight: 5, paddingBottom: 2}}>
-                  {' '}
-                  degree(s) and{' '}
-                </Text>
-                <TextInput
-                  returnKeyType="done"
-                  blurOnSubmit={true}
-                  onSubmitEditing={() => {
-                    Keyboard.dismiss();
-                  }}
-                  style={styles.degreesTextInput}
-                  placeholder="#"
-                  onChangeText={text => setMiles(text)}
-                  keyboardType="decimal-pad"
-                />
-                <Text style={{fontSize: 16, paddingBottom: 2}}>
-                  {' '}
-                  miles from:{' '}
-                </Text>
-              </View>
-              <View style={{zIndex: 1}}>
-                <DropDownPicker
-                  style={{backgroundColor: '#fafafa'}}
-                  theme="LIGHT"
-                  containerStyle={{width: '50%', marginVertical: 10}}
-                  labelStyle={{
-                    fontWeight: 'bold',
-                    fontSize: 16,
-                  }}
-                  textStyle={{
-                    fontSize: 16,
-                  }}
-                  dropDownContainerStyle={{
-                    backgroundColor: '#fafafa',
-                  }}
-                  zIndex={1000}
-                  open={open}
-                  value={harbor}
-                  items={harborItems}
-                  setOpen={setOpen}
-                  setValue={setHarbor}
-                  setItems={setHarborItems}
-                  placeholder={'Choose Harbor'}
-                  dropDownDirection="AUTO"
-                />
-              </View>
-            </View>
-            <TextInput
-              placeholder="Add any additional notes you would like"
-              autoCapitalize="sentences"
-              style={{
-                fontSize: 16,
-                paddingHorizontal: 10,
-                borderTopWidth: 1,
-                borderBottomWidth: 1,
-                borderColor: 'lightgray',
-                paddingTop: 15,
-                paddingBottom: 15,
-                height: windowHeight * 0.90,
-              }}
-              returnKeyType="done"
-              multiline={true}
-              blurOnSubmit={true}
-              onSubmitEditing={() => {
-                Keyboard.dismiss();
-              }}
-              value={additionalNotes}
-              onChangeText={text => setAdditionalNotes(text)}
-            />
-        </KeyboardAvoidingView>
-          </ScrollView>
-        <Loader isLoading={app.loading} isAbsolute />
-      </SafeAreaView>
-    </ImageBackground>
-  );
-};
+            </SafeAreaView>
+          </Modal>
+      </ImageBackground>
+    );
+  };
 
 export default FishData;

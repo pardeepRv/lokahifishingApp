@@ -1,5 +1,6 @@
 import {StyleSheet , Dimensions} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
+import { fonts } from '../../../../../assets';
 import { colors } from '../../../../utilities/constants';
 import { layout } from '../../../../utilities/layout';
 
@@ -125,11 +126,70 @@ export default StyleSheet.create({
     borderRadius: 16,
   },
   subContainer: {
-    height: layout.size.height / .50,
-	// flex:1
-	// backgroundColor:'black'
+    height: layout.size.height / 1.1,
   },
   subContentContainer: {
-    paddingBottom: moderateScale(20),
+    paddingBottom: moderateScale(40),
+  },
+  modalcontent: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.black4,
+  },
+  modalcontainer: {
+    height: layout.size.height / 5,
+    width: layout.size.width / 1.5,
+    // top: 60,
+    alignItems: 'center',
+    // justifyContent: 'center',
+    borderWidth: 2,
+    borderRadius: moderateScale(20),
+    borderColor: '#D3D3D3',
+  },
+  modaltextlogo: {
+    height: moderateScale(25),
+    fontFamily: fonts.bold,
+    fontSize: moderateScale(20),
+    color: colors.white1,
+    top: 10,
+  },
+  modalbuttonviewstyle: {
+    height: moderateScale(40),
+    width: layout.size.width / 1.6,
+alignItems:'center',
+    top: moderateScale(10),
+  },
+  modalbuttonstyle: {
+    backgroundColor: colors.lightTransparent,
+    // borderColor: colors.black15,
+    borderRadius: moderateScale(6),
+    width: moderateScale(100),
+    height: moderateScale(40),
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.4,
+    elevation: 3,
+  },
+  modalbuttontextstyle: {
+    color: colors.white1,
+    fontFamily: fonts.bold,
+    fontSize: moderateScale(16),
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    margin: moderateScale(10),
+  },
+  modalbuttontextstyle1: {
+    color: colors.white1,
+    fontFamily: fonts.bold,
+    fontSize: moderateScale(14),
+    alignSelf: 'center',
+    fontWeight: 'bold',
+	textAlign:'center',
+    margin: moderateScale(5),
+    top: 10,
+
   },
 });

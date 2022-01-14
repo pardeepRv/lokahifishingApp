@@ -10,7 +10,7 @@ const windowHeight = Dimensions.get('window').height
 
 export default StyleSheet.create({
   safeAreaView: {
-
+	  flex:1,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
@@ -126,7 +126,9 @@ export default StyleSheet.create({
     borderRadius: 16,
   },
   subContainer: {
-    height: layout.size.height / 1.1,
+    // height: layout.size.height ,
+	flex:1,
+	// backgroundColor:colors.secondry
   },
   subContentContainer: {
     paddingBottom: moderateScale(40),

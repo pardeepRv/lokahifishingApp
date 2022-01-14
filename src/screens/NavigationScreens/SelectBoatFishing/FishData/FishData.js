@@ -30,6 +30,7 @@ import {colors, screenNames} from '../../../../utilities/constants';
 import styles from './styles';
 import {savelcrreport} from '../../../../store/actions';
 import {Loader} from '../../../../components/common';
+import { layout } from '../../../../utilities/layout';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -316,7 +317,7 @@ const FishData = ({navigation, route}) => {
               contentContainerStyle={styles.subContentContainer}
               keyboardShouldPersistTaps={'always'}
               showsVerticalScrollIndicator={false}>
-            <ScrollView>
+            <ScrollView style={{flex:1}}>
               <View style={[styles.textSection, {justifyContent: 'center'}]}>
                 <Text>Info below is optional & will be private to user only</Text>
               </View>
@@ -705,17 +706,39 @@ const FishData = ({navigation, route}) => {
                   />
                 </View>
               </View>
+              <View
+        style={{
+          height:layout.size.height/3,
+          // bottom:20,
+          width: layout.size.width,
+          margin: 0,
+        }}>
+       
               <TextInput
                 placeholder="Add any additional notes you would like"
                 autoCapitalize="sentences"
+                // style={{
+                //   fontSize: 16,
+                //   paddingHorizontal: 10,
+                //   borderTopWidth: 1,
+                //   borderColor: 'lightgray',
+                //   paddingTop: 15,
+                //   height: windowHeight * 0.35,
+                //   paddingBottom : moderateScale(30)
+                // }}
                 style={{
-                  fontSize: 16,
-                  paddingHorizontal: 10,
-                  borderTopWidth: 1,
-                  borderColor: 'lightgray',
-                  paddingTop: 15,
                   height: windowHeight * 0.35,
-                }}
+                  // height: moderateScale(60),
+                  paddingBottom : moderateScale(30),
+                    // borderWidth: 1,
+                    padding: 9,
+                    borderTopWidth: 1,
+                    fontSize: 16,
+                    // backgroundColor: colors.white1,
+                    borderColor: 'lightgray',
+                    top:5,
+                    paddingHorizontal: 10,
+                  }}
                 returnKeyType="done"
                 multiline={true}
                 blurOnSubmit={true}
@@ -725,6 +748,8 @@ const FishData = ({navigation, route}) => {
                 value={additionalNotes}
                 onChangeText={text => setAdditionalNotes(text)}
               />
+        
+              </View>
             </ScrollView>
           </KeyboardAvoidingView>
           <Loader isLoading={app.loading} isAbsolute />

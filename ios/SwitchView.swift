@@ -1,6 +1,8 @@
 import UIKit
 import MapKit
 import Alamofire
+import Photos
+
 class SwitchView: UIView, MKMapViewDelegate {
   
   /*@objc var isOn: Bool = false  {
@@ -15,11 +17,18 @@ class SwitchView: UIView, MKMapViewDelegate {
     self.addSubview(AppleMap)
    self.addSubview(ProgressLabel)
     
+  /*  PHPhotoLibrary.requestAuthorization({
+           (newStatus) in
+             if newStatus ==  PHAuthorizationStatus.authorized {
+              /* do stuff here */
+               print("authorized")
+        }
+    })*/
  
     let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
       
       
-     if let fileURL = documentsUrl?.appendingPathComponent("MBTILES_09.mbtiles")
+     if let fileURL = documentsUrl?.appendingPathComponent(self.filePath.lastPathComponent)
     {
        if FileManager.default.fileExists(atPath: fileURL.path) == false
     {
@@ -71,6 +80,10 @@ class SwitchView: UIView, MKMapViewDelegate {
     progresslbl.textAlignment = .center
     return progresslbl
   }()
+  
+  var filePath = URL(string: "https://s3.us-east-2.amazonaws.com/lokahimapfiles/MBTILES_09.mbtiles")!
+  
+  
   
   lazy var AppleMap: MKMapView = {
    let mapView = MKMapView()
@@ -144,8 +157,8 @@ class SwitchView: UIView, MKMapViewDelegate {
 */
   
   let destination: DownloadRequest.Destination = { _, _ in
-          let documentsURL = FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask)[0]
-              let fileURL = documentsURL.appendingPathComponent("MBTILES_09.mbtiles")
+    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+      let fileURL = documentsURL.appendingPathComponent("MBTILES_09.mbtiles")
 
               return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
       }
@@ -156,7 +169,7 @@ class SwitchView: UIView, MKMapViewDelegate {
      
      //https://tileservice.charts.noaa.gov/mbtiles/50000_1/MBTILES_08.mbtiles
      
-     AF.download("https://s3.us-east-2.amazonaws.com/lokahimapfiles/MBTILES_09.mbtiles", to: destination )
+     AF.download(filePath.absoluteString, to: destination )
              .downloadProgress { progress in
 
                                    let completed: Float = Float(progress.completedUnitCount)
@@ -182,7 +195,7 @@ class SwitchView: UIView, MKMapViewDelegate {
                }
                let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
 
-               guard let fileURL = documentsUrl?.appendingPathComponent("MBTILES_09.mbtiles") else{
+               guard let fileURL = documentsUrl?.appendingPathComponent(self.filePath.lastPathComponent) else{
                  return
                }
              

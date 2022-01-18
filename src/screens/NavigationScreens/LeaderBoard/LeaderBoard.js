@@ -1,5 +1,7 @@
+import {Picker} from '@react-native-picker/picker';
 import moment from 'moment';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Modal} from 'react-native';
 import {
   Dimensions,
   FlatList,
@@ -12,6 +14,7 @@ import {
   View,
 } from 'react-native';
 import MonthPicker from 'react-native-month-year-picker';
+import * as NavigationService from '../../../store/NavigationService';
 import {moderateScale} from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
 import {useDispatch, useSelector} from 'react-redux';
@@ -23,7 +26,7 @@ import {
   leaderboardfishlist,
   leaderboardranking,
 } from '../../../store/actions';
-import {colors} from '../../../utilities/constants';
+import {colors, screenNames} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import styles from './styles';
 
@@ -117,6 +120,8 @@ const LeaderBoard = ({navigation}) => {
     refreshing: false,
   });
 
+  const [selectedItem, setSelectedItem] = useState();
+
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
   console.log(auth, 'auth in leaderboard >>>>>>>>>>>>>>');
@@ -130,6 +135,8 @@ const LeaderBoard = ({navigation}) => {
   const [selectedYear, setSelectedYear] = useState(null);
 
   const [show, setShow] = useState(false);
+  const [showYearOnly, setShowYearOnly] = useState(false);
+
   const showPicker = useCallback(value => setShow(value), []);
   const month = date.getMonth();
   const year = date.getFullYear();
@@ -185,7 +192,41 @@ const LeaderBoard = ({navigation}) => {
       }),
     );
   };
-  const getfilter = () => {
+  const getfilter = (m, y, f_ID) => {
+    let obj = {};
+
+    obj.token = auth && auth?.userDetails?.access_token;
+    console.log(fishType, 'fishtype name with  id>>>>>>>>>>>>');
+    console.log(fishTypeId, 'fishtype name with  id>>>>>>>>>>>>');
+
+    // obj.fish_id = fishTypeId;
+    // obj.year = selectedYear;
+    // obj.month = selectedMonth;
+
+    obj.fish_id = f_ID;
+    obj.year = y;
+    obj.month = m;
+
+    console.log(obj, 'sending to api in monhly');
+
+    dispatch(
+      leaderboardfilter(obj, cb => {
+        console.log(cb, 'in leader month yearcard>>>>>>>>>>>>>>>>>>>');
+        if (cb) {
+          console.log(cb, 'callBack in card');
+          if (cb?.data?.data) {
+            let fishArr = cb?.data?.data?.leaderboardRankingAnually;
+            fishArr.forEach(element => {
+              element.imgUrl = cb && cb.data && cb.data.base_url;
+            });
+            setDateWiseList(fishArr);
+          }
+        }
+      }),
+    );
+  };
+
+  const getfilterFromAnnual = selectedItem => {
     let obj = {};
 
     obj.token = auth && auth?.userDetails?.access_token;
@@ -193,16 +234,15 @@ const LeaderBoard = ({navigation}) => {
     console.log(fishTypeId, 'fishtype name with  id>>>>>>>>>>>>');
 
     obj.fish_id = fishTypeId;
-    obj.year = selectedYear;
-    obj.month = selectedMonth;
+    obj.year = selectedItem;
 
-    console.log(obj, 'sending to api');
+    console.log(obj, 'sending to api in getfilterFromAnnual ');
 
     dispatch(
       leaderboardfilter(obj, cb => {
         console.log(cb, 'in leader month yearcard>>>>>>>>>>>>>>>>>>>');
         if (cb) {
-          console.log(cb, 'callBack in card');
+          console.log(cb, 'callBack in card Annual');
           if (cb?.data?.data) {
             let fishArr = cb?.data?.data?.leaderboardRankingAnually;
             fishArr.forEach(element => {
@@ -232,10 +272,8 @@ const LeaderBoard = ({navigation}) => {
       }
 
       showPicker(false);
-      // return
-
       setDate(selectedDate);
-      _onRefresh();
+      _onRefresh(valueAre[0], valueAre[2], fishTypeId);
     },
     [date, showPicker],
   );
@@ -251,15 +289,15 @@ const LeaderBoard = ({navigation}) => {
   if (prevState != fishTypeId) {
     setTimeout(() => {
       getboardranking(fishTypeId);
-      getfilter(fishTypeId);
-    }, 1000);
+      // getfilter(fishTypeId);
+    }, 100);
   }
 
-  function _onRefresh(idfish) {
-    console.log(idfish, 'fishtypeif=d');
+  function _onRefresh(m, y, f_id) {
+    console.log(m, y, 'fishtypeif=d');
     // console.log(ID , '??::?:?"?:');
     setState({refreshing: true});
-    getfilter();
+    getfilter(m, y, f_id);
   }
   function onRefresh() {
     setState({refreshing: true});
@@ -286,8 +324,6 @@ const LeaderBoard = ({navigation}) => {
             },
             shadowOpacity: 0.34,
             shadowRadius: 6.27,
-
-            elevation: 10,
           }}
         />
       </TouchableOpacity>
@@ -304,7 +340,7 @@ const LeaderBoard = ({navigation}) => {
     </View>
   );
   const onViewRef = React.useRef(viewableItems => {
-    console.log(viewableItems, 'viewwwww>>>>>>>>>>>>>>>>');
+    console.log(viewableItems, 'on scrolling viewwwww>>>>>>>>>>>>>>>>');
     if (
       viewableItems &&
       viewableItems.viewableItems &&
@@ -325,11 +361,13 @@ const LeaderBoard = ({navigation}) => {
 
   const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 50});
 
+  //on press annual button
   const toggleAnnual = () => {
     let fishid = app && app.rankinglist[0] && app.rankinglist[0].Fish_id;
     console.log(fishid, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>in toogle annually');
     setAnnual(true);
-    showPicker(true, fishid);
+    showPicker(false);
+    setShowYearOnly(true);
     setMonthly(false);
   };
 
@@ -338,6 +376,7 @@ const LeaderBoard = ({navigation}) => {
     console.log(fishid, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>in toogle monthly');
     setAnnual(false);
     setMonthly(true);
+    setShowYearOnly(false);
     showPicker(true);
   };
 
@@ -400,16 +439,19 @@ const LeaderBoard = ({navigation}) => {
             tintColor: colors.black1,
           }}
           onLeftPress={() => {
-            navigation.goBack();
+            getleaderboardFishes();
+            setAnnual(false);
+            setMonthly(false);
+            setShow(false);
+            NavigationService.resetRoute(screenNames.HomeStack);
+            // navigation.goBack();
           }}
         />
 
         <View style={{flex: 0.4}}>
-          {/* {app.fishesArr== true ? (
+          {/* {app.fishesArr == true ? (
             <Loader isLoading={app.loading} isAbsolute />
-           
           ) : ( */}
-
           <FlatList
             extraData={fishingList}
             data={fishingList}
@@ -417,18 +459,18 @@ const LeaderBoard = ({navigation}) => {
             keyExtractor={(item, index) => 'key' + index}
             horizontal
             pagingEnabled
-            ListEmptyComponent={() =>
-              !fishingList.length ? (
-                <Text style={styles.nomatch}>No Match found</Text>
-              ) : null
-            }
+            // ListEmptyComponent={() =>
+            //   !fishingList.length ? (
+            //     <Text style={styles.nomatch}>No Match found</Text>
+            //   ) : null
+            // }
             showsHorizontalScrollIndicator={false}
             indicatorActiveWidth={40}
             contentContainerStyle={{paddingHorizontal: 16}}
             viewabilityConfig={viewConfigRef.current}
             onViewableItemsChanged={onViewRef.current}
           />
-          {/* )}  */}
+          {/* )} */}
         </View>
         <View>
           <View style={{alignItems: 'center', backgroundColor: '#fff'}}>
@@ -458,12 +500,12 @@ const LeaderBoard = ({navigation}) => {
                 </Text>
               </TouchableOpacity>
             </View>
-            <Text style={{fontSize: 22, fontWeight: '600', marginBottom: 10}}>
+            {/* <Text style={{fontSize: 22, fontWeight: '600', marginBottom: 10}}>
               {monthly === true
                 ? moment(date).format(MONTHLY_OUTPUT_FORMAT)
                 : moment(date).format(YEAR_OUTPUT_FORMAT)}{' '}
               Leaderboard
-            </Text>
+            </Text> */}
           </View>
         </View>
         {/* BOTTOM THIRD */}
@@ -475,7 +517,7 @@ const LeaderBoard = ({navigation}) => {
             keyExtractor={(item, index) => 'key' + index}
             ListHeaderComponent={() =>
               !dateWiseList.length ? (
-                <Text style={styles.nomatch}>No Match found</Text>
+                <Text style={styles.nomatch}>No data found</Text>
               ) : null
             }
             refreshControl={
@@ -501,6 +543,84 @@ const LeaderBoard = ({navigation}) => {
                 autoTheme={false}
                 okButton="Done"
               />
+            </View>
+          )}
+
+          {showYearOnly && (
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 0,
+              }}>
+              <Modal
+                animationType={'none'}
+                transparent={true}
+                visible={showYearOnly}
+                onRequestClose={() => {
+                  setShowYearOnly(false);
+                }}>
+                <SafeAreaView>
+                  <View
+                    style={{
+                      height: '60%',
+                      margin: 20,
+                      top: layout.size.height / 3 - 50,
+                      justifyContent: 'center',
+                      backgroundColor: colors.white1,
+                    }}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <TouchableOpacity onPress={() => setShowYearOnly(false)}>
+                        <Text
+                          style={{
+                            marginLeft: 20,
+                            bottom: 10,
+                            fontFamily: fonts.bold,
+                          }}>
+                          Cancel
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          getfilterFromAnnual(selectedItem),
+                            setShowYearOnly(false);
+                        }}>
+                        <Text
+                          style={{
+                            marginRight: 20,
+                            bottom: 10,
+                            fontFamily: fonts.bold,
+                          }}>
+                          Done
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <Picker
+                      selectedValue={selectedItem}
+                      onValueChange={(itemValue, itemIndex) =>
+                        setSelectedItem(itemValue)
+                      }
+                      numberOfLines={1}
+                      style={{
+                        top: 10,
+                      }}>
+                      <Picker.Item label="2019" value="2019" />
+                      <Picker.Item label="2020" value="2020" />
+                      <Picker.Item label="2021" value="2021" />
+                      <Picker.Item label="2022" value="2022" />
+                      <Picker.Item label="2023" value="2023" />
+                      <Picker.Item label="2024" value="2024" />
+                      <Picker.Item label="2025" value="2025" />
+                      <Picker.Item label="2026" value="2026" />
+                      <Picker.Item label="2027" value="2027" />
+                      <Picker.Item label="2028" value="2028" />
+                    </Picker>
+                  </View>
+                </SafeAreaView>
+              </Modal>
             </View>
           )}
         </View>

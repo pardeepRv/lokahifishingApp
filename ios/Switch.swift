@@ -4,7 +4,7 @@ class Switch: RCTViewManager {
   
   override func view() -> UIView! {
  
-    return SwitchView()
+    return CustomMapView()
   }
   
   override static func requiresMainQueueSetup() -> Bool {

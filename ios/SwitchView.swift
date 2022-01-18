@@ -1,9 +1,11 @@
 import UIKit
 import MapKit
 import Alamofire
-import Photos
+import CoreLocation
 
-class SwitchView: UIView, MKMapViewDelegate {
+class SwitchView: UIView, MKMapViewDelegate,CLLocationManagerDelegate {
+  let locationManager = CLLocationManager()
+  var isLoactionAdded = false
   
   /*@objc var isOn: Bool = false  {
     didSet {
@@ -13,17 +15,22 @@ class SwitchView: UIView, MKMapViewDelegate {
   }*/
   override init(frame: CGRect) {
     super.init(frame: frame)
+ 
+    // For use in foreground
+    self.locationManager.requestWhenInUseAuthorization()
+
+    if CLLocationManager.locationServicesEnabled() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.startUpdatingLocation()
+    }
+
+    
     
     self.addSubview(AppleMap)
    self.addSubview(ProgressLabel)
     
-  /*  PHPhotoLibrary.requestAuthorization({
-           (newStatus) in
-             if newStatus ==  PHAuthorizationStatus.authorized {
-              /* do stuff here */
-               print("authorized")
-        }
-    })*/
+
  
     let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
       
@@ -50,6 +57,7 @@ class SwitchView: UIView, MKMapViewDelegate {
     fatalError("init has not been implemented")
   }
   
+
   
  /* @objc func methodOfReceivedNotification(notification: Notification) {
    
@@ -96,26 +104,32 @@ class SwitchView: UIView, MKMapViewDelegate {
      mapView.isScrollEnabled = true
      mapView.isUserInteractionEnabled = true
      mapView.delegate = self
-
-    
-    
-    //obj.downloadFile(mapView)
-   /*
-    let annotation = MKPointAnnotation()
-    annotation.title = "London"
-    annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(17.695930),
-                                                    longitude: CLLocationDegrees(146.099486))
-    mapView.addAnnotation(annotation)
-*/
-    
-    
-    //let indexPath = IndexPath(row: 8, section: 0)
-
-   // obj.tapButton(indexPath)
-    
-    
+     let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap))
+     mapView.addGestureRecognizer(longTapGesture)
+   
       return mapView
   }()
+  
+  @objc func longTap(sender: UIGestureRecognizer){
+    print("long tap")
+      if sender.state == .began && isLoactionAdded == false {
+        print("Enter long tap")
+      self.isLoactionAdded = true
+      let locationInView = sender.location(in: AppleMap)
+      let locationOnMap = AppleMap.convert(locationInView, toCoordinateFrom: AppleMap)
+      print("locationOnMap: ",locationOnMap)
+      addAnnotation(location: locationOnMap)
+      }
+  }
+
+  func addAnnotation(location: CLLocationCoordinate2D){
+          let annotation = MKPointAnnotation()
+          annotation.coordinate = location
+          annotation.title = "Fish catch location"
+          self.AppleMap.addAnnotation(annotation)
+  }
+  
+  
   
   func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
       if overlay is MKTileOverlay {
@@ -128,9 +142,18 @@ class SwitchView: UIView, MKMapViewDelegate {
       return MKOverlayRenderer()
   }
   
-  
-  
-  
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    if let locValue:CLLocationCoordinate2D = manager.location?.coordinate
+    {
+    print("locations = \(locValue.latitude) \(locValue.longitude)")
+    let annotation = MKPointAnnotation()
+    annotation.coordinate = locValue
+    annotation.title = "Current Location"
+    self.AppleMap.addAnnotation(annotation)
+    locationManager.stopUpdatingLocation()
+     }
+  }
+ 
   
   /*
   func addapple() {
@@ -171,9 +194,10 @@ class SwitchView: UIView, MKMapViewDelegate {
      
      AF.download(filePath.absoluteString, to: destination )
              .downloadProgress { progress in
-
-                                   let completed: Float = Float(progress.completedUnitCount)
-                                      let total: Float = Float(progress.totalUnitCount)
+               
+               self.ProgressLabel.isHidden = false
+                      let completed: Float = Float(progress.completedUnitCount)
+                        let total: Float = Float(progress.totalUnitCount)
                                     //  self.progressView.progress = (completed/total)
               
                let FinalPer = String(format: "%.1f",(completed/total)*100)

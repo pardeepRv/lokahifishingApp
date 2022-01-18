@@ -554,7 +554,7 @@ const FishData = ({navigation, route}) => {
               <View style={styles.mapContainer}>
               <ApplmapNoaa 
       style={{
-        height: 280,
+        height: 315,
         width: windowWidth,
           backgroundColor:'black'
       }}/>
@@ -587,7 +587,7 @@ const FishData = ({navigation, route}) => {
                   />
                 </MapView> */}
               </View>
-              {location ? (
+              {/* {location ? (
                 <View
                   style={{
                     flexDirection: 'row',
@@ -644,7 +644,7 @@ const FishData = ({navigation, route}) => {
                     getting location...
                   </Text>
                 </View>
-              )}
+              )} */}
               <Text style={styles.or}>OR</Text>
               <View style={{zIndex: 1, paddingHorizontal: 10}}>
                 <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>

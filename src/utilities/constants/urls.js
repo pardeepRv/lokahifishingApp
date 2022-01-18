@@ -1,5 +1,8 @@
 // let baseUrl = 'https://server3.rvtechnologies.in/LokahiFishing_API/public/api/';
-let baseUrl = 'https://server3.rvtechnologies.in/lokahi-fishing/LokahiFishing_API/public/api/';
+let baseUrl =
+  'https://server3.rvtechnologies.in/lokahi-fishing/LokahiFishing_API/public/api/';
+// let baseUrl =
+//   'https://server3.rvtechnologies.in/lokahi-fishing/Lokahi_Fishing_test/LokahiFishing_API/public/api/';
 
 let imageUrl1 = 'http://54.74.233.110/storage/';
 let imageUrl = 'http://54.74.233.110/';
@@ -49,25 +52,25 @@ const urls = {
   lcr_comments_listing: 'lcr-comments-listing',
   lcr_likes_listing: 'lcr-likes-listing',
   lcr_addlike: 'lcr-addlike',
-  save_video:'save-video-sharing',
-  save_photo_sharing:'save-photo-sharing',
+  save_video: 'save-video-sharing',
+  save_photo_sharing: 'save-photo-sharing',
   timeline: 'timeline',
-  photoshareaddlike : 'photoshare-addlike',
-  photoshare_like_list : 'photoshare-like-list',
-  photoshare_addcomment : 'photoshare-addcomment', 
-  photoshare_comment_list : 'photoshare-comment-list',
-  leaderboard_fish_list :'leaderboard-fishes-list',
-  leaderboard_ranking  : 'leaderboard-ranking',
-  leaderboard_filter : 'leaderboard-filter' , 
-  tournament_listing : 'tournament-listing',
-  terms_and_condition : 'terms-and-condition',
-  member_listing : 'member-listing',
-  send_friend_request : 'send-friend-request',
-  unblock_user : 'unblock-user',
-  member_loadmore : "member-loadmore",
-  important_links :'important_links',
-  survey_questions : 'survey-questions',
-  save_survey_questions : 'save-survey-questions', 
+  photoshareaddlike: 'photoshare-addlike',
+  photoshare_like_list: 'photoshare-like-list',
+  photoshare_addcomment: 'photoshare-addcomment',
+  photoshare_comment_list: 'photoshare-comment-list',
+  leaderboard_fish_list: 'leaderboard-fishes-list',
+  leaderboard_ranking: 'leaderboard-ranking',
+  leaderboard_filter: 'leaderboard-filter',
+  tournament_listing: 'tournament-listing',
+  terms_and_condition: 'terms-and-condition',
+  member_listing: 'member-listing',
+  send_friend_request: 'send-friend-request',
+  unblock_user: 'unblock-user',
+  member_loadmore: 'member-loadmore',
+  important_links: 'important_links',
+  survey_questions: 'survey-questions',
+  save_survey_questions: 'save-survey-questions',
 };
 
 export {urls};

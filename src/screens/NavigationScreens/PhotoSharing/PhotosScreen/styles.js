@@ -17,6 +17,7 @@ export default StyleSheet.create({
 
     viewStyle: {
         top: moderateScale(10),
+        flex:1,
         backgroundColor: colors.white1,
     },
     postView: {

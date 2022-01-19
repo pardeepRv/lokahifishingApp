@@ -136,7 +136,7 @@ const PhotosScreen = ({navigation}) => {
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{flex: 1, height: '100%'}}>
+      style={{flex: 1,}}>
       <SafeAreaView
         style={{
           flex: 1,

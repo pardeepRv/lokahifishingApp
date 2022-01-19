@@ -839,7 +839,7 @@ function* leaderboardrankingsaga(params) {
     }
   } catch (error) {
     console.log(error, 'coming in catch');
-    showErrorAlert(getAPIError(error));
+    // showErrorAlert(getAPIError(error));  //commented for personla use
     yield put({
       type: actionTypes.LEADERBOARD_RANKING_FAIL,
     });
@@ -873,7 +873,7 @@ function* leaderboardfiltersaga(params) {
     }
   } catch (error) {
     console.log(error, 'coming in catch');
-    showErrorAlert(getAPIError(error));
+    // showErrorAlert(getAPIError(error)); //commented for personla use
     yield put({
       type: actionTypes.LEADERBOARD_FILTER_FAIL,
     });

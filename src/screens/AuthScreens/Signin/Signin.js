@@ -68,9 +68,10 @@ const Signin = ({navigation}) => {
         !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
       ) {
         err[name] = 'Email should be valid';
-      } else if ('password' === name && value.length < 8) {
-        err[name] = 'Too short';
-      }
+      } 
+      // else if ('password' === name && value.length < 8) {
+      //   err[name] = 'Too short';
+      // }
     });
     setErrors(err);
     if (Object.keys(err).length == 0) {

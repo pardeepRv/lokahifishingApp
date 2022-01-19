@@ -19,7 +19,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import {useIsFocused} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import GetLocation from 'react-native-get-location';
 import MapView, {PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps';
 import {moderateScale} from 'react-native-size-matters';
@@ -309,13 +309,22 @@ const FishData = ({navigation, route}) => {
         }}
       />
       <SafeAreaView style={styles.safeAreaView}>
-        <KeyboardAvoidingView
+        <ScrollView style={{flex: 1}}>
+          {/* <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
+          keyboardVerticalOffset={50}
           style={styles.subContainer}
           contentContainerStyle={styles.subContentContainer}
           keyboardShouldPersistTaps={'always'}
-          showsVerticalScrollIndicator={false}>
-          <ScrollView style={{flex: 1}}>
+          showsVerticalScrollIndicator={false}> */}
+          <KeyboardAwareScrollView
+            // extraScrollHeight={10}
+            enableOnAndroid={true}
+            style={styles.subContainer}
+            contentContainerStyle={styles.subContentContainer}
+            keyboardShouldPersistTaps={'always'}
+            showsVerticalScrollIndicator={false}>
+
             <View style={[styles.textSection, {justifyContent: 'center'}]}>
               <Text>Info below is optional & will be private to user only</Text>
             </View>
@@ -727,7 +736,7 @@ const FishData = ({navigation, route}) => {
                 style={{
                   height: windowHeight * 0.35,
                   // height: moderateScale(60),
-                  paddingBottom: moderateScale(30),
+                  // paddingBottom: moderateScale(30),
                   // borderWidth: 1,
                   padding: 9,
                   borderTopWidth: 1,
@@ -747,8 +756,10 @@ const FishData = ({navigation, route}) => {
                 onChangeText={text => setAdditionalNotes(text)}
               />
             </View>
-          </ScrollView>
-        </KeyboardAvoidingView>
+            {/* </KeyboardAvoidingView> */}
+          </KeyboardAwareScrollView>
+        </ScrollView>
+
         <Loader isLoading={app.loading} isAbsolute />
       </SafeAreaView>
       <Modal

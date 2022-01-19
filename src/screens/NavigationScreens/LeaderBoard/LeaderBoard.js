@@ -192,22 +192,87 @@ const LeaderBoard = ({navigation}) => {
       }),
     );
   };
+
+  //on refresh annual
+  const getfilterSelectedYear = () => {
+    let obj = {};
+
+    obj.token = auth && auth?.userDetails?.access_token;
+    console.log(fishType, 'fishtype name with getfilterSelectedYear');
+    console.log(fishTypeId, 'fishtype name with getfilterSelectedYear');
+
+    obj.fish_id = fishTypeId;
+    obj.year = selectedYear != null ? selectedYear : selectedItem;
+
+    console.log(obj, 'sending to api in year');
+
+    dispatch(
+      leaderboardfilter(obj, cb => {
+        console.log(cb, 'in leader month yearcard>>>>>>>>>>>>>>>>>>>');
+        if (cb) {
+          console.log(cb, 'callBack in card');
+          if (cb?.data?.data) {
+            let fishArr = cb?.data?.data?.leaderboardRankingAnually;
+            fishArr.forEach(element => {
+              element.imgUrl = cb && cb.data && cb.data.base_url;
+            });
+            setDateWiseList(fishArr);
+          }
+        }
+      }),
+    );
+  };
+
+  //on refresh on month
+  const getfilterSelectedMonth = () => {
+    let obj = {};
+
+    obj.token = auth && auth?.userDetails?.access_token;
+    console.log(fishType, 'fishtype name with getfilterSelectedMonth');
+    console.log(fishTypeId, 'fishtype name with getfilterSelectedMonth');
+
+    obj.fish_id = fishTypeId;
+    obj.year =
+      selectedYear != null
+        ? parseInt(selectedYear) + 1
+        : parseInt(selectedItem) + 1;
+    obj.month = selectedMonth;
+
+    console.log(obj, 'sending to api in monhly');
+
+    dispatch(
+      leaderboardfilter(obj, cb => {
+        console.log(cb, 'in leader month yearcard>>>>>>>>>>>>>>>>>>>');
+        if (cb) {
+          console.log(cb, 'callBack in card');
+          if (cb?.data?.data) {
+            let fishArr = cb?.data?.data?.leaderboardRankingAnually;
+            fishArr.forEach(element => {
+              element.imgUrl = cb && cb.data && cb.data.base_url;
+            });
+            setDateWiseList(fishArr);
+          }
+        }
+      }),
+    );
+  };
+
   const getfilter = (m, y, f_ID) => {
     let obj = {};
 
     obj.token = auth && auth?.userDetails?.access_token;
-    console.log(fishType, 'fishtype name with  id>>>>>>>>>>>>');
-    console.log(fishTypeId, 'fishtype name with  id>>>>>>>>>>>>');
+    console.log(fishType, 'fishtype name with  getfilter');
+    console.log(fishTypeId, 'fishtype name with  getfilter');
 
     // obj.fish_id = fishTypeId;
     // obj.year = selectedYear;
     // obj.month = selectedMonth;
 
-    obj.fish_id = f_ID;
+    obj.fish_id = f_ID != null ? f_ID : fishTypeId;
     obj.year = y;
     obj.month = m;
 
-    console.log(obj, 'sending to api in monhly');
+    console.log(obj, 'sending to api in simple filter');
 
     dispatch(
       leaderboardfilter(obj, cb => {
@@ -255,28 +320,47 @@ const LeaderBoard = ({navigation}) => {
     );
   };
 
-  const onValueChange = useCallback(
-    (event, newDate) => {
-      const selectedDate = newDate || date;
+  // const onValueChange = useCallback(
+  //   (event, newDate) => {
+  //     const selectedDate = newDate || date;
 
-      console.log(selectedDate, '>>>>?????');
-      console.log(moment(selectedDate).format('L'), 'moment>>>>');
-      let finalDate = moment(selectedDate).format('L');
+  //     console.log(selectedDate, '>>>>?????');
+  //     console.log(moment(selectedDate).format('L'), 'moment>>>>');
+  //     let finalDate = moment(selectedDate).format('L');
 
-      let valueAre = finalDate.split('/');
-      console.log(valueAre, 'console value');
-      if (annual == true) {
-        setSelectedYear(valueAre[2]);
-      } else {
-        setSelectedMonth(valueAre[0]);
-      }
+  //     let valueAre = finalDate.split('/');
+  //     console.log(valueAre, 'console value');
+  //     if (annual == true) {
+  //       setSelectedYear(valueAre[2]);
+  //     } else {
+  //       setSelectedMonth(valueAre[0]);
+  //     }
 
-      showPicker(false);
-      setDate(selectedDate);
-      _onRefresh(valueAre[0], valueAre[2], fishTypeId);
-    },
-    [date, showPicker],
-  );
+  //     showPicker(false);
+  //     setDate(selectedDate);
+  //     onChangingFishes(valueAre[0], valueAre[2], fishTypeId);
+  //   },
+  //   [date, showPicker],
+  // );
+
+  const onValueChange = (event, newDate) => {
+    const selectedDate = newDate || date;
+
+    console.log(selectedDate, '>>>>?????');
+    console.log(moment(selectedDate).format('L'), 'moment>>>>');
+    let finalDate = moment(selectedDate).format('L');
+
+    let valueAre = finalDate.split('/');
+    console.log(valueAre, 'console value');
+    if (annual == true) {
+      setSelectedYear(valueAre[2]);
+    } else {
+      setSelectedMonth(valueAre[0]);
+    }
+    showPicker(false);
+    setDate(selectedDate);
+    onChangingFishes(valueAre[0], valueAre[2], fishTypeId);
+  };
 
   const prevStateRef = useRef();
   useEffect(() => {
@@ -286,22 +370,31 @@ const LeaderBoard = ({navigation}) => {
   console.log(prevState, 'prevStateprevState');
   console.log(fishTypeId, 'prevStateprevStatefishTypeId');
 
-  if (prevState != fishTypeId) {
+  if (
+    prevState != fishTypeId &&
+    prevState != undefined &&
+    fishTypeId != undefined
+  ) {
     setTimeout(() => {
       getboardranking(fishTypeId);
       // getfilter(fishTypeId);
     }, 100);
   }
 
-  function _onRefresh(m, y, f_id) {
-    console.log(m, y, 'fishtypeif=d');
-    // console.log(ID , '??::?:?"?:');
+  function _onRefresh() {
     setState({refreshing: true});
-    getfilter(m, y, f_id);
+    if (annual) {
+      getfilterSelectedYear();
+    } else if (monthly) {
+      getfilterSelectedMonth();
+    } else {
+      getboardranking(fishTypeId);
+    }
   }
-  function onRefresh() {
+  function onChangingFishes(m, y, f_id) {
     setState({refreshing: true});
-    getleaderboardFishes();
+    console.log(m, y, f_id, 'fishtypeif=d onChangingFishes');
+    getfilter(m, y, f_id);
   }
 
   //View of flatlist
@@ -374,6 +467,7 @@ const LeaderBoard = ({navigation}) => {
   const toggleMonthly = () => {
     let fishid = app && app.rankinglist[0] && app.rankinglist[0].Fish_id;
     console.log(fishid, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>in toogle monthly');
+    setfishTypeId(fishid);
     setAnnual(false);
     setMonthly(true);
     setShowYearOnly(false);

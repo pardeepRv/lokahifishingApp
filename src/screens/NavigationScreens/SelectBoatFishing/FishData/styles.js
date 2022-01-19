@@ -131,7 +131,7 @@ export default StyleSheet.create({
 	// backgroundColor:colors.secondry
   },
   subContentContainer: {
-    paddingBottom: moderateScale(40),
+    paddingBottom: moderateScale(2),
   },
   modalcontent: {
     height: '100%',

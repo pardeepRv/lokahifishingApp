@@ -1,33 +1,31 @@
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import moment from 'moment';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Modal} from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
   FlatList,
   Image,
-  ImageBackground,
-  RefreshControl,
+  ImageBackground, Modal, RefreshControl,
   SafeAreaView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import MonthPicker from 'react-native-month-year-picker';
-import * as NavigationService from '../../../store/NavigationService';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import TimeAgo from 'react-native-timeago';
-import {useDispatch, useSelector} from 'react-redux';
-import {fonts, icons} from '../../../../assets';
-import {Loader} from '../../../components/common';
-import {Header} from '../../../components/common/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../assets';
+import { Loader } from '../../../components/common';
+import { Header } from '../../../components/common/Header';
 import {
   leaderboardfilter,
   leaderboardfishlist,
-  leaderboardranking,
+  leaderboardranking
 } from '../../../store/actions';
-import {colors, screenNames} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import * as NavigationService from '../../../store/NavigationService';
+import { colors, screenNames } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 import styles from './styles';
 
 const windowWidth = Dimensions.get('window').width;
@@ -105,7 +103,7 @@ let fishingArr = [
 
 let fishID = null;
 
-const LeaderBoard = ({navigation}) => {
+const LeaderBoard = ({ navigation }) => {
   const [fishingList, setfishingList] = useState([]);
   const [fishType, setfishType] = useState('');
   const [annual, setAnnual] = useState(false);
@@ -382,7 +380,7 @@ const LeaderBoard = ({navigation}) => {
   }
 
   function _onRefresh() {
-    setState({refreshing: true});
+    setState({ refreshing: true });
     if (annual) {
       getfilterSelectedYear();
     } else if (monthly) {
@@ -392,13 +390,13 @@ const LeaderBoard = ({navigation}) => {
     }
   }
   function onChangingFishes(m, y, f_id) {
-    setState({refreshing: true});
+    setState({ refreshing: true });
     console.log(m, y, f_id, 'fishtypeif=d onChangingFishes');
     getfilter(m, y, f_id);
   }
 
   //View of flatlist
-  const _renderView = ({item, index}) => (
+  const _renderView = ({ item, index }) => (
     <View style={styles.listView} activeOpacity={0.8}>
       <TouchableOpacity style={styles.viewStyle}>
         <Image
@@ -452,7 +450,7 @@ const LeaderBoard = ({navigation}) => {
     }
   });
 
-  const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 50});
+  const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
 
   //on press annual button
   const toggleAnnual = () => {
@@ -484,7 +482,7 @@ const LeaderBoard = ({navigation}) => {
   //   [date, setShowPicker],
   // );
 
-  const _renderDateView = ({item, index}) => (
+  const _renderDateView = ({ item, index }) => (
     <TouchableOpacity style={styles.LCRPost}>
       <View style={styles.content1}>
         <View style={styles.rankingView}>
@@ -506,7 +504,7 @@ const LeaderBoard = ({navigation}) => {
         <View style={styles.imgView}>
           <Image
             style={styles.image}
-            source={{uri: `${item.imgUrl}${item.image}`}}
+            source={{ uri: `${item.imgUrl}${item.image}` }}
           />
         </View>
       </View>
@@ -515,7 +513,7 @@ const LeaderBoard = ({navigation}) => {
   return (
     <ImageBackground
       source={icons.LeaderBoar1}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -527,7 +525,7 @@ const LeaderBoard = ({navigation}) => {
           }}
           title={'Leader Board- Bigest Fish'}
           blackTitle
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.black1,
@@ -542,7 +540,7 @@ const LeaderBoard = ({navigation}) => {
           }}
         />
 
-        <View style={{flex: 0.4}}>
+        <View style={{ flex: 0.4 }}>
           {/* {app.fishesArr == true ? (
             <Loader isLoading={app.loading} isAbsolute />
           ) : ( */}
@@ -560,15 +558,15 @@ const LeaderBoard = ({navigation}) => {
             // }
             showsHorizontalScrollIndicator={false}
             indicatorActiveWidth={40}
-            contentContainerStyle={{paddingHorizontal: 16}}
+            contentContainerStyle={{ paddingHorizontal: 16 }}
             viewabilityConfig={viewConfigRef.current}
             onViewableItemsChanged={onViewRef.current}
           />
           {/* )} */}
         </View>
         <View>
-          <View style={{alignItems: 'center', backgroundColor: '#fff'}}>
-            <View style={{flexDirection: 'row'}}>
+          <View style={{ alignItems: 'center', backgroundColor: '#fff' }}>
+            <View style={{ flexDirection: 'row' }}>
               <TouchableOpacity
                 onPress={toggleAnnual}
                 style={annual === true ? styles.clickedButton : styles.button}>
@@ -603,7 +601,7 @@ const LeaderBoard = ({navigation}) => {
           </View>
         </View>
         {/* BOTTOM THIRD */}
-        <View style={{backgroundColor: '#2c385e', flex: 1}}>
+        <View style={{ backgroundColor: '#2c385e', flex: 1 }}>
           <FlatList
             extraData={fishTypeId}
             data={dateWiseList}
@@ -626,7 +624,7 @@ const LeaderBoard = ({navigation}) => {
             }
           />
           {show && (
-            <View style={{position: 'absolute', bottom: windowHeight * 0.01}}>
+            <View style={{ position: 'absolute', bottom: windowHeight * 0.01 }}>
               <MonthPicker
                 onChange={onValueChange}
                 value={date}
@@ -673,6 +671,8 @@ const LeaderBoard = ({navigation}) => {
                             marginLeft: 20,
                             bottom: 10,
                             fontFamily: fonts.bold,
+                            fontSize: moderateScale(16),
+                            color: colors.primary
                           }}>
                           Cancel
                         </Text>
@@ -687,6 +687,8 @@ const LeaderBoard = ({navigation}) => {
                             marginRight: 20,
                             bottom: 10,
                             fontFamily: fonts.bold,
+                            fontSize: moderateScale(16),
+                            color: colors.primary
                           }}>
                           Done
                         </Text>

@@ -491,7 +491,7 @@ const LeaderBoard = ({navigation}) => {
           <View style={styles.rankCircle}>
             <Text style={styles.rank}># {index + 1}</Text>
           </View>
-          <Text style={styles.weight}>{item?.Weight} lb</Text>
+          <Text style={styles.weight}>{item?.Fish_weight} lb</Text>
         </View>
 
         <View style={styles.userInfo}>

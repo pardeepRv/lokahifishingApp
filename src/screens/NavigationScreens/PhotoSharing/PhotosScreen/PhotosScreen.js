@@ -1,28 +1,26 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Image,
-  ImageBackground,
-  SafeAreaView,
-  Text,
+  ImageBackground, Keyboard, SafeAreaView, Text,
   TextInput,
   TouchableOpacity,
-  View,
-  Keyboard,
+  View
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../../assets';
-import {Header, Loader} from '../../../../components/common';
-import {savephoto} from '../../../../store/actions';
-import {colors} from '../../../../utilities/constants';
-import {layout} from '../../../../utilities/layout';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../../assets';
+import { Header, Loader } from '../../../../components/common';
+import { savephoto } from '../../../../store/actions';
+import { colors } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
 import styles from './styles';
-import {useDispatch, useSelector} from 'react-redux';
 
 let photosArr = [];
 
-const PhotosScreen = ({navigation}) => {
+const PhotosScreen = ({ navigation }) => {
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
@@ -40,15 +38,15 @@ const PhotosScreen = ({navigation}) => {
       '',
       'Please Select',
       [
-        {text: 'Camera', onPress: () => _doOpenCamera(indx)},
-        {text: 'Gallery', onPress: () => _doOpenGallery(indx)},
+        { text: 'Camera', onPress: () => _doOpenCamera(indx) },
+        { text: 'Gallery', onPress: () => _doOpenGallery(indx) },
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   }
   function _doOpenCamera(indx) {
@@ -136,7 +134,7 @@ const PhotosScreen = ({navigation}) => {
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{flex: 1,}}>
+      style={{ flex: 1, }}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -147,7 +145,7 @@ const PhotosScreen = ({navigation}) => {
             height: moderateScale(60),
           }}
           title={'Upload Photo'}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -156,140 +154,148 @@ const PhotosScreen = ({navigation}) => {
             navigation.goBack();
           }}
         />
-        <View style={styles.viewStyle}>
-          <View style={{margin: 10, flexDirection: 'column'}}>
-            <View
-              style={{
-                margin: 5,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <TouchableOpacity
-                onPress={() => _doOpenOption(1)}
-                style={styles.uploadContainer}>
-                <Image
-                  source={Photopost1 != '' ? {uri: Photopost1} : icons.no_image}
-                  resizeMode="cover"
-                  style={{
-                    borderRadius: moderateScale(100),
-                    height: Photopost1 != '' ? '100%' : '100%',
-                    width: Photopost1 != '' ? '100%' : '100%',
-                  }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => _doOpenOption(2)}
-                style={styles.uploadContainer}>
-                <Image
-                  source={Photopost2 != '' ? {uri: Photopost2} : icons.no_image}
-                  resizeMode="cover"
-                  style={{
-                    borderRadius: moderateScale(100),
-                    height: Photopost2 != '' ? '100%' : '100%',
-                    width: Photopost2 != '' ? '100%' : '100%',
-                  }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => _doOpenOption(3)}
-                style={styles.uploadContainer}>
-                <Image
-                  source={Photopost3 != '' ? {uri: Photopost3} : icons.no_image}
-                  resizeMode="cover"
-                  style={{
-                    borderRadius: moderateScale(100),
-                    height: Photopost3 != '' ? '100%' : '100%',
-                    width: Photopost3 != '' ? '100%' : '100%',
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                margin: 5,
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-              }}>
-              <TouchableOpacity
-                onPress={() => _doOpenOption(4)}
-                style={styles.uploadContainer}>
-                <Image
-                  source={Photopost4 != '' ? {uri: Photopost4} : icons.no_image}
-                  resizeMode="cover"
-                  style={{
-                    borderRadius: moderateScale(100),
-                    height: Photopost4 != '' ? '100%' : '100%',
-                    width: Photopost4 != '' ? '100%' : '100%',
-                  }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => _doOpenOption(5)}
-                style={styles.uploadContainer}>
-                <Image
-                  source={Photopost5 != '' ? {uri: Photopost5} : icons.no_image}
-                  resizeMode="cover"
-                  style={{
-                    borderRadius: moderateScale(100),
-                    height: Photopost5 != '' ? '100%' : '100%',
-                    width: Photopost5 != '' ? '100%' : '100%',
-                  }}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.lineView} activeOpacity={0.8} />
-          <Text style={styles.tittleView}>ADD TITTLE</Text>
-          <View
-            style={{
-              margin: 10,
-              alignItems: 'center',
-            }}>
-            <TextInput
-              placeholder="Enter your tittle here ...."
-              autoCapitalize="sentences"
-              numberOfLines={4}
-              style={{
-                fontSize: 16,
-                paddingHorizontal: 10,
-                borderTopWidth: 1,
-                borderBottomWidth: 1,
-                borderColor: colors.grey1,
-                paddingTop: 15,
-                paddingBottom: 15,
-                height: moderateScale(110),
-                width: layout.size.width / 1.5,
-                borderWidth: 2,
-              }}
-              returnKeyType="done"
-              multiline={true}
-              blurOnSubmit={true}
-              onSubmitEditing={() => {
-                Keyboard.dismiss();
-              }}
-              value={additionalimage}
-              onChangeText={additionalimage =>
-                setadditionalimage(additionalimage)
-              }
-            />
-          </View>
-          <View
-            style={{
-              height: layout.size.height / 4,
-              alignItems: 'center',
-            }}>
-            <TouchableOpacity style={styles.postView} onPress={() => postApi()}>
-              <Text
+        <KeyboardAwareScrollView
+          enableOnAndroid={true}
+          style={{ flex: 1 }}
+          contentContainerStyle={{ paddingBottom: moderateScale(2), }}
+          keyboardShouldPersistTaps={'always'}
+          showsVerticalScrollIndicator={false}>
+
+          <View style={styles.viewStyle}>
+            <View style={{ margin: 10, flexDirection: 'column' }}>
+              <View
                 style={{
-                  fontSize: 18,
-                  fontFamily: fonts.semiBold,
-                  textAlign: 'center',
+                  margin: 5,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                 }}>
-                post
-              </Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => _doOpenOption(1)}
+                  style={styles.uploadContainer}>
+                  <Image
+                    source={Photopost1 != '' ? { uri: Photopost1 } : icons.no_image}
+                    resizeMode="cover"
+                    style={{
+                      borderRadius: moderateScale(100),
+                      height: Photopost1 != '' ? '100%' : '100%',
+                      width: Photopost1 != '' ? '100%' : '100%',
+                    }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => _doOpenOption(2)}
+                  style={styles.uploadContainer}>
+                  <Image
+                    source={Photopost2 != '' ? { uri: Photopost2 } : icons.no_image}
+                    resizeMode="cover"
+                    style={{
+                      borderRadius: moderateScale(100),
+                      height: Photopost2 != '' ? '100%' : '100%',
+                      width: Photopost2 != '' ? '100%' : '100%',
+                    }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => _doOpenOption(3)}
+                  style={styles.uploadContainer}>
+                  <Image
+                    source={Photopost3 != '' ? { uri: Photopost3 } : icons.no_image}
+                    resizeMode="cover"
+                    style={{
+                      borderRadius: moderateScale(100),
+                      height: Photopost3 != '' ? '100%' : '100%',
+                      width: Photopost3 != '' ? '100%' : '100%',
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  margin: 5,
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                }}>
+                <TouchableOpacity
+                  onPress={() => _doOpenOption(4)}
+                  style={styles.uploadContainer}>
+                  <Image
+                    source={Photopost4 != '' ? { uri: Photopost4 } : icons.no_image}
+                    resizeMode="cover"
+                    style={{
+                      borderRadius: moderateScale(100),
+                      height: Photopost4 != '' ? '100%' : '100%',
+                      width: Photopost4 != '' ? '100%' : '100%',
+                    }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => _doOpenOption(5)}
+                  style={styles.uploadContainer}>
+                  <Image
+                    source={Photopost5 != '' ? { uri: Photopost5 } : icons.no_image}
+                    resizeMode="cover"
+                    style={{
+                      borderRadius: moderateScale(100),
+                      height: Photopost5 != '' ? '100%' : '100%',
+                      width: Photopost5 != '' ? '100%' : '100%',
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.lineView} activeOpacity={0.8} />
+            <Text style={styles.tittleView}>ADD TITTLE</Text>
+            <View
+              style={{
+                margin: 10,
+                alignItems: 'center',
+              }}>
+              <TextInput
+                placeholder="Enter your tittle here ...."
+                autoCapitalize="sentences"
+                numberOfLines={4}
+                style={{
+                  fontSize: 16,
+                  paddingHorizontal: 10,
+                  borderTopWidth: 1,
+                  borderBottomWidth: 1,
+                  borderColor: colors.grey1,
+                  paddingTop: 15,
+                  paddingBottom: 15,
+                  height: moderateScale(110),
+                  width: layout.size.width / 1.5,
+                  borderWidth: 2,
+                }}
+                returnKeyType="done"
+                multiline={true}
+                blurOnSubmit={true}
+                onSubmitEditing={() => {
+                  Keyboard.dismiss();
+                }}
+                value={additionalimage}
+                onChangeText={additionalimage =>
+                  setadditionalimage(additionalimage)
+                }
+              />
+            </View>
+            <View
+              style={{
+                height: layout.size.height / 4,
+                alignItems: 'center',
+              }}>
+              <TouchableOpacity style={styles.postView} onPress={() => postApi()}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontFamily: fonts.semiBold,
+                    textAlign: 'center',
+                  }}>
+                  post
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </KeyboardAwareScrollView>
         <Loader isAbsolute isLoading={app.loading} />
       </SafeAreaView>
     </ImageBackground>

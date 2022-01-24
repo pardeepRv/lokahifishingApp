@@ -187,11 +187,12 @@ const PhotoSharing = ({ navigation }) => {
 
                     }}
                         onPress={() => {
-                            images.push({ url: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}` })
+                            images.push({ url: `    http://admin.lokahifishing.com/photosharing/${item.media_name}` })
                             setmodal(true)
                         }}>
                         <Image source={{
-                            uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
+                            // uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
+                            uri: `http://admin.lokahifishing.com/photosharing/${item.media_name}`// live url
                         }}
                             style={{
                                 height: layout.size.height / 3.6,
@@ -206,7 +207,9 @@ const PhotoSharing = ({ navigation }) => {
                         justifyContent: "center",
                         alignItems: "center"}}>
                     <Video
-                        source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
+                        // source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
+                        source={{ uri: `http://admin.lokahifishing.com/photosharing/video/${item.media_name}` }}
+
                         paused={paused}
                         repeat={false}
                         controls={true}

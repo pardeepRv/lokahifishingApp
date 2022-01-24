@@ -81,7 +81,9 @@ const LCRDetails = ({ navigation, route }) => {
                 // source={icons.loginLogo}
                 source={{
                   // uri: item && item.user && item.user.profile_picture
-                  uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
+                  // uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
+                uri: `http://admin.lokahifishing.com/LCR_images/user_fishes/${item.image}`,
+
                 }}
                 // onLoadStart={() => setImgIsLoading(true)}
                 // onLoadEnd={() => setImgIsLoading(false)}

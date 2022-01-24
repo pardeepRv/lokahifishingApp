@@ -1,4 +1,5 @@
-let baseUrl = 'https://server3.rvtechnologies.in/LokahiFishing_API/public/api/';
+// let baseUrl = 'https://server3.rvtechnologies.in/LokahiFishing_API/public/api/';
+let baseUrl = 'http://apps.lokahifishing.com/api/';
 // let baseUrl =
   // 'https://server3.rvtechnologies.in/lokahi-fishing/LokahiFishing_API/public/api/';
 // let baseUrl =

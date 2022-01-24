@@ -212,7 +212,9 @@ const EditLCRDetails = ({ navigation, route }) => {
                 source={{
                   uri:
                     item && item.image
-                      ? `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`
+                      // ? `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`
+               ? `http://admin.lokahifishing.com/LCR_images/user_fishes/${item.image}` // live url      ....
+
                       : icons.loginLogo,
                   // Profilepic != '' ? { uri: Profilepic } : icons.loginLogo
                 }}

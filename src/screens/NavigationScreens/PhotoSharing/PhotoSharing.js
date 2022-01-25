@@ -365,6 +365,7 @@ const PhotoSharing = ({ navigation }) => {
                     }}
                     onLeftPress={() => {
                         navigation.goBack();
+                        setpaused(false);
                     }}
                 />
                 <View

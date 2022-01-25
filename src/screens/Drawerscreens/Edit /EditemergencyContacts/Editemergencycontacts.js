@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ImageBackground,
   Keyboard,
@@ -8,16 +8,17 @@ import {
   Text,
   View,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {useDispatch, useSelector} from 'react-redux';
-import {fonts, icons} from '../../../../../assets';
-import {Button} from '../../../../components/common/Button';
-import {Loader} from '../../../../components/common/Loader';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../../assets';
+import { Button } from '../../../../components/common/Button';
+import { Loader } from '../../../../components/common/Loader';
 import TextInputComp from '../../../../components/common/TextInputComp';
-import {updatecontacts} from '../../../../store/actions';
+import { updatecontacts } from '../../../../store/actions';
 import commonStyles from '../../../../utilities/commonStyles';
-import {colors} from '../../../../utilities/constants';
-import {layout} from '../../../../utilities/layout';
+import { colors } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const EditContacts = () => {
   let auth = useSelector(state => state.auth);
@@ -28,44 +29,44 @@ const EditContacts = () => {
   const [state, setState] = useState({
     name:
       auth &&
-      auth.userAllData &&
-      auth.userAllData.emergency_contacts &&
-      auth.userAllData.emergency_contacts.length > 0
+        auth.userAllData &&
+        auth.userAllData.emergency_contacts &&
+        auth.userAllData.emergency_contacts.length > 0
         ? auth.userAllData.emergency_contacts[0].name
         : '',
     relation:
       auth &&
-      auth.userAllData &&
-      auth.userAllData.emergency_contacts &&
-      auth.userAllData.emergency_contacts.length > 0
+        auth.userAllData &&
+        auth.userAllData.emergency_contacts &&
+        auth.userAllData.emergency_contacts.length > 0
         ? auth.userAllData.emergency_contacts[0].relation
         : '',
     phoneNo:
       auth &&
-      auth.userAllData &&
-      auth.userAllData.emergency_contacts &&
-      auth.userAllData.emergency_contacts.length > 0
+        auth.userAllData &&
+        auth.userAllData.emergency_contacts &&
+        auth.userAllData.emergency_contacts.length > 0
         ? auth.userAllData.emergency_contacts[0].phone_number
         : '',
     secondName:
       auth &&
-      auth.userAllData &&
-      auth.userAllData.emergency_contacts &&
-      auth.userAllData.emergency_contacts.length > 0
+        auth.userAllData &&
+        auth.userAllData.emergency_contacts &&
+        auth.userAllData.emergency_contacts.length > 0
         ? auth.userAllData.emergency_contacts[1].name
         : '',
     secondRelation:
       auth &&
-      auth.userAllData &&
-      auth.userAllData.emergency_contacts &&
-      auth.userAllData.emergency_contacts.length > 0
+        auth.userAllData &&
+        auth.userAllData.emergency_contacts &&
+        auth.userAllData.emergency_contacts.length > 0
         ? auth.userAllData.emergency_contacts[1].relation
         : '',
     secondPhoneNo:
       auth &&
-      auth.userAllData &&
-      auth.userAllData.emergency_contacts &&
-      auth.userAllData.emergency_contacts.length > 0
+        auth.userAllData &&
+        auth.userAllData.emergency_contacts &&
+        auth.userAllData.emergency_contacts.length > 0
         ? auth.userAllData.emergency_contacts[1].phone_number
         : '',
   });
@@ -78,14 +79,14 @@ const EditContacts = () => {
     secondName: '',
     secondRelation: '',
   });
-  const {name, relation, phoneNo, secondName, secondRelation, secondPhoneNo} =
+  const { name, relation, phoneNo, secondName, secondRelation, secondPhoneNo } =
     state;
 
   const _onChangeText = key => val => {
-    setState({...state, [key]: val});
+    setState({ ...state, [key]: val });
   };
 
-  const _renderView = ({item, index}) => (
+  const _renderView = ({ item, index }) => (
     <View
       style={{
         height: layout.size.height / 4,
@@ -135,22 +136,22 @@ const EditContacts = () => {
 
     console.log(formData, 'sending to  emergency api aApi');
 
-    dispatch(updatecontacts({formData, token}));
+    dispatch(updatecontacts({ formData, token }));
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white1 }}>
       <View
         style={{
           flex: 1,
         }}>
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
-          <ScrollView
-            style={{
-              flex: 1,
-            }}
+          <KeyboardAwareScrollView
+            enableOnAndroid={true}
+            style={{ flex: 1 }}
             contentContainerStyle={{
-              paddingBottom: moderateScale(40),
+              paddingBottom: moderateScale(40), paddingHorizontal: moderateScale(15),
+              // marginLeft: 15,
             }}
             keyboardShouldPersistTaps={'always'}
             showsVerticalScrollIndicator={false}>
@@ -203,6 +204,7 @@ const EditContacts = () => {
                   label={'Phone no.'}
                   value={phoneNo}
                   placeholder={'Please Phone no. here.'}
+                  keyboardType="number-pad"
                   labelTextStyle={{
                     fontFamily: fonts.semiBold,
                     fontSize: moderateScale(16),
@@ -256,6 +258,7 @@ const EditContacts = () => {
                 <TextInputComp
                   label={'Phone no.'}
                   value={secondPhoneNo}
+                  keyboardType="number-pad"
                   placeholder={'Please phone no. here.'}
                   labelTextStyle={{
                     fontFamily: fonts.semiBold,
@@ -306,7 +309,7 @@ const EditContacts = () => {
 
       /> */}
             </View>
-          </ScrollView>
+          </KeyboardAwareScrollView>
           <Loader isLoading={auth.loading} isAbsolute />
         </ImageBackground>
       </View>

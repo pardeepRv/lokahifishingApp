@@ -30,7 +30,7 @@ import {signUpWithEmail} from '../../../store/actions';
 import {colors, screenNames} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import styles from './styles';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const Signup = ({navigation}) => {
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in sigup page>>>>>>>>>>');
@@ -292,12 +292,12 @@ const Signup = ({navigation}) => {
               style={{
                 marginTop: layout.size.width / 10,
               }}></View>
-            <KeyboardAvoidingView
-              behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
-              style={styles.subContainer}
-              contentContainerStyle={styles.subContentContainer}
-              keyboardShouldPersistTaps={'always'}
-              showsVerticalScrollIndicator={false}>
+          <KeyboardAwareScrollView
+          enableOnAndroid={true}
+          style={{ flex: 1 }}
+          contentContainerStyle={{ paddingBottom: moderateScale(2), }}
+          keyboardShouldPersistTaps={'always'}
+          showsVerticalScrollIndicator={false}>
               <View
                 style={{
                   marginTop: moderateScale(30),
@@ -462,7 +462,7 @@ const Signup = ({navigation}) => {
                   ) : null}
                 </View>
               </View>
-            </KeyboardAvoidingView>
+           
             <View>
               <Text
                 style={{
@@ -486,7 +486,7 @@ const Signup = ({navigation}) => {
               keyExtractor={(item, index) => 'key' + index}
               horizontal
             />
-
+</KeyboardAwareScrollView>
             <View
               style={{
                 marginTop: moderateScale(30),

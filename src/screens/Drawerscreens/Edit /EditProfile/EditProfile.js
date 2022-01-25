@@ -112,12 +112,13 @@ const EditProfile = ({navigation}) => {
         !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
       ) {
         err[name] = 'Email should be valid';
-      } else if (
-        'contactNumber' === name &&
-        value !== '' &&
-        value.length < 10
+      } 
+      else if (
+        'contactNumber' === name && value
       ) {
-        err[name] = 'Should be valid Phone number';
+        if (!/^[0-9]{10}$/.test(value)) {
+          err[name] = 'Should be valid Phone number';
+        }
       }
     });
     setErrors(err);
@@ -355,6 +356,7 @@ const EditProfile = ({navigation}) => {
                   <TextInputComp
                     label={strings.contactnumber}
                     value={contactNumber}
+                    keyboardType="number-pad"
                     placeholder={strings.entercontact}
                     labelTextStyle={styles.labelTextStyle}
                     onFocus={() =>

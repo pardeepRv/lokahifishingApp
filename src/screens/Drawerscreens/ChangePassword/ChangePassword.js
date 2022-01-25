@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   ImageBackground,
   Keyboard,
@@ -8,22 +8,24 @@ import {
   View,
 } from 'react-native';
 //extrenal libraries
-import {moderateScale} from 'react-native-size-matters';
-import {useDispatch, useSelector} from 'react-redux';
-import {fonts, icons} from '../../../../assets';
-import {Button} from '../../../components/common/Button';
-import {Header} from '../../../components/common/Header';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../assets';
+import { Button } from '../../../components/common/Button';
+import { Header } from '../../../components/common/Header';
 import { Loader } from '../../../components/common/Loader';
 import TextInputComp from '../../../components/common/TextInputComp';
-import {strings} from '../../../localization';
-import {change_Password} from '../../../store/actions';
+import { strings } from '../../../localization';
+import { change_Password } from '../../../store/actions';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 //internal libraries
-import {colors} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import { colors } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 import styles from './styles';
 
 // ChangePassword
-const ChangePassword = ({navigation}) => {
+const ChangePassword = ({ navigation }) => {
   let passwordTextInput = useRef(null);
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in changePassword page>>>>>>>>>>');
@@ -34,9 +36,9 @@ const ChangePassword = ({navigation}) => {
     newpassword: '',
     confirmpassword: '',
   });
-  const {oldpassword, newpassword, confirmpassword} = state;
+  const { oldpassword, newpassword, confirmpassword } = state;
   const _onChangeText = key => val => {
-    setState({...state, [key]: val});
+    setState({ ...state, [key]: val });
   };
   const [errors, setErrors] = useState({
     oldpassword: '',
@@ -45,9 +47,9 @@ const ChangePassword = ({navigation}) => {
     isLoading: false,
   });
   const name_and_values = [
-    {name: 'oldpassword', value: oldpassword},
-    {name: 'newpassword', value: newpassword},
-    {name: 'confirmpassword', value: confirmpassword},
+    { name: 'oldpassword', value: oldpassword },
+    { name: 'newpassword', value: newpassword },
+    { name: 'confirmpassword', value: confirmpassword },
   ];
 
   function Cpassword() {
@@ -87,7 +89,7 @@ const ChangePassword = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white1 }}>
       <View
         style={{
           flex: 1,
@@ -99,7 +101,7 @@ const ChangePassword = ({navigation}) => {
               height: moderateScale(60),
             }}
             title={'Lokahi'}
-            titleStyle={{fontFamily: fonts.bold}}
+            titleStyle={{ fontFamily: fonts.bold }}
             leftIconSource={icons.ic_back_white}
             leftButtonStyle={{
               tintColor: colors.white1,
@@ -109,9 +111,13 @@ const ChangePassword = ({navigation}) => {
             }}
           />
 
-          <ScrollView
-            style={styles.subContainer}
-            contentContainerStyle={styles.subContentContainer}
+          <KeyboardAwareScrollView
+            enableOnAndroid={true}
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              paddingBottom: moderateScale(3), paddingHorizontal: moderateScale(15),
+              marginLeft: 15,
+            }}
             keyboardShouldPersistTaps={'always'}
             showsVerticalScrollIndicator={false}>
             <View
@@ -138,7 +144,7 @@ const ChangePassword = ({navigation}) => {
               {errors.oldpassword ? (
                 <Text
                   transparent
-                  style={{color: colors.primary, bottom: 13, left: 4}}>
+                  style={{ color: colors.primary, bottom: 13, left: 4 }}>
                   {errors.oldpassword}
                 </Text>
               ) : null}
@@ -162,7 +168,7 @@ const ChangePassword = ({navigation}) => {
               {errors.newpassword ? (
                 <Text
                   transparent
-                  style={{color: colors.primary, bottom: 13, left: 4}}>
+                  style={{ color: colors.primary, bottom: 13, left: 4 }}>
                   {errors.newpassword}
                 </Text>
               ) : null}
@@ -186,7 +192,7 @@ const ChangePassword = ({navigation}) => {
               {errors.confirmpassword ? (
                 <Text
                   transparent
-                  style={{color: colors.primary, bottom: 13, left: 4}}>
+                  style={{ color: colors.primary, bottom: 13, left: 4 }}>
                   {errors.confirmpassword}
                 </Text>
               ) : null}
@@ -206,8 +212,7 @@ const ChangePassword = ({navigation}) => {
                 onPress={() => Cpassword()}
               />
             </View>
-           
-          </ScrollView>
+          </KeyboardAwareScrollView>
           <Loader
             isLoading={auth.loading}
             isAbsolute

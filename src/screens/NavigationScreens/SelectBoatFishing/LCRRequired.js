@@ -255,7 +255,7 @@ const LCRRequired = props => {
                 value={date}
                 mode={'date'}
                 display="spinner"
-                minimumDate={new Date("01-01-1990")}
+                // minimumDate={new Date("01-01-1990")}
                 onChange={onChange}
                 style={{height: windowHeight * 0.2, marginVertical: -10}}
               />
@@ -266,7 +266,7 @@ const LCRRequired = props => {
                 mode={'date'}
                 display="spinner"
                 onChange={onChange}
-                minimumDate={new Date("01-01-1990")}
+                // minimumDate={new Date("01-01-1990")}
                 maximumDate={new Date()}
                 style={{height: windowHeight * 0.2, marginVertical: -10}}
               />

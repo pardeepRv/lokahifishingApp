@@ -569,7 +569,7 @@ const Method = props => {
             />
           )}
         />
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Other"
           children={() => (
             <Other
@@ -584,7 +584,7 @@ const Method = props => {
               })}
             />
           )}
-        />
+        /> */}
       </Tab.Navigator>
       <View
         style={{

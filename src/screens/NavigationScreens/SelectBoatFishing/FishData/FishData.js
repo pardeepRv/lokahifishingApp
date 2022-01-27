@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -17,26 +17,27 @@ import {
   requireNativeComponent,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {useIsFocused} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { useIsFocused } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import GetLocation from 'react-native-get-location';
-import MapView, {PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../../assets';
-import {Header} from '../../../../components/common/Header';
+import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
+import { moderateScale } from 'react-native-size-matters';
+import { fonts, icons } from '../../../../../assets';
+import { Header } from '../../../../components/common/Header';
 import * as NavigationService from '../../../../store/NavigationService';
-import {colors, screenNames} from '../../../../utilities/constants';
+import { colors, screenNames } from '../../../../utilities/constants';
 import styles from './styles';
-import {savelcrreport} from '../../../../store/actions';
-import {Loader} from '../../../../components/common';
-import {layout} from '../../../../utilities/layout';
+import { savelcrreport } from '../../../../store/actions';
+import { Loader } from '../../../../components/common';
+import { layout } from '../../../../utilities/layout';
+import { object } from 'prop-types';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ApplmapNoaa = requireNativeComponent('Switch');
-const FishData = ({navigation, route}) => {
-  const {previousScreen} = route && route.params;
+const FishData = ({ navigation, route }) => {
+  const { previousScreen } = route && route.params;
   const [modalVisible1, setModalVisible1] = useState(false);
 
   let auth = useSelector(state => state.auth);
@@ -51,10 +52,10 @@ const FishData = ({navigation, route}) => {
     title: '',
     isPrivate: '',
   });
-  const {isGPS, title, isPrivate} = state;
+  const { isGPS, title, isPrivate } = state;
 
   const _onChangeText = key => val => {
-    setState({...state, [key]: val});
+    setState({ ...state, [key]: val });
   };
 
   const [price, setPrice] = useState(0);
@@ -71,11 +72,11 @@ const FishData = ({navigation, route}) => {
     longitude: '',
   });
   const [harborItems, setHarborItems] = useState([
-    {label: 'Hawaii Kai', value: 'Hawaii Kai'},
-    {label: 'Keehi', value: 'Keehi'},
-    {label: 'Kaneohe', value: 'Kaneohe'},
-    {label: 'Haleiwa', value: 'Haleiwa'},
-    {label: 'Waianae', value: 'Waianae'},
+    { label: 'Hawaii Kai', value: 'Hawaii Kai' },
+    { label: 'Keehi', value: 'Keehi' },
+    { label: 'Kaneohe', value: 'Kaneohe' },
+    { label: 'Haleiwa', value: 'Haleiwa' },
+    { label: 'Waianae', value: 'Waianae' },
   ]);
 
   const [selectedSignArr, setselectedSignArr] = useState([]);
@@ -102,7 +103,7 @@ const FishData = ({navigation, route}) => {
         setLocation(location);
       })
       .catch(error => {
-        const {code, message} = error;
+        const { code, message } = error;
         console.log(code, message);
       });
 
@@ -122,7 +123,7 @@ const FishData = ({navigation, route}) => {
 
   const onChangeLatitude = text => {
     console.log(text, 'coming in thisss');
-    setLocation({...location, latitude: text === '-' ? 1 : parseFloat(text)});
+    setLocation({ ...location, latitude: text === '-' ? 1 : parseFloat(text) });
   };
 
   const onChangeLongitude = text => {
@@ -181,10 +182,31 @@ const FishData = ({navigation, route}) => {
 
   //hit api
   const _postCatchReport = () => {
-    console.log(previousScreen, 'previousScreen data');
+    let updteArrForMethod = [];
     let selectedSigns = [];
     let selectedPosition = [];
     let user_os = '';
+
+    // merging 2 arrays for method start
+    console.log(baitUI, lureUI, 'dataaaaa');
+    let methodarray = [...baitUI, ...lureUI]
+    console.log('methdoarray :>> ', methodarray);
+
+    jsonObject = methodarray.map(JSON.stringify);
+
+    console.log(jsonObject);
+    uniqueSet = new Set(jsonObject);
+    uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+
+
+    uniqueArray.forEach(ev => {
+      console.log(ev, 'ev to be console');
+      updteArrForMethod.push({ ids: [ev.category_id, ev.subcategory_id, ev.id] });
+    });
+    console.log(updteArrForMethod, 'updteArrForMethodupdteArrForMethod');
+
+    // merging 2 arrays for method end
+    console.log(previousScreen, 'previousScreen data');  
 
     if (selectedSignArr && selectedSignArr.length > 0) {
       console.log(selectedSignArr, 'selectedSignArr');
@@ -224,18 +246,13 @@ const FishData = ({navigation, route}) => {
     if (Platform.OS == 'android') {
       user_os = 'android';
     }
+    let obj = {};
+    obj.ids = [47, 1];
 
     let formData = new FormData();
 
     formData.append('fish_id', previousScreen && previousScreen.selectedFish);
     formData.append('image', previousScreen && previousScreen.fishphoto);
-
-    // formData.append('image', {
-    //   uri: previousScreen && previousScreen.fishphoto,
-    //   type: 'image/jpeg',
-    //   name: 'profilePic',
-    // });
-
     formData.append('fish_weight', previousScreen && previousScreen.weight);
     formData.append('lcr_date_time', previousScreen && previousScreen.date);
     formData.append('effort', price);
@@ -249,11 +266,6 @@ const FishData = ({navigation, route}) => {
     );
     formData.append('description', additionalNotes);
 
-    // formData.append('sign_id', selectedSigns);
-    // formData.append('method_id', weateherArrNeedsToSendApi);
-    // formData.append('weather_id', []);
-    // formData.append('position_id', selectedPosition);
-
     for (let i = 0; i < selectedSigns.length; i++) {
       console.log(selectedSigns[i], 'selectedSigns[i]');
       let index = selectedSigns[i];
@@ -266,14 +278,14 @@ const FishData = ({navigation, route}) => {
       formData.append(`position_id[${i}]`, index);
     }
 
-    formData.append('method_id[0]', 1);
-    formData.append('weather_id', weateherArrNeedsToSendApi);
-    // formData.append('position_id[0]', 3);
+    formData.append('method_id', JSON.stringify(updteArrForMethod));
+    formData.append('weather_id', JSON.stringify(weateherArrNeedsToSendApi));
+
 
     formData.append('user_os', user_os);
     formData.append('is_private', isEnabled);
 
-    console.log(formData, 'consoling formadta');
+      console.log(formData, 'consoling formadta');
     let token = auth && auth.userDetails.access_token;
 
     dispatch(savelcrreport(formData, token));
@@ -284,7 +296,7 @@ const FishData = ({navigation, route}) => {
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <Header
         containerStyle={{
           backgroundColor: 'transparent',
@@ -292,7 +304,7 @@ const FishData = ({navigation, route}) => {
         }}
         blackTitle
         title={'Catch Report'}
-        titleStyle={{fontFamily: fonts.bold}}
+        titleStyle={{ fontFamily: fonts.bold }}
         leftIconSource={icons.ic_back_white}
         leftButtonStyle={{
           tintColor: colors.black1,
@@ -309,7 +321,7 @@ const FishData = ({navigation, route}) => {
         }}
       />
       <SafeAreaView style={styles.safeAreaView}>
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{ flex: 1 }}>
           {/* <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
           keyboardVerticalOffset={50}
@@ -325,7 +337,7 @@ const FishData = ({navigation, route}) => {
             keyboardShouldPersistTaps={'always'}
             showsVerticalScrollIndicator={false}>
 
-            <View style={[styles.textSection, {justifyContent: 'center'}]}>
+            <View style={[styles.textSection, { justifyContent: 'center' }]}>
               <Text>Info below is optional & will be private to user only</Text>
             </View>
             <View
@@ -339,7 +351,7 @@ const FishData = ({navigation, route}) => {
               ]}>
               <Text>Post Catch Report to Photo Sharing?</Text>
               <Switch
-                trackColor={{false: '#767577', true: '#34C759'}}
+                trackColor={{ false: '#767577', true: '#34C759' }}
                 thumbColor={'#f4f3f4'}
                 ios_backgroundColor="#767577"
                 onValueChange={toggleSwitch}
@@ -358,7 +370,7 @@ const FishData = ({navigation, route}) => {
                 }>
                 Sign(optional)
               </Text>
-              <View style={{flex: 0.5}}>
+              <View style={{ flex: 0.5 }}>
                 {selectedSignArr && selectedSignArr.length > 0 ? (
                   selectedSignArr.map((val, index) => {
                     return (
@@ -401,7 +413,7 @@ const FishData = ({navigation, route}) => {
                 }>
                 Method(optional)
               </Text>
-              <View style={{flex: 0.5}}>
+              <View style={{ flex: 0.5 }}>
                 {baitUI.map((val, index) => {
                   return (
                     <Text
@@ -455,7 +467,7 @@ const FishData = ({navigation, route}) => {
                 }>
                 Weather(optional)
               </Text>
-              <View style={{flex: 0.5}}>
+              <View style={{ flex: 0.5 }}>
                 {weateherArr && weateherArr.length > 0 ? (
                   weateherArr.map((val, index) => {
                     return (
@@ -500,7 +512,7 @@ const FishData = ({navigation, route}) => {
                 Position(optional)
               </Text>
 
-              <View style={{flex: 0.5}}>
+              <View style={{ flex: 0.5 }}>
                 {positionarr && positionarr.length > 0 ? (
                   positionarr.map((val, index) => {
                     return (
@@ -654,8 +666,8 @@ const FishData = ({navigation, route}) => {
                 </View>
               )} */}
             <Text style={styles.or}>OR</Text>
-            <View style={{zIndex: 1, paddingHorizontal: 10}}>
-              <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+            <View style={{ zIndex: 1, paddingHorizontal: 10 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                 <TextInput
                   returnKeyType="done"
                   blurOnSubmit={true}
@@ -667,7 +679,7 @@ const FishData = ({navigation, route}) => {
                   onChangeText={text => setDegrees(text)}
                   keyboardType="decimal-pad"
                 />
-                <Text style={{fontSize: 16, marginRight: 5, paddingBottom: 2}}>
+                <Text style={{ fontSize: 16, marginRight: 5, paddingBottom: 2 }}>
                   {' '}
                   degree(s) and{' '}
                 </Text>
@@ -682,16 +694,16 @@ const FishData = ({navigation, route}) => {
                   onChangeText={text => setMiles(text)}
                   keyboardType="decimal-pad"
                 />
-                <Text style={{fontSize: 16, paddingBottom: 2}}>
+                <Text style={{ fontSize: 16, paddingBottom: 2 }}>
                   {' '}
                   miles from:{' '}
                 </Text>
               </View>
-              <View style={{zIndex: 1}}>
+              <View style={{ zIndex: 1 }}>
                 <DropDownPicker
-                  style={{backgroundColor: '#fafafa'}}
+                  style={{ backgroundColor: '#fafafa' }}
                   theme="LIGHT"
-                  containerStyle={{width: '50%', marginVertical: 10}}
+                  containerStyle={{ width: '50%', marginVertical: 10 }}
                   labelStyle={{
                     fontWeight: 'bold',
                     fontSize: 16,
@@ -766,7 +778,7 @@ const FishData = ({navigation, route}) => {
         animationType={'none'}
         transparent={true}
         visible={modalVisible1}
-        onRequestClose={() => {}}>
+        onRequestClose={() => { }}>
         <SafeAreaView>
           <View style={styles.modalcontent}>
             <View style={styles.modalcontainer}>

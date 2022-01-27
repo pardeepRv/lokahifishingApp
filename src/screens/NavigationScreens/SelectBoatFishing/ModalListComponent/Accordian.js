@@ -56,11 +56,19 @@ export default class Accordian extends PureComponent {
       }
     });
 
+    let newArr = [];
+    this.emptyArr.forEach(ev => {
+      console.log(ev,'ev to be console');
+      newArr.push({ ids: ev });
+    });
+
+    console.log(newArr, 'newArr to be send 111');
+
     console.log(arr, 'arr to be send');
     console.log(this.emptyArr, 'arr to be send 111');
 
     getSelectedweather(arr);
-    getWeatherSendToApi(this.emptyArr);
+    getWeatherSendToApi(newArr);
 
     navigation.goBack();
   };
@@ -70,7 +78,7 @@ export default class Accordian extends PureComponent {
       <View style={{ flex: 1, backgroundColor: colors.white1 }}>
         <TouchableOpacity
           style={[styles.childRow]}
-          onPress={() => this.onClick(index)}>
+          onPress={() => this.onClick(index, item.id)}>
           <View
             style={{
               width: layout.size.width - 20,
@@ -86,7 +94,7 @@ export default class Accordian extends PureComponent {
             )}
           </View>
           {item &&
-            item.selected &&
+            item.selected && item.id &&
             item.weather_type &&
             item.weather_type.length
             ? item.weather_type.map((val, i) => {
@@ -94,8 +102,8 @@ export default class Accordian extends PureComponent {
                 <TouchableOpacity
                   style={styles.childRow1}
                   key={i}
-                  onPress={() => this.onClickInner(index, i, val.isSelected)}
-                  >
+                  onPress={() => this.onClickInner(index, item.id, i, val.id, val.isSelected)}
+                >
                   <Text style={[styles.font, styles.itemInActive]}>
                     {val.value}
                   </Text>
@@ -152,25 +160,26 @@ export default class Accordian extends PureComponent {
     );
   }
 
-  onClick = index => {
+  onClick = (index, id) => {
     const temp = this.state.data.slice();
     temp[index].selected = !temp[index].selected;
     this.setState({ data: temp });
+    console.log('temp :>> ', temp);
   };
 
-  onClickInner = (index, idx, status) => {
+  onClickInner = (index, id, idx, val_id, status) => {
 
-    console.log(index, idx, status, 'index1', 'idx', "status");
+    console.log(index, id, idx, val_id, status, 'index1', 'idx', "status");
 
     console.log(this.emptyArr, 'before this.emptyArr');
 
     if (status == false) {
-      this.emptyArr.push([index]);
+      this.emptyArr.push([id]);
 
       this.emptyArr.forEach(elements => {
         console.log(elements, 'in loop 166');
         if (elements && elements.length <= 1) {
-          return elements.push(idx);
+          return elements.push(val_id);
         }
       });
     }
@@ -180,7 +189,7 @@ export default class Accordian extends PureComponent {
       this.emptyArr.forEach((elements, i) => {
         console.log(elements, 'in loop 176');
 
-        if (elements[0] == index && elements[1] == idx) {
+        if (elements[0] == id && elements[1] == val_id) {
           console.log('coming in else loop2', i);
           this.emptyArr.splice(i, 1);
         }
@@ -188,7 +197,7 @@ export default class Accordian extends PureComponent {
     }
 
     console.log(this.emptyArr, 'after this.emptyArr');
-
+    console.log('this.state.data.slice() :>> ', this.state.data.slice());
     const temp = this.state.data.slice();
     temp[index].weather_type[idx].isSelected =
       !temp[index].weather_type[idx].isSelected;

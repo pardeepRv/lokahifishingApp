@@ -470,8 +470,8 @@ function* addCommentSaga(params) {
       yield put({
         type: actionTypes.ADD_COMMENT_SUCCEEDED,
       });
-       showSuccessAlert(response?.data?.message);
-       return  NavigationService.goBack();
+      showSuccessAlert(response?.data?.message);
+      return NavigationService.goBack();
     }
   } catch (error) {
     console.log(error, 'coming in catch');

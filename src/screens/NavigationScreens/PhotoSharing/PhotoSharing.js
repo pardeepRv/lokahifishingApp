@@ -172,7 +172,7 @@ const PhotoSharing = ({ navigation }) => {
                 alignItems: 'flex-start',
                 shadowColor: colors.primary,
                 // backgroundColor:colors.blue1
-                
+
             }}>
             {
                 item && item.media_type == 'img' ?
@@ -181,13 +181,13 @@ const PhotoSharing = ({ navigation }) => {
                         height: layout.size.height / 3.1,
                         width: layout.size.width / 1.2,
                         // marginRight:15,
-                        margin:4,
-                        marginTop:moderateScale(50),
+                        margin: 4,
+                        marginTop: moderateScale(50),
                         // backgroundColor:'black'
 
                     }}
                         onPress={() => {
-                            images.push({ url: `    http://admin.lokahifishing.com/photosharing/${item.media_name}` })
+                            images.push({ url: `http://admin.lokahifishing.com/photosharing/${item.media_name}` })
                             setmodal(true)
                         }}>
                         <Image source={{
@@ -199,31 +199,60 @@ const PhotoSharing = ({ navigation }) => {
                                 width: layout.size.width / 1.2,
 
                             }}
-                             resizeMode= 'contain'
+                            resizeMode='contain'
                         />
                     </TouchableOpacity>
                     :
-                    <TouchableOpacity style={{flex: 1,
+                    <View style={{
+                        flex: 1,
                         justifyContent: "center",
-                        alignItems: "center"}}>
-                    <Video
-                        // source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
-                        source={{ uri: `http://admin.lokahifishing.com/photosharing/video/${item.media_name}` }}
+                        alignItems: "center"
+                    }}
+                    // onPress={() => setpaused(false)}
+>
+                        <Video
+                            // source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
+                            source={{ uri: `http://admin.lokahifishing.com/photosharing/video/${item.media_name}` }}
 
-                        paused={paused}
-                        repeat={false}
-                        controls={true}
-        resizeMode={'contain'}
-                        playInBackground={false}
-                        playWhenInactive={false}
-                        style={Platform.OS === "android" ? styles.videoContainerAndroid : styles.videoContainerIOS}
+                            paused={paused}
+                            repeat={false}
+                            controls={true}
+                            resizeMode={'contain'}
+                            playInBackground={false}
+                            playWhenInactive={false}
+                            style={Platform.OS === "android" ? styles.videoContainerAndroid : styles.videoContainerIOS}
                         // style={{ width: layout.size.width -80, backgroundColor:'black', height: layout.size.height / 3.9, top:10 , marginVertical:10}}
-                    />
-                    </TouchableOpacity>
+                        />
+                    </View>
             }
         </View>
 
     )
+
+    const onViewRef = React.useRef(viewableItems => {
+        console.log(viewableItems, 'viewwwww>>>>>>>>>>>>>>>> in phot sharing');
+        // Use viewable items in state or as intended
+
+        if (
+            viewableItems &&
+            viewableItems.viewableItems &&
+            viewableItems.viewableItems.length > 0
+        ) {
+            if (
+                viewableItems.viewableItems[0].isViewable
+            ) {
+                console.log('cmoing in if', viewableItems.viewableItems[0].isViewable);
+                setpaused();
+            } else {
+                console.log('cmoing in else', viewableItems.viewableItems[0].isViewable);
+
+            }
+
+        }
+    });
+    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
+
+
     //View of flatlist
     const _renderView = ({ item, index }) => (
         <View style={styles.listView} >
@@ -463,6 +492,8 @@ const PhotoSharing = ({ navigation }) => {
                             <Text style={styles.nomatch}>No Match found</Text>
                         ) : null
                     }
+                    viewabilityConfig={viewConfigRef.current}
+                    onViewableItemsChanged={onViewRef.current}
                 />
 
                 {modal ? <ImgViewer

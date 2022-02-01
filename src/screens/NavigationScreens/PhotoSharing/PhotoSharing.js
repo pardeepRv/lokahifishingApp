@@ -494,6 +494,8 @@ const PhotoSharing = ({ navigation }) => {
                     }
                     viewabilityConfig={viewConfigRef.current}
                     onViewableItemsChanged={onViewRef.current}
+                    removeClippedSubviews={true}
+                    initialNumToRender={5}
                 />
 
                 {modal ? <ImgViewer

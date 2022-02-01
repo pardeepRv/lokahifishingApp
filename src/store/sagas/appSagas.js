@@ -1,14 +1,14 @@
-import { put } from 'redux-saga/effects';
+import {put} from 'redux-saga/effects';
 import * as NavigationService from '../../store/NavigationService';
-import { actionTypes, screenNames, urls } from '../../utilities/constants';
+import {actionTypes, screenNames, urls} from '../../utilities/constants';
 import {
   getAPIError,
   showErrorAlert,
-  showSuccessAlert
+  showSuccessAlert,
 } from '../../utilities/helperFunctions';
-import { request } from '../../utilities/request';
+import {request} from '../../utilities/request';
 
-function* fetchAll({ params }) {
+function* fetchAll({params}) {
   try {
     const config = {
       url: 'https://dog.ceo/api/breeds/image/random',
@@ -26,7 +26,7 @@ function* fetchAll({ params }) {
   }
 }
 
-function* getvediosaga({ params }) {
+function* getvediosaga({params}) {
   try {
     const config = {
       url: urls.videos,
@@ -172,12 +172,14 @@ function* getLcrSecondsaga(params) {
   console.log(params, 'params in LCR second api ');
   try {
     const config = {
-      url: `${urls.lcr_Second}/${params && params.payload && params.payload.first_id
-        }`,
+      url: `${urls.lcr_Second}/${
+        params && params.payload && params.payload.first_id
+      }`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params && params.payload && params.payload.token
-          }`,
+        Authorization: `Bearer ${
+          params && params.payload && params.payload.token
+        }`,
       },
     };
 
@@ -202,12 +204,14 @@ function* getLcrThirdsaga(params) {
   console.log(params, 'params in LCR third api ');
   try {
     const config = {
-      url: `${urls.lcr_third}/${params && params.payload && params.payload.first_id
-        }/${params && params.payload && params.payload.second}`,
+      url: `${urls.lcr_third}/${
+        params && params.payload && params.payload.first_id
+      }/${params && params.payload && params.payload.second}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params && params.payload && params.payload.token
-          }`,
+        Authorization: `Bearer ${
+          params && params.payload && params.payload.token
+        }`,
       },
     };
 
@@ -235,23 +239,28 @@ function* getAllFishesSaga(params) {
 
     if (params && params.payload && params.payload.extraFish) {
       config = {
-        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
-          }/${params && params.payload && params.payload.second}/${params && params.payload && params.payload.third
-          }`,
+        url: `${urls.lcr_fishes}/${
+          params && params.payload && params.payload.first_id
+        }/${params && params.payload && params.payload.second}/${
+          params && params.payload && params.payload.third
+        }`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${params && params.payload && params.payload.token
-            }`,
+          Authorization: `Bearer ${
+            params && params.payload && params.payload.token
+          }`,
         },
       };
     } else {
       config = {
-        url: `${urls.lcr_fishes}/${params && params.payload && params.payload.first_id
-          }/${params && params.payload && params.payload.second}`,
+        url: `${urls.lcr_fishes}/${
+          params && params.payload && params.payload.first_id
+        }/${params && params.payload && params.payload.second}`,
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${params && params.payload && params.payload.token
-            }`,
+          Authorization: `Bearer ${
+            params && params.payload && params.payload.token
+          }`,
         },
       };
     }
@@ -488,7 +497,7 @@ function* commentListLcr(params) {
     const config = {
       url: urls.lcr_comments_listing,
       method: 'POST',
-      data: { lcr_id: params?.params?.lcr_id },
+      data: {lcr_id: params?.params?.lcr_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -517,7 +526,7 @@ function* likesListLcr(params) {
     const config = {
       url: urls.lcr_likes_listing,
       method: 'POST',
-      data: { lcr_id: params?.params?.lcr_id },
+      data: {lcr_id: params?.params?.lcr_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -546,7 +555,7 @@ function* addLikeInSaga(params) {
     const config = {
       url: urls.lcr_addlike,
       method: 'POST',
-      data: { lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id },
+      data: {lcr_id: params?.params?.lcr_id, user_id: params?.params?.user_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -703,7 +712,7 @@ function* likesphotosharinglist(params) {
     const config = {
       url: urls.photoshare_like_list,
       method: 'POST',
-      data: { photoshare_id: params?.params?.photoshare_id },
+      data: {photoshare_id: params?.params?.photoshare_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -744,6 +753,7 @@ function* addcommentphotodharingsaga(params) {
       yield put({
         type: actionTypes.PHOTO_ADDCOMMENT_SUCCEEDED,
       });
+      NavigationService.goBack();
       return showSuccessAlert(response?.data?.message);
     }
   } catch (error) {
@@ -761,7 +771,7 @@ function* commentListphotoharing(params) {
     const config = {
       url: urls.photoshare_comment_list,
       method: 'POST',
-      data: { photoshare_id: params?.params?.photoshare_id },
+      data: {photoshare_id: params?.params?.photoshare_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -791,8 +801,9 @@ function* getleaderboardfishlist(params) {
       url: urls.leaderboard_fish_list,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params && params.params && params.params.token
-          }`,
+        Authorization: `Bearer ${
+          params && params.params && params.params.token
+        }`,
       },
     };
     const response = yield request(config);
@@ -822,7 +833,7 @@ function* leaderboardrankingsaga(params) {
     const config = {
       url: urls.leaderboard_ranking,
       method: 'POST',
-      data: { fish_id: params?.params?.fish_id },
+      data: {fish_id: params?.params?.fish_id},
       headers: {
         Authorization: `Bearer ${params?.params?.token}`,
       },
@@ -922,7 +933,10 @@ function* gettermsconditionsaga(params) {
       },
     };
     const response = yield request(config);
-    console.log(response, '<<<<<<<< terms and condition  response  >>>>>>>>>>>>>>>>>');
+    console.log(
+      response,
+      '<<<<<<<< terms and condition  response  >>>>>>>>>>>>>>>>>',
+    );
 
     if (response?.data?.status) {
       yield put({
@@ -965,7 +979,7 @@ function* getmemberlist(params) {
     });
   }
 }
-function* sendfriendrequestsaga({ params }) {
+function* sendfriendrequestsaga({params}) {
   console.log('params in it>>>>>>>>>>', params);
   try {
     const config = {
@@ -995,7 +1009,7 @@ function* sendfriendrequestsaga({ params }) {
   }
 }
 
-function* unblockusersaga({ params }) {
+function* unblockusersaga({params}) {
   console.log('params in it>>>>>>>>>>', params);
   try {
     const config = {
@@ -1032,11 +1046,16 @@ function* postmemberlistsaga(params) {
       method: 'POST',
       data: params?.params?.formData,
       headers: {
-        Authorization: `Bearer ${params && params.params && params.params.token}`,
+        Authorization: `Bearer ${
+          params && params.params && params.params.token
+        }`,
       },
     };
     const response = yield request(config);
-    return console.log(response, '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>');
+    return console.log(
+      response,
+      '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>',
+    );
 
     if (response?.data?.status) {
       yield put({
@@ -1053,7 +1072,7 @@ function* postmemberlistsaga(params) {
   }
 }
 
-function* getimprtantlinks({ params }) {
+function* getimprtantlinks({params}) {
   try {
     const config = {
       url: urls.important_links,
@@ -1086,7 +1105,9 @@ function* getsurveyquestion(params) {
       url: urls.survey_questions,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params && params.params && params.params.token}`,
+        Authorization: `Bearer ${
+          params && params.params && params.params.token
+        }`,
       },
     };
     const response = yield request(config);
@@ -1127,7 +1148,6 @@ function* postquestioninarry(params) {
       });
       showSuccessAlert(response?.data?.message);
       NavigationService.goBack();
-
     } else {
       yield put({
         type: actionTypes.SAVE_SURVEY_QUESTION_FAIL,
@@ -1178,5 +1198,5 @@ export {
   postmemberlistsaga,
   getimprtantlinks,
   getsurveyquestion,
-  postquestioninarry
+  postquestioninarry,
 };

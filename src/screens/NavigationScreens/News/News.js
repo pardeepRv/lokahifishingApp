@@ -124,7 +124,11 @@ const News = ({navigation}) => {
       }}>
       <View style={styles.viewStyle}>
         <Image
-          source={{uri: `${item.image_folder}/${item.image}`}}
+          source={
+            item && item.image != null
+              ? {uri: `${item.image_folder}/${item.image}`}
+              : icons.no_image
+          }
           // source={item.image}
           style={{
             height: moderateScale(70),

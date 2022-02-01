@@ -196,7 +196,11 @@ const LCRlist = ({ navigation }) => {
               <Text style={styles.dateStyle}>{item?.fish?.title}</Text>
 
               {/* <Text style={styles.dateStyle}>{item.date}</Text> */}
-              <TimeAgo style={styles.dateStyle} time={item?.created_at} />
+              {
+                item && item.created_at !=null ?
+              <TimeAgo style={styles.dateStyle} time={item?.created_at} />:
+              <TimeAgo style={styles.dateStyle} time={item?.LCR_DateTime} />
+              }
             </View>
             <View
               style={{

@@ -278,9 +278,9 @@ const PhotoSharing = ({ navigation }) => {
                             <TouchableOpacity
                                 onPress={() => {
                                     item.photosharingmedia[0].media_type == "video" ?
-                                        onShare(`https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.photosharingmedia[0].media_name}`)
+                                        onShare(`http://admin.lokahifishing.com/photosharing/video/${item.photosharingmedia[0].media_name}`)
                                         :
-                                        onShare(`https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.photosharingmedia[0].media_name}`)
+                                        onShare(`http://admin.lokahifishing.com/photosharing/${item.photosharingmedia[0].media_name}`)
                                 }}
                                 title="Share"
                             >

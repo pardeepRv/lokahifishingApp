@@ -279,7 +279,7 @@ const LCRlist = ({ navigation }) => {
                 height: moderateScale(25),
                 width: layout.size.width / 8,
               }}
-              onPress={() => onShare(`https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`)}
+              onPress={() => onShare(`http://admin.lokahifishing.com/LCR_images/user_fishes/${item.image}`)}
               title="Share">
               <Image
                 source={icons.sharearrow}

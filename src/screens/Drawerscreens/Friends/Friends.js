@@ -107,8 +107,8 @@ const Friends = ({navigation}) => {
             justifyContent: 'center',
           }}>
           <Text style={styles.nameStyle}>{item?.user?.user_name}</Text>
-          <Text style={styles.dateStyle}>
-            <TimeAgo time={item?.user?.created_at} />
+          <Text style={styles.dateStyle}>Member since :
+            <TimeAgo time={item?.user?.email_verified_at} />
           </Text>
         </View>
       </View>

@@ -140,7 +140,7 @@ function _onRefresh() {
           {/* <Text style={styles.nameStyle}>FullName :{item.full_name}</Text> */}
           <Text>Member Since :
           <TimeAgo
-                time={item.created_at}
+                time={item.email_verified_at}
               /></Text>
         </View>
       </View>

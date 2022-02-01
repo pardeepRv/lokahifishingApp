@@ -496,7 +496,7 @@ const LeaderBoard = ({ navigation }) => {
           <Text style={styles.fullname}>{item?.user?.full_name}</Text>
           <Text style={styles.time}>
             Caught on:
-            <TimeAgo time={item?.LCR_Datetime} />
+            <TimeAgo time={item?.LCR_DateTime} />
           </Text>
           <Text style={styles.time}>{item?.fish?.title}</Text>
         </View>

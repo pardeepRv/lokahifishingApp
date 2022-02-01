@@ -38,7 +38,7 @@ const FriendLCR = Props => {
       <View style={styles.viewStyle}>
         <Image
           source={{
-            uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
+            uri: `http://admin.lokahifishing.com/LCR_images/user_fishes/${item.image}`,
           }}
           style={{
             height: moderateScale(70),

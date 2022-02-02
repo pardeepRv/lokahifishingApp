@@ -38,9 +38,9 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Granting access will allow you to take photos from Gallery and add them to attachment fields..</string>
+	<string>Granting access will allow you to take photos from Gallery and add them to attachment fields.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Granting access will allow you to take photos from Gallery and add them to attachment fields..</string>
+	<string>Granting access will allow you to take photos from Gallery and add them to attachment fields.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>circular-black.otf</string>

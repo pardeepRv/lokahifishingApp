@@ -13,13 +13,13 @@ import CoreLocation
 class CustomMapView: UIView,UITextFieldDelegate, MKMapViewDelegate,CLLocationManagerDelegate {
     @IBOutlet weak var ProgressLabel: UILabel!
     let locationManager = CLLocationManager()
-  var isLoactionAdded = false
-  var isfirst = false
+ // var isLoactionAdded = false
+  //var isfirst = false
     @IBOutlet weak var txtLong: UITextField!
     @IBOutlet weak var txtlati: UITextField!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet var contentView: UIView!
- 
+  var FishAnnotation = MKPointAnnotation()
     
     var filePath = URL(string: "https://s3.us-east-2.amazonaws.com/lokahimapfiles/MBTILES_09.mbtiles")!
     
@@ -72,25 +72,32 @@ class CustomMapView: UIView,UITextFieldDelegate, MKMapViewDelegate,CLLocationMan
   }
     @objc func longTap(sender: UIGestureRecognizer){
       print("long tap")
-        if sender.state == .began && isLoactionAdded == false {
+        if sender.state == .began //&& isLoactionAdded == false
+      {
           print("Enter long tap")
-        self.isLoactionAdded = true
+      //  self.isLoactionAdded = true
         let locationInView = sender.location(in: mapView)
         let locationOnMap = mapView.convert(locationInView, toCoordinateFrom: mapView)
         print("locationOnMap: ",locationOnMap)
-          isfirst = true
-          addAnnotation(location: locationOnMap)
+        //  isfirst = true
+
+          mapView.removeAnnotation(FishAnnotation)
+          
+            add_Annotation(location: locationOnMap)
           
         }
     }
     
     
     
-  func addAnnotation(location: CLLocationCoordinate2D){
-           let annotation = MKPointAnnotation()
-            annotation.coordinate = location
-            annotation.title = "Fish catch location"
-            self.mapView.addAnnotation(annotation)
+  func add_Annotation(location: CLLocationCoordinate2D){
+          
+        FishAnnotation.coordinate = location
+        FishAnnotation.title = "Fish catch location"
+        self.mapView.addAnnotation(FishAnnotation)
+    txtlati.text = String(format: "%.4f",location.latitude)
+    txtLong.text = String(format: "%.4f",location.longitude)
+    
   }
     
     
@@ -112,9 +119,9 @@ class CustomMapView: UIView,UITextFieldDelegate, MKMapViewDelegate,CLLocationMan
         txtlati.text = String(format: "%.4f",locValue.latitude)
         txtLong.text = String(format: "%.4f",locValue.longitude)
         
-        print("locations =  \(txtlati.text ),\(txtLong.text)")
+       // print("locations =  \(txtlati.text ),\(txtLong.text)")
      
-        let annotation = MKPointAnnotation()
+      let annotation = MKPointAnnotation()
       annotation.coordinate = locValue
       annotation.title = "Current Location"
       self.mapView.addAnnotation(annotation)
@@ -152,7 +159,7 @@ class CustomMapView: UIView,UITextFieldDelegate, MKMapViewDelegate,CLLocationMan
     let cutomCordinates = CLLocationCoordinate2D(latitude: lati, longitude: long)
     print("CustomCord : ",cutomCordinates)
     //zoomAndCenter(on:cutomCordinates, zoom: 5)
-    addAnnotation(location: cutomCordinates)
+   // add_Annotation(location: cutomCordinates)
   }
   func zoomAndCenter(on centerCoordinate: CLLocationCoordinate2D, zoom: Double) {
       var span: MKCoordinateSpan = mapView.region.span

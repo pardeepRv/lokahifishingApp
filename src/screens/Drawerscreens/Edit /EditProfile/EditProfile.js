@@ -301,7 +301,7 @@ const EditProfile = ({navigation}) => {
                   {errors.username ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 14}}>
+                      style={{color: colors.red1, bottom: 14}}>
                       {errors.username}
                     </Text>
                   ) : null}
@@ -324,7 +324,7 @@ const EditProfile = ({navigation}) => {
                   {errors.fullname ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{color: colors.red1, bottom: 13, left: 4}}>
                       {errors.fullname}
                     </Text>
                   ) : null}
@@ -347,7 +347,7 @@ const EditProfile = ({navigation}) => {
                   {errors.email ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{color: colors.red1, bottom: 13, left: 4}}>
                       {errors.email}
                     </Text>
                   ) : null}
@@ -372,7 +372,7 @@ const EditProfile = ({navigation}) => {
                   {errors.contactNumber ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{color: colors.red1, bottom: 13, left: 4}}>
                       {errors.contactNumber}
                     </Text>
                   ) : null}
@@ -395,7 +395,7 @@ const EditProfile = ({navigation}) => {
                   {errors.city ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{color: colors.red1, bottom: 13, left: 4}}>
                       {errors.city}
                     </Text>
                   ) : null}
@@ -417,7 +417,7 @@ const EditProfile = ({navigation}) => {
                   {errors.island ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{color: colors.red1, bottom: 13, left: 4}}>
                       {errors.island}
                     </Text>
                   ) : null}

@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fonts, icons } from '../../../../assets';
 import { Loader } from '../../../components/common';
 import { Header } from '../../../components/common/Header';
+import ImgViewer from '../../../components/common/ImgViewer';
 import {
   leaderboardfilter,
   leaderboardfishlist,
@@ -102,6 +103,7 @@ let fishingArr = [
 ];
 
 let fishID = null;
+let images = [];
 
 const LeaderBoard = ({ navigation }) => {
   const [fishingList, setfishingList] = useState([]);
@@ -110,7 +112,8 @@ const LeaderBoard = ({ navigation }) => {
   const [monthly, setMonthly] = useState(false);
   const [dateWiseList, setDateWiseList] = useState([]);
   const [filterWiseList, setfilterWiseList] = useState([]);
-
+  const [modal, setmodal] = useState(false);
+  
   const [fishTypeId, setfishTypeId] = useState(null);
   const [fishId, setfishId] = useState(null);
 
@@ -118,7 +121,14 @@ const LeaderBoard = ({ navigation }) => {
     refreshing: false,
   });
 
-  const [selectedItem, setSelectedItem] = useState();
+  const [selectedItem, setSelectedItem] = useState(); 
+
+  const setImages = () => {
+    images = [];
+}
+  const setmodalFun = (v) => {
+    setmodal(v)
+}
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -142,6 +152,7 @@ const LeaderBoard = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getleaderboardFishes();
+      console.log('datewis', dateWiseList)
     });
     return unsubscribe;
   }, [navigation]);
@@ -483,7 +494,11 @@ const LeaderBoard = ({ navigation }) => {
   // );
 
   const _renderDateView = ({ item, index }) => (
-    <TouchableOpacity style={styles.LCRPost}>
+    <TouchableOpacity style={styles.LCRPost}
+    onPress={() => {
+      images.push({ url: `${item.imgUrl}${item.image}` })
+      setmodal(true)
+  }}>
       <View style={styles.content1}>
         <View style={styles.rankingView}>
           <View style={styles.rankCircle}>
@@ -501,12 +516,13 @@ const LeaderBoard = ({ navigation }) => {
           <Text style={styles.time}>{item?.fish?.title}</Text>
         </View>
 
-        <View style={styles.imgView}>
+        <TouchableOpacity style={styles.imgView}
+       >
           <Image
             style={styles.image}
             source={{ uri: `${item.imgUrl}${item.image}` }}
           />
-        </View>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -721,6 +737,13 @@ const LeaderBoard = ({ navigation }) => {
           )}
         </View>
         <Loader isLoading={app.loading} isAbsolute />
+
+        {modal ? <ImgViewer
+                    setmodalFun={setmodalFun}
+                    modal={modal}
+                    images={images}
+                    setImages={setImages}
+                /> : null}
       </SafeAreaView>
     </ImageBackground>
   );

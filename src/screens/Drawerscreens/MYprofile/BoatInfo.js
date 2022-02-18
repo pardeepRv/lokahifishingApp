@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Image,
   ImageBackground,
@@ -10,25 +10,25 @@ import {
   View,
 } from 'react-native';
 // import Pdf from 'react-native-pdf';
-import {moderateScale} from 'react-native-size-matters';
-import {fonts, icons} from '../../../../assets';
-import {Loader} from '../../../components/common/Loader';
-import {strings} from '../../../localization';
-import {colors} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
-import {useDispatch, useSelector} from 'react-redux';
+import { moderateScale } from 'react-native-size-matters';
+import { fonts, icons } from '../../../../assets';
+import { Loader } from '../../../components/common/Loader';
+import { strings } from '../../../localization';
+import { colors } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
+import { useDispatch, useSelector } from 'react-redux';
 
-const BoatInfo = props => {
-  console.log(props, 'datadata in emememeenekebev');
+const BoatInfo = ({ navigation }) => {
+  // console.log(props, 'datadata in emememeenekebev');
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in boatinfo  page>>>>>>>>>>');
   const [state, setState] = useState({
     iscbradio: '',
   });
 
-  const {iscbradio, password} = state;
+  const { iscbradio, password } = state;
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white1 }}>
       <View
         style={{
           flex: 1,
@@ -44,8 +44,8 @@ const BoatInfo = props => {
                 <Image
                   source={icons.signin_bg_ic}
                   source={
-                    props?.userAllData?.boat_info?.boat_image
-                      ? {uri: props?.userAllData?.boat_info?.boat_image}
+                    auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 ?
+                      { uri: auth && auth.userAllData && auth.userAllData.boat_info[0].boat_image }
                       : icons.loginLogo
                   }
                   resizeMode="cover"
@@ -59,8 +59,8 @@ const BoatInfo = props => {
                 />
                 <View style={styles.rowContent2}>
                   <Text style={styles.nameStyle}>
-                    {props?.userAllData?.boat_info?.boat_maker
-                      ? props?.userAllData?.boat_info?.boat_maker
+                    {auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 ?
+                      auth && auth.userAllData && auth.userAllData.boat_info[0].boat_maker
                       : strings.boatmaker}
                   </Text>
                   <Text
@@ -71,8 +71,8 @@ const BoatInfo = props => {
                     }}></Text>
 
                   <Text style={styles.nameStyle}>
-                    {props?.userAllData?.boat_info?.boat_length
-                      ? props?.userAllData?.boat_info?.boat_length
+                    {auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 ?
+                      auth && auth.userAllData && auth.userAllData.boat_info[0].boat_length
                       : strings.boatlength}
                   </Text>
                 </View>
@@ -84,7 +84,8 @@ const BoatInfo = props => {
                   {strings.homeport}
                 </Text>
                 <Text style={styles.textstyle}>
-                  {props?.userAllData?.boat_info?.home_port}
+                  {auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 && auth.userAllData.boat_info[0].home_port}
+                  {/* {auth?.userAllData?.boat_info?.home_port} */}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -93,7 +94,8 @@ const BoatInfo = props => {
                 <Text style={styles.textstyle}>{strings.vhfradio}</Text>
                 <Image
                   source={
-                    props?.userAllData?.boat_info?.VHF_Radio
+                    // auth?.userAllData?.boat_info?.VHF_Radio
+                    auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 && auth.userAllData.boat_info[0].VHF_Radio
                       ? icons.ic_donex
                       : icons.ic_not_donex
                   }
@@ -106,7 +108,9 @@ const BoatInfo = props => {
                 <Text style={styles.textstyle}>{strings.cbradio}</Text>
                 <Image
                   source={
-                    props?.userAllData?.boat_info?.CB_Radio
+                    // auth?.userAllData?.boat_info?.CB_Radio
+                    auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 && auth.userAllData.boat_info[0].CB_Radio
+
                       ? icons.ic_donex
                       : icons.ic_not_donex
                   }
@@ -119,7 +123,8 @@ const BoatInfo = props => {
                 <Text style={styles.textstyle}>{strings.epirb}</Text>
                 <Image
                   source={
-                    props?.userAllData?.boat_info?.EPIRB
+                    // auth?.userAllData?.boat_info?.EPIRB
+                    auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 && auth.userAllData.boat_info[0].EPIRB
                       ? icons.ic_donex
                       : icons.ic_not_donex
                   }
@@ -133,7 +138,8 @@ const BoatInfo = props => {
                 <Text style={styles.textstyle}>{strings.liferaft}</Text>
                 <Image
                   source={
-                    props?.userAllData?.boat_info?.Life_Raft
+                    // auth?.userAllData?.boat_info?.Life_Raft
+                    auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 && auth.userAllData.boat_info[0].Life_Raft
                       ? icons.ic_donex
                       : icons.ic_not_donex
                   }
@@ -148,7 +154,8 @@ const BoatInfo = props => {
                 </Text>
                 <Image
                   source={
-                    props?.userAllData?.boat_info?.Visual_Distress_Signals
+                    // auth?.userAllData?.boat_info?.Visual_Distress_Signals
+                    auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 && auth.userAllData.boat_info[0].Visual_Distress_Signals
                       ? icons.ic_donex
                       : icons.ic_not_donex
                   }
@@ -253,7 +260,7 @@ const styles = StyleSheet.create({
   },
   texthomeport: {
     fontSize: 22,
-    width: layout.size.width /3,
+    width: layout.size.width / 3,
     color: colors.white1,
     top: moderateScale(8),
     left: moderateScale(10),

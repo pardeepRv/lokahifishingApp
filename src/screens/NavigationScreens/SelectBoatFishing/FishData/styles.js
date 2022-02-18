@@ -140,8 +140,8 @@ export default StyleSheet.create({
     backgroundColor: colors.black4,
   },
   modalcontainer: {
-    height: layout.size.height / 5,
-    width: layout.size.width / 1.5,
+    height: layout.size.height / 4,
+    width: layout.size.width / 1.3,
     // top: 60,
     alignItems: 'center',
     // justifyContent: 'center',
@@ -150,17 +150,18 @@ export default StyleSheet.create({
     borderColor: '#D3D3D3',
   },
   modaltextlogo: {
-    height: moderateScale(25),
+    // height: moderateScale(25),
     fontFamily: fonts.bold,
     fontSize: moderateScale(20),
     color: colors.white1,
-    top: 10,
+    top: 13,
+	textAlign:'center'
   },
   modalbuttonviewstyle: {
-    height: moderateScale(40),
+    height: moderateScale(50),
     width: layout.size.width / 1.6,
 alignItems:'center',
-    top: moderateScale(10),
+    // top: moderateScale(10),
   },
   modalbuttonstyle: {
     backgroundColor: colors.lightTransparent,
@@ -193,5 +194,10 @@ alignItems:'center',
     margin: moderateScale(5),
     top: 10,
 
+  },
+  labelTextStyle: {
+    fontFamily: fonts.semiBold,
+    fontSize: moderateScale(16),
+    color: colors.white1,
   },
 });

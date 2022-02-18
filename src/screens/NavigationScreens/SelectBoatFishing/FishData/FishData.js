@@ -1,37 +1,32 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
   ImageBackground,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
+  Keyboard, Modal, Platform, requireNativeComponent, SafeAreaView,
   ScrollView,
   Switch,
   Text,
-  TextInput,
-  View,
-  Modal,
-  TouchableOpacity,
-  requireNativeComponent,
+  TextInput, TouchableOpacity, View
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useIsFocused } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import GetLocation from 'react-native-get-location';
-import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
 import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
 import { fonts, icons } from '../../../../../assets';
+import { Loader } from '../../../../components/common';
 import { Header } from '../../../../components/common/Header';
+import TextInputComp from '../../../../components/common/TextInputComp';
+import { strings } from '../../../../localization';
+import { savelcrreport } from '../../../../store/actions';
 import * as NavigationService from '../../../../store/NavigationService';
 import { colors, screenNames } from '../../../../utilities/constants';
-import styles from './styles';
-import { savelcrreport } from '../../../../store/actions';
-import { Loader } from '../../../../components/common';
 import { layout } from '../../../../utilities/layout';
-import { object } from 'prop-types';
+import styles from './styles';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -39,6 +34,7 @@ const ApplmapNoaa = requireNativeComponent('Switch');
 const FishData = ({ navigation, route }) => {
   const { previousScreen } = route && route.params;
   const [modalVisible1, setModalVisible1] = useState(false);
+  const [email, setEmail] = useState('');
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -77,6 +73,7 @@ const FishData = ({ navigation, route }) => {
     { label: 'Kaneohe', value: 'Kaneohe' },
     { label: 'Haleiwa', value: 'Haleiwa' },
     { label: 'Waianae', value: 'Waianae' },
+    { label: 'Other', value: 'Other' },
   ]);
 
   const [selectedSignArr, setselectedSignArr] = useState([]);
@@ -84,6 +81,8 @@ const FishData = ({ navigation, route }) => {
   const [weateherArr, setWeatherAr] = useState([]);
   const [baitUI, setBaitForUI] = useState([]);
   const [lureUI, setlureForUI] = useState([]);
+  const [otherUI, setOtherUI] = useState('');
+
 
   const [weateherArrNeedsToSendApi, setWeateherArrNeedsToSendApi] = useState(
     [],
@@ -91,7 +90,9 @@ const FishData = ({ navigation, route }) => {
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+  console.log(harbor, 'harborharborharbor');
   useEffect(() => {
+    load();
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
       //I'm not sure what is best for the timeout to be set as. Some more testing could be beneficial
@@ -113,6 +114,22 @@ const FishData = ({ navigation, route }) => {
     // I set this so that the region could update as we move the map around and it seems to break the map. Setting the actual <MapView> region to this seems to work but then the pin only stays at the users current location. Maybe the map will be good if they make the post at the spot of location and use the other method if it is created later.
     // }, [isFocused]);
   }, []);
+
+  const setHarborVal = (v) => {
+    console.log(v, ' on selcet');
+    //  setModalVisible1(true)
+    setHarbor(v)
+  }
+  const load = async () => {
+    AsyncStorage.getItem('FirstTime').then(result => {
+      console.log(result, 'geeting from local');
+      if (result == null) {
+        alert('Make sure your mobile battery is sufficient Since map is downloading.It will take 20 to 30 minutes')
+      }
+    })
+    await AsyncStorage.setItem('FirstTime', JSON.stringify({ key: 1 }));
+  }
+
 
   const [region, setRegion] = useState({
     latitude: location?.latitude,
@@ -172,7 +189,12 @@ const FishData = ({ navigation, route }) => {
       setlureForUI(data);
     }
   };
+  const getother = data => {
+    console.log('data getother me', data);
 
+    setOtherUI(data);
+
+  };
   const getHrs = v => {
     console.log(v, ' in parnt hrs');
     if (v > 0) {
@@ -206,7 +228,7 @@ const FishData = ({ navigation, route }) => {
     console.log(updteArrForMethod, 'updteArrForMethodupdteArrForMethod');
 
     // merging 2 arrays for method end
-    console.log(previousScreen, 'previousScreen data');  
+    console.log(previousScreen, 'previousScreen data');
 
     if (selectedSignArr && selectedSignArr.length > 0) {
       console.log(selectedSignArr, 'selectedSignArr');
@@ -284,8 +306,9 @@ const FishData = ({ navigation, route }) => {
 
     formData.append('user_os', user_os);
     formData.append('is_private', isEnabled);
+    formData.append('other_method', otherUI);
 
-      console.log(formData, 'consoling formadta');
+    console.log(formData, 'consoling formadta');
     let token = auth && auth.userDetails.access_token;
 
     dispatch(savelcrreport(formData, token));
@@ -409,12 +432,14 @@ const FishData = ({ navigation, route }) => {
                     name: 'Method',
                     getSelectedBaits: getSelectedBaits,
                     getSelectedLures: getSelectedLures,
+                    getother: getother,
                   })
                 }>
                 Method(optional)
               </Text>
               <View style={{ flex: 0.5 }}>
                 {baitUI.map((val, index) => {
+                  console.log('val :>> ', val);
                   return (
                     <Text
                       key={index}
@@ -436,7 +461,16 @@ const FishData = ({ navigation, route }) => {
                     </Text>
                   );
                 })}
-                {lureUI.length == 0 && baitUI.length == 0 ? (
+                {otherUI ?
+                  <Text
+
+                    style={{
+                      fontFamily: fonts.semiBold,
+                    }}>
+                    {otherUI}
+                  </Text> : null
+                }
+                {lureUI.length == 0 && baitUI.length == 0 && otherUI == 0 ? (
                   <Text
                     style={{
                       fontFamily: fonts.semiBold,
@@ -447,6 +481,7 @@ const FishData = ({ navigation, route }) => {
                         name: 'Method',
                         getSelectedBaits: getSelectedBaits,
                         getSelectedLures: getSelectedLures,
+                        getother: getother,
                       })
                     }>
                     Select Method
@@ -571,42 +606,101 @@ const FishData = ({ navigation, route }) => {
               <Text style={styles.title}>Location</Text>
             </View>
             <View style={styles.mapContainer}>
-              <ApplmapNoaa
+              {Platform.OS === 'ios' ? <ApplmapNoaa
                 style={{
                   height: 325,
                   width: windowWidth,
                   backgroundColor: 'black',
                 }}
-              />
-              {/* <MapView
-                  provider={
-                    Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
-                  } // remove if not using Google Maps
-                  style={styles.map}
-                  region={{
+              /> : <MapView
+                provider={
+                  Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
+                } // remove if not using Google Maps
+                style={styles.map}
+                region={{
+                  latitude:
+                    location && location.latitude ? location.latitude : 31.9311,
+                  longitude:
+                    location && location.longitude
+                      ? location.longitude
+                      : 75.8941,
+                  latitudeDelta: 0.015,
+                  longitudeDelta: 0.0121,
+                }}>
+                <MapView.Marker
+                  coordinate={{
                     latitude:
-                      location && location.latitude ? location.latitude : 31.9311,
+                      location && location.latitude
+                        ? location.latitude
+                        : 31.9311,
                     longitude:
                       location && location.longitude
                         ? location.longitude
                         : 75.8941,
-                    latitudeDelta: 0.015,
-                    longitudeDelta: 0.0121,
-                  }}>
-                  <MapView.Marker
-                    coordinate={{
-                      latitude:
-                        location && location.latitude
-                          ? location.latitude
-                          : 31.9311,
-                      longitude:
-                        location && location.longitude
-                          ? location.longitude
-                          : 75.8941,
-                    }}
-                  />
-                </MapView> */}
+                  }}
+                />
+              </MapView>}
             </View>
+            {Platform.OS === 'android' ?
+              <>{location ? (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'flex-end',
+                    paddingHorizontal: 10,
+                  }}>
+                  <TextInput
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                    onSubmitEditing={() => {
+                      Keyboard.dismiss();
+                    }}
+                    style={styles.locationTextInput}
+                    placeholder={location?.latitude?.toString()}
+                    onChangeText={text => onChangeLatitude(text)}
+                    keyboardType={
+                      Platform.OS === 'ios'
+                        ? 'numbers-and-punctuation'
+                        : 'default'
+                    }
+                  // value={location?.latitude?.toString()}
+                  />
+                  <Text style={{ fontSize: 16, marginRight: 10, paddingBottom: 2 }}>
+                    latitude
+                  </Text>
+                  <TextInput
+                    style={{ fontSize: 16 }}
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                    onSubmitEditing={() => {
+                      Keyboard.dismiss();
+                    }}
+                    style={styles.locationTextInput}
+                    placeholder={location?.longitude?.toString()}
+                    onChangeText={text => onChangeLongitude(text)}
+                    keyboardType={
+                      Platform.OS === 'ios'
+                        ? 'numbers-and-punctuation'
+                        : 'default'
+                    }
+                  // value={location?.longitude?.toString()}
+                  />
+                  <Text style={{ fontSize: 16, paddingBottom: 2 }}>longitude</Text>
+                </View>
+              ) : (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 20,
+                    paddingHorizontal: 10,
+                  }}>
+                  <ActivityIndicator />
+                  <Text style={{ fontSize: 16, marginLeft: 10 }}>
+                    getting location...
+                  </Text>
+                </View>
+              )}</>
+              : null}
             {/* {location ? (
                 <View
                   style={{
@@ -699,11 +793,11 @@ const FishData = ({ navigation, route }) => {
                   miles from:{' '}
                 </Text>
               </View>
-              <View style={{ zIndex: 1 }}>
+              <View style={{ zIndex: 1, }}>
                 <DropDownPicker
                   style={{ backgroundColor: '#fafafa' }}
                   theme="LIGHT"
-                  containerStyle={{ width: '50%', marginVertical: 10 }}
+                  containerStyle={{ width: '50%', marginVertical: 10, flex: 1 }}
                   labelStyle={{
                     fontWeight: 'bold',
                     fontSize: 16,
@@ -719,6 +813,14 @@ const FishData = ({ navigation, route }) => {
                   value={harbor}
                   items={harborItems}
                   setOpen={setOpen}
+                  onChangeValue={(value) => {
+                    console.log(value, "onChangeValue");
+                    if (value == "Other") {
+                      setModalVisible1(true)
+                    } else {
+                      setModalVisible1(false)
+                    }
+                  }}
                   setValue={setHarbor}
                   setItems={setHarborItems}
                   placeholder={'Choose Harbor'}
@@ -774,7 +876,7 @@ const FishData = ({ navigation, route }) => {
 
         <Loader isLoading={app.loading} isAbsolute />
       </SafeAreaView>
-      <Modal
+      {harbor == "Other" && modalVisible1 && <Modal
         animationType={'none'}
         transparent={true}
         visible={modalVisible1}
@@ -782,16 +884,21 @@ const FishData = ({ navigation, route }) => {
         <SafeAreaView>
           <View style={styles.modalcontent}>
             <View style={styles.modalcontainer}>
-              <Text style={styles.modaltextlogo}>Lokahi</Text>
-              <Text style={styles.modalbuttontextstyle1}>
-                You need to download Hawaii marine map
-              </Text>
-              {/* <Text
-                    numberOfLines={2}
-                    ellipsizeMode="tail"
-                    style={styles.modaltextstyle}>
-                    {strings.areyouwant}
-                  </Text> */}
+              <View >
+              <Text style={styles.modaltextlogo}>Please enter the other option</Text>
+              </View>
+              <View style={{top:13,  flex:1,
+                  width: layout.size.width / 2, }}>
+                  <TextInputComp
+                    // label={strings.Password}
+                    value={email}
+                    // secureTextEntry
+                    placeholder={"Enter other"}
+                    labelTextStyle={styles.labelTextStyle}
+                    onChangeText={email => setEmail(email)}
+                  />
+               
+                </View>
               <View style={styles.modalbuttonviewstyle}>
                 <TouchableOpacity
                   style={styles.modalbuttonstyle}
@@ -806,7 +913,7 @@ const FishData = ({ navigation, route }) => {
             </View>
           </View>
         </SafeAreaView>
-      </Modal>
+      </Modal>}
     </ImageBackground>
   );
 };

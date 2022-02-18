@@ -335,107 +335,183 @@ const Lure = props => {
 
 const Other = props => {
   console.log(props, 'props in meee>>>>>>>>>>>');
-  const {otherMethods} = props;
+
+  const {otherMethods , getselctedother} = props;
   const [modalVisible1, setModalVisible1] = useState(props.modalVisible);
-  const [state, setState] = useState({
-    text: '',
-  });
-  const {text} = state;
-  const _onChangeText = key => val => {
-    setState({...state, [key]: val});
+  // const [state, setState] = useState({
+  //   text: '',
+  // });
+
+  // const {text} = state;
+  // const _onChangeText = key => val => {
+  //   setState({...state, [key]: val});
+  // };
+  // const [errors, setErrors] = settext('');
+  
+  const [text, settext] = useState('');
+ 
+  // setTimeout(() => {
+  //   if (text > 0 ){
+  //       console.log('text :>> ', text);
+  //       getselctedother(text)
+  //   }
+
+  // }, 3000);
+
+  const onBlurInput =  () => {
+    // setLoader(true);
+    console.log('text :>> ', text);
+    getselctedother(text)
+   
   };
-  const [errors, setErrors] = useState({
-    text: '',
-    isLoading: false,
-  });
-  const name_and_values = [{name: 'text', value: text}];
+  // const name_and_values = [{name: 'text', value: text}];
 
   return (
-    <>
-      <>
-        <TouchableOpacity
+    <SafeAreaView style={{flex:1 ,  alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.black4,}}>
+       {/* <View style={styles.modalcontent}> */}
+        <View style={styles.modalcontainer}>
+ <View
           style={{
             width: layout.size.width - 20,
-            height: moderateScale(35),
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: 10,
+            height: moderateScale(105),
+            // flex:1,
+            // flexDirection: 'row',
+            // justifyContent: 'space-between',
+            // padding: 10,
+            top:moderateScale(35),
+            // backgroundColor:colors.black1
           }}
-          onPress={() => {
-            props.setMethod(true);
-          }}>
+         >
           <Text
             style={{
-              fontSize: 16,
+              fontSize: 25,
               fontFamily: fonts.semiBold,
-              color: colors.black1,
+              color: colors.primary,
+              textAlign:'center'
             }}>
-            Other
+            Enter Other Method
           </Text>
-        </TouchableOpacity>
-      </>
-      <Modal
-        animationType={'none'}
-        transparent={true}
-        visible={props.modalVisible}
-        onRequestClose={() => {}}>
-        <SafeAreaView>
-          <View style={styles.modalcontent}>
-            <View style={styles.modalcontainer}>
-              <Text
-                numberOfLines={2}
-                ellipsizeMode="tail"
-                style={styles.modaltextlogo}>
-                Enter Other Method
-              </Text>
-              <View
+        </View>
+
+        <View
                 style={{
-                  marginTop: moderateScale(15),
+                  // marginTop: moderateScale(15),
+                  flex:1,
                   width: layout.size.width / 2,
                 }}>
                 <TextInputComp
                   value={text}
                   placeholder={strings.enterother}
                   labelTextStyle={styles.labelTextStyle}
-                  onFocus={() =>
-                    setErrors({
-                      ...errors,
-                      text: '',
-                    })
-                  }
-                  onChangeText={_onChangeText('text')}
+                  // onFocus={() =>
+                  //   setErrors({
+                  //     ...errors,
+                  //     text: '',
+                  //   })
+                  // }
+                  // onBlur={() => onBlurInput()}
+                  onFocus={onBlurInput()}
+                  onChangeText={text => settext(text)}
                 />
-                {errors.text ? (
+                {/* {errors.text ? (
                   <Text
                     transparent
                     style={{color: colors.primary, bottom: 13, left: 4}}>
                     {errors.text}
                   </Text>
-                ) : null}
+                ) : null} */}
               </View>
-              <View style={styles.modalbuttonviewstyle}>
-                <TouchableOpacity
-                  style={styles.modalbuttonstyle}
-                  underlayColor={colors.white1}
-                  onPress={() => {
-                    props.setMethod(false);
-                  }}>
-                  <Text style={styles.modalbuttontextstyle}>cancel</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.modalbuttonstyle}
-                  underlayColor={colors.white1}
-                  onPress={() => {
-                    props.setMethod(false);
-                  }}>
-                  <Text style={styles.modalbuttontextstyle}>OK</Text>
-                </TouchableOpacity>
               </View>
-            </View>
-          </View>
-        </SafeAreaView>
-      </Modal>
-    </>
+              {/* </View> */}
+       </SafeAreaView>
+    // <>
+    //   <>
+    //     <TouchableOpacity
+    //       style={{
+    //         width: layout.size.width - 20,
+    //         height: moderateScale(35),
+    //         flexDirection: 'row',
+    //         justifyContent: 'space-between',
+    //         padding: 10,
+    //       }}
+    //       onPress={() => {
+    //         props.setMethod(true);
+    //       }}>
+    //       <Text
+    //         style={{
+    //           fontSize: 16,
+    //           fontFamily: fonts.semiBold,
+    //           color: colors.black1,
+    //         }}>
+    //         Other
+    //       </Text>
+    //     </TouchableOpacity>
+    //   </>
+    //   <Modal
+    //     animationType={'none'}
+    //     transparent={true}
+    //     visible={props.modalVisible}
+    //     onRequestClose={() => {}}>
+    //     <SafeAreaView>
+    //       <View style={styles.modalcontent}>
+    //         <View style={styles.modalcontainer}>
+    //           <Text
+    //             numberOfLines={2}
+    //             ellipsizeMode="tail"
+    //             style={styles.modaltextlogo}>
+    //             Enter Other Method
+    //           </Text>
+    //           <View
+    //             style={{
+    //               marginTop: moderateScale(15),
+    //               width: layout.size.width / 2,
+    //             }}>
+    //             <TextInputComp
+    //               value={text}
+    //               placeholder={strings.enterother}
+    //               labelTextStyle={styles.labelTextStyle}
+    //               onFocus={() =>
+    //                 setErrors({
+    //                   ...errors,
+    //                   text: '',
+    //                 })
+    //               }
+    //               onChangeText={_onChangeText('text')}
+    //             />
+    //             {errors.text ? (
+    //               <Text
+    //                 transparent
+    //                 style={{color: colors.primary, bottom: 13, left: 4}}>
+    //                 {errors.text}
+    //               </Text>
+    //             ) : null}
+    //           </View>
+    //           <View style={styles.modalbuttonviewstyle}>
+    //             <TouchableOpacity
+    //               style={styles.modalbuttonstyle}
+    //               underlayColor={colors.white1}
+    //               onPress={() => {
+    //                 props.setMethod(false);
+    //               }}>
+    //               <Text style={styles.modalbuttontextstyle}>cancel</Text>
+    //             </TouchableOpacity>
+    //             <TouchableOpacity
+    //               style={styles.modalbuttonstyle}
+    //               underlayColor={colors.white1}
+    //               onPress={() => {
+    //                 props.setMethod(false);
+    //               }}>
+    //               <Text style={styles.modalbuttontextstyle}>OK</Text>
+    //             </TouchableOpacity>
+    //           </View>
+    //         </View>
+    //       </View>
+    //     </SafeAreaView>
+    //   </Modal>
+    // </>
+   
   );
 };
 
@@ -446,25 +522,34 @@ const Method = props => {
 
   const [allBait, setAllBait] = useState([]);
   const [allLure, setAllLure] = useState([]);
+  const [other, setAllother] = useState([]);
+
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
   console.log(auth, 'auth>>>>>>>>>>>>auth', app, 'app>>>>>>>>>>>>>>>>app');
 
-  const setMethod = state => {
-    console.log('press>>>>>>>>>>>>q', state);
-    setModalVisible(state);
+  const getselctedother = val => {
+    console.log('press>>>>>>>>>>>>q', val);
+    // setModalVisible(state);
+    setAllother(val)
   };
 
   const submitAllSelctedThings = selectedIndex => {
+     console.log('selectedIndex :>> ', selectedIndex);
     if (selectedIndex == 0) {
       props.baiArr(allBait && allBait.length > 0 ? allBait : []);
     }
     if (selectedIndex == 1) {
       props.lureArr(allLure && allLure.length > 0 ? allLure : []);
     }
-    props.navigation.goBack();
+    if (selectedIndex == 2) {
+      props.other(other && other.length > 0 ? other : [])
+      // console.log('other :>> ', other);
+    }
+     
+      props.navigation.goBack();
   };
 
   //get selected baits
@@ -569,22 +654,22 @@ const Method = props => {
             />
           )}
         />
-        {/* <Tab.Screen
+        <Tab.Screen
           name="Other"
           children={() => (
             <Other
-              otherMethods={app.methodarray[2]}
-              modalVisible={modalVisible}
-              setMethod={setMethod}
-              listeners={({navigation, route}) => ({
-                tabPress: e => {
-                  alert('tygi');
-                  e.preventDefault();
-                },
-              })}
+              otherMethods={app.methodarray}
+              // modalVisible={modalVisible}
+              getselctedother={getselctedother}
+              // listeners={({navigation, route}) => ({
+              //   tabPress: e => {
+              //     alert('tygi');
+              //     e.preventDefault();
+              //   },
+              // })}
             />
           )}
-        /> */}
+        />
       </Tab.Navigator>
       <View
         style={{
@@ -620,10 +705,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.black4,
+    width:'100%'
   },
   modalcontainer: {
-    height: layout.size.height / 4.2,
-    width: layout.size.width / 1.5,
+    height: layout.size.height / 3.8,
+    width: layout.size.width - 90,
     backgroundColor: colors.lightTransparent,
     alignItems: 'center',
     borderWidth: 2,

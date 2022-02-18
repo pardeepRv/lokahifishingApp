@@ -46,8 +46,8 @@ const FriendBoatInfo = Props => {
                 <Image
 
                   source={
-                    boatdata?.boat_image
-                      ? { uri: boatdata?.boat_image }
+                    boatdata[0].boat_image
+                      ? { uri: boatdata[0].boat_image }
                       : icons.loginLogo
                   }
                   resizeMode="cover"
@@ -59,14 +59,14 @@ const FriendBoatInfo = Props => {
                   }}
                 />
                 <View style={styles.rowContent2}>
-                  <Text style={styles.nameStyle}>{boatdata?.boat_maker ? boatdata?.boat_maker : strings.boatmaker}</Text>
+                  <Text style={styles.nameStyle}>{boatdata[0].boat_maker ? boatdata[0].boat_maker : strings.boatmaker}</Text>
                   <Text style={{
                     height: moderateScale(2),
                     width: layout.size.width / 1.8,
                     backgroundColor: colors.white1
                   }}></Text>
 
-                  <Text style={styles.nameStyle}>{boatdata?.boat_length ? boatdata?.boat_length : strings.boatlength}</Text>
+                  <Text style={styles.nameStyle}>{boatdata[0].boat_length ? boatdata[0].boat_length : strings.boatlength}</Text>
                 </View>
               </View>
             </View>
@@ -75,27 +75,27 @@ const FriendBoatInfo = Props => {
     flexDirection: 'row',
     justifyContent: 'flex-start'}}>
                 <Text style={styles.textstyle1}>{strings.homeport}</Text>
-                <Text style={styles.textstyle2} numberOfLines={2}>{boatdata.home_port ? boatdata?.home_port : ''}</Text>
+                <Text style={styles.textstyle2} numberOfLines={2}>{boatdata[0].home_port ? boatdata[0].home_port : ''}</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.vhfradio}</Text>
-                <Image source={boatdata.VHF_Radio ? icons.ic_donex
+                <Image source={boatdata[0].VHF_Radio ? icons.ic_donex
                   : icons.ic_not_donex} style={styles.checkIcon} />
               </View>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.cbradio}</Text>
-                <Image source={boatdata.CB_Radio ? icons.ic_donex
+                <Image source={boatdata[0].CB_Radio ? icons.ic_donex
                   : icons.ic_not_donex} style={styles.checkIcon} />
               </View>
             </View>
             <View style={styles.Containertable}>
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.epirb}</Text>
-                <Image source={boatdata.EPIRB ? icons.ic_donex
+                <Image source={boatdata[0].EPIRB ? icons.ic_donex
                   : icons.ic_not_donex} style={styles.checkIcon} />
               </View>
             </View>
@@ -104,7 +104,7 @@ const FriendBoatInfo = Props => {
               <View style={styles.rowContent3}>
                 <Text style={styles.textstyle}>{strings.liferaft}</Text>
                 <Image
-                  source={boatdata.Life_Raft ? icons.ic_donex : icons.ic_not_donex}
+                  source={boatdata[0].Life_Raft ? icons.ic_donex : icons.ic_not_donex}
                   style={styles.checkIcon}
                 />
               </View>
@@ -115,7 +115,7 @@ const FriendBoatInfo = Props => {
                   {strings.visualdistressignal}
                 </Text>
                 <Image
-                  source={boatdata.Visual_Distress_Signals ? icons.ic_donex : icons.ic_not_donex}
+                  source={boatdata[0].Visual_Distress_Signals ? icons.ic_donex : icons.ic_not_donex}
                   style={styles.checkIcon}
                 />
               </View>

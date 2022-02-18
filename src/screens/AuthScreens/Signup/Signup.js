@@ -1,6 +1,6 @@
 //import liraries
 import messaging from '@react-native-firebase/messaging';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -16,22 +16,22 @@ import {
   View,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {moderateScale} from 'react-native-size-matters';
-import {useDispatch, useSelector} from 'react-redux';
-import {fonts, icons} from '../../../../assets';
-import {Button} from '../../../components/common/Button';
-import {Header} from '../../../components/common/Header';
-import {Loader} from '../../../components/common/Loader';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../assets';
+import { Button } from '../../../components/common/Button';
+import { Header } from '../../../components/common/Header';
+import { Loader } from '../../../components/common/Loader';
 import TextInputComp from '../../../components/common/TextInputComp';
-import {strings} from '../../../localization';
-import {signUpWithEmail} from '../../../store/actions';
+import { strings } from '../../../localization';
+import { signUpWithEmail } from '../../../store/actions';
 //internal libraries
-import {colors, screenNames} from '../../../utilities/constants';
-import {layout} from '../../../utilities/layout';
+import { colors, screenNames } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
 import styles from './styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-const Signup = ({navigation}) => {
+const Signup = ({ navigation }) => {
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in sigup page>>>>>>>>>>');
 
@@ -46,8 +46,8 @@ const Signup = ({navigation}) => {
   const [productPhoto, setProductPhoto] = useState('');
 
   const [cmlHolder, setCmlHolder] = useState([
-    {value: 'Yes', isSelected: false},
-    {value: 'No', isSelected: false},
+    { value: 'Yes', isSelected: false },
+    { value: 'No', isSelected: false },
   ]);
 
   const [errors, setErrors] = useState({
@@ -64,13 +64,13 @@ const Signup = ({navigation}) => {
   });
 
   const name_and_values = [
-    {name: 'username', value: username},
-    {name: 'fullname', value: fullname},
-    {name: 'email', value: email},
-    {name: 'city', value: city},
-    {name: 'island', value: island},
-    {name: 'password', value: password},
-    {name: 'confirmpassword', value: confirmpassword},
+    { name: 'username', value: username },
+    { name: 'fullname', value: fullname },
+    { name: 'email', value: email },
+    { name: 'city', value: city },
+    { name: 'island', value: island },
+    { name: 'password', value: password },
+    { name: 'confirmpassword', value: confirmpassword },
   ];
 
   // const _onChangeText = key => val => {
@@ -130,17 +130,18 @@ const Signup = ({navigation}) => {
       formData.append('email', email);
       formData.append('city', city);
       formData.append('island', island);
-      formData.append('cml', 1);
+      formData.append('cml', cmlHolder[0].isSelected ? 1 : 0);
       formData.append('password', password);
       formData.append('password_confirmation', confirmpassword);
       formData.append('device_token', fcmToken);
 
+      console.log(cmlHolder, 'cmlHolder');
       let obj = {};
       obj.password = password;
       obj.full_name = fullname;
       obj.email = email;
       obj.island = island;
-      obj.cml = cmlHolder;
+      obj.cml = cmlHolder[0].isSelected ? 1 : 0;
       obj.password_confirmation = confirmpassword;
       obj.city = city;
       obj.user_name = username;
@@ -154,7 +155,7 @@ const Signup = ({navigation}) => {
     }
   }
 
-  const _renderView = ({item, index}) => (
+  const _renderView = ({ item, index }) => (
     <TouchableOpacity
       style={{
         flexDirection: 'row',
@@ -189,15 +190,15 @@ const Signup = ({navigation}) => {
       '',
       'Please Select',
       [
-        {text: 'Camera', onPress: () => _doOpenCamera()},
-        {text: 'Gallery', onPress: () => _doOpenGallery()},
+        { text: 'Camera', onPress: () => _doOpenCamera() },
+        { text: 'Gallery', onPress: () => _doOpenGallery() },
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   }
   function _doOpenCamera() {
@@ -242,7 +243,7 @@ const Signup = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white1 }}>
       <View
         style={{
           flex: 1,
@@ -254,7 +255,7 @@ const Signup = ({navigation}) => {
               height: moderateScale(60),
             }}
             title={''}
-            titleStyle={{fontFamily: fonts.bold}}
+            titleStyle={{ fontFamily: fonts.bold }}
             leftIconSource={icons.ic_back_white}
             leftButtonStyle={{
               tintColor: colors.white1,
@@ -263,13 +264,13 @@ const Signup = ({navigation}) => {
               navigation.goBack();
             }}
           />
-          <ScrollView style={{flex: 1, paddingHorizontal: moderateScale(15)}}>
+          <ScrollView style={{ flex: 1, paddingHorizontal: moderateScale(15) }}>
             <TouchableOpacity
               style={styles.uploadContainer}
               onPress={() => _doOpenOption()}>
               <Image
                 source={
-                  productPhoto != '' ? {uri: productPhoto} : icons.loginLogo
+                  productPhoto != '' ? { uri: productPhoto } : icons.loginLogo
                 }
                 resizeMode="cover"
                 style={{
@@ -292,12 +293,12 @@ const Signup = ({navigation}) => {
               style={{
                 marginTop: layout.size.width / 10,
               }}></View>
-          <KeyboardAwareScrollView
-          enableOnAndroid={true}
-          style={{ flex: 1 }}
-          contentContainerStyle={{ paddingBottom: moderateScale(2), }}
-          keyboardShouldPersistTaps={'always'}
-          showsVerticalScrollIndicator={false}>
+            <KeyboardAwareScrollView
+              enableOnAndroid={true}
+              style={{ flex: 1 }}
+              contentContainerStyle={{ paddingBottom: moderateScale(2), }}
+              keyboardShouldPersistTaps={'always'}
+              showsVerticalScrollIndicator={false}>
               <View
                 style={{
                   marginTop: moderateScale(30),
@@ -319,7 +320,7 @@ const Signup = ({navigation}) => {
                   {errors.username ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 14}}>
+                      style={{ color: colors.primary, bottom: 14 }}>
                       {errors.username}
                     </Text>
                   ) : null}
@@ -342,7 +343,7 @@ const Signup = ({navigation}) => {
                   {errors.fullname ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
                       {errors.fullname}
                     </Text>
                   ) : null}
@@ -364,7 +365,7 @@ const Signup = ({navigation}) => {
                   {errors.email ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
                       {errors.email}
                     </Text>
                   ) : null}
@@ -386,7 +387,7 @@ const Signup = ({navigation}) => {
                   {errors.password ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
                       {errors.password}
                     </Text>
                   ) : null}
@@ -412,7 +413,7 @@ const Signup = ({navigation}) => {
                   {errors.confirmpassword ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
                       {errors.confirmpassword}
                     </Text>
                   ) : null}
@@ -434,7 +435,7 @@ const Signup = ({navigation}) => {
                   {errors.city ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
                       {errors.city}
                     </Text>
                   ) : null}
@@ -456,37 +457,37 @@ const Signup = ({navigation}) => {
                   {errors.island ? (
                     <Text
                       transparent
-                      style={{color: colors.primary, bottom: 13, left: 4}}>
+                      style={{ color: colors.primary, bottom: 13, left: 4 }}>
                       {errors.island}
                     </Text>
                   ) : null}
                 </View>
               </View>
-           
-            <View>
-              <Text
+
+              <View>
+                <Text
+                  style={{
+                    fontFamily: fonts.semiBold,
+                    color: colors.white1,
+                    fontSize: RFValue(16),
+                    paddingHorizontal: 10,
+                  }}>
+                  CML holder
+                </Text>
+              </View>
+              <FlatList
+                extraData={cmlHolder}
+                data={cmlHolder}
                 style={{
-                  fontFamily: fonts.semiBold,
-                  color: colors.white1,
-                  fontSize: RFValue(16),
+                  marginTop: moderateScale(5),
                   paddingHorizontal: 10,
-                }}>
-                CML holder
-              </Text>
-            </View>
-            <FlatList
-              extraData={cmlHolder}
-              data={cmlHolder}
-              style={{
-                marginTop: moderateScale(5),
-                paddingHorizontal: 10,
-                marginBottom: 10,
-              }}
-              renderItem={_renderView}
-              keyExtractor={(item, index) => 'key' + index}
-              horizontal
-            />
-</KeyboardAwareScrollView>
+                  marginBottom: 10,
+                }}
+                renderItem={_renderView}
+                keyExtractor={(item, index) => 'key' + index}
+                horizontal
+              />
+            </KeyboardAwareScrollView>
             <View
               style={{
                 marginTop: moderateScale(30),
@@ -505,10 +506,10 @@ const Signup = ({navigation}) => {
 
             <TouchableOpacity
               onPress={() => navigation.navigate(screenNames.Signin)}
-              // style={{
-              //   flexDirection:'row',
-              //   justifyContent:'center'
-              // }}
+            // style={{
+            //   flexDirection:'row',
+            //   justifyContent:'center'
+            // }}
             >
               <Text
                 style={{

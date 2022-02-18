@@ -45,6 +45,7 @@ const ModalListComponent = props => {
     getWeatherSendToApi,
     getSelectedBaits,
     getSelectedLures,
+    getother
   } = route?.params;
 
   const [weateherArr, setWeatherAr] = useState(app && app.weatherarray);
@@ -119,6 +120,14 @@ const ModalListComponent = props => {
 
     if (vals && vals.length > 0) {
       getSelectedLures(vals);
+    }
+  };
+
+  const getothermethod = vals => {
+    console.log(vals, 'vals in parant class lure');
+
+    if (vals && vals.length > 0) {
+      getother(vals);
     }
   };
 
@@ -319,6 +328,7 @@ const ModalListComponent = props => {
             methodarr={methodarr}
             baiArr={getBaitMethod}
             lureArr={getLureMethod}
+            other={getothermethod}
           />
         ) : null}
         {value == 3 && weateherArr && weateherArr.length > 0 ? (

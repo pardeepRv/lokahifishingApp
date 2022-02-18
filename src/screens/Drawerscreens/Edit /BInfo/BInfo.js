@@ -34,42 +34,42 @@ const BInfo = () => {
   const dispatch = useDispatch();
 
   const [boatmarker, setBoatmarker] = useState(
-    auth?.userAllData?.boat_info?.boat_maker,
+    auth?.userAllData?.boat_info[0]?.boat_maker,
   );
   const [boatlength, setBoatlength] = useState(
-    auth?.userAllData?.boat_info?.boat_length,
+    auth?.userAllData?.boat_info[0]?.boat_length,
   );
   const [homeport, setHomeport] = useState(
-    auth?.userAllData?.boat_info?.home_port,
+    auth?.userAllData?.boat_info[0]?.home_port,
   );
   const [boatphoto, setboatphoto] = useState(
-    auth?.userAllData?.boat_info?.boat_image
-      ? auth?.userAllData?.boat_info?.boat_image
+    auth?.userAllData?.boat_info[0]?.boat_image
+      ? auth?.userAllData?.boat_info[0]?.boat_image
       : '',
   );
   const [LifeIcon, setLifeIcon] = useState(
-    auth?.userAllData?.boat_info?.Life_Raft
-      ? auth?.userAllData?.boat_info?.Life_Raft
+    auth?.userAllData?.boat_info[0]?.Life_Raft
+      ? auth?.userAllData?.boat_info[0]?.Life_Raft
       : false,
   );
   const [VHFIcon, setVHFIcon] = useState(
-    auth?.userAllData?.boat_info?.VHF_Radio
-      ? auth?.userAllData?.boat_info?.VHF_Radio
+    auth?.userAllData?.boat_info[0]?.VHF_Radio
+      ? auth?.userAllData?.boat_info[0]?.VHF_Radio
       : false,
   );
   const [CbIcon, setCbIcon] = useState(
-    auth?.userAllData?.boat_info?.CB_Radio
-      ? auth?.userAllData?.boat_info?.CB_Radio
+    auth?.userAllData?.boat_info[0]?.CB_Radio
+      ? auth?.userAllData?.boat_info[0]?.CB_Radio
       : false,
   );
   const [EPIRBIcon, setEPIRBIcon] = useState(
-    auth?.userAllData?.boat_info?.EPIRB
-      ? auth?.userAllData?.boat_info?.EPIRB
+    auth?.userAllData?.boat_info[0]?.EPIRB
+      ? auth?.userAllData?.boat_info[0]?.EPIRB
       : false,
   );
   const [VisualIcon, setVisualIcon] = useState(
-    auth?.userAllData?.boat_info?.Visual_Distress_Signals
-      ? auth?.userAllData?.boat_info?.Visual_Distress_Signals
+    auth?.userAllData?.boat_info[0]?.Visual_Distress_Signals
+      ? auth?.userAllData?.boat_info[0]?.Visual_Distress_Signals
       : false,
   );
   const [sendingProfile, setSendingProfile] = useState(false);

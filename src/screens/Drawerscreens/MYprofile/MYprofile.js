@@ -139,9 +139,7 @@ const MYprofile = ({navigation}) => {
               backgroundColor: colors.white1,
             },
           }}>
-          <Tab.Screen name="Boat Info" 
-          children={() => <BoatInfo {...auth}/>}
-          />
+            <Tab.Screen name="Boat Info" component={BoatInfo} />
           <Tab.Screen
             name="Emergency Contact"
             children={() => <EmergencyContacts {...auth} />}

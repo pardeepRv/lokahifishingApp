@@ -1,5 +1,5 @@
 //import liraries
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -16,23 +16,23 @@ import {
 } from 'react-native';
 //ecternal libaraies
 import ImagePicker from 'react-native-image-crop-picker';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {moderateScale} from 'react-native-size-matters';
-import {useDispatch, useSelector} from 'react-redux';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
 
 //internal libraries
 
-import {fonts, icons} from '../../../../../assets';
-import {Button} from '../../../../components/common/Button';
-import {Loader} from '../../../../components/common/Loader';
+import { fonts, icons } from '../../../../../assets';
+import { Button } from '../../../../components/common/Button';
+import { Loader } from '../../../../components/common/Loader';
 import TextInputComp from '../../../../components/common/TextInputComp';
-import {strings} from '../../../../localization';
-import {getLoginUserProfile, updateProfile} from '../../../../store/actions';
-import {colors, screenNames} from '../../../../utilities/constants';
-import {layout} from '../../../../utilities/layout';
+import { strings } from '../../../../localization';
+import { getLoginUserProfile, updateProfile } from '../../../../store/actions';
+import { colors, screenNames } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
 import styles from './styles';
 
-const EditProfile = ({navigation}) => {
+const EditProfile = ({ navigation }) => {
   let passwordTextInput = useRef(null);
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in editprofile  page>>>>>>>>>>');
@@ -54,13 +54,13 @@ const EditProfile = ({navigation}) => {
   const [cmlHolder, setCmlHolder] = useState(
     auth?.userDetails?.CML == '0'
       ? [
-          {value: 'Yes', isSelected: false},
-          {value: 'No', isSelected: true},
-        ]
+        { value: 'Yes', isSelected: false },
+        { value: 'No', isSelected: true },
+      ]
       : [
-          {value: 'Yes', isSelected: true},
-          {value: 'No', isSelected: false},
-        ],
+        { value: 'Yes', isSelected: true },
+        { value: 'No', isSelected: false },
+      ],
   );
 
   const [errors, setErrors] = useState({
@@ -75,12 +75,12 @@ const EditProfile = ({navigation}) => {
   });
 
   const name_and_values = [
-    {name: 'username', value: username},
-    {name: 'fullname', value: fullname},
-    {name: 'email', value: email},
-    {name: 'city', value: city},
-    {name: 'island', value: island},
-    {name: 'contactNumber', value: contactNumber},
+    { name: 'username', value: username },
+    { name: 'fullname', value: fullname },
+    { name: 'email', value: email },
+    { name: 'city', value: city },
+    { name: 'island', value: island },
+    { name: 'contactNumber', value: contactNumber },
   ];
 
   // const _onChangeText = key => val => {
@@ -112,7 +112,7 @@ const EditProfile = ({navigation}) => {
         !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
       ) {
         err[name] = 'Email should be valid';
-      } 
+      }
       else if (
         'contactNumber' === name && value
       ) {
@@ -137,7 +137,7 @@ const EditProfile = ({navigation}) => {
       formData.append('email', email);
       formData.append('city', city);
       formData.append('island', island);
-      formData.append('cml_holder', 1);
+      formData.append('cml_holder', cmlHolder[0].isSelected ? 1 : 0);
       formData.append('phone_number', contactNumber);
 
       console.log(formData, 'sending to aApi');
@@ -147,7 +147,7 @@ const EditProfile = ({navigation}) => {
     }
   }
 
-  const _renderView = ({item, index}) => (
+  const _renderView = ({ item, index }) => (
     <TouchableOpacity
       style={{
         flexDirection: 'row',
@@ -181,15 +181,15 @@ const EditProfile = ({navigation}) => {
       '',
       'Please Select',
       [
-        {text: 'Camera', onPress: () => _doOpenCamera()},
-        {text: 'Gallery', onPress: () => _doOpenGallery()},
+        { text: 'Camera', onPress: () => _doOpenCamera() },
+        { text: 'Gallery', onPress: () => _doOpenGallery() },
         {
           text: 'Cancel',
           onPress: () => console.log('err'), //setSendingProfile(false),
           style: 'cancel',
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   }
   function _doOpenCamera() {
@@ -236,13 +236,13 @@ const EditProfile = ({navigation}) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: colors.white1}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white1 }}>
       <View
         style={{
           flex: 1,
         }}>
         <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
-          <ScrollView style={{flex: 1}}>
+          <ScrollView style={{ flex: 1 }}>
             <KeyboardAvoidingView
               behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
               style={styles.subContainer}
@@ -253,7 +253,7 @@ const EditProfile = ({navigation}) => {
                 <Image
                   source={
                     profilePhoto != ''
-                      ? {uri: profilePhoto}
+                      ? { uri: profilePhoto }
                       : icons.signin_bg_ic
                   }
                   resizeMode={profilePhoto != '' ? 'cover' : 'contain'}
@@ -301,7 +301,7 @@ const EditProfile = ({navigation}) => {
                   {errors.username ? (
                     <Text
                       transparent
-                      style={{color: colors.red1, bottom: 14}}>
+                      style={{ color: colors.red1, bottom: 14 }}>
                       {errors.username}
                     </Text>
                   ) : null}
@@ -324,7 +324,7 @@ const EditProfile = ({navigation}) => {
                   {errors.fullname ? (
                     <Text
                       transparent
-                      style={{color: colors.red1, bottom: 13, left: 4}}>
+                      style={{ color: colors.red1, bottom: 13, left: 4 }}>
                       {errors.fullname}
                     </Text>
                   ) : null}
@@ -347,7 +347,7 @@ const EditProfile = ({navigation}) => {
                   {errors.email ? (
                     <Text
                       transparent
-                      style={{color: colors.red1, bottom: 13, left: 4}}>
+                      style={{ color: colors.red1, bottom: 13, left: 4 }}>
                       {errors.email}
                     </Text>
                   ) : null}
@@ -372,7 +372,7 @@ const EditProfile = ({navigation}) => {
                   {errors.contactNumber ? (
                     <Text
                       transparent
-                      style={{color: colors.red1, bottom: 13, left: 4}}>
+                      style={{ color: colors.red1, bottom: 13, left: 4 }}>
                       {errors.contactNumber}
                     </Text>
                   ) : null}
@@ -395,7 +395,7 @@ const EditProfile = ({navigation}) => {
                   {errors.city ? (
                     <Text
                       transparent
-                      style={{color: colors.red1, bottom: 13, left: 4}}>
+                      style={{ color: colors.red1, bottom: 13, left: 4 }}>
                       {errors.city}
                     </Text>
                   ) : null}
@@ -417,7 +417,7 @@ const EditProfile = ({navigation}) => {
                   {errors.island ? (
                     <Text
                       transparent
-                      style={{color: colors.red1, bottom: 13, left: 4}}>
+                      style={{ color: colors.red1, bottom: 13, left: 4 }}>
                       {errors.island}
                     </Text>
                   ) : null}

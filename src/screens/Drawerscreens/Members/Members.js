@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -10,12 +10,12 @@ import {
   View,
   RefreshControl,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 import SegmentedControl from 'rn-segmented-control';
-import {fonts, icons} from '../../../../assets';
-import {Header} from '../../../components/common/Header';
+import { fonts, icons } from '../../../../assets';
+import { Header } from '../../../components/common/Header';
 
-import {colors, screenNames} from '../../../utilities/constants';
+import { colors, screenNames } from '../../../utilities/constants';
 import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { memberlisting } from '../../../store/actions';
@@ -28,35 +28,35 @@ let members = [
     img: icons.ic_LokahiLogo,
     username: 'princepardeepkmr',
     date: 'Member since 1 oct 2021',
-    fullname:'Pardeep kumar'
+    fullname: 'Pardeep kumar'
   },
   {
     img: icons.ic_LokahiLogo,
     username: 'rv_kunal',
     date: 'Member since 2 oct 2021',
-    fullname:'Kunal Chauhan'
+    fullname: 'Kunal Chauhan'
 
   },
   {
     img: icons.ic_LokahiLogo,
     username: 'rvtechnologies',
     date: 'Member since 1 oct 2021',
-    fullname:'Prince Pardeep'
+    fullname: 'Prince Pardeep'
 
   },
   {
     img: icons.ic_LokahiLogo,
     username: 'dev_pardeep',
     date: 'Member since 2 oct 2021',
-    fullname:'New Name'
+    fullname: 'New Name'
 
   },
 ];
 
-const Members = ({navigation}) => {
-  const [membersList, setMembersList] = useState( app && app.memberlist && app.memberlist.length > 0
+const Members = ({ navigation }) => {
+  const [membersList, setMembersList] = useState(app && app.memberlist && app.memberlist.length > 0
     ? app.memberlist
-    : [],);
+    : []);
   const [filterdata, setfilterdata] = useState([]);
 
 
@@ -80,38 +80,38 @@ const Members = ({navigation}) => {
   useEffect(() => {
     console.log('coming in this on timelinelist page');
     const unsubscribe = navigation.addListener('focus', () => {
-        getmemberfunc();
-setfilterdata(membersList)
+      getmemberfunc();
+      setfilterdata(membersList)
     });
-}, [navigation]);
+  }, [navigation]);
 
-function getmemberfunc() {
+  function getmemberfunc() {
     let token = auth && auth?.userDetails?.access_token;
     dispatch(
       memberlisting(token, cb => {
-            if (cb) {
-                console.log(cb, 'callback list arr>>>>>>>>>>');
-                if (cb?.data?.data) {
-                    let memberList = cb?.data?.data?.memberListing;
-                    memberList.reverse();
-                    setMembersList(memberList)
-                }
-            }
-        }),
+        if (cb) {
+          console.log(cb, 'callback list arr>>>>>>>>>>');
+          if (cb?.data?.data) {
+            let memberList = cb?.data?.data?.memberListing;
+            memberList.reverse();
+            setMembersList(memberList)
+          }
+        }
+      }),
     );
-}
+  }
 
-function _onRefresh() {
-  setState({refreshing: true});
-  getmemberfunc();
-}
-  const _renderView = ({item, index}) => (
-   
+  function _onRefresh() {
+    setState({ refreshing: true });
+    getmemberfunc();
+  }
+  const _renderView = ({ item, index }) => (
+
     <TouchableOpacity
-      onPress={() => 
-        navigation.navigate(screenNames.FriendProfileScreen , {
-          item:item
-        })  
+      onPress={() =>
+        navigation.navigate(screenNames.FriendProfileScreen, {
+          item: item
+        })
       }
       style={[
         styles.listView,
@@ -122,7 +122,7 @@ function _onRefresh() {
       activeOpacity={0.8}>
       <View style={styles.viewStyle}>
         <Image
-          source={{uri: item.profile_picture}}
+          source={ item.profile_picture ? { uri: item.profile_picture } : icons.loginLogo}
           style={{
             height: moderateScale(70),
             width: moderateScale(70),
@@ -132,16 +132,16 @@ function _onRefresh() {
         <View
           style={{
             justifyContent: 'center',
-            left:moderateScale(20),
-            width:layout.size.width/2,
-            margin:10,
-          }}>{tabIndex == 2 ? (<Text style={styles.nameStyle}>{item.full_name}</Text>):(
-             <Text style={styles.nameStyle}>{item.user_name}</Text>)}
+            left: moderateScale(20),
+            width: layout.size.width / 2,
+            margin: 10,
+          }}>{tabIndex == 2 ? (<Text style={styles.nameStyle}>{item.full_name}</Text>) : (
+            <Text style={styles.nameStyle}>{item.user_name}</Text>)}
           {/* <Text style={styles.nameStyle}>FullName :{item.full_name}</Text> */}
           <Text>Member Since :
-          <TimeAgo
-                time={item.email_verified_at}
-              /></Text>
+            <TimeAgo
+              time={item.email_verified_at}
+            /></Text>
         </View>
       </View>
       <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
@@ -177,15 +177,19 @@ function _onRefresh() {
     let text = e.toLowerCase();
     let member = membersList;
     let filteredName = member.filter(item => {
-       console.log(item, 'consile ');
-       if(tabIndex==0){
+      console.log(item, 'consile ');
       return item && item.user_name.toLowerCase().match(text);
-    } else if (tabIndex==2){
-      return item && item.full_name.toLowerCase().match(text);
-    }
+      // for segment cotrol code 
+
+      //    if(tabIndex==0){
+      //   return item && item.user_name.toLowerCase().match(text);
+      // } else if (tabIndex==2){
+      //   return item && item.full_name.toLowerCase().match(text);
+      // } 
+
     });
-     console.log(filteredName, 'dbwdvewduyv');
-    if (!text || text === '' ) {
+    console.log(filteredName, 'dbwdvewduyv');
+    if (!text || text === '') {
       setMembersList(app?.memberlist);
     } else if (!Array.isArray(filteredName) && !filteredName.length) {
       setMembersList(app?.memberlist);
@@ -194,12 +198,12 @@ function _onRefresh() {
     }
   };
 
- 
+
 
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView
         style={{
           flex: 1,
@@ -209,8 +213,8 @@ function _onRefresh() {
             backgroundColor: 'transparent',
             height: moderateScale(60),
           }}
-          title={'Members'}
-          titleStyle={{fontFamily: fonts.bold}}
+          title={`${membersList && membersList.length > 0 ? membersList.length : ''} Members`}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
@@ -221,7 +225,7 @@ function _onRefresh() {
         />
 
         <TextInputComp
-        value={Search}
+          value={Search}
           placeholder={'Please enter something!'}
           labelTextStyle={{
             fontFamily: fonts.semiBold,
@@ -231,9 +235,9 @@ function _onRefresh() {
           onChangeText={text => searchText(text)}
         />
 
-        <View
+        {/* <View
           style={{
-            flexDirection: 'row',
+            // backgroundColor:colors.black1
           }}>
           <SegmentedControl
             tabs={['Username', 'Date Joined', 'Fullname']}
@@ -243,7 +247,7 @@ function _onRefresh() {
             }}
             onChange={handleTabsChange}
             currentIndex={tabIndex}
-            width={Dimensions.get('screen').width - 90}
+            width={Dimensions.get('screen').width }
             textStyle={{
               fontWeight: '300',
               fontSize: 14,
@@ -263,8 +267,33 @@ function _onRefresh() {
               fontSize: 14,
             }}
           />
-        </View>
+        </View> */}
 
+
+        <FlatList
+          extraData={membersList}
+          data={membersList}
+          renderItem={_renderView}
+          keyExtractor={(item, index) => 'key' + index}
+          ListHeaderComponent={() =>
+            !membersList.length ? (
+              <Text style={styles.nomatch}>No Match found</Text>
+            ) : null
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={app.loading}
+              onRefresh={_onRefresh.bind(this)}
+              title="Pull to refresh"
+              tintColor={colors.white1}
+              titleColor={colors.white1}
+            />
+          }
+
+        />
+
+        {/* commented code of tabindex segemenconro */}
+        {/* 
         {tabIndex == 0 ? (
           <FlatList
             extraData={membersList}
@@ -308,7 +337,28 @@ function _onRefresh() {
               />
             }
           />
-        ) : null}
+        ): tabIndex == 1 ? (
+          <FlatList
+            extraData={membersList}
+            data={membersList}
+            renderItem={_renderView}
+            keyExtractor={(item, index) => 'key' + index}
+            ListHeaderComponent={() =>
+              !membersList.length ? (
+                <Text style={styles.nomatch}>No Match found</Text>
+              ) : null
+            }
+            refreshControl={
+              <RefreshControl
+                refreshing={app.loading}
+                onRefresh={_onRefresh.bind(this)}
+                title="Pull to refresh"
+                tintColor={colors.white1}
+                titleColor={colors.white1}
+              />
+            }
+          />
+        ) : null} */}
       </SafeAreaView>
     </ImageBackground>
   );

@@ -1,6 +1,6 @@
 // import { launchImageLibrary, launchCamera } from 'react-native-image-picker'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import {
   Alert,
   Dimensions,
@@ -17,6 +17,8 @@ import {
 import ImagePicker from 'react-native-image-crop-picker';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
+import TimeAgo from 'react-native-timeago';
+
 var moment = require('moment');
 
 const LCRRequired = props => {
@@ -25,6 +27,9 @@ const LCRRequired = props => {
 
   const [weight, setWeight] = useState(0);
   const [date, setDate] = useState(new Date());
+  const [datetext, setdatetext] = useState();
+  const [timetext, settimetext] = useState();
+
 
   // const [time, setTime] = useState(new Date().toLocaleTimeString());
   const [time, setTime] = useState(new Date());
@@ -40,14 +45,49 @@ const LCRRequired = props => {
     // let dateIs = moment(selectedDate).format('YYYY-MM-DD');
     // console.log(dateIs, '<>><><><><');
 
-    // const currentDate = selectedDate || date
-    setDate(selectedDate);
+    const currentDate = selectedDate || date
+    if (Platform.OS === 'android' ){
+      setDate(currentDate);
+      setDateStatus(false);
+    }
+    else{ setDate(currentDate);}
+    
+  };
+
+
+setTimeout(() => {
+  getDate()
+  getTime()
+}, 100);
+
+  const getDate = () => {
+    let tempDate = date.toString().split(' ');
+    console.log('object :>> ', date.toString().split(' '));
+   setdatetext(`${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`)
+    return date !== ''
+      ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
+      : '';
+  };
+
+  const getTime = () => {
+    let tempDate = time.toString().split(' ');
+     console.log('time >>>>>>>>>>', time.toString().split(' '));
+   settimetext(`${tempDate[4]} `)
+    return time !== ''
+      ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
+      : '';
   };
 
   const onTimeChange = (event, newTime) => {
-    console.log(event, newTime);
+    console.log(event, newTime , "time hange");
     // setTime(moment(newTime, 'MM/DD/YYYY h:mmA'));
     // console.log(time,'time>>>>>>>>>');
+    const currentDate = newTime || time
+    if (Platform.OS === 'android' ){
+      setTime(currentDate);
+      setTimeStatus(false);
+    }
+    else{ setTime(currentDate);}
   };
 
   const [errors, setErrors] = useState({
@@ -233,10 +273,14 @@ const LCRRequired = props => {
             }}>
             <TouchableOpacity
               onPress={() => {
-                setDateStatus(true);
+                setDateStatus(true);  
                 setTimeStatus(false);
               }}>
-              <Text style={{fontFamily: fonts.bold}}>Show date</Text>
+                {Platform.OS == 'android' ?   <Text style={{fontFamily: fonts.bold}}>
+                {datetext}
+          
+                </Text>  : null }
+    
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -244,7 +288,7 @@ const LCRRequired = props => {
                 setTimeStatus(true);
                 setDateStatus(false);
               }}>
-              <Text>Show time</Text>
+               {Platform.OS == 'android' ?   <Text style={{fontFamily: fonts.bold}}>{timetext}</Text>  : null }
             </TouchableOpacity>
           </View>
 
@@ -256,6 +300,7 @@ const LCRRequired = props => {
                 mode={'date'}
                 display="spinner"
                 // minimumDate={new Date("01-01-1990")}
+                maximumDate={new Date()}
                 onChange={onChange}
                 style={{height: windowHeight * 0.2, marginVertical: -10}}
               />

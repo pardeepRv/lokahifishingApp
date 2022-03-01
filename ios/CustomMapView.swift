@@ -48,8 +48,8 @@ class CustomMapView: UIView,UITextFieldDelegate, MKMapViewDelegate,CLLocationMan
           locationManager.startUpdatingLocation()
       }
 
-    let longTapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTap))
-    mapView.addGestureRecognizer(longTapGesture)
+    let TapGesture = UITapGestureRecognizer(target: self, action: #selector(OnTap))
+    mapView.addGestureRecognizer(TapGesture)
     
       let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         
@@ -70,11 +70,11 @@ class CustomMapView: UIView,UITextFieldDelegate, MKMapViewDelegate,CLLocationMan
        }
     
   }
-    @objc func longTap(sender: UIGestureRecognizer){
-      print("long tap")
-        if sender.state == .began //&& isLoactionAdded == false
-      {
-          print("Enter long tap")
+    @objc func OnTap(sender: UITapGestureRecognizer){
+     
+       // if sender.state == .began //&& isLoactionAdded == false
+     // {
+          print("Tap Gesture")
       //  self.isLoactionAdded = true
         let locationInView = sender.location(in: mapView)
         let locationOnMap = mapView.convert(locationInView, toCoordinateFrom: mapView)
@@ -85,7 +85,7 @@ class CustomMapView: UIView,UITextFieldDelegate, MKMapViewDelegate,CLLocationMan
           
             add_Annotation(location: locationOnMap)
           
-        }
+        //}
     }
     
     

@@ -32,14 +32,17 @@ import TimeAgo from 'react-native-timeago';
 import { sendfriendsrequests, unblockuserrequest } from '../../../store/actions';
 import FriendLCR from './FriendLCR';
 import FriendEmergencyContacts from './FriendEmergencyContacts';
+import ImgViewer from '../../../components/common/ImgViewer';
 
 const Tab = createMaterialTopTabNavigator();
+let images = [];
 
 const FriendProfileScreen = ({ navigation, route }) => {
   const { item } = route.params;
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
   const dispatch = useDispatch();
+
 
   console.log(app, 'appp in friendprofile   page>>>>>>>>>>');
   console.log(auth, 'auth in friendprofile page >>>>>>>>>>');
@@ -54,8 +57,17 @@ const FriendProfileScreen = ({ navigation, route }) => {
   });
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
+  const [modal, setmodal] = useState(false);
 
   const { color, membersList } = state;
+
+  const setmodalFun = (v) => {
+    setmodal(v)
+}
+
+const setImages = () => {
+    images = [];
+}
 
   function onButtonPressed(value) {
     // box1 pressed.
@@ -139,13 +151,18 @@ const FriendProfileScreen = ({ navigation, route }) => {
         />
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.contentcontainer}>
-            <View style={styles.uploadContainer}>
+            <TouchableOpacity style={styles.uploadContainer}
+            onPress={() => {
+              images.push({ url:  item.profile_picture })
+              setmodal(true)
+          }}
+            >
               <Image
                 source={{ uri: item.profile_picture }}
                 resizeMode="cover"
                 style={styles.big}
               />
-            </View>
+            </TouchableOpacity>
             <Text style={styles.nameStyle}>{item.full_name}</Text>
             <Text style={styles.nameStyle}>{item.user_name}</Text>
 
@@ -421,6 +438,12 @@ const FriendProfileScreen = ({ navigation, route }) => {
             </View>
           </SafeAreaView>
         </Modal>
+        {modal ? <ImgViewer
+                    setmodalFun={setmodalFun}
+                    modal={modal}
+                    images={images}
+                    setImages={setImages}
+                /> : null}
       </SafeAreaView>
     </ImageBackground>
   );

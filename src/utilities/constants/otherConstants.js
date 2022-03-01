@@ -450,11 +450,11 @@ const data = [
   //   navigate: 'aboutUs',
   //   img: icons.ic_map,
   // },
-  {
-    name: strings.FriendsRequest,
-    navigate: 'FriendRequests',
-    img: icons.ic_Notifications,
-  },
+  // {
+  //   name: strings.FriendsRequest,
+  //   navigate: 'FriendRequests',
+  //   img: icons.ic_Notifications,
+  // },
   {
     name: strings.Survey,
     navigate: 'Survey',
@@ -470,11 +470,11 @@ const data = [
     navigate: screenNames.Members,
     img: icons.ic_Users,
   },
-  {
-    name: strings.Friends,
-    navigate: 'Friends',
-    img: icons.ic_Notifications,
-  },
+  // {
+  //   name: strings.Friends,
+  //   navigate: 'Friends',
+  //   img: icons.ic_Notifications,
+  // },
   // {
   //   name: strings.Gallery,
   //   navigate: 'Gallery',

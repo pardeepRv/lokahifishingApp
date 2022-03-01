@@ -101,7 +101,7 @@ export default {
   submit:'Submit',
   submitsurvey:'Submit Survey',
   //Myprofile
-  boatmaker:'Boat Marker',
+  boatmaker:'Boat Maker',
   boatlength :'Boat Length',
   homeport:'Home Port :',
   vhfradio:'VHF Radio',
@@ -112,7 +112,7 @@ export default {
   edit:'Edit',
   save:'Save',
   contactnumber:'Contact Number',
-  marker:'Enter Boat Marker...',
+  marker:'Enter Boat Maker...',
 Length:'Enter Boat Length...',
 port:'Enter Home Port...',
 //LCR Filter

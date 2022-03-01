@@ -140,7 +140,7 @@ const Members = ({ navigation }) => {
           {/* <Text style={styles.nameStyle}>FullName :{item.full_name}</Text> */}
           <Text>Member Since :
             <TimeAgo
-              time={item.email_verified_at}
+              time={item.created_at}
             /></Text>
         </View>
       </View>

@@ -42,7 +42,7 @@ const BoatInfo = ({ navigation }) => {
             <View style={styles.Container}>
               <View style={styles.rowContent}>
                 <Image
-                  source={icons.signin_bg_ic}
+                  // source={icons.signin_bg_ic}
                   source={
                     auth && auth.userAllData && auth.userAllData.boat_info && auth.userAllData.boat_info.length > 0 ?
                       { uri: auth && auth.userAllData && auth.userAllData.boat_info[0].boat_image }

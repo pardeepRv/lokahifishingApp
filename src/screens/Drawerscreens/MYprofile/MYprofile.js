@@ -136,15 +136,15 @@ const MYprofile = ({navigation}) => {
               fontSize: 14,
             },
             indicatorStyle: {
-              backgroundColor: colors.white1,
+              backgroundColor: colors.transparent,
             },
           }}>
             <Tab.Screen name="Boat Info" component={BoatInfo} />
-          <Tab.Screen
+          {/* <Tab.Screen
             name="Emergency Contact"
             children={() => <EmergencyContacts {...auth} />}
           />
-          <Tab.Screen name="LCR" component={LCR} />
+          <Tab.Screen name="LCR" component={LCR} /> */}
         </Tab.Navigator>
       </SafeAreaView>
       <Loader isLoading={auth.loading} isAbsolute />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,  {useState} from 'react';
 import {
   Image,
   ImageBackground,
@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { fonts, icons } from '../../../../../assets';
 import { Loader } from '../../../../components/common';
 import { Header } from '../../../../components/common/Header';
+import ImgViewer from '../../../../components/common/ImgViewer';
 import {
   colors,
   FISHES_IMAGES,
@@ -22,10 +23,20 @@ import {
 import { layout } from '../../../../utilities/layout';
 import styles from './styles';
 
+let images = [];
+
 const LCRDetails = ({ navigation, route }) => {
   const { item, allDropDown } = route.params;
+  const [modal, setmodal] = useState(false);
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
+  const setmodalFun = (v) => {
+    setmodal(v)
+}
+
+const setImages = () => {
+    images = [];
+}
 
   console.log(app, 'appp in lcrlist   page>>>>>>>>>>');
   console.log(auth, 'auth in lcrlist page >>>>>>>>>>');
@@ -76,13 +87,18 @@ const LCRDetails = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
         >
           <View style={styles.content}>
-            <View style={styles.picView}>
+            <TouchableOpacity style={styles.picView}
+                onPress={() => {
+                  images.push({ url: item && item.user && item.user.profile_picture})
+                  setmodal(true)
+              }}
+            >
               <Image
                 // source={icons.loginLogo}
                 source={{
-                  // uri: item && item.user && item.user.profile_picture
+                  uri: item && item.user && item.user.profile_picture
                   // uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/LCR_images/user_fishes/${item.image}`,
-                uri: `http://admin.lokahifishing.com/LCR_images/user_fishes/${item.image}`,
+                // uri: `http://admin.lokahifishing.com/LCR_images/user_fishes/${item.image}`,
 
                 }}
                 // onLoadStart={() => setImgIsLoading(true)}
@@ -92,16 +108,22 @@ const LCRDetails = ({ navigation, route }) => {
               // style={styles.pic}
               />
               {/* <ActivityIndicator size='large' color='#ffffff' style={    styles.loading } /> */}
-            </View>
+            </TouchableOpacity>
             <View style={styles.userInfo}>
+              <TouchableOpacity 
+                onPress={() => {
+                  images.push({ url: `http://admin.lokahifishing.com/LCR_images/user_fishes/${item.image}`})
+                  setmodal(true)
+              }}
+              >
               <Image
                 source={{
-                  uri: `${FISHES_IMAGES}${item && item.fish && item.fish.image
-                    }`,
+                  uri: `http://admin.lokahifishing.com/LCR_images/user_fishes/${item.image}`,
                 }}
                 style={styles.profilePic}
                 resizeMode="contain"
               />
+              </TouchableOpacity>
               <Text style={styles.text}>
                 {item && item.fish && item.fish.title}
               </Text>
@@ -180,6 +202,12 @@ const LCRDetails = ({ navigation, route }) => {
             </View>
           </View>
         </ScrollView>
+        {modal ? <ImgViewer
+                    setmodalFun={setmodalFun}
+                    modal={modal}
+                    images={images}
+                    setImages={setImages}
+                /> : null}
       </SafeAreaView>
       <Loader isLoading={app.loading} isAbsolute />
     </ImageBackground>

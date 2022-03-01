@@ -262,6 +262,12 @@ const PhotoSharing = ({ navigation }) => {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
+                    <TouchableOpacity
+                     onPress={() => {
+                        images.push({ url: item.user_image })
+                        setmodal(true)
+                    }}
+                    >
                     <Image
                         source={{
                             uri: item.user_image
@@ -272,6 +278,7 @@ const PhotoSharing = ({ navigation }) => {
                             borderRadius: 25
                         }}
                     />
+                    </TouchableOpacity>
                     <Text style={[styles.nameStyle, { fontSize: 16, fontFamily: fonts.bold }]}>{item.user_name}</Text>
                     <>
                         {item && item.photosharingmedia && (
@@ -412,6 +419,12 @@ const PhotoSharing = ({ navigation }) => {
                             paddingVertical: 10
                         }}
                     >
+                        <TouchableOpacity
+                         onPress={() => {
+                            images.push({ url: auth && auth.userDetails && auth.userDetails.profile_picture})
+                            setmodal(true)
+                        }}
+                        >
                         <Image
                             source={{
                                 uri: auth && auth.userDetails && auth.userDetails.profile_picture
@@ -422,6 +435,7 @@ const PhotoSharing = ({ navigation }) => {
                                 borderRadius: 25
                             }}
                         />
+                        </TouchableOpacity>
                         <Text style={{
                             fontFamily: fonts.bold,
                             fontSize: moderateScale(16),

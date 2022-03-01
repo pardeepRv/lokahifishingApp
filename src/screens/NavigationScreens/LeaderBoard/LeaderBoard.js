@@ -130,6 +130,15 @@ const LeaderBoard = ({ navigation }) => {
     setmodal(v)
 }
 
+const getDate = () => {
+  let tempDate = date.toString().split(' ');
+  console.log('object :>> ', date.toString().split(' '));
+ setdatetext(`${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`)
+  return date !== ''
+    ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
+    : '';
+};
+
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
   console.log(auth, 'auth in leaderboard >>>>>>>>>>>>>>');
@@ -511,7 +520,8 @@ const LeaderBoard = ({ navigation }) => {
           <Text style={styles.fullname}>{item?.user?.full_name}</Text>
           <Text style={styles.time}>
             Caught on:
-            <TimeAgo time={item?.LCR_DateTime} />
+            {item?.LCR_DateTime}
+            {/* <TimeAgo time={item?.LCR_DateTime} hideAgo={true} /> */}
           </Text>
           <Text style={styles.time}>{item?.fish?.title}</Text>
         </View>

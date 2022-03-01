@@ -69,7 +69,7 @@ const Edit = ({ navigation }) => {
         }}>
         <Tab.Screen name="profile" component={EditProfile} />
         <Tab.Screen name="Boat info" component={BInfo} />
-        <Tab.Screen name="EmergencyContacts" component={EditContacts} />
+        {/* <Tab.Screen name="EmergencyContacts" component={EditContacts} /> */}
       </Tab.Navigator>
     </SafeAreaView>
   );

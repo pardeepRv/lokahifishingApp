@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
-import React, { useEffect, useState  , useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -51,7 +51,7 @@ const FishData = ({ navigation, route }) => {
   const { previousScreen } = route && route.params;
   const [modalVisible1, setModalVisible1] = useState(false);
   const [email, setEmail] = useState('');
-
+  console.log('email :>> ', email);
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
   const isFocused = useIsFocused();
@@ -69,6 +69,13 @@ const FishData = ({ navigation, route }) => {
   const _onChangeText = key => val => {
     setState({ ...state, [key]: val });
   };
+
+  const setText = (t) => {
+    console.log(t, 'hvuvdw');
+    setEmail(t);
+
+
+  }
 
   const [price, setPrice] = useState(0);
 
@@ -108,26 +115,31 @@ const FishData = ({ navigation, route }) => {
 
   console.log(harbor, 'harborharborharbor');
   useEffect(() => {
-    const viewId = findNodeHandle(ref.current);
-    createFragment(viewId);
+    if (Platform.OS === 'android') {
+      const viewId = findNodeHandle(ref.current);
+      createFragment(viewId);
+    }
+    else {
+      GetLocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        //I'm not sure what is best for the timeout to be set as. Some more testing could be beneficial
+        timeout: 15000,
+      })
+        .then(location => {
+          console.log('getting locationn >>>>>>>>>>>>>', location);
+
+          setLocation(location);
+        })
+        .catch(error => {
+          const { code, message } = error;
+          console.log(code, message);
+        })
+    }
     load();
-   
-      // GetLocation.getCurrentPosition({
-      //   enableHighAccuracy: true,
-      //   //I'm not sure what is best for the timeout to be set as. Some more testing could be beneficial
-      //   timeout: 15000,
-      // })
-      //   .then(location => {
-      //     console.log('getting locationn >>>>>>>>>>>>>', location);
-  
-      //     setLocation(location);
-      //   })
-      //   .catch(error => {
-      //     const { code, message } = error;
-      //     console.log(code, message);
-      //   })
-      
-   
+
+
+
+
 
     //   if(isFocused){
     //     setModalVisible1(true);
@@ -357,15 +369,15 @@ const FishData = ({ navigation, route }) => {
           navigation.goBack();
         }}
         onRightPress={_postCatchReport}
-        rightIconSource={icons.post}
+        rightIconSource={icons.post1}
         rightIconStyle={{
-          height: 30,
-          width: 30,
+          height: 35,
+          width: 35,
           tintColor: colors.green1,
         }}
       />
       <SafeAreaView style={styles.safeAreaView}>
-        <ScrollView  nestedScrollEnabled style={{ flex: 1  }}>
+        <ScrollView nestedScrollEnabled style={{ flex: 1 }}>
           {/* <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
           keyboardVerticalOffset={50}
@@ -635,45 +647,45 @@ const FishData = ({ navigation, route }) => {
                   backgroundColor: 'black',
                 }}
               /> :
-              <MyViewManager
-      style={{
-        // converts dpi to px, provide desired height
-        height: PixelRatio.getPixelSizeForLayoutSize(390),
-        // converts dpi to px, provide desired width
-        width: PixelRatio.getPixelSizeForLayoutSize(430)
-      }}
-      ref={ref}
-    />
-      //        
-              // <MapView
-              //   provider={
-              //     Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
-              //   } // remove if not using Google Maps
-              //   style={styles.map}
-              //   region={{
-              //     latitude:
-              //       location && location.latitude ? location.latitude : 31.9311,
-              //     longitude:
-              //       location && location.longitude
-              //         ? location.longitude
-              //         : 75.8941,
-              //     latitudeDelta: 0.015,
-              //     longitudeDelta: 0.0121,
-              //   }}>
-              //   <MapView.Marker
-              //     coordinate={{
-              //       latitude:
-              //         location && location.latitude
-              //           ? location.latitude
-              //           : 31.9311,
-              //       longitude:
-              //         location && location.longitude
-              //           ? location.longitude
-              //           : 75.8941,
-              //     }}
-              //   />
-              // </MapView>
-            }
+                <MyViewManager
+                  style={{
+                    // converts dpi to px, provide desired height
+                    height: PixelRatio.getPixelSizeForLayoutSize(390),
+                    // converts dpi to px, provide desired width
+                    width: PixelRatio.getPixelSizeForLayoutSize(430)
+                  }}
+                  ref={ref}
+                />
+                //        
+                // <MapView
+                //   provider={
+                //     Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
+                //   } // remove if not using Google Maps
+                //   style={styles.map}
+                //   region={{
+                //     latitude:
+                //       location && location.latitude ? location.latitude : 31.9311,
+                //     longitude:
+                //       location && location.longitude
+                //         ? location.longitude
+                //         : 75.8941,
+                //     latitudeDelta: 0.015,
+                //     longitudeDelta: 0.0121,
+                //   }}>
+                //   <MapView.Marker
+                //     coordinate={{
+                //       latitude:
+                //         location && location.latitude
+                //           ? location.latitude
+                //           : 31.9311,
+                //       longitude:
+                //         location && location.longitude
+                //           ? location.longitude
+                //           : 75.8941,
+                //     }}
+                //   />
+                // </MapView>
+              }
             </View>
             {/* {Platform.OS === 'android' ?
               <>{location ? (
@@ -850,6 +862,7 @@ const FishData = ({ navigation, route }) => {
                   onChangeValue={(value) => {
                     console.log(value, "onChangeValue");
                     if (value == "Other") {
+
                       setModalVisible1(true)
                     } else {
                       setModalVisible1(false)
@@ -871,25 +884,12 @@ const FishData = ({ navigation, route }) => {
               }}>
               <TextInput
                 placeholder="Add any additional notes you would like"
-                autoCapitalize="sentences"
-                // style={{
-                //   fontSize: 16,
-                //   paddingHorizontal: 10,
-                //   borderTopWidth: 1,
-                //   borderColor: 'lightgray',
-                //   paddingTop: 15,
-                //   height: windowHeight * 0.35,
-                //   paddingBottom : moderateScale(30)
-                // }}
+                autoCapitalize="sentences" 
                 style={{
                   height: windowHeight * 0.35,
-                  // height: moderateScale(60),
-                  // paddingBottom: moderateScale(30),
-                  // borderWidth: 1,
                   padding: 9,
                   borderTopWidth: 1,
                   fontSize: 16,
-                  // backgroundColor: colors.white1,
                   borderColor: 'lightgray',
                   top: 5,
                   paddingHorizontal: 10,
@@ -919,20 +919,20 @@ const FishData = ({ navigation, route }) => {
           <View style={styles.modalcontent}>
             <View style={styles.modalcontainer}>
               <View >
-              <Text style={styles.modaltextlogo}>Please enter the other option</Text>
+                <Text style={styles.modaltextlogo}>Please enter the other option</Text>
               </View>
-              <View style={{top:13,  flex:1,
-                  width: layout.size.width / 2, }}>
-                  <TextInputComp
-                    // label={strings.Password}
-                    value={email}
-                    // secureTextEntry
-                    placeholder={"Enter other"}
-                    labelTextStyle={styles.labelTextStyle}
-                    onChangeText={email => setEmail(email)}
-                  />
-               
-                </View>
+              <View style={{
+                top: 13, flex: 1,
+                width: layout.size.width / 2,
+              }}>
+                <TextInputComp
+                  value={email}
+                  placeholder={"Enter other"}
+                  labelTextStyle={styles.labelTextStyle}
+                  onChangeText={email => setText(email)}
+                />
+
+              </View>
               <View style={styles.modalbuttonviewstyle}>
                 <TouchableOpacity
                   style={styles.modalbuttonstyle}
@@ -940,6 +940,9 @@ const FishData = ({ navigation, route }) => {
                   // onPress={() => onButtonPressed(true)}
                   onPress={() => {
                     setModalVisible1(false);
+                    harborItems.unshift({ label: email, value: email })
+                    setHarborItems(harborItems)
+                    setEmail('')
                   }}>
                   <Text style={styles.modalbuttontextstyle}>OK</Text>
                 </TouchableOpacity>

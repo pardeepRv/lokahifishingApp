@@ -23,6 +23,8 @@ import signin_bg_ic from './icons/signin_bg_ic.png';
 import signin_bg_icx from './icons/signin_bg_icx.png';
 import save from './icons/SAVE.png';
 import post from './icons/POST.png';
+import post1 from './icons/POST1.png';
+
 import ic_radio_btn_on from './icons/ic_radio_btn_on.png';
 import ic_radio_btn_off from './icons/ic_radio_btn_offx.png';
 import ic_back_white from './icons/ic_back_white.png';
@@ -120,6 +122,7 @@ import NewsIcon from './icons/home-icons/NewsIcon.png';
 import TidesIcon2 from './icons/home-icons/TidesIcon2.png';
 import PhotoIcon from './icons/home-icons/PhotoIcon.png';
 import TournamentIcon from './icons/home-icons/TournamentIcon.png';
+import post_icons from './icons/post-office.png';
 
 import ic_Fish01 from './icons/dashbaordImages/Fish01.png';
 import ic_Fish02 from './icons/dashbaordImages/Fish02.png';
@@ -185,7 +188,9 @@ import ProfilePlaceholder from './icons/drawer/ProfilePlaceholder.jpg';
 
 const icons = {
   like_me,
+  post_icons,
   like_u,
+  post1,
   plane,
   ic_downA,
   like,

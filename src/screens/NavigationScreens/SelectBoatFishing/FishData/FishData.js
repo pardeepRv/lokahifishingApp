@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState  , useRef} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -8,8 +8,11 @@ import {
   Keyboard, Modal, Platform, requireNativeComponent, SafeAreaView,
   ScrollView,
   Switch,
+  NativeModules,
   Text,
-  TextInput, TouchableOpacity, View
+  TextInput, TouchableOpacity, View,
+  UIManager, findNodeHandle,
+  PixelRatio
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import GetLocation from 'react-native-get-location';
@@ -27,11 +30,24 @@ import * as NavigationService from '../../../../store/NavigationService';
 import { colors, screenNames } from '../../../../utilities/constants';
 import { layout } from '../../../../utilities/layout';
 import styles from './styles';
+import { MyViewManager } from '../../../../components/common/MyViewManager';
+
+
+const createFragment = (viewId) =>
+  UIManager.dispatchViewManagerCommand(
+    viewId,
+    // we are calling the 'create' command
+    UIManager.MyViewManager.Commands.create.toString(),
+    [viewId]
+  );
+
+const { ActivityStarterModule } = NativeModules;
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ApplmapNoaa = requireNativeComponent('Switch');
 const FishData = ({ navigation, route }) => {
+  const ref = useRef(null);
   const { previousScreen } = route && route.params;
   const [modalVisible1, setModalVisible1] = useState(false);
   const [email, setEmail] = useState('');
@@ -92,21 +108,26 @@ const FishData = ({ navigation, route }) => {
 
   console.log(harbor, 'harborharborharbor');
   useEffect(() => {
+    const viewId = findNodeHandle(ref.current);
+    createFragment(viewId);
     load();
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      //I'm not sure what is best for the timeout to be set as. Some more testing could be beneficial
-      timeout: 15000,
-    })
-      .then(location => {
-        console.log('getting locationn >>>>>>>>>>>>>', location);
-
-        setLocation(location);
-      })
-      .catch(error => {
-        const { code, message } = error;
-        console.log(code, message);
-      });
+   
+      // GetLocation.getCurrentPosition({
+      //   enableHighAccuracy: true,
+      //   //I'm not sure what is best for the timeout to be set as. Some more testing could be beneficial
+      //   timeout: 15000,
+      // })
+      //   .then(location => {
+      //     console.log('getting locationn >>>>>>>>>>>>>', location);
+  
+      //     setLocation(location);
+      //   })
+      //   .catch(error => {
+      //     const { code, message } = error;
+      //     console.log(code, message);
+      //   })
+      
+   
 
     //   if(isFocused){
     //     setModalVisible1(true);
@@ -344,7 +365,7 @@ const FishData = ({ navigation, route }) => {
         }}
       />
       <SafeAreaView style={styles.safeAreaView}>
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView  nestedScrollEnabled style={{ flex: 1  }}>
           {/* <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
           keyboardVerticalOffset={50}
@@ -354,6 +375,7 @@ const FishData = ({ navigation, route }) => {
           showsVerticalScrollIndicator={false}> */}
           <KeyboardAwareScrollView
             // extraScrollHeight={10}
+            nestedScrollEnabled
             enableOnAndroid={true}
             style={styles.subContainer}
             contentContainerStyle={styles.subContentContainer}
@@ -612,36 +634,48 @@ const FishData = ({ navigation, route }) => {
                   width: windowWidth,
                   backgroundColor: 'black',
                 }}
-              /> : <MapView
-                provider={
-                  Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
-                } // remove if not using Google Maps
-                style={styles.map}
-                region={{
-                  latitude:
-                    location && location.latitude ? location.latitude : 31.9311,
-                  longitude:
-                    location && location.longitude
-                      ? location.longitude
-                      : 75.8941,
-                  latitudeDelta: 0.015,
-                  longitudeDelta: 0.0121,
-                }}>
-                <MapView.Marker
-                  coordinate={{
-                    latitude:
-                      location && location.latitude
-                        ? location.latitude
-                        : 31.9311,
-                    longitude:
-                      location && location.longitude
-                        ? location.longitude
-                        : 75.8941,
-                  }}
-                />
-              </MapView>}
+              /> :
+              <MyViewManager
+      style={{
+        // converts dpi to px, provide desired height
+        height: PixelRatio.getPixelSizeForLayoutSize(390),
+        // converts dpi to px, provide desired width
+        width: PixelRatio.getPixelSizeForLayoutSize(430)
+      }}
+      ref={ref}
+    />
+      //        
+              // <MapView
+              //   provider={
+              //     Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
+              //   } // remove if not using Google Maps
+              //   style={styles.map}
+              //   region={{
+              //     latitude:
+              //       location && location.latitude ? location.latitude : 31.9311,
+              //     longitude:
+              //       location && location.longitude
+              //         ? location.longitude
+              //         : 75.8941,
+              //     latitudeDelta: 0.015,
+              //     longitudeDelta: 0.0121,
+              //   }}>
+              //   <MapView.Marker
+              //     coordinate={{
+              //       latitude:
+              //         location && location.latitude
+              //           ? location.latitude
+              //           : 31.9311,
+              //       longitude:
+              //         location && location.longitude
+              //           ? location.longitude
+              //           : 75.8941,
+              //     }}
+              //   />
+              // </MapView>
+            }
             </View>
-            {Platform.OS === 'android' ?
+            {/* {Platform.OS === 'android' ?
               <>{location ? (
                 <View
                   style={{
@@ -700,7 +734,7 @@ const FishData = ({ navigation, route }) => {
                   </Text>
                 </View>
               )}</>
-              : null}
+              : null} */}
             {/* {location ? (
                 <View
                   style={{

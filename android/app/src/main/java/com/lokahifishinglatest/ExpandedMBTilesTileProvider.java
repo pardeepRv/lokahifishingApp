@@ -1,4 +1,4 @@
-package com.newproject;
+package com.lokahifishinglatest;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

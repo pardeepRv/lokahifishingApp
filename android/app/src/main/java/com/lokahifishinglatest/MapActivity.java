@@ -1,4 +1,4 @@
-package com.newproject;
+package com.lokahifishinglatest;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
@@ -26,16 +26,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.esri.android.map.MapView;
-import com.esri.android.map.TiledServiceLayer;
-import com.esri.android.map.ags.ArcGISTiledMapServiceLayer;
-import com.esri.android.map.event.OnSingleTapListener;
-import com.esri.android.map.event.OnZoomListener;
-import com.esri.core.geometry.Point;
-import com.esri.core.portal.PortalInfo;
-import com.esri.core.symbol.SimpleLineSymbol;
-import com.esri.core.symbol.SimpleMarkerSymbol;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
@@ -49,9 +39,6 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.TileProvider;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.newproject.ctsMap.ChartTileServiceLayer;
-import com.newproject.ctsMap.MBTilesLayer;
-import com.newproject.ctsMap.MapTilePoint;
 
 import java.io.File;
 import java.io.Serializable;
@@ -59,13 +46,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
-    MapView mMapView = null;
+//    MapView mMapView = null;
 
     private static final String FILE_PATH = "Tiles";
     private static final String TILE9_URL = "https://tileservice.charts.noaa.gov/mbtiles/50000_1/MBTILES_08.mbtiles";
 //    private static final String TILE9_URL = "https://s3.us-east-2.amazonaws.com/lokahimapfiles/MBTILES_09.mbtiles";
-    MBTilesLayer[] layers = new MBTilesLayer[28];
-    ArcGISTiledMapServiceLayer mArcGISTiledMapServiceLayer;
+//    MBTilesLayer[] layers = new MBTilesLayer[28];
+//    ArcGISTiledMapServiceLayer mArcGISTiledMapServiceLayer;
     boolean mActiveNetwork;
     private GoogleMap mMap;
     private Boolean onMapClicked = false;
@@ -98,22 +85,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // enable map to wrap around
 //        mMapView.enableWrapAround(true);
 
-        if (savedInstanceState != null) {
-            List layerState = (List) savedInstanceState.get("layerState");
-            if (layerState != null) {
-                for (int i = 0; i < layerState.size(); i++) {
-                    boolean selected = (boolean) layerState.get(i);
-                    if (selected) {
-                        MBTilesLayer layer = new ChartTileServiceLayer(Environment.getExternalStorageDirectory() +
-                                FILE_PATH + "/" + mMbTilesNames[i] + ".mbtiles",
-                                this.getBaseContext());
-                        mMapView.addLayer(layer);
-                        layers[i] = layer;
-                    }
-                }
-                Toast.makeText(this, "Restored " + layerState.size() + " layers", Toast.LENGTH_SHORT).show();
-            }
-        }
+//        if (savedInstanceState != null) {
+//            List layerState = (List) savedInstanceState.get("layerState");
+//            if (layerState != null) {
+//                for (int i = 0; i < layerState.size(); i++) {
+//                    boolean selected = (boolean) layerState.get(i);
+//                    if (selected) {
+//                        MBTilesLayer layer = new ChartTileServiceLayer(Environment.getExternalStorageDirectory() +
+//                                FILE_PATH + "/" + mMbTilesNames[i] + ".mbtiles",
+//                                this.getBaseContext());
+//                        mMapView.addLayer(layer);
+//                        layers[i] = layer;
+//                    }
+//                }
+//                Toast.makeText(this, "Restored " + layerState.size() + " layers", Toast.LENGTH_SHORT).show();
+//            }
+//        }
 
         requestPermissions();
 
@@ -197,129 +184,129 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     };
 
-    private void initMap() {
-        mActiveNetwork = isNetworkAvailable();
-        if (mActiveNetwork) {
-            mArcGISTiledMapServiceLayer = new ArcGISTiledMapServiceLayer(
-//                    "https://tileservice.charts.noaa.gov/mbtiles/50000_1/MBTILES_08.mbtiles");
-                    "http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer");
-            // Add tiled layer to MapView
-            mMapView.addLayer(mArcGISTiledMapServiceLayer);
-        } else {
-            Toast toast = Toast.makeText(this, R.string.offline_message, Toast.LENGTH_SHORT);
-            toast.show();
-        }
-
-
-        // Handle tap event to demo UTFGrid metadata retrieval
-        mMapView.setOnSingleTapListener(new OnSingleTapListener() {
-            private static final long serialVersionUID = 1L;
-
-            public void onSingleTap(float screenX, float screenY) {
-                if (MapTilePoint.mScaleMap.containsKey(mMapView.getScale())) {
-                    MBTilesLayer firstLayer = findFirstLayer();
-                    if (firstLayer != null) {
-                        TiledServiceLayer.TileInfo tileInfo = firstLayer.mTileInfo;
-                        MapTilePoint localMapTilePoint = new MapTilePoint(mMapView.toMapPoint(screenX, screenY), mMapView.getScale(), layers);
-                        try {
-                            String json = localMapTilePoint.getGridJson();
-                            Point screenPoint = new Point(Math.round(screenX), Math.round(screenY));
-//                          create a map point from screen point
+//    private void initMap() {
+//        mActiveNetwork = isNetworkAvailable();
+//        if (mActiveNetwork) {
+//            mArcGISTiledMapServiceLayer = new ArcGISTiledMapServiceLayer(
+////                    "https://tileservice.charts.noaa.gov/mbtiles/50000_1/MBTILES_08.mbtiles");
+//                    "http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer");
+//            // Add tiled layer to MapView
+//            mMapView.addLayer(mArcGISTiledMapServiceLayer);
+//        } else {
+//            Toast toast = Toast.makeText(this, R.string.offline_message, Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
 //
-
-
-                            android.graphics.Point point;
-                            point = new android.graphics.Point(Math.round(screenX), Math.round(screenY));
-
-                            // create an opaque orange (0xFFFF5733) point symbol with a blue (0xFF0063FF) outline symbol
-                            SimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbol(0xFFFF5733, 20, SimpleMarkerSymbol.STYLE.DIAMOND);
-
-                            SimpleLineSymbol blueOutlineSymbol = new SimpleLineSymbol(0xFFFF5733, 20, SimpleLineSymbol.STYLE.SOLID);
-                            simpleMarkerSymbol.setOutline(blueOutlineSymbol);
-
-//                          format output
-                            Log.d("TAG MAP POINT", "Lat: " + String.format("%.4f", tileInfo.getOrigin().getX()) + ", Lon: " + String.format("%.4f", tileInfo.getOrigin().getX()));
-
-                            Toast.makeText(MapActivity.this, "/" + localMapTilePoint.getMapTile().getZ() + "/" + localMapTilePoint.getMapTile().getX() + "/" + localMapTilePoint.getMapTile().getY() + " (" + localMapTilePoint.getX() + ", " + localMapTilePoint.getX() + ") " + json, Toast.LENGTH_SHORT).show();
-                        } catch (Exception localException) {
-                            Log.e("MainActivity", "Error getting grid json", localException);
-                        }
-                    }
-                }
-            }
-        });
-
-        // When zooming in or out, make sure we 'snap' to a scale matching a zoom level.
-        mMapView.setOnZoomListener(new OnZoomListener() {
-            private static final long serialVersionUID = 1L;
-            double mInitialScale;
-
-            public void postAction(float param1, float param2, double param3) {
-                double scale = findNearestScale(this.mInitialScale, mMapView.getScale());
-                if (scale != mMapView.getScale()) {
-                    Log.i("MainActivity", "Snapping to scale: " + scale);
-                    mMapView.zoomToScale(mMapView.getCenter(), scale);
-                    return;
-                }
-                Log.i("MainActivity", "Already at nearest scale");
-            }
-
-            public void preAction(float param1, float param2, double param3) {
-                this.mInitialScale = mMapView.getScale();
-            }
-        });
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        List layerState = new ArrayList<Boolean>();
-        for (int i = 0; i < layers.length; i++) {
-            if (layers[i] != null) {
-                layerState.add(true);
-            } else {
-                layerState.add(false);
-            }
-        }
-        outState.putSerializable("layerState", (Serializable) layerState);
-        super.onSaveInstanceState(outState);
-    }
-
-    private MBTilesLayer findFirstLayer() {
-        MBTilesLayer localMBTilesLayer = null;
-        int i = 0;
-        while (i < this.layers.length) {
-            if (this.layers[i] != null) {
-                localMBTilesLayer = this.layers[i];
-            }
-            i += 1;
-        }
-        return localMBTilesLayer;
-    }
-
-
-    private double findNearestScale(double initialScale, double currentScale) {
-        if (findFirstLayer() != null && findFirstLayer().getTileInfo() != null) {
-            double[] scales = findFirstLayer().getTileInfo().getScales();
-            int i = 0;
-            while (i < scales.length) {
-                if (i < scales.length - 1) {
-                    double d1 = scales[i];
-                    double d2 = scales[(i + 1)];
-                    Log.i("MainActivity", "scale1: " + d1);
-                    Log.i("MainActivity", "currentScale: " + currentScale);
-                    Log.i("MainActivity", "scale2: " + d2);
-                    if ((currentScale < d1) && (currentScale > d2)) {
-                        if (currentScale > initialScale) {
-                            return d1;
-                        }
-                        return d2;
-                    }
-                }
-                i += 1;
-            }
-        }
-        return currentScale;
-    }
+//
+//        // Handle tap event to demo UTFGrid metadata retrieval
+//        mMapView.setOnSingleTapListener(new OnSingleTapListener() {
+//            private static final long serialVersionUID = 1L;
+//
+//            public void onSingleTap(float screenX, float screenY) {
+//                if (MapTilePoint.mScaleMap.containsKey(mMapView.getScale())) {
+//                    MBTilesLayer firstLayer = findFirstLayer();
+//                    if (firstLayer != null) {
+//                        TiledServiceLayer.TileInfo tileInfo = firstLayer.mTileInfo;
+//                        MapTilePoint localMapTilePoint = new MapTilePoint(mMapView.toMapPoint(screenX, screenY), mMapView.getScale(), layers);
+//                        try {
+//                            String json = localMapTilePoint.getGridJson();
+//                            Point screenPoint = new Point(Math.round(screenX), Math.round(screenY));
+////                          create a map point from screen point
+////
+//
+//
+//                            android.graphics.Point point;
+//                            point = new android.graphics.Point(Math.round(screenX), Math.round(screenY));
+//
+//                            // create an opaque orange (0xFFFF5733) point symbol with a blue (0xFF0063FF) outline symbol
+//                            SimpleMarkerSymbol simpleMarkerSymbol = new SimpleMarkerSymbol(0xFFFF5733, 20, SimpleMarkerSymbol.STYLE.DIAMOND);
+//
+//                            SimpleLineSymbol blueOutlineSymbol = new SimpleLineSymbol(0xFFFF5733, 20, SimpleLineSymbol.STYLE.SOLID);
+//                            simpleMarkerSymbol.setOutline(blueOutlineSymbol);
+//
+////                          format output
+//                            Log.d("TAG MAP POINT", "Lat: " + String.format("%.4f", tileInfo.getOrigin().getX()) + ", Lon: " + String.format("%.4f", tileInfo.getOrigin().getX()));
+//
+//                            Toast.makeText(MapActivity.this, "/" + localMapTilePoint.getMapTile().getZ() + "/" + localMapTilePoint.getMapTile().getX() + "/" + localMapTilePoint.getMapTile().getY() + " (" + localMapTilePoint.getX() + ", " + localMapTilePoint.getX() + ") " + json, Toast.LENGTH_SHORT).show();
+//                        } catch (Exception localException) {
+//                            Log.e("MainActivity", "Error getting grid json", localException);
+//                        }
+//                    }
+//                }
+//            }
+//        });
+//
+//        // When zooming in or out, make sure we 'snap' to a scale matching a zoom level.
+//        mMapView.setOnZoomListener(new OnZoomListener() {
+//            private static final long serialVersionUID = 1L;
+//            double mInitialScale;
+//
+//            public void postAction(float param1, float param2, double param3) {
+//                double scale = findNearestScale(this.mInitialScale, mMapView.getScale());
+//                if (scale != mMapView.getScale()) {
+//                    Log.i("MainActivity", "Snapping to scale: " + scale);
+//                    mMapView.zoomToScale(mMapView.getCenter(), scale);
+//                    return;
+//                }
+//                Log.i("MainActivity", "Already at nearest scale");
+//            }
+//
+//            public void preAction(float param1, float param2, double param3) {
+//                this.mInitialScale = mMapView.getScale();
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        List layerState = new ArrayList<Boolean>();
+//        for (int i = 0; i < layers.length; i++) {
+//            if (layers[i] != null) {
+//                layerState.add(true);
+//            } else {
+//                layerState.add(false);
+//            }
+//        }
+//        outState.putSerializable("layerState", (Serializable) layerState);
+//        super.onSaveInstanceState(outState);
+//    }
+//
+//    private MBTilesLayer findFirstLayer() {
+//        MBTilesLayer localMBTilesLayer = null;
+//        int i = 0;
+//        while (i < this.layers.length) {
+//            if (this.layers[i] != null) {
+//                localMBTilesLayer = this.layers[i];
+//            }
+//            i += 1;
+//        }
+//        return localMBTilesLayer;
+//    }
+//
+//
+//    private double findNearestScale(double initialScale, double currentScale) {
+//        if (findFirstLayer() != null && findFirstLayer().getTileInfo() != null) {
+//            double[] scales = findFirstLayer().getTileInfo().getScales();
+//            int i = 0;
+//            while (i < scales.length) {
+//                if (i < scales.length - 1) {
+//                    double d1 = scales[i];
+//                    double d2 = scales[(i + 1)];
+//                    Log.i("MainActivity", "scale1: " + d1);
+//                    Log.i("MainActivity", "currentScale: " + currentScale);
+//                    Log.i("MainActivity", "scale2: " + d2);
+//                    if ((currentScale < d1) && (currentScale > d2)) {
+//                        if (currentScale > initialScale) {
+//                            return d1;
+//                        }
+//                        return d2;
+//                    }
+//                }
+//                i += 1;
+//            }
+//        }
+//        return currentScale;
+//    }
 
 
     private boolean isNetworkAvailable() {
@@ -372,12 +359,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         }
                     }
                 });
-                locationProvider.getLastLocation().addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i("Location", "Fail:: " + e.getLocalizedMessage());
-                    }
-                });
+
             }
         }
     }

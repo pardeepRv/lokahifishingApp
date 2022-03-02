@@ -138,10 +138,8 @@ const Members = ({ navigation }) => {
           }}>{tabIndex == 2 ? (<Text style={styles.nameStyle}>{item.full_name}</Text>) : (
             <Text style={styles.nameStyle}>{item.user_name}</Text>)}
           {/* <Text style={styles.nameStyle}>FullName :{item.full_name}</Text> */}
-          <Text>Member Since :
-            <TimeAgo
-              time={item.created_at}
-            /></Text>
+          <Text>Member Since :{item.created_at}
+            </Text>
         </View>
       </View>
       <Image source={icons.ic_rightArrow} style={styles.rightArrow} />

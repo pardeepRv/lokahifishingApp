@@ -303,10 +303,10 @@ const PhotoSharing = ({ navigation }) => {
                     </>
 
                 </View>
-                <TimeAgo style={{
+                <Text style={{
                     fontSize: 14, fontFamily: fonts.semiBold,
                     color: colors.black2
-                }} time={item.created_at} />
+                }}  >{item.created_at}</Text>
 
                 <View style={{
                     margin: 10, flex: 1, height: moderateScale(200)

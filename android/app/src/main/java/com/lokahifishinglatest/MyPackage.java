@@ -1,4 +1,4 @@
-package com.lokahifishinglatest;
+package lokahi.com.lokahi;
 
 import androidx.annotation.NonNull;
 

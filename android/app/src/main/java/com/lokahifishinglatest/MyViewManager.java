@@ -1,4 +1,4 @@
-package com.lokahifishinglatest;
+package lokahi.com.lokahi;
 
 import android.view.Choreographer;
 import android.view.View;

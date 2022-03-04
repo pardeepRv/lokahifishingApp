@@ -1,4 +1,4 @@
-package com.lokahifishinglatest;
+package lokahi.com.lokahi;
 
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 

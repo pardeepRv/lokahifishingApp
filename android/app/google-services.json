@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:527485414997:android:5cf37351fd2cfe03172edc",
+        "mobilesdk_app_id": "1:527485414997:android:3487d5e922cea6db172edc",
         "android_client_info": {
-          "package_name": "com.lokahifishinglatest"
+          "package_name": "lokahi.com.lokahi"
         }
       },
       "oauth_client": [

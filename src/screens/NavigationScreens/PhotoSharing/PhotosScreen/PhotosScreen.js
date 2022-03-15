@@ -104,8 +104,7 @@ const PhotosScreen = ({navigation, route}) => {
       // compressImageQuality: 0.8,
       includeBase64: true,
     }).then(res => {
-      console.log(`ress`, res);
-      if (Platform.OS == 'ios') {
+       console.log(`ress`, res);
         if (indx == 1) {
           setPhotopost1(`data:${res.mime};base64,${res.data}`);
         } else if (indx == 2) {
@@ -117,14 +116,7 @@ const PhotosScreen = ({navigation, route}) => {
         } else {
           setPhotopost5(`data:${res.mime};base64,${res.data}`);
         }
-      } else {
-        setPhotopost1(res.path);
-        setPhotopost2(res.path);
-        setPhotopost3(res.path);
-        setPhotopost4(res.path);
-        setPhotopost5(res.path);
-
-      };
+      
     });
   }
   function _doOpenGallery(index) {
@@ -136,7 +128,7 @@ const PhotosScreen = ({navigation, route}) => {
       includeBase64: true,
     }).then(res => {
       console.log(`ress`, res);
-      if (Platform.OS == 'ios') {
+      
         if (index == 1) {
           console.log(`data:${res.mime};base64,${res.data}`,'`data:${res.mime};base64,${res.data}`');
 
@@ -150,14 +142,7 @@ const PhotosScreen = ({navigation, route}) => {
         } else {
           setPhotopost5(`data:${res.mime};base64,${res.data}`);
         }
-      } else {
-        setPhotopost1(res.path);
-        setPhotopost2(res.path);
-        setPhotopost3(res.path);
-        setPhotopost4(res.path);
-        setPhotopost5(res.path);
-
-      } 
+      
     });
   }
 

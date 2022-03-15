@@ -90,10 +90,11 @@ const Members = ({ navigation }) => {
     dispatch(
       memberlisting(token, cb => {
         if (cb) {
-          console.log(cb, 'callback list arr>>>>>>>>>>');
+            console.log(cb, 'callback list arr>>>>>>>>>>');
           if (cb?.data?.data) {
             let memberList = cb?.data?.data?.memberListing;
-            memberList.reverse();
+          // return  console.log('m', memberList)
+            // memberList.reverse();
             setMembersList(memberList)
           }
         }

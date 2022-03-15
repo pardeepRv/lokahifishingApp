@@ -12,7 +12,7 @@ const axios = Axios.create({
         }
         return false;
     },
-    timeout: 30000 //30 seconds
+    timeout: 50000 //30 seconds
 });
 
 export const request = (config: AxiosRequestConfig) => axios(config).then((response) => {

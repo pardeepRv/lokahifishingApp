@@ -44,7 +44,8 @@ const screenNames = {
   LCRlist:'LCRlist',
   LCRDetails:'LCRDetails',
   EditLCRDetails:'EditLCRDetails',
-  FriendProfileScreen :'FriendProfileScreen'
+  FriendProfileScreen :'FriendProfileScreen',
+  PhotosScreen:'PhotosScreen'
 };
 
 export { transitionConfig, screenNames };

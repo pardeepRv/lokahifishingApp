@@ -374,14 +374,20 @@ function* savelcrreport(params) {
       },
     };
     const response = yield request(config);
-    console.log(response, 'getting response from LCR api ');
+      console.log(response, 'getting response from LCR api ');
 
     if (response?.data?.success) {
       yield put({
         type: actionTypes.SAVE_LCR_REPORT_SUCCEEDED,
       });
       showSuccessAlert(response?.data?.message);
-      NavigationService.resetRoute(screenNames.HomeStack);
+      if(response?.data?.data?.LiveCatchReport?.is_private == "true"){
+        NavigationService.navigate(screenNames.PhotosScreen,{data:response?.data});
+      }
+      else {
+        NavigationService.resetRoute(screenNames.HomeStack);
+      }
+      
     } else {
       showErrorAlert(response?.data?.message);
       yield put({
@@ -630,7 +636,8 @@ function* savephotosharingsaga(params) {
         type: actionTypes.SAVE_PHOTO_SHARING_SUCCEEDED,
       });
       showSuccessAlert(response?.data?.message);
-      NavigationService.goBack();
+      NavigationService.resetRoute(screenNames.PhotoSharing);
+      // NavigationService.goBack();
     } else {
       showErrorAlert(response?.data?.message);
       yield put({
@@ -953,7 +960,7 @@ function* gettermsconditionsaga(params) {
 }
 
 function* getmemberlist(params) {
-  console.log(params, 'params in members .....api ');
+  console.log(params, 'params in members .....api');
   try {
     const config = {
       url: urls.member_listing,

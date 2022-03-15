@@ -36,6 +36,7 @@ const LCRRequired = props => {
 
   const [fishphoto, setFishphoto] = useState('');
   const [fishInput, setfishInput] = useState('');
+  const [price, setPrice] = useState(0);
 
   const [showDate, setDateStatus] = useState(false);
   const [showTime, setTimeStatus] = useState(false);
@@ -54,6 +55,12 @@ const LCRRequired = props => {
     
   };
 
+  const getHrs = v => {
+    console.log(v, ' in parnt hrs');
+    if (v > 0) {
+      setPrice(v);
+    }
+  };
 
 setTimeout(() => {
   getDate()
@@ -252,17 +259,41 @@ setTimeout(() => {
             />
           </TouchableOpacity>
         </View>
-        {/* <View style={styles.section}>
+        <View style={styles.section}>
           <View style={styles.effortTitle}>
-            <Text style={[styles.title, {marginBottom: 0}]}>Effort</Text>
+            <Text style={[styles.title, {marginBottom: 0}]}>please select</Text>
             <Text style={styles.effortSubtext}>
               (fishing time only, not travel time)
             </Text>
           </View>
           <View style={styles.subsection}>
-            <Circular />
+            {/* <Circular /> */}
           </View>
-        </View> */}
+        </View>
+        <View style={styles.textSection}>
+              <Text
+                style={styles.title}
+                onPress={() =>
+                  props.navigation.navigate('Circular', {
+                    value: 5,
+                    getHrs: getHrs,
+                  })
+                }>
+                Efforts
+              </Text>
+              {price > 0 && (
+                <Text
+                  onPress={() =>
+                    props.navigation.navigate('Circular', {
+                      value: 5,
+                      getHrs: getHrs,
+                    })
+                  }
+                  style={styles.title}>
+                  {price} hrs.
+                </Text>
+              )}
+            </View>
         <View style={styles.section}>
           <Text style={styles.title}>Date & Time</Text>
 
@@ -373,6 +404,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  textSection: {
+		borderTopWidth: 1,
+		borderColor: 'lightgray',
+		paddingVertical: 15,
+		paddingHorizontal: 10,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	},
   centeredView: {
     width: windowWidth,
     height: windowHeight,

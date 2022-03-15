@@ -161,7 +161,7 @@ const setImages = () => {
                   : item.fish.third_category}
               </Text>
             </View>
-            <View style={styles.likecommentview}>
+            {/* <View style={styles.likecommentview}>
               <View style={styles.likecomment}>
                 {item && item.lcr_liked ? (
                   <TouchableOpacity style={{}} >
@@ -199,7 +199,7 @@ const setImages = () => {
                 </TouchableOpacity>
                 <Text style={styles.likecommenttext}>{item.comments_count} Comments</Text>
               </View>
-            </View>
+            </View> */}
           </View>
         </ScrollView>
         {modal ? <ImgViewer

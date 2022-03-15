@@ -304,6 +304,7 @@ const catchReportStack = props => {
       <Stack.Screen name="FishData" component={FishData} />
       <Stack.Screen name="UploadImg" component={UploadImg} />
       <Stack.Screen name="LCRRequired" component={LCRRequired} />
+      <Stack.Screen name="PhotosScreen" component={PhotosScreen} />
       <Stack.Screen name="Circular" component={Circular} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen

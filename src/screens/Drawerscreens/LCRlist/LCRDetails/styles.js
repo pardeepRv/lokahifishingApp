@@ -166,11 +166,12 @@ export default StyleSheet.create({
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 1,
     shadowRadius: 2,
+    marginTop:10
   },
   comment: {
     fontSize: 20,
     fontWeight: '600',
-
+marginTop:10,
     color: colors.white1,
     textAlign: 'center',
   },

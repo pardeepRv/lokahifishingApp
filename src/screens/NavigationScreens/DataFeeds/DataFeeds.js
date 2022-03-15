@@ -19,22 +19,22 @@ import styles from './styles';
 let members = [
   {
     img: icons.BannerRoy,
-    title: 'BannerRoy',
+    title: 'Hobbietat',
     url: 'https://www.hawaiifishingtackle.com/',
   },
   {
     img: icons.BannerShane,
-    title: 'BannerShane',
+    title: 'POP Fishing&Marine',
     url: 'https://pop-hawaii.com/wp/',
   },
   {
     img: icons.MorrisLuresBanner,
-    title: 'MorrisLuresBanner',
+    title: 'MorrisLures',
     url: 'https://morrislures.com/',
   },
   {
     img: icons.PacificRim,
-    title: 'PacificRim',
+    title: 'Pacific Rim',
     url: 'https://pacific-rim-fishing-tackle.shoplightspeed.com/',
   },
   {
@@ -49,7 +49,7 @@ let members = [
   },
   {
     img: icons.STokunaga,
-    title: 'STokunaga',
+    title: 'Stokunaga',
     url: 'https://stokunagastore.com/',
   },
   {
@@ -59,12 +59,12 @@ let members = [
   },
   {
     img: icons.ahieps,
-    title: 'ahieps',
+    title: 'TSUTOMU',
     url: 'https://tsutomulures.com/',
   },
   {
     img: icons.gotakulogoredo,
-    title: 'gotakulogoredo',
+    title: 'GYOTAKU',
     url: 'https://gyotaku.com/',
   },
 ];

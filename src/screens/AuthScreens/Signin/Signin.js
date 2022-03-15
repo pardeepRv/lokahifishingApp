@@ -1,6 +1,6 @@
 //import liraries
 import messaging from '@react-native-firebase/messaging';
-import React, {useState} from 'react';
+import React, {useState  , useEffect} from 'react';
 import {
   Image,
   ImageBackground,
@@ -24,11 +24,18 @@ import {loginWithEmail} from '../../../store/actions';
 import {colors, screenNames} from '../../../utilities/constants';
 import {layout} from '../../../utilities/layout';
 import styles from './styles';
+import GetLocation from 'react-native-get-location';
+import { set } from 'react-native-reanimated';
+import NetInfo from "@react-native-community/netinfo";
 
 const Signin = ({navigation}) => {
   let auth = useSelector(state => state.auth);
   console.log(auth, 'auth in signin page>>>>>>>>>>');
   const dispatch = useDispatch();
+  const [location, setLocation] = useState({
+    latitude: '',
+    longitude: '',
+  });
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -49,9 +56,43 @@ const Signin = ({navigation}) => {
     {name: 'email', value: email},
     {name: 'password', value: password},
   ];
+  
+  const [isInternetReachable, setIsInternetReachable] = useState('')
+
+useEffect(() => {
+  GetLocation.getCurrentPosition({
+    enableHighAccuracy: true,
+    //I'm not sure what is best for the timeout to be set as. Some more testing could be beneficial
+    timeout: 15000,
+  })
+    .then(location => {
+      console.log('getting locationn >>>>>>>>>>>>>', location);
+
+      setLocation(location);
+    })
+    .catch(error => {
+      const { code, message } = error;
+      console.log(code, message);
+    })
+    NetInfo.fetch().then(state => {
+      console.log("Connection type", state.details.ipAddress);
+      setIsInternetReachable(state.details.ipAddress)
+      console.log("Is connected?", state.isConnected);
+    });
+
+    
+}, [])
 
   async function Done() {
     const fcmToken = await messaging().getToken();
+    console.log(
+      location && location.latitude ? location.latitude : 0.0,
+      'latitude',
+    );
+ console.log(
+      location && location.longitude ? location.longitude : 0.0,
+      'longitude',
+    );
 
     Keyboard.dismiss();
     //  navigation.navigate('HomeStack');
@@ -79,12 +120,24 @@ const Signin = ({navigation}) => {
       formData.append('email', email);
       formData.append('password', password);
       formData.append('device_token', fcmToken);
-
+      formData.append(
+        'lat',
+        location && location.latitude ? location.latitude : 0.0,
+      );
+      formData.append(
+        'long',
+        location && location.longitude ? location.longitude : 0.0,
+      );
+      formData.append('ipaddres', isInternetReachable);
+      
       let obj = {};
       obj.email = email;
       obj.password = password;
+      obj.ipaddres = isInternetReachable;
       obj.device_token = fcmToken;
-
+      obj.lat = location && location.latitude ? location.latitude : 0.0;
+      obj.long = location && location.longitude ? location.longitude : 0.0;
+         console.log('obj', obj)
       dispatch(loginWithEmail(obj));
     }
     // navigation.navigate('HomeStack');

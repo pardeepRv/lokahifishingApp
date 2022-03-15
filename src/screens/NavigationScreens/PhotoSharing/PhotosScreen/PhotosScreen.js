@@ -124,8 +124,7 @@ const PhotosScreen = ({navigation, route}) => {
         setPhotopost4(res.path);
         setPhotopost5(res.path);
 
-      }
-      0;
+      };
     });
   }
   function _doOpenGallery(index) {

@@ -131,8 +131,8 @@ android {
         applicationId "lokahi.com.lokahi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 26
-        versionName "2.0"
+        versionCode 28
+        versionName "3.0"
         vectorDrawables.useSupportLibrary = true
     }
     packagingOptions {

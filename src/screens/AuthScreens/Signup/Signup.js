@@ -360,7 +360,7 @@ const Signup = ({ navigation }) => {
                         email: '',
                       })
                     }
-                    onChangeText={email => setEmail(email)}
+                    onChangeText={email => setEmail( email.trim(), true)}
                   />
                   {errors.email ? (
                     <Text

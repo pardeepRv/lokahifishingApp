@@ -611,7 +611,7 @@ const FishData = ({ navigation, route }) => {
                 )}
               </View>
             </View>
-            <View style={styles.textSection}>
+            {/* <View style={styles.textSection}>
               <Text
                 style={styles.title}
                 onPress={() =>
@@ -634,7 +634,7 @@ const FishData = ({ navigation, route }) => {
                   {price} hrs.
                 </Text>
               )}
-            </View>
+            </View> */}
 
             <View style={styles.textSection}>
               <Text style={styles.title}>Location</Text>

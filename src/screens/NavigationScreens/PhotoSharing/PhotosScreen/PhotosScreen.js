@@ -344,7 +344,7 @@ const PhotosScreen = ({navigation, route}) => {
                     fontFamily: fonts.semiBold,
                     textAlign: 'center',
                   }}>
-                  post
+                  Post
                 </Text>
               </TouchableOpacity>
             </View>

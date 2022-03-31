@@ -394,7 +394,6 @@ const menu = [
   },
   {
     name: strings.News,
-
     navigate: 'News',
     img: icons.NewsIcon,
     bgColor: 'rgb(254, 222, 0)',

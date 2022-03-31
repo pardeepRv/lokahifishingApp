@@ -32,7 +32,7 @@ const PhotosScreen = ({navigation, route}) => {
   console.log(auth, 'auth>>>>>>>>>>>>', app, 'app>>>>>>>>>>>>>>>>');
   const dispatch = useDispatch();
   const [image, setImage] = useState(
-    route?.params?.data?.data?.LiveCatchReport?.image,
+    route?.params?.data?.data?.LiveCatchReport?.image ? route?.params?.data?.data?.LiveCatchReport?.image : null ,
   );
   const [additionalimage, setadditionalimage] = useState('');
   const [Photopost1, setPhotopost1] = useState('');
@@ -47,36 +47,38 @@ const PhotosScreen = ({navigation, route}) => {
     // if (route?.params?.data?.data?.LiveCatchReport?.is_private == "true")
     // {setPhotopost1(`http://admin.lokahifishing.com/LCR_images/user_fishes/${image}`)}
     // else {setPhotopost1()}
-    
-    let imagePath = null;
-    RNFetchBlob.config({
-      fileCache: true,
-    })
-      .fetch(
-        'GET',
-        `http://admin.lokahifishing.com/LCR_images/user_fishes/${image}`
-        ,
-      )
-      // the image is now dowloaded to device's storage
-      .then(resp => {
-        console.log('resp', resp)
-        // the image path you can use it directly with Image component
-        imagePath = resp.path();
-        return resp.readFile('base64');
+    console.log('image :>> ', image);
+    if (image != null) {
+      let imagePath = null;
+      RNFetchBlob.config({
+        fileCache: true,
       })
-      .then(base64Data => {
-        // here's base64 encoded image
-        console.log(base64Data);
-        console.log(`data:image/jpeg;base64,${base64Data}`,'`data:image/jpeg;base64,${base64Data}`');
-       setPhotopost1(`data:image/jpeg;base64,${base64Data}`)
-      //  if (!base64Data) {
-      //   setPhotopost1(`data:image/jpeg;base64,${base64Data}`)
-      // }else{setPhotopost1('')}
-        // remove the file from storage
-        return fs.unlink(imagePath);
-      });
-
-
+        .fetch(
+          'GET',
+          `http://admin.lokahifishing.com/LCR_images/user_fishes/${image}`
+          ,
+        )
+        // the image is now dowloaded to device's storage
+        .then(resp => {
+          console.log('resp', resp)
+          // the image path you can use it directly with Image component
+          imagePath = resp.path();
+          return resp.readFile('base64');
+        })
+        .then(base64Data => {
+          // here's base64 encoded image
+          console.log(base64Data , 'gdfgfdg');
+          console.log(`data:image/jpeg;base64,${base64Data}`,'`data:image/jpeg;base64,${base64Data}`');
+         setPhotopost1(`data:image/jpeg;base64,${base64Data}`)
+        //  if (!base64Data) {
+        //   setPhotopost1(`data:image/jpeg;base64,${base64Data}`)
+        // }else{setPhotopost1('')}
+          // remove the file from storage
+          return fs.unlink(imagePath);
+        });
+    } else {
+      setPhotopost1()
+    }
   }, []);
 
   function _doOpenOption(indx) {
@@ -344,7 +346,7 @@ const PhotosScreen = ({navigation, route}) => {
                     fontFamily: fonts.semiBold,
                     textAlign: 'center',
                   }}>
-                  post
+                  Post
                 </Text>
               </TouchableOpacity>
             </View>

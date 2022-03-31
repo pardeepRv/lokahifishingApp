@@ -139,7 +139,7 @@ const Members = ({ navigation }) => {
           }}>{tabIndex == 2 ? (<Text style={styles.nameStyle}>{item.full_name}</Text>) : (
             <Text style={styles.nameStyle}>{item.user_name}</Text>)}
           {/* <Text style={styles.nameStyle}>FullName :{item.full_name}</Text> */}
-          <Text>Member Since :{item.email_verified_at}
+          <Text>Member Since :{item.email_verified_at != null ? item.email_verified_at : "no date found"}
             </Text>
         </View>
       </View>

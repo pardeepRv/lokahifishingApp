@@ -29,7 +29,7 @@ const Home = ({navigation}) => {
       {/* && strings.Tids_weather */}
       <Text
         style={
-          item.name != strings.LeaderBoard && item.name != strings.Tids_weather
+          item.name != strings.LeaderBoard && item.name != strings.Tids_weather && item.name != strings.News
             ? styles.textStyle
             : [styles.textStyle, {color: '#2c385e'}]
         }>

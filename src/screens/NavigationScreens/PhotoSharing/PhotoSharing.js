@@ -226,7 +226,6 @@ const PhotoSharing = ({ navigation }) => {
                     </View>
             }
         </View>
-
     )
 
     const onViewRef = React.useRef(viewableItems => {
@@ -245,9 +244,7 @@ const PhotoSharing = ({ navigation }) => {
                 setpaused();
             } else {
                 console.log('cmoing in else', viewableItems.viewableItems[0].isViewable);
-
             }
-
         }
     });
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });

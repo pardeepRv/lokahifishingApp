@@ -55,12 +55,10 @@ const Videoscreen = ({navigation}) => {
       videoQuality: 'low',
       durationLimit: 4000, //Video max duration in seconds
     }).then(video => {
-      console.log(`ress`, video);
-      if (Platform.OS == 'ios') {
+        console.log(`ress`, video);
         setVideoPost(video.path);
-      } else {
-        setVideoPost(video.path);
-      }
+ 
+      
     });
   }
   const videoBuffer = isBuffer => {
@@ -86,7 +84,7 @@ const Videoscreen = ({navigation}) => {
     }
 
     formData.append('title_vid', additionalTittle);
-    console.log(formData, 'sending to aApi');
+     console.log(formData, 'sending to aApi');
     dispatch(savevideo(formData, token));
   };
 

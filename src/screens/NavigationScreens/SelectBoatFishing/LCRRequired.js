@@ -18,6 +18,10 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
 import TimeAgo from 'react-native-timeago';
+import Circular from '../../../components/common/Circular';
+import CircularPicker from 'react-native-circular-picker'
+import { colors } from '../../../utilities/constants';
+
 
 var moment = require('moment');
 
@@ -25,11 +29,19 @@ const LCRRequired = props => {
   console.log(props, 'consoling props in lcr requires');
   console.log(props.selectedFish, 'selectedFish is <<<<<<<');
 
+  const handleChange = (v) => {
+  setScrollEnabled(false)
+  setPrice((v * 0.24).toFixed(0));
+   setTimeout(() => {
+    setScrollEnabled(true)
+   }, 3000);
+  }
+
   const [weight, setWeight] = useState(0);
   const [date, setDate] = useState(new Date());
   const [datetext, setdatetext] = useState();
   const [timetext, settimetext] = useState();
-
+  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   // const [time, setTime] = useState(new Date().toLocaleTimeString());
   const [time, setTime] = useState(new Date());
@@ -184,8 +196,7 @@ setTimeout(() => {
   return (
     <View style={styles.bg} blurRadius={4}>
       <ScrollView
-        showsVerticalScrollIndicator={false}
-        nestedScrollEnabled
+       scrollEnabled={scrollEnabled}
         style={styles.scrollView}>
         {props.fishType === 'Multiple' ? (
           <View style={{zIndex: 1, paddingHorizontal: 20, width: '100%'}}>
@@ -259,18 +270,27 @@ setTimeout(() => {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.section}>
-          <View style={styles.effortTitle}>
-            <Text style={[styles.title, {marginBottom: 0}]}>please select</Text>
-            <Text style={styles.effortSubtext}>
-              (fishing time only, not travel time)
-            </Text>
-          </View>
-          <View style={styles.subsection}>
-            {/* <Circular /> */}
-          </View>
-        </View>
-        <View style={styles.textSection}>
+        <View style={styles.section} onPress={() => setScrollEnabled(true)}>
+					<View style={styles.effortTitle}>
+						<Text style={[styles.title, { marginBottom: 0 }]}>Effort</Text>
+						<Text style={styles.effortSubtext}>(fishing time only, not travel time)</Text>
+					</View>
+					<View style={styles.subsection} >
+          {/* <Circular/> */}
+          <CircularPicker
+					size={270}
+					strokeWidth={40}
+					steps={[4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100]}
+					gradients={{
+						0: ['#2c385e', '#2c385e'],
+					}}
+					onChange={handleChange}
+				>
+					<Text style={{ textAlign: 'center', fontSize: 24, fontWeight: '600', marginBottom: 8 }}>{price} hr(s)</Text>
+				</CircularPicker>
+					</View>
+				</View>
+        {/* <View style={styles.textSection}>
               <Text
                 style={styles.title}
                 onPress={() =>
@@ -293,7 +313,7 @@ setTimeout(() => {
                   {price} hrs.
                 </Text>
               )}
-            </View>
+            </View> */}
         <View style={styles.section}>
           <Text style={styles.title}>Date & Time</Text>
 
@@ -449,7 +469,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   section: {
-    marginVertical: 15,
+   
+      marginVertical: 10,
   },
   title: {
     fontWeight: '700',
@@ -477,8 +498,6 @@ const styles = StyleSheet.create({
   subsection: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
-    marginTop: 10,
   },
   effortTitle: {
     flexDirection: 'row',
@@ -522,4 +541,5 @@ const styles = StyleSheet.create({
 
     elevation: 30,
   },
+ 
 });

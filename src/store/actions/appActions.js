@@ -270,7 +270,17 @@ const postsurvey = (params, token) => {
     token,
   };
 };
+
+const loadpage = (params, cb) => {
+  return {
+    type: actionTypes.SAVE_LOADMORE_REQUESTED,
+    params,
+    cb,
+  };
+};
+
 export {
+  loadpage,
   getvideo,
   getNewsFromAdmin,
   getsigns,

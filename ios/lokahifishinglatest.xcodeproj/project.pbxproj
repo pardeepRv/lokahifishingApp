@@ -412,7 +412,7 @@
 				CODE_SIGN_ENTITLEMENTS = lokahifishinglatest/lokahifishinglatestDebug.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3HDGGZFX5G;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = lokahifishinglatest/Info.plist;
@@ -420,7 +420,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.3;
+				MARKETING_VERSION = 8.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -445,17 +445,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = lokahifishinglatest/lokahifishinglatest.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lokahi Fishing, LLC (3HDGGZFX5G)";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution: Lokahi Fishing, LLC (3HDGGZFX5G)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3HDGGZFX5G;
 				INFOPLIST_FILE = lokahifishinglatest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.3;
+				MARKETING_VERSION = 8.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -463,7 +463,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rvtech.lokahi;
 				PRODUCT_NAME = lokahifishinglatest;
-				PROVISIONING_PROFILE_SPECIFIER = Adhoc_lokahi;
+				PROVISIONING_PROFILE_SPECIFIER = new_App_store;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "lokahifishinglatest-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

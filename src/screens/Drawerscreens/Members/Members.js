@@ -1,27 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Dimensions,
   FlatList,
   Image,
   ImageBackground,
   SafeAreaView,
   Text,
   TouchableOpacity,
-  View,
-  RefreshControl,
+  View
 } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
-import SegmentedControl from 'rn-segmented-control';
-import { fonts, icons } from '../../../../assets';
-import { Header } from '../../../components/common/Header';
-
-import { colors, screenNames } from '../../../utilities/constants';
-import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { memberlisting } from '../../../store/actions';
-import TimeAgo from 'react-native-timeago';
-import { layout } from '../../../utilities/layout';
+import { fonts, icons } from '../../../../assets';
+import { Loader } from '../../../components/common';
+import { Header } from '../../../components/common/Header';
 import TextInputComp from '../../../components/common/TextInputComp';
+import { loadpage, memberlisting } from '../../../store/actions';
+import { colors, screenNames } from '../../../utilities/constants';
+import { layout } from '../../../utilities/layout';
+import styles from './styles';
+
 
 let members = [
   {
@@ -57,14 +54,16 @@ const Members = ({ navigation }) => {
   const [membersList, setMembersList] = useState(app && app.memberlist && app.memberlist.length > 0
     ? app.memberlist
     : []);
-  const [filterdata, setfilterdata] = useState([]);
-
-
+  const [filterdata, setfilterdata] = useState(app && app.loadmore && app.loadmore.length > 0 ? app.loadmore : []);
+  const [membercount, setmembercount] = useState('');
 
   const [Search, setSearchMember] = useState('');
 
   const [tabIndex, setTabIndex] = React.useState(0);
   const [tabAscDscIndex, settabAscDscIndex] = React.useState(0);
+  const [loadingExtraData, setloadingExtraData] = useState(false);
+  const [loadpapage, setpage] = useState(0);
+  const [loadpa, setloadpa] = useState(1);
 
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -81,25 +80,77 @@ const Members = ({ navigation }) => {
     console.log('coming in this on timelinelist page');
     const unsubscribe = navigation.addListener('focus', () => {
       getmemberfunc();
-      setfilterdata(membersList)
+
     });
+    // LoadRandomData();
   }, [navigation]);
+
+
+  // function LoadRandomData  ()  {
+
+
+  //    setMembersList(loadpage === 1 ?  [...filterdata , ...membersList])
+  //  responseJson.results : [...membersList, ...responseJson.results]) 
+
+  //   }).catch(error => {
+  //   console.log('Error selecting random data: ' + error)
+  //   })
+  //   }
+
+
 
   function getmemberfunc() {
     let token = auth && auth?.userDetails?.access_token;
     dispatch(
       memberlisting(token, cb => {
         if (cb) {
-            console.log(cb, 'callback list arr>>>>>>>>>>');
+          console.log(cb, 'callback list arr>>>>>>>>>>');
           if (cb?.data?.data) {
             let memberList = cb?.data?.data?.memberListing;
-          // return  console.log('m', memberList)
+            let page = cb?.data?.page;
+            // return  console.log('m', memberList)
             // memberList.reverse();
+          setmembercount(cb?.data?.member_count)
             setMembersList(memberList)
+            setpage(page)
           }
         }
       }),
     );
+  }
+
+  function LoadRandomData() {
+    let token = auth && auth?.userDetails?.access_token;
+    let ob = {};
+    ob.token = auth && auth?.userDetails?.access_token;
+    ob.page = loadpapage;
+
+     dispatch(
+      loadpage(ob, cb => {
+        console.log('ob :>> ', ob);
+        if (cb) {
+          console.log(cb, 'in load  page>>>>>>>>>');
+          if (cb?.data?.data) {
+            let filterlist = cb?.data?.data?.memberListing;
+            // let page = cb?.data?.data?.page;
+            // return  console.log('m', memberList)
+            // memberList.reverse();
+            setfilterdata(filterlist)
+            setMembersList([...membersList , ...filterlist])
+            setpage(loadpapage + 1)
+          }
+        }
+      }),
+    );
+
+    // console.log(filterdata, 'filterdatafilterdatafilterdata');
+
+    // setfilterdata(app.loadmore)
+
+  }
+
+  const LoadMoreRandomData = () => {
+    LoadRandomData()
   }
 
   function _onRefresh() {
@@ -123,7 +174,7 @@ const Members = ({ navigation }) => {
       activeOpacity={0.8}>
       <View style={styles.viewStyle}>
         <Image
-          source={ item.profile_picture ? { uri: item.profile_picture } : icons.loginLogo}
+          source={item.profile_picture ? { uri: item.profile_picture } : icons.loginLogo}
           style={{
             height: moderateScale(70),
             width: moderateScale(70),
@@ -140,7 +191,7 @@ const Members = ({ navigation }) => {
             <Text style={styles.nameStyle}>{item.user_name}</Text>)}
           {/* <Text style={styles.nameStyle}>FullName :{item.full_name}</Text> */}
           <Text>Member Since :{item.email_verified_at != null ? item.email_verified_at : "no date found"}
-            </Text>
+          </Text>
         </View>
       </View>
       <Image source={icons.ic_rightArrow} style={styles.rightArrow} />
@@ -207,12 +258,13 @@ const Members = ({ navigation }) => {
         style={{
           flex: 1,
         }}>
+        {console.log('membersList :>> ', membersList)}
         <Header
           containerStyle={{
             backgroundColor: 'transparent',
             height: moderateScale(60),
           }}
-          title={`${membersList && membersList.length > 0 ? membersList.length : ''} Members`}
+          title={`${membercount} Members`}
           titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
@@ -279,15 +331,17 @@ const Members = ({ navigation }) => {
               <Text style={styles.nomatch}>No Match found</Text>
             ) : null
           }
-          refreshControl={
-            <RefreshControl
-              refreshing={app.loading}
-              onRefresh={_onRefresh.bind(this)}
-              title="Pull to refresh"
-              tintColor={colors.white1}
-              titleColor={colors.white1}
-            />
-          }
+          // refreshControl={
+          //   <RefreshControl
+          //     refreshing={app.loading}
+
+          //     title="Pull to refresh"
+          //     tintColor={colors.white1}
+          //     titleColor={colors.white1}
+          //   />
+          // }
+          onEndReached={LoadMoreRandomData}
+          onEndReachedThreshold={0}
 
         />
 
@@ -358,7 +412,12 @@ const Members = ({ navigation }) => {
             }
           />
         ) : null} */}
+        <Loader
+          isLoading={app.loading}
+          isAbsolute
+        />
       </SafeAreaView>
+
     </ImageBackground>
   );
 };

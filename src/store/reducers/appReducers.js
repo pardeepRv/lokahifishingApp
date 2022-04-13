@@ -17,6 +17,7 @@ const initialState = {
   memberlistdata:[],
   linkslist: [],
   questionlist:[],
+  loadmore:[],
 };
 
 export default (state = initialState, action) => {
@@ -573,6 +574,26 @@ export default (state = initialState, action) => {
                   ...state,
                   loading: false,
                 };
+
+                case actionTypes.SAVE_LOADMORE_REQUESTED:
+                  return {
+                    ...state,
+                    loading: true,
+                  };
+            
+                case actionTypes.SAVE_LOADMORE_SUCCEEDED:
+                  return {
+                    ...state,
+                    loading: false,
+                    loadmore : action.payload,
+                  };
+            
+                case actionTypes.SAVE_LOADMORE_FAIL:
+                  return {
+                    ...state,
+                    loading: false,
+                  };
+
                 case actionTypes.IMPORTANT_LINKS_REQUESTED:
                   return {
                     ...state,

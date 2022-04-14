@@ -279,6 +279,14 @@ const loadpage = (params, cb) => {
   };
 };
 
+const photoshariongloading = (params, cb) => {
+  return {
+    type: actionTypes.SAVE_PHOTOSHARING_REQUESTED,
+    params,
+    cb,
+  };
+};
+
 export {
   loadpage,
   getvideo,
@@ -315,5 +323,5 @@ export {
   unblockuserrequest,
   memberloadmore,
   linksimportant,
-  questionsurvey, postsurvey
+  questionsurvey, postsurvey ,photoshariongloading
 };

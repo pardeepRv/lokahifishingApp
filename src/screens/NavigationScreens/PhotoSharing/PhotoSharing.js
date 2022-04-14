@@ -15,7 +15,7 @@ import { fonts, icons } from '../../../../assets';
 import { Loader } from '../../../components/common';
 import { Header } from '../../../components/common/Header';
 import ImgViewer from '../../../components/common/ImgViewer';
-import { addlikeunlikeohothsaring, savetimelinelist } from '../../../store/actions';
+import { addlikeunlikeohothsaring, photoshariongloading, savetimelinelist } from '../../../store/actions';
 import { colors } from '../../../utilities/constants';
 import { layout } from '../../../utilities/layout';
 import styles from './styles';
@@ -56,6 +56,7 @@ const PhotoSharing = ({ navigation }) => {
     const [timeline, settimeline] = useState([]);
     let auth = useSelector(state => state.auth);
     let app = useSelector(state => state.app);
+  const [loadpapage, setpage] = useState(0);
     const [modal, setmodal] = useState(false);
     const [paused, setpaused] = useState(true);
 
@@ -91,13 +92,43 @@ const PhotoSharing = ({ navigation }) => {
                     console.log(cb, 'callback list arr>>>>>>>>>>');
                     if (cb?.data?.data) {
                         let photosharingList = cb?.data?.data?.photosharing;
+                        let page = cb?.data?.page;
                         photosharingList.reverse();
                         settimeline(photosharingList)
+            setpage(page)
+
                     }
                 }
             }),
         );
     }
+
+    function LoadRandomData() {
+        let token = auth && auth?.userDetails?.access_token;
+        let ob = {};
+        ob.token = auth && auth?.userDetails?.access_token;
+        ob.page = loadpapage;
+    
+         dispatch(
+            photoshariongloading(ob, cb => {
+            console.log('ob :>> ', ob);
+            if (cb) {
+              console.log(cb, 'in load  page>>>>>>>>>');
+              if (cb?.data?.data) {
+                let filterlist = cb?.data?.data?.photosharing;
+                settimeline([...timeline , ...filterlist])
+                setpage(loadpapage + 1)
+              }
+            }
+          }),
+        );
+    
+      }
+
+      const LoadMoreRandomData = () => {
+        LoadRandomData()
+      }
+    
 
     const likeAdded = lcr_id => {
         let obj = {};
@@ -507,6 +538,8 @@ const PhotoSharing = ({ navigation }) => {
                     onViewableItemsChanged={onViewRef.current}
                     removeClippedSubviews={true}
                     initialNumToRender={5}
+                    onEndReached={LoadMoreRandomData}
+                    onEndReachedThreshold={0}
                 />
 
                 {modal ? <ImgViewer

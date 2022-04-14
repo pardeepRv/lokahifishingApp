@@ -594,6 +594,26 @@ export default (state = initialState, action) => {
                     loading: false,
                   };
 
+
+                case actionTypes.SAVE_PHOTOSHARING_REQUESTED:
+                  return {
+                    ...state,
+                    loading: true,
+                  };
+            
+                case actionTypes.SAVE_PHOTOSHARING_SUCCEEDED:
+                  return {
+                    ...state,
+                    loading: false,
+                    loadmore : action.payload,
+                  };
+            
+                case actionTypes.SAVE_PHOTOSHARING_FAIL:
+                  return {
+                    ...state,
+                    loading: false,
+                  };
+
                 case actionTypes.IMPORTANT_LINKS_REQUESTED:
                   return {
                     ...state,

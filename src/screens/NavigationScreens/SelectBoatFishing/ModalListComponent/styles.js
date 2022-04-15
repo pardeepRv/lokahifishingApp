@@ -17,6 +17,9 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white1,
   },
+  modalcontainer: {
+    marginTop: 50,
+  },
   text: {
     color: '#fff',
     fontSize: 18,
@@ -56,13 +59,18 @@ export default StyleSheet.create({
   modal: {
     flex: 1,
     display: 'flex',
-    margin: moderateScale(30),
-    backgroundColor: colors.red1,
+    backgroundColor: colors.white1,
+    marginLeft: moderateScale(20),
+    marginRight: moderateScale(20),
+    marginTop: moderateScale(100),
+    marginBottom: moderateScale(100),
+    borderRadius:1,
+    borderWidth:1
   },
   backBtnView: {
-    width: Dimensions.get('window').width,
-    backgroundColor: colors.primary1,
-    height: moderateScale(50),
+    // width: Dimensions.get('window').width - 50,
+    // backgroundColor: colors.secondry,
+    // height: moderateScale(50),
   },
   btnStyles: {
     backgroundColor: colors.secondry,

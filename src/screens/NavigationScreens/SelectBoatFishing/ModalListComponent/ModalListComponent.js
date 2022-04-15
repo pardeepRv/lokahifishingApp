@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   UIManager,
   View,
+  Modal,
 } from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,6 +18,7 @@ import {fonts, icons} from '../../../../../assets';
 import {Button, Loader} from '../../../../components/common';
 import Circular from '../../../../components/common/Circular';
 import {Header} from '../../../../components/common/Header';
+import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
 import {
   getMethod,
@@ -25,6 +27,7 @@ import {
   getWeather,
 } from '../../../../store/actions';
 import {colors} from '../../../../utilities/constants';
+import {layout} from '../../../../utilities/layout';
 import Accordian from './Accordian';
 import Method from './Method';
 import styles from './styles.js';
@@ -33,19 +36,21 @@ const ModalListComponent = props => {
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   console.log(auth, 'auth>>>>>>>>>>>>', app, 'app>>>>>>>>>>>>>>>>');
   console.log(props, 'props in modal>>>>>>>.');
 
   const dispatch = useDispatch();
   const {navigation, route} = props;
-  const {value, name, getSelectedSigns} = route?.params;
-  const {getSelectedposition} = route?.params;
+  const {value, name, getSelectedSigns, getEnteredSignVal} = route?.params;
+  const {getSelectedposition, getEnteredPositionVal} = route?.params;
   const {
     getSelectedweather,
     getWeatherSendToApi,
     getSelectedBaits,
     getSelectedLures,
-    getother
+    getother,
   } = route?.params;
 
   const [weateherArr, setWeatherAr] = useState(app && app.weatherarray);
@@ -53,6 +58,7 @@ const ModalListComponent = props => {
   const [open, setopen] = useState(false);
   const [signs, setSignArr] = useState(app && app.signarray);
   const [position, setpositionarr] = useState(app && app.positionarray);
+  const [text, settext] = useState('');
 
   if (Platform.OS === 'android') {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -250,7 +256,17 @@ const ModalListComponent = props => {
         },
       ]}
       activeOpacity={0.8}
-      onPress={() => toggleCml(index, value)}>
+      onPress={() => {
+        if (
+          (item.name == 'Other' && value === 1) ||
+          (item.name == 'Other' && value === 4)
+        ) {
+          console.log('open modal here/...');
+          setModalVisible(true);
+        } else {
+          toggleCml(index, value);
+        }
+      }}>
       <Text>{item.name}</Text>
 
       {item && item.isSelected ? (
@@ -376,6 +392,57 @@ const ModalListComponent = props => {
           />
         )}
         {value == 5 && <Circular />}
+
+        <Modal
+          animationType={'slide'}
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {}}>
+          <SafeAreaView style={styles.modal}>
+            <View
+              style={[
+                styles.backBtnView,
+                {flexDirection: 'row', justifyContent: 'space-between'},
+              ]}>
+              <TouchableOpacity
+                style={{width: 100}}
+                onPress={() => {
+                  setModalVisible(false);
+                }}>
+                <Image
+                  source={icons.ic_back_white}
+                  style={{
+                    top: 15,
+                    left: 10,
+                    tintColor: colors.secondry,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.modalcontainer}>
+              <TextInputComp
+                value={text}
+                placeholder={strings.enterother}
+                labelTextStyle={styles.labelTextStyle}
+                onChangeText={text => settext(text)}
+              />
+            </View>
+
+            <Button
+              style={styles.btnStyles}
+              label={'Ok'}
+              onPress={() => {
+                if (value == 1) {
+                  getEnteredSignVal(text);
+                }
+                if (value == 4) {
+                  getEnteredPositionVal(text);
+                }
+                navigation.goBack();
+              }}
+            />
+          </SafeAreaView>
+        </Modal>
       </SafeAreaView>
       <Loader isLoading={app.loading} isAbsolute />
     </ImageBackground>

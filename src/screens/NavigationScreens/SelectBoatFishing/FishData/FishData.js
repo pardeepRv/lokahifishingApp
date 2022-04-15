@@ -1,54 +1,60 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useIsFocused } from '@react-navigation/native';
-import React, { useEffect, useState, useRef } from 'react';
+import {useIsFocused} from '@react-navigation/native';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
   ImageBackground,
-  Keyboard, Modal, Platform, requireNativeComponent, SafeAreaView,
+  Keyboard,
+  Modal,
+  Platform,
+  requireNativeComponent,
+  SafeAreaView,
   ScrollView,
   Switch,
   NativeModules,
   Text,
-  TextInput, TouchableOpacity, View,
-  UIManager, findNodeHandle,
-  PixelRatio
+  TextInput,
+  TouchableOpacity,
+  View,
+  UIManager,
+  findNodeHandle,
+  PixelRatio,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import GetLocation from 'react-native-get-location';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MapView, { PROVIDER_DEFAULT, PROVIDER_GOOGLE } from 'react-native-maps';
-import { moderateScale } from 'react-native-size-matters';
-import { useDispatch, useSelector } from 'react-redux';
-import { fonts, icons } from '../../../../../assets';
-import { Loader } from '../../../../components/common';
-import { Header } from '../../../../components/common/Header';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import MapView, {PROVIDER_DEFAULT, PROVIDER_GOOGLE} from 'react-native-maps';
+import {moderateScale} from 'react-native-size-matters';
+import {useDispatch, useSelector} from 'react-redux';
+import {fonts, icons} from '../../../../../assets';
+import {Loader} from '../../../../components/common';
+import {Header} from '../../../../components/common/Header';
 import TextInputComp from '../../../../components/common/TextInputComp';
-import { strings } from '../../../../localization';
-import { savelcrreport } from '../../../../store/actions';
+import {strings} from '../../../../localization';
+import {savelcrreport} from '../../../../store/actions';
 import * as NavigationService from '../../../../store/NavigationService';
-import { colors, screenNames } from '../../../../utilities/constants';
-import { layout } from '../../../../utilities/layout';
+import {colors, screenNames} from '../../../../utilities/constants';
+import {layout} from '../../../../utilities/layout';
 import styles from './styles';
-import { MyViewManager } from '../../../../components/common/MyViewManager';
+import {MyViewManager} from '../../../../components/common/MyViewManager';
 
-
-const createFragment = (viewId) =>
+const createFragment = viewId =>
   UIManager.dispatchViewManagerCommand(
     viewId,
     // we are calling the 'create' command
     UIManager.MyViewManager.Commands.create.toString(),
-    [viewId]
+    [viewId],
   );
 
-const { ActivityStarterModule } = NativeModules;
+const {ActivityStarterModule} = NativeModules;
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const ApplmapNoaa = requireNativeComponent('Switch');
-const FishData = ({ navigation, route }) => {
+const FishData = ({navigation, route}) => {
   const ref = useRef(null);
-  const { previousScreen } = route && route.params;
+  const {previousScreen} = route && route.params;
   const [modalVisible1, setModalVisible1] = useState(false);
   const [email, setEmail] = useState('');
   console.log('email :>> ', email);
@@ -64,18 +70,16 @@ const FishData = ({ navigation, route }) => {
     title: '',
     isPrivate: '',
   });
-  const { isGPS, title, isPrivate } = state;
+  const {isGPS, title, isPrivate} = state;
 
   const _onChangeText = key => val => {
-    setState({ ...state, [key]: val });
+    setState({...state, [key]: val});
   };
 
-  const setText = (t) => {
+  const setText = t => {
     console.log(t, 'hvuvdw');
     setEmail(t);
-
-
-  }
+  };
 
   const [price, setPrice] = useState(0);
 
@@ -91,21 +95,23 @@ const FishData = ({ navigation, route }) => {
     longitude: '',
   });
   const [harborItems, setHarborItems] = useState([
-    { label: 'Hawaii Kai', value: 'Hawaii Kai' },
-    { label: 'Keehi', value: 'Keehi' },
-    { label: 'Kaneohe', value: 'Kaneohe' },
-    { label: 'Haleiwa', value: 'Haleiwa' },
-    { label: 'Waianae', value: 'Waianae' },
-    { label: 'Other', value: 'Other' },
+    {label: 'Hawaii Kai', value: 'Hawaii Kai'},
+    {label: 'Keehi', value: 'Keehi'},
+    {label: 'Kaneohe', value: 'Kaneohe'},
+    {label: 'Haleiwa', value: 'Haleiwa'},
+    {label: 'Waianae', value: 'Waianae'},
+    {label: 'Other', value: 'Other'},
   ]);
 
   const [selectedSignArr, setselectedSignArr] = useState([]);
+  const [enteredOtherSign, setOtherSign] = useState('');
+  const [enteredOtherPosition, setOtherPosition] = useState('');
+
   const [positionarr, setpositionarr] = useState([]);
   const [weateherArr, setWeatherAr] = useState([]);
   const [baitUI, setBaitForUI] = useState([]);
   const [lureUI, setlureForUI] = useState([]);
   const [otherUI, setOtherUI] = useState('');
-
 
   const [weateherArrNeedsToSendApi, setWeateherArrNeedsToSendApi] = useState(
     [],
@@ -118,8 +124,7 @@ const FishData = ({ navigation, route }) => {
     if (Platform.OS === 'android') {
       const viewId = findNodeHandle(ref.current);
       createFragment(viewId);
-    }
-    else {
+    } else {
       GetLocation.getCurrentPosition({
         enableHighAccuracy: true,
         //I'm not sure what is best for the timeout to be set as. Some more testing could be beneficial
@@ -131,15 +136,11 @@ const FishData = ({ navigation, route }) => {
           setLocation(location);
         })
         .catch(error => {
-          const { code, message } = error;
+          const {code, message} = error;
           console.log(code, message);
-        })
+        });
     }
     load();
-
-
-
-
 
     //   if(isFocused){
     //     setModalVisible1(true);
@@ -148,21 +149,22 @@ const FishData = ({ navigation, route }) => {
     // }, [isFocused]);
   }, []);
 
-  const setHarborVal = (v) => {
+  const setHarborVal = v => {
     console.log(v, ' on selcet');
     //  setModalVisible1(true)
-    setHarbor(v)
-  }
+    setHarbor(v);
+  };
   const load = async () => {
     AsyncStorage.getItem('FirstTime').then(result => {
       console.log(result, 'geeting from local');
       if (result == null) {
-        alert('Make sure your mobile battery is sufficient Since map is downloading.It will take 20 to 30 minutes')
+        alert(
+          'Make sure your mobile battery is sufficient Since map is downloading.It will take 20 to 30 minutes',
+        );
       }
-    })
-    await AsyncStorage.setItem('FirstTime', JSON.stringify({ key: 1 }));
-  }
-
+    });
+    await AsyncStorage.setItem('FirstTime', JSON.stringify({key: 1}));
+  };
 
   const [region, setRegion] = useState({
     latitude: location?.latitude,
@@ -173,7 +175,7 @@ const FishData = ({ navigation, route }) => {
 
   const onChangeLatitude = text => {
     console.log(text, 'coming in thisss');
-    setLocation({ ...location, latitude: text === '-' ? 1 : parseFloat(text) });
+    setLocation({...location, latitude: text === '-' ? 1 : parseFloat(text)});
   };
 
   const onChangeLongitude = text => {
@@ -181,6 +183,16 @@ const FishData = ({ navigation, route }) => {
       ...location,
       longitude: text === '-' ? 1 : parseFloat(text),
     });
+  };
+
+  const getEnteredSignVal = val => {
+    console.log(val, 'coming in val190');
+    setOtherSign(val);
+  };
+
+  const getEnteredPositionVal = val => {
+    console.log(val, 'coming in val195');
+    setOtherPosition(val);
   };
 
   const getSelectedSigns = val => {
@@ -226,7 +238,6 @@ const FishData = ({ navigation, route }) => {
     console.log('data getother me', data);
 
     setOtherUI(data);
-
   };
   const getHrs = v => {
     console.log(v, ' in parnt hrs');
@@ -244,7 +255,7 @@ const FishData = ({ navigation, route }) => {
 
     // merging 2 arrays for method start
     console.log(baitUI, lureUI, 'dataaaaa');
-    let methodarray = [...baitUI, ...lureUI]
+    let methodarray = [...baitUI, ...lureUI];
     console.log('methdoarray :>> ', methodarray);
 
     jsonObject = methodarray.map(JSON.stringify);
@@ -253,10 +264,9 @@ const FishData = ({ navigation, route }) => {
     uniqueSet = new Set(jsonObject);
     uniqueArray = Array.from(uniqueSet).map(JSON.parse);
 
-
     uniqueArray.forEach(ev => {
       console.log(ev, 'ev to be console');
-      updteArrForMethod.push({ ids: [ev.category_id, ev.subcategory_id, ev.id] });
+      updteArrForMethod.push({ids: [ev.category_id, ev.subcategory_id, ev.id]});
     });
     console.log(updteArrForMethod, 'updteArrForMethodupdteArrForMethod');
 
@@ -336,10 +346,12 @@ const FishData = ({ navigation, route }) => {
     formData.append('method_id', JSON.stringify(updteArrForMethod));
     formData.append('weather_id', JSON.stringify(weateherArrNeedsToSendApi));
 
-
     formData.append('user_os', user_os);
     formData.append('is_private', isEnabled);
     formData.append('other_method', otherUI);
+
+    // formData.append('sign_alt', enteredOtherSign);
+    // formData.append('position_alt', enteredOtherSign);
 
     console.log(formData, 'consoling formadta');
     let token = auth && auth.userDetails.access_token;
@@ -352,7 +364,7 @@ const FishData = ({ navigation, route }) => {
   return (
     <ImageBackground
       source={icons.LeaderBoard1}
-      style={{ flex: 1, height: '100%' }}>
+      style={{flex: 1, height: '100%'}}>
       <Header
         containerStyle={{
           backgroundColor: 'transparent',
@@ -360,7 +372,7 @@ const FishData = ({ navigation, route }) => {
         }}
         blackTitle
         title={'Catch Report'}
-        titleStyle={{ fontFamily: fonts.bold }}
+        titleStyle={{fontFamily: fonts.bold}}
         leftIconSource={icons.ic_back_white}
         leftButtonStyle={{
           tintColor: colors.black1,
@@ -377,7 +389,7 @@ const FishData = ({ navigation, route }) => {
         }}
       />
       <SafeAreaView style={styles.safeAreaView}>
-        <ScrollView nestedScrollEnabled style={{ flex: 1 }}>
+        <ScrollView nestedScrollEnabled style={{flex: 1}}>
           {/* <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
           keyboardVerticalOffset={50}
@@ -393,8 +405,7 @@ const FishData = ({ navigation, route }) => {
             contentContainerStyle={styles.subContentContainer}
             keyboardShouldPersistTaps={'always'}
             showsVerticalScrollIndicator={false}>
-
-            <View style={[styles.textSection, { justifyContent: 'center' }]}>
+            <View style={[styles.textSection, {justifyContent: 'center'}]}>
               <Text>Info below is optional & will be private to user only</Text>
             </View>
             <View
@@ -408,14 +419,23 @@ const FishData = ({ navigation, route }) => {
               ]}>
               <Text>Post Catch Report to Photo Sharing?</Text>
               <Switch
-                trackColor={{ false: '#767577', true: '#34C759' }}
+                trackColor={{false: '#767577', true: '#34C759'}}
                 thumbColor={'#f4f3f4'}
                 ios_backgroundColor="#767577"
                 onValueChange={toggleSwitch}
                 value={isEnabled}
               />
             </View>
-            <View style={styles.textSection}>
+            <TouchableOpacity
+              style={styles.textSection}
+              onPress={() =>
+                navigation.navigate('ModalListComponent', {
+                  value: 1,
+                  name: 'Sign',
+                  getSelectedSigns: getSelectedSigns,
+                  getEnteredSignVal: getEnteredSignVal,
+                })
+              }>
               <Text
                 style={styles.title}
                 onPress={() =>
@@ -423,12 +443,32 @@ const FishData = ({ navigation, route }) => {
                     value: 1,
                     name: 'Sign',
                     getSelectedSigns: getSelectedSigns,
+                    getEnteredSignVal: getEnteredSignVal,
                   })
                 }>
                 Sign(optional)
               </Text>
-              <View style={{ flex: 0.5 }}>
-                {selectedSignArr && selectedSignArr.length > 0 ? (
+              <View style={{flex: 0.5}}>
+                {
+                  enteredOtherSign != '' &&
+                  selectedSignArr &&
+                  selectedSignArr.length == 0 ? (
+                    <Text
+                      style={{
+                        fontFamily: fonts.semiBold,
+                      }}>
+                      {enteredOtherSign}
+                    </Text>
+                  ) : null
+                  // <Text
+                  //   style={{
+                  //     fontFamily: fonts.semiBold,
+                  //   }}>
+                  //   Select sign
+                  // </Text>
+                }
+                {selectedSignArr &&
+                  selectedSignArr.length > 0 &&
                   selectedSignArr.map((val, index) => {
                     return (
                       <Text
@@ -439,24 +479,9 @@ const FishData = ({ navigation, route }) => {
                         {val.name}
                       </Text>
                     );
-                  })
-                ) : (
-                  <Text
-                    style={{
-                      fontFamily: fonts.semiBold,
-                    }}
-                    onPress={() =>
-                      navigation.navigate('ModalListComponent', {
-                        value: 1,
-                        name: 'Sign',
-                        getSelectedSigns: getSelectedSigns,
-                      })
-                    }>
-                    Select sign
-                  </Text>
-                )}
+                  })}
               </View>
-            </View>
+            </TouchableOpacity>
             <View style={styles.textSection}>
               <Text
                 style={styles.title}
@@ -471,7 +496,7 @@ const FishData = ({ navigation, route }) => {
                 }>
                 Method(optional)
               </Text>
-              <View style={{ flex: 0.5 }}>
+              <View style={{flex: 0.5}}>
                 {baitUI.map((val, index) => {
                   console.log('val :>> ', val);
                   return (
@@ -495,15 +520,14 @@ const FishData = ({ navigation, route }) => {
                     </Text>
                   );
                 })}
-                {otherUI ?
+                {otherUI ? (
                   <Text
-
                     style={{
                       fontFamily: fonts.semiBold,
                     }}>
                     {otherUI}
-                  </Text> : null
-                }
+                  </Text>
+                ) : null}
                 {lureUI.length == 0 && baitUI.length == 0 && otherUI == 0 ? (
                   <Text
                     style={{
@@ -536,7 +560,7 @@ const FishData = ({ navigation, route }) => {
                 }>
                 Weather(optional)
               </Text>
-              <View style={{ flex: 0.5 }}>
+              <View style={{flex: 0.5}}>
                 {weateherArr && weateherArr.length > 0 ? (
                   weateherArr.map((val, index) => {
                     return (
@@ -568,49 +592,60 @@ const FishData = ({ navigation, route }) => {
                 )}
               </View>
             </View>
-            <View style={styles.textSection}>
-              <Text
-                style={styles.title}
-                onPress={() =>
-                  navigation.navigate('ModalListComponent', {
-                    value: 4,
-                    name: 'Position',
-                    getSelectedposition: getSelectedposition,
-                  })
-                }>
-                Position(optional)
-              </Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ModalListComponent', {
+                  value: 4,
+                  name: 'Position',
+                  getSelectedposition: getSelectedposition,
+                  getEnteredPositionVal: getEnteredPositionVal,
+                })
+              }
+              style={styles.textSection}>
+              <Text style={styles.title}>Position(optional)</Text>
 
-              <View style={{ flex: 0.5 }}>
-                {positionarr && positionarr.length > 0 ? (
-                  positionarr.map((val, index) => {
-                    return (
-                      <Text
-                        key={index}
-                        style={{
-                          fontFamily: fonts.semiBold,
-                        }}>
-                        {val.name}
-                      </Text>
-                    );
-                  })
-                ) : (
+              <View style={{flex: 0.5}}>
+                {enteredOtherPosition != '' &&
+                positionarr &&
+                positionarr.length == 0 ? (
                   <Text
                     style={{
                       fontFamily: fonts.semiBold,
-                    }}
-                    onPress={() =>
-                      navigation.navigate('ModalListComponent', {
-                        value: 4,
-                        name: 'position',
-                        getSelectedposition: getSelectedposition,
-                      })
-                    }>
-                    Select position
+                    }}>
+                    {enteredOtherPosition}
                   </Text>
-                )}
+                ) : null}
+
+                {positionarr && positionarr.length > 0
+                  ? positionarr.map((val, index) => {
+                      return (
+                        <Text
+                          key={index}
+                          style={{
+                            fontFamily: fonts.semiBold,
+                          }}>
+                          {val.name}
+                        </Text>
+                      );
+                    })
+                  : null
+                    // <Text
+                    //   style={{
+                    //     fontFamily: fonts.semiBold,
+                    //   }}
+                    //   onPress={() =>
+                    //     navigation.navigate('ModalListComponent', {
+                    //       value: 4,
+                    //       name: 'position',
+                    //       getSelectedposition: getSelectedposition,
+                    //       getEnteredPositionVal: getEnteredPositionVal,
+                    //     })
+                    //   }>
+                    //   Select position
+                    // </Text>
+                }
               </View>
-            </View>
+            </TouchableOpacity>
             {/* <View style={styles.textSection}>
               <Text
                 style={styles.title}
@@ -640,23 +675,27 @@ const FishData = ({ navigation, route }) => {
               <Text style={styles.title}>Location</Text>
             </View>
             <View style={styles.mapContainer}>
-              {Platform.OS === 'ios' ? <ApplmapNoaa
-                style={{
-                  height: 325,
-                  width: windowWidth,
-                  backgroundColor: 'black',
-                }}
-              /> :
-                <MyViewManager
-                  style={{
-                    // converts dpi to px, provide desired height
-                    height: PixelRatio.getPixelSizeForLayoutSize(390),
-                    // converts dpi to px, provide desired width
-                    width: PixelRatio.getPixelSizeForLayoutSize(430)
-                  }}
-                  ref={ref}
-                />
-                //        
+              {
+                Platform.OS === 'ios' ? (
+                  <ApplmapNoaa
+                    style={{
+                      height: 325,
+                      width: windowWidth,
+                      backgroundColor: 'black',
+                    }}
+                  />
+                ) : (
+                  <MyViewManager
+                    style={{
+                      // converts dpi to px, provide desired height
+                      height: PixelRatio.getPixelSizeForLayoutSize(390),
+                      // converts dpi to px, provide desired width
+                      width: PixelRatio.getPixelSizeForLayoutSize(430),
+                    }}
+                    ref={ref}
+                  />
+                )
+                //
                 // <MapView
                 //   provider={
                 //     Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
@@ -806,8 +845,8 @@ const FishData = ({ navigation, route }) => {
                 </View>
               )} */}
             <Text style={styles.or}>OR</Text>
-            <View style={{ zIndex: 1, paddingHorizontal: 10 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+            <View style={{zIndex: 1, paddingHorizontal: 10}}>
+              <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
                 <TextInput
                   returnKeyType="done"
                   blurOnSubmit={true}
@@ -819,7 +858,7 @@ const FishData = ({ navigation, route }) => {
                   onChangeText={text => setDegrees(text)}
                   keyboardType="decimal-pad"
                 />
-                <Text style={{ fontSize: 16, marginRight: 5, paddingBottom: 2 }}>
+                <Text style={{fontSize: 16, marginRight: 5, paddingBottom: 2}}>
                   {' '}
                   degree(s) and{' '}
                 </Text>
@@ -834,16 +873,16 @@ const FishData = ({ navigation, route }) => {
                   onChangeText={text => setMiles(text)}
                   keyboardType="decimal-pad"
                 />
-                <Text style={{ fontSize: 16, paddingBottom: 2 }}>
+                <Text style={{fontSize: 16, paddingBottom: 2}}>
                   {' '}
                   miles from:{' '}
                 </Text>
               </View>
-              <View style={{ zIndex: 1, }}>
+              <View style={{zIndex: 1}}>
                 <DropDownPicker
-                  style={{ backgroundColor: '#fafafa' }}
+                  style={{backgroundColor: '#fafafa'}}
                   theme="LIGHT"
-                  containerStyle={{ width: '50%', marginVertical: 10, flex: 1 }}
+                  containerStyle={{width: '50%', marginVertical: 10, flex: 1}}
                   labelStyle={{
                     fontWeight: 'bold',
                     fontSize: 16,
@@ -859,13 +898,12 @@ const FishData = ({ navigation, route }) => {
                   value={harbor}
                   items={harborItems}
                   setOpen={setOpen}
-                  onChangeValue={(value) => {
-                    console.log(value, "onChangeValue");
-                    if (value == "Other") {
-
-                      setModalVisible1(true)
+                  onChangeValue={value => {
+                    console.log(value, 'onChangeValue');
+                    if (value == 'Other') {
+                      setModalVisible1(true);
                     } else {
-                      setModalVisible1(false)
+                      setModalVisible1(false);
                     }
                   }}
                   setValue={setHarbor}
@@ -884,7 +922,7 @@ const FishData = ({ navigation, route }) => {
               }}>
               <TextInput
                 placeholder="Add any additional notes you would like"
-                autoCapitalize="sentences" 
+                autoCapitalize="sentences"
                 style={{
                   height: windowHeight * 0.35,
                   padding: 9,
@@ -910,47 +948,52 @@ const FishData = ({ navigation, route }) => {
 
         <Loader isLoading={app.loading} isAbsolute />
       </SafeAreaView>
-      {harbor == "Other" && modalVisible1 && <Modal
-        animationType={'none'}
-        transparent={true}
-        visible={modalVisible1}
-        onRequestClose={() => { }}>
-        <SafeAreaView>
-          <View style={styles.modalcontent}>
-            <View style={styles.modalcontainer}>
-              <View >
-                <Text style={styles.modaltextlogo}>Please enter the other option</Text>
-              </View>
-              <View style={{
-                top: 13, flex: 1,
-                width: layout.size.width / 2,
-              }}>
-                <TextInputComp
-                  value={email}
-                  placeholder={"Enter other"}
-                  labelTextStyle={styles.labelTextStyle}
-                  onChangeText={email => setText(email)}
-                />
-
-              </View>
-              <View style={styles.modalbuttonviewstyle}>
-                <TouchableOpacity
-                  style={styles.modalbuttonstyle}
-                  underlayColor={colors.white1}
-                  // onPress={() => onButtonPressed(true)}
-                  onPress={() => {
-                    setModalVisible1(false);
-                    harborItems.unshift({ label: email, value: email })
-                    setHarborItems(harborItems)
-                    setEmail('')
+      {harbor == 'Other' && modalVisible1 && (
+        <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={modalVisible1}
+          onRequestClose={() => {}}>
+          <SafeAreaView>
+            <View style={styles.modalcontent}>
+              <View style={styles.modalcontainer}>
+                <View>
+                  <Text style={styles.modaltextlogo}>
+                    Please enter the other option
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    top: 13,
+                    flex: 1,
+                    width: layout.size.width / 2,
                   }}>
-                  <Text style={styles.modalbuttontextstyle}>OK</Text>
-                </TouchableOpacity>
+                  <TextInputComp
+                    value={email}
+                    placeholder={'Enter other'}
+                    labelTextStyle={styles.labelTextStyle}
+                    onChangeText={email => setText(email)}
+                  />
+                </View>
+                <View style={styles.modalbuttonviewstyle}>
+                  <TouchableOpacity
+                    style={styles.modalbuttonstyle}
+                    underlayColor={colors.white1}
+                    // onPress={() => onButtonPressed(true)}
+                    onPress={() => {
+                      setModalVisible1(false);
+                      harborItems.unshift({label: email, value: email});
+                      setHarborItems(harborItems);
+                      setEmail('');
+                    }}>
+                    <Text style={styles.modalbuttontextstyle}>OK</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-        </SafeAreaView>
-      </Modal>}
+          </SafeAreaView>
+        </Modal>
+      )}
     </ImageBackground>
   );
 };

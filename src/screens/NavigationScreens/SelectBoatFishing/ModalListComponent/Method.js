@@ -336,7 +336,7 @@ const Lure = props => {
 const Other = props => {
   console.log(props, 'props in meee>>>>>>>>>>>');
 
-  const {otherMethods , getselctedother} = props;
+  const {otherMethods, getselctedother} = props;
   const [modalVisible1, setModalVisible1] = useState(props.modalVisible);
   // const [state, setState] = useState({
   //   text: '',
@@ -347,9 +347,9 @@ const Other = props => {
   //   setState({...state, [key]: val});
   // };
   // const [errors, setErrors] = settext('');
-  
+
   const [text, settext] = useState('');
- 
+
   // setTimeout(() => {
   //   if (text > 0 ){
   //       console.log('text :>> ', text);
@@ -358,74 +358,55 @@ const Other = props => {
 
   // }, 3000);
 
-  const onBlurInput =  () => {
+  const onBlurInput = () => {
     // setLoader(true);
     console.log('text :>> ', text);
-    getselctedother(text)
-   
+    getselctedother(text);
   };
   // const name_and_values = [{name: 'text', value: text}];
 
   return (
-    <SafeAreaView style={{flex:1 ,  alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.black4,}}>
-       {/* <View style={styles.modalcontent}> */}
-        <View style={styles.modalcontainer}>
- <View
+    <SafeAreaView
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.black4,
+      }}>
+      <View style={styles.modalcontainer}>
+        <View
           style={{
             width: layout.size.width - 20,
             height: moderateScale(105),
-            // flex:1,
-            // flexDirection: 'row',
-            // justifyContent: 'space-between',
-            // padding: 10,
-            top:moderateScale(35),
-            // backgroundColor:colors.black1
-          }}
-         >
+            top: moderateScale(35),
+          }}>
           <Text
             style={{
               fontSize: 25,
               fontFamily: fonts.semiBold,
               color: colors.primary,
-              textAlign:'center'
+              textAlign: 'center',
             }}>
             Enter Other Method
           </Text>
         </View>
 
         <View
-                style={{
-                  // marginTop: moderateScale(15),
-                  flex:1,
-                  width: layout.size.width / 2,
-                }}>
-                <TextInputComp
-                  value={text}
-                  placeholder={strings.enterother}
-                  labelTextStyle={styles.labelTextStyle}
-                  // onFocus={() =>
-                  //   setErrors({
-                  //     ...errors,
-                  //     text: '',
-                  //   })
-                  // }
-                  // onBlur={() => onBlurInput()}
-                  onFocus={onBlurInput()}
-                  onChangeText={text => settext(text)}
-                />
-                {/* {errors.text ? (
-                  <Text
-                    transparent
-                    style={{color: colors.primary, bottom: 13, left: 4}}>
-                    {errors.text}
-                  </Text>
-                ) : null} */}
-              </View>
-              </View>
-              {/* </View> */}
-       </SafeAreaView>
+          style={{
+            flex: 1,
+            width: layout.size.width / 2,
+          }}>
+          <TextInputComp
+            value={text}
+            placeholder={strings.enterother}
+            labelTextStyle={styles.labelTextStyle}
+            onFocus={onBlurInput()}
+            onChangeText={text => settext(text)}
+          /> 
+        </View>
+      </View>
+      {/* </View> */}
+    </SafeAreaView>
     // <>
     //   <>
     //     <TouchableOpacity
@@ -511,7 +492,6 @@ const Other = props => {
     //     </SafeAreaView>
     //   </Modal>
     // </>
-   
   );
 };
 
@@ -524,7 +504,6 @@ const Method = props => {
   const [allLure, setAllLure] = useState([]);
   const [other, setAllother] = useState([]);
 
-
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
 
@@ -533,11 +512,11 @@ const Method = props => {
   const getselctedother = val => {
     console.log('press>>>>>>>>>>>>q', val);
     // setModalVisible(state);
-    setAllother(val)
+    setAllother(val);
   };
 
   const submitAllSelctedThings = selectedIndex => {
-     console.log('selectedIndex :>> ', selectedIndex);
+    console.log('selectedIndex :>> ', selectedIndex);
     if (selectedIndex == 0) {
       props.baiArr(allBait && allBait.length > 0 ? allBait : []);
     }
@@ -545,11 +524,11 @@ const Method = props => {
       props.lureArr(allLure && allLure.length > 0 ? allLure : []);
     }
     if (selectedIndex == 2) {
-      props.other(other && other.length > 0 ? other : [])
+      props.other(other && other.length > 0 ? other : []);
       // console.log('other :>> ', other);
     }
-     
-      props.navigation.goBack();
+
+    props.navigation.goBack();
   };
 
   //get selected baits
@@ -705,7 +684,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.black4,
-    width:'100%'
+    width: '100%',
   },
   modalcontainer: {
     height: layout.size.height / 3.8,

@@ -99,8 +99,8 @@ const PhotosScreen = ({navigation, route}) => {
   }
   function _doOpenCamera(indx) {
     ImagePicker.openCamera({
-      width: 300,
-      height: 300,
+      width: 600,
+      height: 600,
       cropping: true,
       multiple: true,
       // compressImageQuality: 0.8,

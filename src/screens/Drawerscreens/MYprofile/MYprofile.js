@@ -116,6 +116,8 @@ const MYprofile = ({navigation}) => {
             </Text> */}
             {/* <Text style={styles.nameStyle}>{auth.userDetails.CML}</Text> */}
             <Text style={styles.nameStyle}>{auth?.userDetails?.city}</Text>
+            <Text style={styles.nameStyle}>{auth?.userDetails?.island}</Text>
+
           </View>
         </ScrollView>
 

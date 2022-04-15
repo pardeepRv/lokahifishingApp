@@ -56,7 +56,7 @@ const PhotoSharing = ({ navigation }) => {
     const [timeline, settimeline] = useState([]);
     let auth = useSelector(state => state.auth);
     let app = useSelector(state => state.app);
-  const [loadpapage, setpage] = useState(0);
+  const [loadpapage, setpage] = useState(1);
     const [modal, setmodal] = useState(false);
     const [paused, setpaused] = useState(true);
 
@@ -86,16 +86,19 @@ const PhotoSharing = ({ navigation }) => {
 
     function gettimelinefunc() {
         let token = auth && auth?.userDetails?.access_token;
+        let ob = {};
+    ob.token = auth && auth?.userDetails?.access_token;
+    ob.page = loadpapage;
         dispatch(
-            savetimelinelist(token, cb => {
+            savetimelinelist(ob, cb => {
                 if (cb) {
                     console.log(cb, 'callback list arr>>>>>>>>>>');
                     if (cb?.data?.data) {
-                        let photosharingList = cb?.data?.data?.photosharing;
-                        let page = cb?.data?.page;
-                        photosharingList.reverse();
+                        let photosharingList = cb?.data?.data?.photosharing?.data;
+                        // let page = cb?.data?.page;
+                        // photosharingList.reverse();
                         settimeline(photosharingList)
-            setpage(page)
+            setpage(loadpapage + 1)
 
                     }
                 }
@@ -110,12 +113,12 @@ const PhotoSharing = ({ navigation }) => {
         ob.page = loadpapage;
     
          dispatch(
-            photoshariongloading(ob, cb => {
+            savetimelinelist(ob, cb => {
             console.log('ob :>> ', ob);
             if (cb) {
               console.log(cb, 'in load  page>>>>>>>>>');
               if (cb?.data?.data) {
-                let filterlist = cb?.data?.data?.photosharing;
+                let filterlist = cb?.data?.data?.photosharing?.data;
                 settimeline([...timeline , ...filterlist])
                 setpage(loadpapage + 1)
               }

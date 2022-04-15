@@ -163,8 +163,8 @@ const setImages = () => {
                 style={styles.big}
               />
             </TouchableOpacity>
-            <Text style={styles.nameStyle}>{item.full_name}</Text>
             <Text style={styles.nameStyle}>{item.user_name}</Text>
+            <Text style={styles.nameStyle}>{item.full_name}</Text>
 
             <View
               style={styles.buttonView}>

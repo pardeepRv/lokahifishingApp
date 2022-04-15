@@ -644,13 +644,16 @@ function* savephotosharingsaga(params) {
 }
 
 function* gettimeline(params) {
-  console.log(params, 'params in timelien api ');
+   console.log(params, 'params in timelien api ');
   try {
+    let data = {};
+    data.page = params?.params?.page;
     const config = {
-      url: urls.timeline,
+      url:`${urls.timeline}?page=${params?.params?.page}` ,
+      // data: data,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params && params.params}`,
+        Authorization: `Bearer ${params && params.params && params.params.token}`,
       },
     };
     const response = yield request(config);
@@ -952,20 +955,23 @@ function* gettermsconditionsaga(params) {
 function* getmemberlist(params) {
   console.log(params, 'params in members .....api');
   try {
+    let data = {};
+    data.page = params?.params?.page;
     const config = {
-      url: urls.member_listing,
+      url:`${urls.member_listing}?page=${params?.params?.page}` ,
+      // data: data,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${params && params.params}`,
+        Authorization: `Bearer ${params && params.params && params.params.token}`,
       },
     };
     const response = yield request(config);
-    console.log(response, '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>');
+     console.log(response, '<<<<<<<< memberlist response  >>>>>>>>>>>>>>>>>');
 
     if (response?.data?.status) {
       yield put({
         type: actionTypes.MEMBER_LISTING_SUCCEEDED,
-        payload: response?.data?.data?.memberListing,
+        payload: response?.data?.data?.memberListing?.data,
       });
       params.cb(response);
     }
@@ -1012,7 +1018,7 @@ function* loadmoredata(params) {
 }
 
 function* loadmorephotosharing(params) {
-   console.log('params in it>>>>>>>>>> load more photodharing  ', params);
+  console.log('params in it>>>>>>>>>> load more photodharing  ', params);
   try {
     let data = {};
     data.page = params?.params?.page;

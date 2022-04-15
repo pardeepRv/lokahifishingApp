@@ -62,7 +62,7 @@ const Members = ({ navigation }) => {
   const [tabIndex, setTabIndex] = React.useState(0);
   const [tabAscDscIndex, settabAscDscIndex] = React.useState(0);
   const [loadingExtraData, setloadingExtraData] = useState(false);
-  const [loadpapage, setpage] = useState(0);
+  const [loadpapage, setpage] = useState(1);
   const [loadpa, setloadpa] = useState(1);
 
   let auth = useSelector(state => state.auth);
@@ -101,18 +101,21 @@ const Members = ({ navigation }) => {
 
   function getmemberfunc() {
     let token = auth && auth?.userDetails?.access_token;
+    let ob = {};
+    ob.token = auth && auth?.userDetails?.access_token;
+    ob.page = loadpapage;
     dispatch(
-      memberlisting(token, cb => {
+      memberlisting(ob, cb => {
         if (cb) {
           console.log(cb, 'callback list arr>>>>>>>>>>');
           if (cb?.data?.data) {
-            let memberList = cb?.data?.data?.memberListing;
-            let page = cb?.data?.page;
+            let memberList = cb?.data?.data?.memberListing?.data;
+            // let page = cb?.data?.data?.memberListing?.current_page;
             // return  console.log('m', memberList)
             // memberList.reverse();
-          setmembercount(cb?.data?.member_count)
+            setmembercount(cb?.data?.member_count)
             setMembersList(memberList)
-            setpage(page)
+            setpage(loadpapage + 1)
           }
         }
       }),
@@ -122,21 +125,21 @@ const Members = ({ navigation }) => {
   function LoadRandomData() {
     let token = auth && auth?.userDetails?.access_token;
     let ob = {};
-    ob.token = auth && auth?.userDetails?.access_token;
+    ob.token = token;
     ob.page = loadpapage;
 
-     dispatch(
-      loadpage(ob, cb => {
+    dispatch(
+      memberlisting(ob, cb => {
         console.log('ob :>> ', ob);
         if (cb) {
           console.log(cb, 'in load  page>>>>>>>>>');
           if (cb?.data?.data) {
-            let filterlist = cb?.data?.data?.memberListing;
+            let filterlist = cb?.data?.data?.memberListing?.data;
             // let page = cb?.data?.data?.page;
             // return  console.log('m', memberList)
             // memberList.reverse();
-            setfilterdata(filterlist)
-            setMembersList([...membersList , ...filterlist])
+            // setfilterdata(filterlist)
+            setMembersList([...membersList, ...filterlist])
             setpage(loadpapage + 1)
           }
         }
@@ -187,8 +190,8 @@ const Members = ({ navigation }) => {
             left: moderateScale(20),
             width: layout.size.width / 2,
             margin: 10,
-          }}>{tabIndex == 2 ? (<Text style={styles.nameStyle}>{item.full_name}</Text>) : (
-            <Text style={styles.nameStyle}>{item.user_name}</Text>)}
+          }}>
+            <Text style={styles.nameStyle}>{item.user_name}</Text>
           {/* <Text style={styles.nameStyle}>FullName :{item.full_name}</Text> */}
           <Text>Member Since :{item.email_verified_at != null ? item.email_verified_at : "no date found"}
           </Text>

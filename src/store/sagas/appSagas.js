@@ -1011,7 +1011,39 @@ function* loadmoredata(params) {
   }
 }
 
+function* loadmorephotosharing(params) {
+   console.log('params in it>>>>>>>>>> load more photodharing  ', params);
+  try {
+    let data = {};
+    data.page = params?.params?.page;
 
+    const config = {
+      url: urls.load_photosharing,
+      method: 'POST',
+      data: data,
+      headers: {
+        Authorization: `Bearer ${params && params?.params && params?.params?.token}`,
+      },
+    };
+    const response = yield request(config);
+    console.log(response, 'getting response from load more phottosharing api   api ');
+
+    if (response && response.data && response.data.success) {
+      yield put({
+        type: actionTypes.SAVE_PHOTOSHARING_SUCCEEDED,
+        payload: response?.data?.data?.memberListing,
+
+      });
+      params.cb(response);
+    }
+  } catch (error) {
+    console.log(error, 'coming in catch');
+    showErrorAlert(getAPIError(error));
+    yield put({
+      type: actionTypes.SAVE_PHOTOSHARING_FAIL,
+    });
+  }
+}
 
 function* sendfriendrequestsaga({ params }) {
   console.log('params in it>>>>>>>>>>', params);
@@ -1231,5 +1263,6 @@ export {
   getimprtantlinks,
   getsurveyquestion,
   postquestioninarry,
-  loadmoredata
+  loadmoredata,
+  loadmorephotosharing
 };

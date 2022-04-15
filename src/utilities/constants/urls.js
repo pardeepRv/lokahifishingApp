@@ -72,7 +72,8 @@ const urls = {
   important_links: 'important_links',
   survey_questions: 'survey-questions',
   save_survey_questions: 'save-survey-questions',
-  load_page : 'member-loadmore'
+  load_page : 'member-loadmore' ,
+  load_photosharing : "timeline-loadmore",
 };
 
 export {urls};

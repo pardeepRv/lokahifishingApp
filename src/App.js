@@ -10,6 +10,13 @@ import {requestUserPermission} from './service/FcmService';
 import {createNotificationListener} from './service/notificationListener';
 import checkPermission from './service/notificationServices';
 
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({ 
+  dsn: 'https://b9bbc44419b243d1a93d2de6c40bcc17@o1212165.ingest.sentry.io/6350207', 
+});
+
+
 class App extends PureComponent {
   constructor(props) {
     Text.defaultProps = Text.defaultProps || {};
@@ -54,4 +61,6 @@ class App extends PureComponent {
   }
 }
 
-export default App;
+// export default App;
+export default Sentry.wrap(App);
+

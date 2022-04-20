@@ -134,11 +134,11 @@ setTimeout(() => {
 
   function _doOpenCamera() {
     ImagePicker.openCamera({
-      width: 200,
-      height: 200,
+      width: 600,
+      height: 600,
       cropping: true,
       includeBase64: true,
-      compressImageQuality: 0.2,
+      // compressImageQuality: 0.2,
     }).then(response => {
       console.log(`ress`, response);
       setFishphoto(`data:${response.mime};base64,${response.data}`);
@@ -154,10 +154,10 @@ setTimeout(() => {
 
   function _doOpenGallery() {
     ImagePicker.openPicker({
-      width: 200,
-      height: 200,
+      width: 600,
+      height: 600,
       cropping: true,
-      compressImageQuality: 0.2,
+      // compressImageQuality: 0.2,
       includeBase64: true,
     }).then(image => {
       console.log(`images`, image);
@@ -187,6 +187,8 @@ setTimeout(() => {
     dataTobeSendOnNext.fishphoto = fishphoto;
     dataTobeSendOnNext.date = selectedDate;
     dataTobeSendOnNext.selectedTime = selectedTime;
+    dataTobeSendOnNext.efforts = price;
+
 
     console.log(dataTobeSendOnNext, 'dataTobeSendOnNext');
 

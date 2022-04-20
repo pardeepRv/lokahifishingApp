@@ -113,6 +113,15 @@ const FishData = ({navigation, route}) => {
   const [lureUI, setlureForUI] = useState([]);
   const [otherUI, setOtherUI] = useState('');
 
+  // methods other
+  const [otherLure1, setOtherLure1] = useState('');
+  const [otherLure2, setOtherLure2] = useState('');
+  const [otherLure3, setOtherLure3] = useState('');
+
+  console.log(otherLure1, 'otherLure1121');
+  console.log(otherLure2, 'otherLure2otherLure212121');
+  console.log(otherLure3, 'otherLure3otherLure3222');
+
   const [weateherArrNeedsToSendApi, setWeateherArrNeedsToSendApi] = useState(
     [],
   );
@@ -239,6 +248,18 @@ const FishData = ({navigation, route}) => {
 
     setOtherUI(data);
   };
+
+  //set All other selected in method list
+  const setSelectedLure1 = data => {
+    setOtherLure1(data);
+  };
+  const setSelectedLure2 = data => {
+    setOtherLure2(data);
+  };
+  const setSelectedLure3 = data => {
+    setOtherLure3(data);
+  };
+
   const getHrs = v => {
     console.log(v, ' in parnt hrs');
     if (v > 0) {
@@ -291,7 +312,7 @@ const FishData = ({navigation, route}) => {
 
     console.log(selectedSigns, 'selectedSigns');
     console.log(selectedPosition, 'selectedPosition');
-    console.log(price, 'efforts');
+    // console.log(price, 'efforts');
     console.log(
       location && location.latitude ? location.latitude : 0.0,
       'latitude',
@@ -320,7 +341,7 @@ const FishData = ({navigation, route}) => {
     formData.append('image', previousScreen && previousScreen.fishphoto);
     formData.append('fish_weight', previousScreen && previousScreen.weight);
     formData.append('lcr_date_time', previousScreen && previousScreen.date);
-    formData.append('effort', price);
+    formData.append('effort', previousScreen && previousScreen.efforts);
     formData.append(
       'lat',
       location && location.latitude ? location.latitude : 0.0,
@@ -350,8 +371,20 @@ const FishData = ({navigation, route}) => {
     formData.append('is_private', isEnabled);
     formData.append('other_method', otherUI);
 
-    // formData.append('sign_alt', enteredOtherSign);
-    // formData.append('position_alt', enteredOtherSign);
+    formData.append('sign_alt', enteredOtherSign);
+    formData.append('position_alt', enteredOtherPosition);
+    formData.append(
+      'method_alt[0]',
+      JSON.stringify([{lure_maker_other: otherLure2}]),
+    );
+    formData.append(
+      'method_alt[1]',
+      JSON.stringify([{Color_other: otherLure3}]),
+    );
+    formData.append(
+      'method_alt[2]',
+      JSON.stringify([{Type_other: otherLure1}]),
+    );
 
     console.log(formData, 'consoling formadta');
     let token = auth && auth.userDetails.access_token;
@@ -450,16 +483,15 @@ const FishData = ({navigation, route}) => {
               </Text>
               <View style={{flex: 0.5}}>
                 {
-                  enteredOtherSign != '' &&
-                  selectedSignArr &&
-                  selectedSignArr.length == 0 ? (
+                  enteredOtherSign != '' && (
                     <Text
                       style={{
                         fontFamily: fonts.semiBold,
                       }}>
                       {enteredOtherSign}
                     </Text>
-                  ) : null
+                  )
+                  // : null
                   // <Text
                   //   style={{
                   //     fontFamily: fonts.semiBold,
@@ -482,21 +514,60 @@ const FishData = ({navigation, route}) => {
                   })}
               </View>
             </TouchableOpacity>
-            <View style={styles.textSection}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ModalListComponent', {
+                  value: 2,
+                  name: 'Method',
+                  getSelectedBaits: getSelectedBaits,
+                  getSelectedLures: getSelectedLures,
+                  getother: getother,
+                  otherLure1: setSelectedLure1,
+                  otherLure2: setSelectedLure2,
+                  otherLure3: setSelectedLure3,
+                })
+              }
+              style={styles.textSection}>
               <Text
                 style={styles.title}
-                onPress={() =>
-                  navigation.navigate('ModalListComponent', {
-                    value: 2,
-                    name: 'Method',
-                    getSelectedBaits: getSelectedBaits,
-                    getSelectedLures: getSelectedLures,
-                    getother: getother,
-                  })
-                }>
+                // onPress={() =>
+                //   navigation.navigate('ModalListComponent', {
+                //     value: 2,
+                //     name: 'Method',
+                //     getSelectedBaits: getSelectedBaits,
+                //     getSelectedLures: getSelectedLures,
+                //     getother: getother,
+                //   })
+                // }
+              >
                 Method(optional)
               </Text>
               <View style={{flex: 0.5}}>
+                {otherLure1 != '' && (
+                  <Text
+                    style={{
+                      fontFamily: fonts.semiBold,
+                    }}>
+                    {otherLure1}
+                  </Text>
+                )}
+                {otherLure2 != '' && (
+                  <Text
+                    style={{
+                      fontFamily: fonts.semiBold,
+                    }}>
+                    {otherLure2}
+                  </Text>
+                )}
+                {otherLure3 != '' && (
+                  <Text
+                    style={{
+                      fontFamily: fonts.semiBold,
+                    }}>
+                    {otherLure3}
+                  </Text>
+                )}
+
                 {baitUI.map((val, index) => {
                   console.log('val :>> ', val);
                   return (
@@ -532,21 +603,12 @@ const FishData = ({navigation, route}) => {
                   <Text
                     style={{
                       fontFamily: fonts.semiBold,
-                    }}
-                    onPress={() =>
-                      navigation.navigate('ModalListComponent', {
-                        value: 2,
-                        name: 'Method',
-                        getSelectedBaits: getSelectedBaits,
-                        getSelectedLures: getSelectedLures,
-                        getother: getother,
-                      })
-                    }>
+                    }}>
                     Select Method
                   </Text>
                 ) : null}
               </View>
-            </View>
+            </TouchableOpacity>
             <View style={styles.textSection}>
               <Text
                 style={styles.title}
@@ -605,9 +667,7 @@ const FishData = ({navigation, route}) => {
               <Text style={styles.title}>Position(optional)</Text>
 
               <View style={{flex: 0.5}}>
-                {enteredOtherPosition != '' &&
-                positionarr &&
-                positionarr.length == 0 ? (
+                {enteredOtherPosition != '' ? (
                   <Text
                     style={{
                       fontFamily: fonts.semiBold,
@@ -616,33 +676,34 @@ const FishData = ({navigation, route}) => {
                   </Text>
                 ) : null}
 
-                {positionarr && positionarr.length > 0
-                  ? positionarr.map((val, index) => {
-                      return (
-                        <Text
-                          key={index}
-                          style={{
-                            fontFamily: fonts.semiBold,
-                          }}>
-                          {val.name}
-                        </Text>
-                      );
-                    })
-                  : null
-                    // <Text
-                    //   style={{
-                    //     fontFamily: fonts.semiBold,
-                    //   }}
-                    //   onPress={() =>
-                    //     navigation.navigate('ModalListComponent', {
-                    //       value: 4,
-                    //       name: 'position',
-                    //       getSelectedposition: getSelectedposition,
-                    //       getEnteredPositionVal: getEnteredPositionVal,
-                    //     })
-                    //   }>
-                    //   Select position
-                    // </Text>
+                {
+                  positionarr && positionarr.length > 0
+                    ? positionarr.map((val, index) => {
+                        return (
+                          <Text
+                            key={index}
+                            style={{
+                              fontFamily: fonts.semiBold,
+                            }}>
+                            {val.name}
+                          </Text>
+                        );
+                      })
+                    : null
+                  // <Text
+                  //   style={{
+                  //     fontFamily: fonts.semiBold,
+                  //   }}
+                  //   onPress={() =>
+                  //     navigation.navigate('ModalListComponent', {
+                  //       value: 4,
+                  //       name: 'position',
+                  //       getSelectedposition: getSelectedposition,
+                  //       getEnteredPositionVal: getEnteredPositionVal,
+                  //     })
+                  //   }>
+                  //   Select position
+                  // </Text>
                 }
               </View>
             </TouchableOpacity>

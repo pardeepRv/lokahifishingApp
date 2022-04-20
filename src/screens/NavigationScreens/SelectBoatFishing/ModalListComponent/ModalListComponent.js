@@ -51,6 +51,9 @@ const ModalListComponent = props => {
     getSelectedBaits,
     getSelectedLures,
     getother,
+    otherLure1,
+    otherLure2,
+    otherLure3,
   } = route?.params;
 
   const [weateherArr, setWeatherAr] = useState(app && app.weatherarray);
@@ -137,6 +140,22 @@ const ModalListComponent = props => {
     }
   };
 
+  //settings all others from method
+  const setLure1 = vals => {
+    console.log(vals, 'val at 145');
+    otherLure1(vals);
+  };
+
+  const setLure2 = vals => {
+    console.log(vals, 'val at 150');
+    otherLure2(vals);
+  };
+
+  const setLure3 = vals => {
+    console.log(vals, 'val at 155');
+    otherLure3(vals);
+  };
+
   const sendSelectedValues = () => {
     let arr = [];
 
@@ -146,6 +165,9 @@ const ModalListComponent = props => {
       }
     });
     getSelectedSigns(arr);
+    if (value == 1) {
+      getEnteredSignVal(text);
+    }
     navigation.goBack();
   };
 
@@ -158,6 +180,9 @@ const ModalListComponent = props => {
       }
     });
     getSelectedposition(arr);
+    if (value == 4) {
+      getEnteredPositionVal(text);
+    }
     navigation.goBack();
   };
 
@@ -267,7 +292,15 @@ const ModalListComponent = props => {
           toggleCml(index, value);
         }
       }}>
-      <Text>{item.name}</Text>
+      <Text>
+        {item.name == 'Other' && text != '' ? (
+          <Text>
+            {item.name} ({text})
+          </Text>
+        ) : (
+          item.name
+        )}
+      </Text>
 
       {item && item.isSelected ? (
         <Image
@@ -345,6 +378,9 @@ const ModalListComponent = props => {
             baiArr={getBaitMethod}
             lureArr={getLureMethod}
             other={getothermethod}
+            otherLure1={setLure1}
+            otherLure2={setLure2}
+            otherLure3={setLure3}
           />
         ) : null}
         {value == 3 && weateherArr && weateherArr.length > 0 ? (
@@ -432,6 +468,9 @@ const ModalListComponent = props => {
               style={styles.btnStyles}
               label={'Ok'}
               onPress={() => {
+                setModalVisible(false);
+
+                return;
                 if (value == 1) {
                   getEnteredSignVal(text);
                 }

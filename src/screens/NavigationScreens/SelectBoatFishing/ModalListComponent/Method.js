@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
+import {moderateScale, moderateVerticalScale} from 'react-native-size-matters';
 import {useSelector} from 'react-redux';
 import {fonts, icons} from '../../../../../assets';
 import {Button} from '../../../../components/common';
@@ -196,6 +196,11 @@ const Lure = props => {
   console.log(props, 'props in Lure>>>>>>>>>>');
   const {lureMethods, getSelectedlure} = props;
   const [lureArry, setlureArry] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [text, settext] = useState('');
+  const [text1, settext1] = useState('');
+  const [text2, settext2] = useState('');
+  const [isPressed, setIsPressed] = useState(0);
 
   useEffect(() => {
     setlureArry(lureMethods);
@@ -272,17 +277,28 @@ const Lure = props => {
                           justifyContent: 'space-between',
                           flexDirection: 'row',
                         }}
-                        onPress={() =>
-                          onClickInner(
-                            index,
-                            idx1,
-                            idx2,
-                            item,
-                            val,
-                            v,
-                            v.isSelected,
-                          )
-                        }>
+                        onPress={() => {
+                          if (v.method_name == 'Other') {
+                            setIsPressed(1);
+                            setModalVisible(true);
+                          } else if (v.method_name == 'Other Maker') {
+                            setIsPressed(2);
+                            setModalVisible(true);
+                          } else if (v.method_name == 'Other Color') {
+                            setIsPressed(3);
+                            setModalVisible(true);
+                          } else {
+                            onClickInner(
+                              index,
+                              idx1,
+                              idx2,
+                              item,
+                              val,
+                              v,
+                              v.isSelected,
+                            );
+                          }
+                        }}>
                         <View
                           style={{
                             margin: 2,
@@ -292,7 +308,30 @@ const Lure = props => {
                             style={{
                               fontFamily: fonts.regular,
                             }}>
-                            {v.method_name}
+                            {v.method_name == 'Other' ? (
+                              <Text
+                                style={{
+                                  fontFamily: fonts.regular,
+                                }}>
+                                {v.method_name} {text}
+                              </Text>
+                            ) : v.method_name == 'Other Maker' ? (
+                              <Text
+                                style={{
+                                  fontFamily: fonts.regular,
+                                }}>
+                                {v.method_name} {text1}
+                              </Text>
+                            ) : v.method_name == 'Other Color' ? (
+                              <Text
+                                style={{
+                                  fontFamily: fonts.regular,
+                                }}>
+                                {v.method_name} {text2}
+                              </Text>
+                            ) : (
+                              v.method_name
+                            )}
                           </Text>
                         </View>
                         {v && v.isSelected ? (
@@ -329,6 +368,66 @@ const Lure = props => {
         removeClippedSubviews={true}
         keyExtractor={item => item.id}
       />
+
+      <Modal
+        animationType={'slide'}
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {}}>
+        <SafeAreaView style={styles.modal}>
+          <View style={{}}>
+            <TouchableOpacity
+              style={{width: 100}}
+              onPress={() => {
+                setModalVisible(false);
+              }}>
+              <Image
+                source={icons.ic_back_white}
+                style={{
+                  top: 15,
+                  left: 10,
+                  tintColor: colors.secondry,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{marginTop: 50}}>
+            <TextInputComp
+              value={isPressed === 1 ? text : isPressed === 2 ? text1 : text2}
+              placeholder={strings.enterother}
+              labelTextStyle={styles.labelTextStyle}
+              onChangeText={text => {
+                if (isPressed === 1) {
+                  settext(text);
+                }
+                if (isPressed === 2) {
+                  settext1(text);
+                }
+                if (isPressed === 3) {
+                  settext2(text);
+                }
+              }}
+            />
+          </View>
+
+          <Button
+            style={styles.btnStyles}
+            label={'Ok'}
+            onPress={() => {
+              if (isPressed === 1) {
+                props.setLure1(text);
+              }
+              if (isPressed === 2) {
+                props.setLure2(text1);
+              }
+              if (isPressed === 3) {
+                props.setLure3(text2);
+              }
+              setModalVisible(false);
+            }}
+          />
+        </SafeAreaView>
+      </Modal>
     </View>
   );
 };
@@ -402,7 +501,7 @@ const Other = props => {
             labelTextStyle={styles.labelTextStyle}
             onFocus={onBlurInput()}
             onChangeText={text => settext(text)}
-          /> 
+          />
         </View>
       </View>
       {/* </View> */}
@@ -497,6 +596,7 @@ const Other = props => {
 
 const Method = props => {
   console.log(props, 'props in methoddd');
+  const {otherLure1, otherLure2, otherLure3} = props;
   const [modalVisible, setModalVisible] = useState(false);
   const [Index, setIndex] = useState(0);
 
@@ -515,6 +615,18 @@ const Method = props => {
     setAllother(val);
   };
 
+  const setOtherLure1 = val => {
+    otherLure1(val);
+  };
+
+  const setOtherLure2 = val => {
+    otherLure2(val);
+  };
+
+  const setOtherLure3 = val => {
+    otherLure3(val);
+  };
+
   const submitAllSelctedThings = selectedIndex => {
     console.log('selectedIndex :>> ', selectedIndex);
     if (selectedIndex == 0) {
@@ -522,6 +634,7 @@ const Method = props => {
     }
     if (selectedIndex == 1) {
       props.lureArr(allLure && allLure.length > 0 ? allLure : []);
+      //put all others here...
     }
     if (selectedIndex == 2) {
       props.other(other && other.length > 0 ? other : []);
@@ -630,6 +743,9 @@ const Method = props => {
               //  lureMethods={app.methodarray[1]}
               lureMethods={app.methodarray}
               getSelectedlure={getSelectedlure}
+              setLure1={setOtherLure1}
+              setLure2={setOtherLure2}
+              setLure3={setOtherLure3}
             />
           )}
         />
@@ -742,6 +858,22 @@ const styles = StyleSheet.create({
     fontFamily: fonts.semiBold,
     fontSize: moderateScale(16),
     color: colors.white1,
+  },
+  btnStyles: {
+    backgroundColor: colors.secondry,
+    width: layout.size.width - 80,
+    alignSelf: 'center',
+  },
+  modal: {
+    flex: 1,
+    display: 'flex',
+    backgroundColor: colors.white1,
+    marginLeft: moderateScale(20),
+    marginRight: moderateScale(20),
+    marginTop: moderateScale(100),
+    marginBottom: moderateScale(100),
+    borderRadius: 1,
+    borderWidth: 1,
   },
 });
 

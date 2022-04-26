@@ -17,7 +17,8 @@ import {fonts, icons} from '../../../../../assets';
 import {Button} from '../../../../components/common';
 import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
-import {colors} from '../../../../utilities/constants';
+import store from '../../../../store';
+import {actionTypes, colors} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 
 const Tab = createMaterialTopTabNavigator();
@@ -640,7 +641,10 @@ const Method = props => {
       props.other(other && other.length > 0 ? other : []);
       // console.log('other :>> ', other);
     }
-
+    store.dispatch({
+      type: actionTypes.GET_METHOD_SUCCEEDED,
+      payload: props.methodarr,
+    });
     props.navigation.goBack();
   };
 

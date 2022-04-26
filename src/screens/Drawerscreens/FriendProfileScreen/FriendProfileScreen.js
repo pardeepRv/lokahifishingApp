@@ -165,6 +165,8 @@ const setImages = () => {
             </TouchableOpacity>
             <Text style={styles.nameStyle}>{item.user_name}</Text>
             <Text style={styles.nameStyle}>{item.full_name}</Text>
+            <Text style={styles.nameStyle}>{item.city}</Text>
+            <Text style={styles.nameStyle}>{item.island}</Text>
 
             <View
               style={styles.buttonView}>

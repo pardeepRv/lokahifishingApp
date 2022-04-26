@@ -34,10 +34,11 @@ import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
 import {savelcrreport} from '../../../../store/actions';
 import * as NavigationService from '../../../../store/NavigationService';
-import {colors, screenNames} from '../../../../utilities/constants';
+import {actionTypes, colors, screenNames} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 import styles from './styles';
 import {MyViewManager} from '../../../../components/common/MyViewManager';
+import store from '../../../../store';
 
 const createFragment = viewId =>
   UIManager.dispatchViewManagerCommand(
@@ -390,6 +391,7 @@ const FishData = ({navigation, route}) => {
     let token = auth && auth.userDetails.access_token;
 
     dispatch(savelcrreport(formData, token));
+ 
     return;
     NavigationService.resetRoute(screenNames.HomeStack);
   };

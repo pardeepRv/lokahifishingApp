@@ -217,6 +217,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        signarray:[],
+        positionarray: [],
+        weatherarray: [],
+        methodarray: [],
       };
 
     case actionTypes.SAVE_LCR_REPORT_FAIL:

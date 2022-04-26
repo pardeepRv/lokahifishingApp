@@ -14,7 +14,8 @@ import { moderateScale } from 'react-native-size-matters';
 import { fonts, icons } from '../../../../../assets';
 import { Button } from '../../../../components/common';
 import { strings } from '../../../../localization';
-import { colors } from '../../../../utilities/constants';
+import store from '../../../../store';
+import { actionTypes, colors } from '../../../../utilities/constants';
 import { layout } from '../../../../utilities/layout';
 
 export default class Accordian extends PureComponent {
@@ -69,7 +70,10 @@ export default class Accordian extends PureComponent {
 
     getSelectedweather(arr);
     getWeatherSendToApi(newArr);
-
+    store.dispatch({
+      type: actionTypes.GET_WEATHER_SUCCEEDED,
+      payload: data
+    });
     navigation.goBack();
   };
 

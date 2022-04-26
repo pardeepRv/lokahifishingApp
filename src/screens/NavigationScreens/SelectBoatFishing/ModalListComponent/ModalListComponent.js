@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
@@ -12,22 +12,23 @@ import {
   View,
   Modal,
 } from 'react-native';
-import {moderateScale} from 'react-native-size-matters';
-import {useDispatch, useSelector} from 'react-redux';
-import {fonts, icons} from '../../../../../assets';
-import {Button, Loader} from '../../../../components/common';
+import { moderateScale } from 'react-native-size-matters';
+import { useDispatch, useSelector } from 'react-redux';
+import { fonts, icons } from '../../../../../assets';
+import { Button, Loader } from '../../../../components/common';
 import Circular from '../../../../components/common/Circular';
-import {Header} from '../../../../components/common/Header';
+import { Header } from '../../../../components/common/Header';
 import TextInputComp from '../../../../components/common/TextInputComp';
-import {strings} from '../../../../localization';
+import { strings } from '../../../../localization';
+import store from '../../../../store';
 import {
   getMethod,
   getposition,
   getsigns,
   getWeather,
 } from '../../../../store/actions';
-import {colors} from '../../../../utilities/constants';
-import {layout} from '../../../../utilities/layout';
+import { actionTypes, colors } from '../../../../utilities/constants';
+import { layout } from '../../../../utilities/layout';
 import Accordian from './Accordian';
 import Method from './Method';
 import styles from './styles.js';
@@ -42,9 +43,9 @@ const ModalListComponent = props => {
   console.log(props, 'props in modal>>>>>>>.');
 
   const dispatch = useDispatch();
-  const {navigation, route} = props;
-  const {value, name, getSelectedSigns, getEnteredSignVal} = route?.params;
-  const {getSelectedposition, getEnteredPositionVal} = route?.params;
+  const { navigation, route } = props;
+  const { value, name, getSelectedSigns, getEnteredSignVal } = route?.params;
+  const { getSelectedposition, getEnteredPositionVal } = route?.params;
   const {
     getSelectedweather,
     getWeatherSendToApi,
@@ -168,6 +169,10 @@ const ModalListComponent = props => {
     if (value == 1) {
       getEnteredSignVal(text);
     }
+    store.dispatch({
+      type: actionTypes.GET_SIGNS_SUCCEEDED,
+      payload: signs
+    });
     navigation.goBack();
   };
 
@@ -183,6 +188,11 @@ const ModalListComponent = props => {
     if (value == 4) {
       getEnteredPositionVal(text);
     }
+     console.log('list in   :>>'  );
+     store.dispatch({
+      type: actionTypes.GET_POSITION_SUCCEEDED,
+      payload: position
+    });
     navigation.goBack();
   };
 
@@ -208,7 +218,7 @@ const ModalListComponent = props => {
       getsigns(token, cb => {
         if (cb) {
           console.log(cb, ';cb in sign');
-          if (cb?.data?.data) {
+          if (cb?.data?.data && signs.length == 0) {
             setSignArr(cb?.data?.data?.sign);
           }
         }
@@ -221,7 +231,7 @@ const ModalListComponent = props => {
       getposition(token, cb => {
         if (cb) {
           console.log(cb, ';cb in poosition');
-          if (cb?.data?.data) {
+          if (cb?.data?.data && position.length == 0) {
             setpositionarr(cb?.data?.data?.position);
           }
         }
@@ -251,7 +261,7 @@ const ModalListComponent = props => {
           });
 
           console.log(newArr, 'updated Arr is');
-          if (cb?.data?.data) {
+          if (cb?.data?.data &&  weateherArr.length == 0) {
             setWeatherAr(cb?.data?.data?.weather);
           }
         }
@@ -264,7 +274,7 @@ const ModalListComponent = props => {
       getMethod(token, cb => {
         if (cb) {
           console.log(cb, 'callback setmethodarr>>>>>>>>>>');
-          if (cb?.data?.data) {
+          if (cb?.data?.data && methodarr.length == 0) {
             setmethodarr(cb?.data?.data?.category);
           }
         }
@@ -272,7 +282,7 @@ const ModalListComponent = props => {
     );
   }
 
-  const _renderView = ({item, index}) => (
+  const _renderView = ({ item, index }) => (
     <TouchableOpacity
       style={[
         styles.listItem,
@@ -318,7 +328,7 @@ const ModalListComponent = props => {
   return (
     <ImageBackground
       source={icons.ic_signup_bg}
-      style={{flex: 1, height: '100%'}}>
+      style={{ flex: 1, height: '100%' }}>
       <SafeAreaView style={styles.content}>
         <Header
           containerStyle={{
@@ -326,13 +336,36 @@ const ModalListComponent = props => {
             height: moderateScale(60),
           }}
           title={name}
-          titleStyle={{fontFamily: fonts.bold}}
+          titleStyle={{ fontFamily: fonts.bold }}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
             tintColor: colors.white1,
           }}
           onLeftPress={() => {
             navigation.goBack();
+           if (value == 1){
+            store.dispatch({
+              type: actionTypes.GET_SIGNS_SUCCEEDED,
+              payload: signs
+            });
+           } 
+            if (value == 4){
+            store.dispatch({
+              type: actionTypes.GET_POSITION_SUCCEEDED,
+              payload: position
+            });
+           }if (value == 3){
+            store.dispatch({
+              type: actionTypes.GET_WEATHER_SUCCEEDED,
+              payload: weateherArr
+            });
+           }if (value == 2){
+            store.dispatch({
+              type: actionTypes.GET_METHOD_SUCCEEDED,
+              payload: methodarr
+            });
+           }
+            
           }}
         />
         {value == 1 && (
@@ -341,7 +374,7 @@ const ModalListComponent = props => {
             data={signs}
             showsVerticalScrollIndicator={false}
             renderItem={_renderView}
-            contentInset={{bottom: 20}}
+            contentInset={{ bottom: 20 }}
             keyExtractor={(item, index) => 'key' + index}
             ListEmptyComponent={() =>
               signs >= 0 && (
@@ -398,7 +431,7 @@ const ModalListComponent = props => {
             data={position}
             showsVerticalScrollIndicator={false}
             renderItem={_renderView}
-            contentInset={{bottom: 20}}
+            contentInset={{ bottom: 20 }}
             keyExtractor={(item, index) => 'key' + index}
             ListEmptyComponent={() =>
               position >= 0 && (
@@ -433,15 +466,15 @@ const ModalListComponent = props => {
           animationType={'slide'}
           transparent={true}
           visible={modalVisible}
-          onRequestClose={() => {}}>
+          onRequestClose={() => { }}>
           <SafeAreaView style={styles.modal}>
             <View
               style={[
                 styles.backBtnView,
-                {flexDirection: 'row', justifyContent: 'space-between'},
+                { flexDirection: 'row', justifyContent: 'space-between' },
               ]}>
               <TouchableOpacity
-                style={{width: 100}}
+                style={{ width: 100 }}
                 onPress={() => {
                   setModalVisible(false);
                 }}>

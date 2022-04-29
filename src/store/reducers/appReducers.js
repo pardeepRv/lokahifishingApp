@@ -355,7 +355,7 @@ export default (state = initialState, action) => {
     case actionTypes.PHOTOSHARE_ADDLIKE_REQUESTED:
       return {
         ...state,
-        loading: true,
+        loading: false,
       };
 
     case actionTypes.PHOTOSHARE_ADDLIKE_SUCCEEDED:

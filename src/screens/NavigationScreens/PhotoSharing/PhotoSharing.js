@@ -1,561 +1,618 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-    FlatList,
-    Image,
-    ImageBackground,
-    SafeAreaView, Share, Text,
-    TouchableOpacity,
-    View
+  FlatList,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  Share,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { moderateScale } from 'react-native-size-matters';
-import TimeAgo from 'react-native-timeago';
+import {moderateScale} from 'react-native-size-matters';
 import Video from 'react-native-video';
-import { useDispatch, useSelector } from 'react-redux';
-import { fonts, icons } from '../../../../assets';
-import { Loader } from '../../../components/common';
-import { Header } from '../../../components/common/Header';
+import {useDispatch, useSelector} from 'react-redux';
+import {fonts, icons} from '../../../../assets';
+import {Loader} from '../../../components/common';
+import {Header} from '../../../components/common/Header';
 import ImgViewer from '../../../components/common/ImgViewer';
-import { addlikeunlikeohothsaring, photoshariongloading, savetimelinelist } from '../../../store/actions';
-import { colors } from '../../../utilities/constants';
-import { layout } from '../../../utilities/layout';
+import {
+  addlikeunlikeohothsaring,
+  savetimelinelist,
+} from '../../../store/actions';
+import * as NavigationService from '../../../store/NavigationService';
+
+import {colors, screenNames} from '../../../utilities/constants';
+import {layout} from '../../../utilities/layout';
 import styles from './styles';
 let timeLineArr = [
-    {
-        img: icons.ic_LokahiLogo,
-        name: 'Edwin watamura',
-        date: 'Oct. 4, 2021 1:34 PM',
-        description: 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.'
-    },
-    {
-        img: icons.ic_LokahiLogo,
-        name: 'Jim hori',
-        date: 'Oct. 5, 2021 1:34 PM',
-        description: 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.'
-
-    },
-    {
-        img: icons.ic_LokahiLogo,
-        name: 'Edwin watamura',
-        date: 'Oct. 4, 2021 1:34 PM',
-        description: 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.'
-
-    },
-    {
-        img: icons.ic_LokahiLogo,
-        name: 'Edwin watamura',
-        date: 'Oct. 4, 2021 1:34 PM',
-        description: 'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.'
-
-    },
+  {
+    img: icons.ic_LokahiLogo,
+    name: 'Edwin watamura',
+    date: 'Oct. 4, 2021 1:34 PM',
+    description:
+      'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.',
+  },
+  {
+    img: icons.ic_LokahiLogo,
+    name: 'Jim hori',
+    date: 'Oct. 5, 2021 1:34 PM',
+    description:
+      'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.',
+  },
+  {
+    img: icons.ic_LokahiLogo,
+    name: 'Edwin watamura',
+    date: 'Oct. 4, 2021 1:34 PM',
+    description:
+      'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.',
+  },
+  {
+    img: icons.ic_LokahiLogo,
+    name: 'Edwin watamura',
+    date: 'Oct. 4, 2021 1:34 PM',
+    description:
+      'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.',
+  },
 ];
-
 
 let images = [];
 
-const PhotoSharing = ({ navigation }) => {
-    const [timeline, settimeline] = useState([]);
-    let auth = useSelector(state => state.auth);
-    let app = useSelector(state => state.app);
+const PhotoSharing = ({navigation}) => {
+  const [timeline, settimeline] = useState([]);
+  let auth = useSelector(state => state.auth);
+  let app = useSelector(state => state.app);
   const [loadpapage, setpage] = useState(1);
-    const [modal, setmodal] = useState(false);
-    const [paused, setpaused] = useState(true);
+  const [modal, setmodal] = useState(false);
+  const [paused, setpaused] = useState(true);
 
-    console.log(app, 'appp in timelinelist   page>>>>>>>>>>');
-    console.log(auth, 'auth in timelinelist page >>>>>>>>>>');
-    const dispatch = useDispatch();
+  console.log(app, 'appp in timelinelist   page>>>>>>>>>>');
+  console.log(auth, 'auth in timelinelist page >>>>>>>>>>');
+  const dispatch = useDispatch();
 
-    const setmodalFun = (v) => {
-        setmodal(v)
-    }
+  const setmodalFun = v => {
+    setmodal(v);
+  };
 
-    const setImages = () => {
-        images = [];
-    }
-    useEffect(() => {
-        console.log('coming in this on timelinelist page');
-        const unsubscribe = navigation.addListener('focus', () => {
-            gettimelinefunc();
+  const setImages = () => {
+    images = [];
+  };
+  useEffect(() => {
+    console.log('coming in this on timelinelist page');
+    gettimelinefunc();
 
-        });
-        const blur = navigation.addListener('blur', () => {
-            setpaused(true)
-            return unsubscribe, blur;
+    // const unsubscribe = navigation.addListener('focus', () => {
+    //   gettimelinefunc();
+    // });
+    // const blur = navigation.addListener('blur', () => {
+    //   setpaused(true);
+    //   return unsubscribe, blur;
+    // });
+  }, [navigation]);
 
-        })
-    }, [navigation]);
-
-    function gettimelinefunc() {
-        let token = auth && auth?.userDetails?.access_token;
-        let ob = {};
+  function gettimelinefunc() {
+    let token = auth && auth?.userDetails?.access_token;
+    let ob = {};
     ob.token = auth && auth?.userDetails?.access_token;
     ob.page = loadpapage;
-        dispatch(
-            savetimelinelist(ob, cb => {
-                if (cb) {
-                    console.log(cb, 'callback list arr>>>>>>>>>>');
-                    if (cb?.data?.data) {
-                        let photosharingList = cb?.data?.data?.photosharing?.data;
-                        // let page = cb?.data?.page;
-                        // photosharingList.reverse();
-                        settimeline(photosharingList)
-            setpage(loadpapage + 1)
-
-                    }
-                }
-            }),
-        );
-    }
-
-    function LoadRandomData() {
-        let token = auth && auth?.userDetails?.access_token;
-        let ob = {};
-        ob.token = auth && auth?.userDetails?.access_token;
-        ob.page = loadpapage;
-    
-         dispatch(
-            savetimelinelist(ob, cb => {
-            console.log('ob :>> ', ob);
-            if (cb) {
-              console.log(cb, 'in load  page>>>>>>>>>');
-              if (cb?.data?.data) {
-                let filterlist = cb?.data?.data?.photosharing?.data;
-                settimeline([...timeline , ...filterlist])
-                setpage(loadpapage + 1)
-              }
-            }
-          }),
-        );
-    
-      }
-
-      const LoadMoreRandomData = () => {
-        LoadRandomData()
-      }
-    
-
-    const likeAdded = lcr_id => {
-        let obj = {};
-
-        obj.token = auth && auth?.userDetails?.access_token;
-        obj.photoshare_id = lcr_id;
-        obj.user_id = auth && auth?.userDetails?.id;
-        dispatch(
-            addlikeunlikeohothsaring(obj, cb => {
-                console.log(obj, 'obj >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-                if (cb) {
-                    console.log(cb, 'callback timelimne list  like arr>>>>>>>>>>');
-                    if (cb?.data?.status) {
-                        gettimelinefunc();
-                    }
-                }
-            }),
-        );
-    };
-
-    const onShare = async (imgUrl) => {
-        console.log(imgUrl, 'link');
-        try {
-            const result = await Share.share({
-                title: 'Lokahi fishing',
-                // message: 'Sharing from lokahi',
-                url: imgUrl
-            });
-            console.log(result, 'result on share >>>>>>>>>>>>>>>>>');
-            if (result.action === Share.sharedAction) {
-                if (result.activityType) {
-                    // shared with activity type of result.activityType
-                } else {
-                    // shared
-                }
-            } else if (result.action === Share.dismissedAction) {
-                // dismissed
-            }
-        } catch (error) {
-            alert(error.message);
+    dispatch(
+      savetimelinelist(ob, cb => {
+        if (cb) {
+          console.log(cb, 'callback list arr>>>>>>>>>>');
+          if (cb?.data?.data) {
+            let photosharingList = cb?.data?.data?.photosharing?.data;
+            // let page = cb?.data?.page;
+            // photosharingList.reverse();
+            settimeline(photosharingList);
+            setpage(loadpapage + 1);
+          }
         }
-    };
-
-    const listViewForPhoto = (arr) => {
-        return (
-            <FlatList
-                extraData={arr}
-                data={arr}
-                horizontal
-                pagingEnabled
-                renderItem={_renderPhotoView}
-                indicatorActiveWidth={40}
-                contentContainerStyle={{ paddingHorizontal: 16 }}
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item, index) => 'key' + index}
-                ListHeaderComponent={() =>
-                    !arr.length ? (
-                        <Text style={styles.nomatch}>No Match found</Text>
-                    ) : null
-                }
-            />
-        )
-    }
-    const _renderPhotoView = ({ item, index }) => (
-        <View
-            activeOpacity={0.8}
-            style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignSelf: 'center',
-                height: layout.size.height / 3,
-                alignItems: 'flex-start',
-                shadowColor: colors.primary,
-                // backgroundColor:colors.blue1
-
-            }}>
-            {
-                item && item.media_type == 'img' ?
-                    <TouchableOpacity style={{
-                        alignSelf: 'center',
-                        height: layout.size.height / 3.1,
-                        width: layout.size.width / 1.2,
-                        // marginRight:15,
-                        margin: 4,
-                        marginTop: moderateScale(50),
-                        // backgroundColor:'black'
-
-                    }}
-                        onPress={() => {
-                            images.push({ url: `http://admin.lokahifishing.com/photosharing/${item.media_name}` })
-                            setmodal(true)
-                        }}>
-                        <Image source={{
-                            // uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
-                            uri: `http://admin.lokahifishing.com/photosharing/${item.media_name}`// live url
-                        }}
-                            style={{
-                                height: layout.size.height / 3.6,
-                                width: layout.size.width / 1.2,
-
-                            }}
-                            resizeMode='contain'
-                        />
-                    </TouchableOpacity>
-                    :
-                    <View style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}
-                    // onPress={() => setpaused(false)}
->
-                        <Video
-                            // source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
-                            source={{ uri: `http://admin.lokahifishing.com/photosharing/video/${item.media_name}` }}
-
-                            paused={paused}
-                            repeat={false}
-                            controls={true}
-                            resizeMode={'contain'}
-                            playInBackground={false}
-                            playWhenInactive={false}
-                            style={Platform.OS === "android" ? styles.videoContainerAndroid : styles.videoContainerIOS}
-                        // style={{ width: layout.size.width -80, backgroundColor:'black', height: layout.size.height / 3.9, top:10 , marginVertical:10}}
-                        />
-                    </View>
-            }
-        </View>
-    )
-
-    const onViewRef = React.useRef(viewableItems => {
-        console.log(viewableItems, 'viewwwww>>>>>>>>>>>>>>>> in phot sharing');
-        // Use viewable items in state or as intended
-
-        if (
-            viewableItems &&
-            viewableItems.viewableItems &&
-            viewableItems.viewableItems.length > 0
-        ) {
-            if (
-                viewableItems.viewableItems[0].isViewable
-            ) {
-                console.log('cmoing in if', viewableItems.viewableItems[0].isViewable);
-                setpaused();
-            } else {
-                console.log('cmoing in else', viewableItems.viewableItems[0].isViewable);
-            }
-        }
-    });
-    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
-
-
-    //View of flatlist
-    const _renderView = ({ item, index }) => (
-        <View style={styles.listView} >
-            <View style={styles.viewStyle}>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                }}>
-                    <TouchableOpacity
-                     onPress={() => {
-                        images.push({ url: item.user_image })
-                        setmodal(true)
-                    }}
-                    >
-                    <Image
-                        source={{
-                            uri: item.user_image
-                        }}
-                        style={{
-                            height: 50,
-                            width: 50,
-                            borderRadius: 25
-                        }}
-                    />
-                    </TouchableOpacity>
-                    <Text style={[styles.nameStyle, { fontSize: 16, fontFamily: fonts.bold }]}>{item.user_name}</Text>
-                    <>
-                        {item && item.photosharingmedia && (
-                            <TouchableOpacity
-                                onPress={() => {
-                                    item.photosharingmedia[0].media_type == "video" ?
-                                        onShare(`http://admin.lokahifishing.com/photosharing/video/${item.photosharingmedia[0].media_name}`)
-                                        :
-                                        onShare(`http://admin.lokahifishing.com/photosharing/${item.photosharingmedia[0].media_name}`)
-                                }}
-                                title="Share"
-                            >
-                                <Image source={icons.sharearrow}
-                                    style={{
-                                        alignSelf: 'flex-end',
-                                        height: 20,
-                                        width: 20,
-                                    }}
-                                />
-                            </TouchableOpacity>
-                        )}
-                    </>
-
-                </View>
-                <Text style={{
-                    fontSize: 14, fontFamily: fonts.semiBold,
-                    color: colors.black2
-                }}  >{item.created_at}</Text>
-
-                <View style={{
-                    margin: 10, flex: 1, height: moderateScale(200)
-                }}>
-                    {listViewForPhoto(item && item.photosharingmedia)}
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                }}
-                >
-                    <View
-                        style={{
-                            alignItems: 'center',
-                        }}
-                    >
-                        {item && item.photo_share_like ? (
-                            <TouchableOpacity style={{}}
-                                onPress={() => likeAdded(item.id)} >
-                                <Image
-                                    source={icons.like_me}
-                                    style={{
-                                        height: 25,
-                                        width: 25,
-                                    }}
-                                />
-                            </TouchableOpacity>) : (<TouchableOpacity style={{}}
-                                onPress={() => likeAdded(item.id)}  >
-                                <Image
-                                    source={icons.like}
-                                    style={{
-                                        height: 25,
-                                        width: 25,
-                                    }}
-                                />
-                            </TouchableOpacity>)}
-
-                        <TouchableOpacity
-                            onPress={() => {
-                                navigation.navigate('Like', { lcr_id: item.id, list: '2' });
-                            }}   >
-                            <Text
-                                style={[styles.dateStyle, {
-                                    fontSize: moderateScale(12),
-                                    width: moderateScale(150)
-                                }]}>Likes {item.like_count}
-                            </Text>
-                        </TouchableOpacity>
-
-                    </View>
-                    <TouchableOpacity
-                        onPress={() => {
-                            navigation.navigate('Comment', { lcr_id: item.id, list: '2' });
-                        }}
-                        style={{
-                            alignItems: 'center',
-
-                            right: moderateScale(15)
-                        }}>
-                        <Image source={icons.photoComment} style={{
-                            height: 25,
-                            width: 25,
-                        }} />
-                        <Text style={[styles.dateStyle, {
-                            fontSize: moderateScale(12),
-                        }]}>{' '}
-                            {item.comment_count}  comments</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
+      }),
     );
+  }
 
+  function LoadRandomData() {
+    let token = auth && auth?.userDetails?.access_token;
+    let ob = {};
+    ob.token = auth && auth?.userDetails?.access_token;
+    ob.page = loadpapage;
+
+    dispatch(
+      savetimelinelist(ob, cb => {
+        console.log('ob :>> ', ob);
+        if (cb) {
+          console.log(cb, 'in load  page>>>>>>>>>');
+          if (cb?.data?.data) {
+            let filterlist = cb?.data?.data?.photosharing?.data;
+            settimeline([...timeline, ...filterlist]);
+            setpage(loadpapage + 1);
+          }
+        }
+      }),
+    );
+  }
+
+  const LoadMoreRandomData = () => {
+    LoadRandomData();
+  };
+
+  //like dislike function
+  const likeAdded = (lcr_id, item, i) => {
+    console.log(item, 'by press getting it');
+    console.log(timeline, 'by press getting it2');
+    console.log(i, 'iiiiii2');
+
+    let obj = {};
+
+    obj.token = auth && auth?.userDetails?.access_token;
+    obj.photoshare_id = lcr_id;
+    obj.user_id = auth && auth?.userDetails?.id;
+    dispatch(
+      addlikeunlikeohothsaring(obj, cb => {
+        console.log(obj, 'obj >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        if (cb) {
+          console.log(cb, 'callback timelimne list  like arr>>>>>>>>>>');
+          if (cb?.data) {
+            // gettimelinefunc();
+            console.log('before timeline', timeline);
+
+            let updateArr = timeline;
+
+            updateArr[i].myName = 'pardeep';
+            updateArr[i].like_count =
+              item.photo_share_like == 1
+                ? item.like_count - 1
+                : item.like_count + 1;
+
+            updateArr[i].photo_share_like = item.photo_share_like === 1 ? 0 : 1;
+
+            console.log('after updateArr', updateArr);
+            settimeline(updateArr);
+          }
+        }
+      }),
+    );
+  };
+
+  const onShare = async imgUrl => {
+    console.log(imgUrl, 'link');
+    try {
+      const result = await Share.share({
+        title: 'Lokahi fishing',
+        // message: 'Sharing from lokahi',
+        url: imgUrl,
+      });
+      console.log(result, 'result on share >>>>>>>>>>>>>>>>>');
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const listViewForPhoto = arr => {
     return (
-        <ImageBackground
-            source={icons.ic_signup_bg}
-            style={{ flex: 1, }}>
-            <SafeAreaView
-                style={{
-                    flex: 1,
-                }}>
-                <Header
-                    containerStyle={{
-                        backgroundColor: 'transparent',
-                        height: moderateScale(60),
-                    }}
-                    title={'Photo Sharing'}
-                    titleStyle={{ fontFamily: fonts.bold }}
-                    leftIconSource={icons.ic_back_white}
-                    leftButtonStyle={{
-                        tintColor: colors.white1,
-                    }}
-                    onLeftPress={() => {
-                        navigation.goBack();
-                        setpaused(false);
-                    }}
-                />
-                <View
-                    style={{
-                        backgroundColor: colors.white1,
-                        height: moderateScale(100),
-                        margin: 10,
-                        borderRadius: 10
-                    }}
-                >
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            paddingHorizontal: 10,
-                            paddingVertical: 10
-                        }}
-                    >
-                        <TouchableOpacity
-                         onPress={() => {
-                            images.push({ url: auth && auth.userDetails && auth.userDetails.profile_picture})
-                            setmodal(true)
-                        }}
-                        >
-                        <Image
-                            source={{
-                                uri: auth && auth.userDetails && auth.userDetails.profile_picture
-                            }}
-                            style={{
-                                height: 50,
-                                width: 50,
-                                borderRadius: 25
-                            }}
-                        />
-                        </TouchableOpacity>
-                        <Text style={{
-                            fontFamily: fonts.bold,
-                            fontSize: moderateScale(16),
-                            paddingHorizontal: 10
-                        }}>
-                            Share your catch memory
-
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-around'
-
-                        }}
-                    >
-                        <TouchableOpacity
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'center'
-                            }}
-                            onPress={() => navigation.navigate('PhotosScreen')}
-
-                        >
-                            <Image source={icons.photoUploadPhoto}
-                                style={{
-                                    height: 30,
-                                    width: 30
-                                }}
-                            />
-                            <Text style={{
-                                fontFamily: fonts.regular,
-                                paddingHorizontal: 10
-                            }}>
-                                Photos
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={{
-                                flexDirection: 'row',
-                                alignItems: 'center'
-                            }}
-                            onPress={() => navigation.navigate('Videoscreen')}
-                        >
-                            <Image source={icons.photoVideo}
-                                style={{
-                                    height: 30,
-                                    width: 30
-                                }}
-                            />
-                            <Text style={{
-                                fontFamily: fonts.regular,
-                                paddingHorizontal: 10
-                            }}>
-                                Videos
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-
-                </View>
-                <FlatList
-                    extraData={timeline}
-                    data={timeline}
-                    renderItem={_renderView}
-                    keyExtractor={(item, index) => 'key' + index}
-                    ListHeaderComponent={() =>
-                        !timeline.length ? (
-                            <Text style={styles.nomatch}>No Match found</Text>
-                        ) : null
-                    }
-                    viewabilityConfig={viewConfigRef.current}
-                    onViewableItemsChanged={onViewRef.current}
-                    removeClippedSubviews={true}
-                    initialNumToRender={5}
-                    onEndReached={LoadMoreRandomData}
-                    onEndReachedThreshold={0}
-                />
-
-                {modal ? <ImgViewer
-                    setmodalFun={setmodalFun}
-                    modal={modal}
-                    images={images}
-                    setImages={setImages}
-                /> : null}
-
-            </SafeAreaView>
-            <Loader isLoading={app.loading} isAbsolute />
-        </ImageBackground>
+      <FlatList
+        extraData={arr}
+        data={arr}
+        horizontal
+        pagingEnabled
+        renderItem={_renderPhotoView}
+        indicatorActiveWidth={40}
+        contentContainerStyle={{paddingHorizontal: 16}}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item, index) => 'key' + index}
+        ListHeaderComponent={() =>
+          !arr.length ? (
+            <Text style={styles.nomatch}>No Match found</Text>
+          ) : null
+        }
+      />
     );
+  };
+  const _renderPhotoView = ({item, index}) => (
+    <View
+      activeOpacity={0.8}
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        height: layout.size.height / 3,
+        alignItems: 'flex-start',
+        shadowColor: colors.primary,
+        // backgroundColor:colors.blue1
+      }}>
+      {item && item.media_type == 'img' ? (
+        <TouchableOpacity
+          style={{
+            alignSelf: 'center',
+            height: layout.size.height / 3.1,
+            width: layout.size.width / 1.2,
+            // marginRight:15,
+            margin: 4,
+            marginTop: moderateScale(50),
+            // backgroundColor:'black'
+          }}
+          onPress={() => {
+            images.push({
+              url: `http://admin.lokahifishing.com/photosharing/${item.media_name}`,
+            });
+            setmodal(true);
+          }}>
+          <Image
+            source={{
+              // uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/${item.media_name}`
+              uri: `http://admin.lokahifishing.com/photosharing/${item.media_name}`, // live url
+            }}
+            style={{
+              height: layout.size.height / 3.6,
+              width: layout.size.width / 1.2,
+            }}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          // onPress={() => setpaused(false)}
+        >
+          <Video
+            // source={{ uri: `https://server3.rvtechnologies.in/LokahiFishing_Admin/public/photosharing/video/${item.media_name}` }}
+            source={{
+              uri: `http://admin.lokahifishing.com/photosharing/video/${item.media_name}`,
+            }}
+            paused={paused}
+            repeat={false}
+            controls={true}
+            resizeMode={'contain'}
+            playInBackground={false}
+            playWhenInactive={false}
+            style={
+              Platform.OS === 'android'
+                ? styles.videoContainerAndroid
+                : styles.videoContainerIOS
+            }
+            // style={{ width: layout.size.width -80, backgroundColor:'black', height: layout.size.height / 3.9, top:10 , marginVertical:10}}
+          />
+        </View>
+      )}
+    </View>
+  );
+
+  const onViewRef = React.useRef(viewableItems => {
+    // console.log(viewableItems, 'viewwwww>>>>>>>>>>>>>>>> in phot sharing');
+    // Use viewable items in state or as intended
+
+    if (
+      viewableItems &&
+      viewableItems.viewableItems &&
+      viewableItems.viewableItems.length > 0
+    ) {
+      if (viewableItems.viewableItems[0].isViewable) {
+        // console.log('cmoing in if', viewableItems.viewableItems[0].isViewable);
+        setpaused();
+      } else {
+        // console.log('cmoing in else', viewableItems.viewableItems[0].isViewable);
+      }
+    }
+  });
+  const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 50});
+
+  //View of flatlist
+  const _renderView = ({item, index}) => (
+    <View style={styles.listView}>
+      <View style={styles.viewStyle}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            onPress={() => {
+              images.push({url: item.user_image});
+              setmodal(true);
+            }}>
+            <Image
+              source={{
+                uri: item.user_image,
+              }}
+              style={{
+                height: 50,
+                width: 50,
+                borderRadius: 25,
+              }}
+            />
+          </TouchableOpacity>
+          <Text
+            style={[styles.nameStyle, {fontSize: 16, fontFamily: fonts.bold}]}>
+            {item.user_name}
+          </Text>
+          <>
+            {item && item.photosharingmedia && (
+              <TouchableOpacity
+                onPress={() => {
+                  item.photosharingmedia[0].media_type == 'video'
+                    ? onShare(
+                        `http://admin.lokahifishing.com/photosharing/video/${item.photosharingmedia[0].media_name}`,
+                      )
+                    : onShare(
+                        `http://admin.lokahifishing.com/photosharing/${item.photosharingmedia[0].media_name}`,
+                      );
+                }}
+                title="Share">
+                <Image
+                  source={icons.sharearrow}
+                  style={{
+                    alignSelf: 'flex-end',
+                    height: 20,
+                    width: 20,
+                  }}
+                />
+              </TouchableOpacity>
+            )}
+          </>
+        </View>
+        <Text
+          style={{
+            fontSize: 14,
+            fontFamily: fonts.semiBold,
+            color: colors.black2,
+          }}>
+          {item.created_at}
+        </Text>
+
+        <View
+          style={{
+            margin: 10,
+            flex: 1,
+            height: moderateScale(200),
+          }}>
+          {listViewForPhoto(item && item.photosharingmedia)}
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <View
+            style={{
+              alignItems: 'center',
+            }}>
+            {item && item.photo_share_like ? (
+              <TouchableOpacity
+                style={{}}
+                onPress={() => likeAdded(item.id, item, index)}>
+                <Image
+                  source={icons.like_me}
+                  style={{
+                    height: 25,
+                    width: 25,
+                  }}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={{}}
+                onPress={() => likeAdded(item.id, item, index)}>
+                <Image
+                  source={icons.like}
+                  style={{
+                    height: 25,
+                    width: 25,
+                  }}
+                />
+              </TouchableOpacity>
+            )}
+
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Like', {lcr_id: item.id, list: '2'});
+              }}>
+              <Text
+                style={[
+                  styles.dateStyle,
+                  {
+                    fontSize: moderateScale(12),
+                    width: moderateScale(150),
+                  },
+                ]}>
+                Likes {item.like_count}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Comment', {lcr_id: item.id, list: '2'});
+            }}
+            style={{
+              alignItems: 'center',
+
+              right: moderateScale(15),
+            }}>
+            <Image
+              source={icons.photoComment}
+              style={{
+                height: 25,
+                width: 25,
+              }}
+            />
+            <Text
+              style={[
+                styles.dateStyle,
+                {
+                  fontSize: moderateScale(12),
+                },
+              ]}>
+              {' '}
+              {item.comment_count} comments
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+
+  return (
+    <ImageBackground source={icons.ic_signup_bg} style={{flex: 1}}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+        }}>
+        <Header
+          containerStyle={{
+            backgroundColor: 'transparent',
+            height: moderateScale(60),
+          }}
+          title={'Photo Sharing'}
+          titleStyle={{fontFamily: fonts.bold}}
+          leftIconSource={icons.ic_back_white}
+          leftButtonStyle={{
+            tintColor: colors.white1,
+          }}
+          onLeftPress={() => {
+            // navigation.goBack();
+            NavigationService.resetRoute(screenNames.HomeStack);
+
+            setpaused(false);
+          }}
+        />
+        <View
+          style={{
+            backgroundColor: colors.white1,
+            height: moderateScale(100),
+            margin: 10,
+            borderRadius: 10,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                images.push({
+                  url:
+                    auth &&
+                    auth.userDetails &&
+                    auth.userDetails.profile_picture,
+                });
+                setmodal(true);
+              }}>
+              <Image
+                source={{
+                  uri:
+                    auth &&
+                    auth.userDetails &&
+                    auth.userDetails.profile_picture,
+                }}
+                style={{
+                  height: 50,
+                  width: 50,
+                  borderRadius: 25,
+                }}
+              />
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontFamily: fonts.bold,
+                fontSize: moderateScale(16),
+                paddingHorizontal: 10,
+              }}>
+              Share your catch memory
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              onPress={() => navigation.navigate('PhotosScreen')}>
+              <Image
+                source={icons.photoUploadPhoto}
+                style={{
+                  height: 30,
+                  width: 30,
+                }}
+              />
+              <Text
+                style={{
+                  fontFamily: fonts.regular,
+                  paddingHorizontal: 10,
+                }}>
+                Photos
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              onPress={() => navigation.navigate('Videoscreen')}>
+              <Image
+                source={icons.photoVideo}
+                style={{
+                  height: 30,
+                  width: 30,
+                }}
+              />
+              <Text
+                style={{
+                  fontFamily: fonts.regular,
+                  paddingHorizontal: 10,
+                }}>
+                Videos
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <FlatList
+          extraData={timeline}
+          data={timeline}
+          renderItem={_renderView}
+          keyExtractor={(item, index) => 'key' + index}
+          ListHeaderComponent={() =>
+            !timeline.length ? (
+              <Text style={styles.nomatch}>No Match found</Text>
+            ) : null
+          }
+          viewabilityConfig={viewConfigRef.current}
+          onViewableItemsChanged={onViewRef.current}
+          removeClippedSubviews={true}
+          initialNumToRender={5}
+          onEndReached={LoadMoreRandomData}
+          onEndReachedThreshold={0}
+        />
+
+        {modal ? (
+          <ImgViewer
+            setmodalFun={setmodalFun}
+            modal={modal}
+            images={images}
+            setImages={setImages}
+          />
+        ) : null}
+      </SafeAreaView>
+      <Loader isLoading={app.loading} isAbsolute />
+    </ImageBackground>
+  );
 };
 
 export default PhotoSharing;

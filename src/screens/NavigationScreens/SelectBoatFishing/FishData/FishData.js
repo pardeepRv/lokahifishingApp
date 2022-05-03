@@ -34,7 +34,11 @@ import TextInputComp from '../../../../components/common/TextInputComp';
 import {strings} from '../../../../localization';
 import {savelcrreport} from '../../../../store/actions';
 import * as NavigationService from '../../../../store/NavigationService';
-import {actionTypes, colors, screenNames} from '../../../../utilities/constants';
+import {
+  actionTypes,
+  colors,
+  screenNames,
+} from '../../../../utilities/constants';
 import {layout} from '../../../../utilities/layout';
 import styles from './styles';
 import {MyViewManager} from '../../../../components/common/MyViewManager';
@@ -391,7 +395,7 @@ const FishData = ({navigation, route}) => {
     let token = auth && auth.userDetails.access_token;
 
     dispatch(savelcrreport(formData, token));
- 
+
     return;
     NavigationService.resetRoute(screenNames.HomeStack);
   };
@@ -424,7 +428,9 @@ const FishData = ({navigation, route}) => {
         }}
       />
       <SafeAreaView style={styles.safeAreaView}>
-        <ScrollView nestedScrollEnabled style={{flex: 1}}>
+        <ScrollView 
+        nestedScrollEnabled
+         style={{flex: 1}}>
           {/* <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
           keyboardVerticalOffset={50}
@@ -941,11 +947,16 @@ const FishData = ({navigation, route}) => {
                   miles from:{' '}
                 </Text>
               </View>
-              <View style={{zIndex: 1}}>
+              <View
+                style={{
+                  zIndex: 1,
+                  height: open ? 300 : 100,
+                }} >
                 <DropDownPicker
+                  // nestedScrollEnabled
                   style={{backgroundColor: '#fafafa'}}
                   theme="LIGHT"
-                  containerStyle={{width: '50%', marginVertical: 10, flex: 1}}
+                  containerStyle={{width: '50%', marginVertical: 5, flex: 1}}
                   labelStyle={{
                     fontWeight: 'bold',
                     fontSize: 16,
@@ -972,7 +983,8 @@ const FishData = ({navigation, route}) => {
                   setValue={setHarbor}
                   setItems={setHarborItems}
                   placeholder={'Choose Harbor'}
-                  dropDownDirection="AUTO"
+                  dropDownDirection='DEFAULT'
+                  listMode="SCROLLVIEW"
                 />
               </View>
             </View>

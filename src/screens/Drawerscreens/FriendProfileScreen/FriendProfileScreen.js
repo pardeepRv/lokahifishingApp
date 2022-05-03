@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, {useEffect, useState, useContext, useRef} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
@@ -13,23 +13,22 @@ import {
 } from 'react-native';
 // internal libraries
 
-
 import EmergencyContacts from './FriendEmergencyContacts';
 import LCR from './FriendLCR';
 import styles from './styles';
 
 // ecternal libraries
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { moderateScale } from 'react-native-size-matters';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {moderateScale} from 'react-native-size-matters';
 import FriendBoatInfo from './FriendBoatInfo';
-import { Header } from '../../../components/common';
-import { fonts, icons } from '../../../../assets';
-import { colors } from '../../../utilities/constants';
-import { strings } from '../../../localization';
-import { layout } from '../../../utilities/layout';
-import { useDispatch, useSelector } from 'react-redux';
+import {Header} from '../../../components/common';
+import {fonts, icons} from '../../../../assets';
+import {colors} from '../../../utilities/constants';
+import {strings} from '../../../localization';
+import {layout} from '../../../utilities/layout';
+import {useDispatch, useSelector} from 'react-redux';
 import TimeAgo from 'react-native-timeago';
-import { sendfriendsrequests, unblockuserrequest } from '../../../store/actions';
+import {sendfriendsrequests, unblockuserrequest} from '../../../store/actions';
 import FriendLCR from './FriendLCR';
 import FriendEmergencyContacts from './FriendEmergencyContacts';
 import ImgViewer from '../../../components/common/ImgViewer';
@@ -37,12 +36,11 @@ import ImgViewer from '../../../components/common/ImgViewer';
 const Tab = createMaterialTopTabNavigator();
 let images = [];
 
-const FriendProfileScreen = ({ navigation, route }) => {
-  const { item } = route.params;
+const FriendProfileScreen = ({navigation, route}) => {
+  const {item} = route.params;
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
   const dispatch = useDispatch();
-
 
   console.log(app, 'appp in friendprofile   page>>>>>>>>>>');
   console.log(auth, 'auth in friendprofile page >>>>>>>>>>');
@@ -59,15 +57,15 @@ const FriendProfileScreen = ({ navigation, route }) => {
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modal, setmodal] = useState(false);
 
-  const { color, membersList } = state;
+  const {color, membersList} = state;
 
-  const setmodalFun = (v) => {
-    setmodal(v)
-}
+  const setmodalFun = v => {
+    setmodal(v);
+  };
 
-const setImages = () => {
+  const setImages = () => {
     images = [];
-}
+  };
 
   function onButtonPressed(value) {
     // box1 pressed.
@@ -75,12 +73,12 @@ const setImages = () => {
     if (value === true) {
       // Change box1 to red, and box2 to blue
       setState({
-        color: { box1: colors.primary },
+        color: {box1: colors.primary},
         onPress: setModalVisible1(true),
       });
       if (value === true) {
         setTimeout(() => {
-          setModalVisible1(false)
+          setModalVisible1(false);
           hitApiAcceptReq();
         }, 1000);
       }
@@ -92,14 +90,14 @@ const setImages = () => {
       'Confirm',
       'Request',
       [
-        { text: 'Ok', onPress: () => hitApiAcceptReq(respond, val) },
+        {text: 'Ok', onPress: () => hitApiAcceptReq(respond, val)},
         {
           text: 'Cancel',
           onPress: () => console.log('err'),
           style: 'cancel',
         },
       ],
-      { cancelable: true },
+      {cancelable: true},
     );
   };
 
@@ -111,8 +109,7 @@ const setImages = () => {
     let formData = new FormData();
     formData.append('requested_user_id', item?.id);
 
-
-    dispatch(sendfriendsrequests({ formData, token }));
+    dispatch(sendfriendsrequests({formData, token}));
   };
   const unblockuserreq = () => {
     // console.log(val, 'valval');
@@ -122,8 +119,7 @@ const setImages = () => {
     let formData = new FormData();
     formData.append('other_user_id', item?.id);
 
-
-    dispatch(unblockuserrequest({ formData, token }));
+    dispatch(unblockuserrequest({formData, token}));
   };
   return (
     <ImageBackground source={icons.ic_signup_bg} style={styles.image}>
@@ -140,25 +136,25 @@ const setImages = () => {
           onLeftPress={() => {
             navigation.goBack();
           }}
-        // onRightPress={() => {
-        //   navigation.navigate('Edit');
-        // }}
-        // rightIconSource={icons.location}
-        // rightIconStyle={{
-        //   tintColor: colors.white1,
-        //   position: 'absolute',
-        // }}
+          // onRightPress={() => {
+          //   navigation.navigate('Edit');
+          // }}
+          // rightIconSource={icons.location}
+          // rightIconStyle={{
+          //   tintColor: colors.white1,
+          //   position: 'absolute',
+          // }}
         />
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{flex: 1}}>
           <View style={styles.contentcontainer}>
-            <TouchableOpacity style={styles.uploadContainer}
-            onPress={() => {
-              images.push({ url:  item.profile_picture })
-              setmodal(true)
-          }}
-            >
+            <TouchableOpacity
+              style={styles.uploadContainer}
+              onPress={() => {
+                images.push({url: item.profile_picture});
+                setmodal(true);
+              }}>
               <Image
-                source={{ uri: item.profile_picture }}
+                source={{uri: item.profile_picture}}
                 resizeMode="cover"
                 style={styles.big}
               />
@@ -168,20 +164,92 @@ const setImages = () => {
             <Text style={styles.nameStyle}>{item.city}</Text>
             <Text style={styles.nameStyle}>{item.island}</Text>
 
-            <View
-              style={styles.buttonView}>
-              <Text style={styles.nameStyle1}>MembersSince :
-                <TimeAgo
-                  time={item.created_at}
-                />
+            <View style={styles.buttonView}>
+              <Text style={styles.nameStyle1}>
+                MembersSince :{/* <TimeAgo time={item.created_at} /> */}
+                <Text style={{fontFamily: fonts.regular}}>
+                  {item.created_at}
+                </Text>
               </Text>
 
               {item.is_blocked === 0 ? (
-                <View
-                  style={styles.buttonviewstyle}>
-{item.is_friend === 0 ? (
-                  <View>
-                    {item.is_request_sent === 0 ? (<TouchableOpacity
+                <View style={styles.buttonviewstyle}>
+                  {item.is_friend === 0 ? (
+                    <View>
+                      {item.is_request_sent === 0 ? (
+                        <TouchableOpacity
+                          style={{
+                            backgroundColor: colors.primary,
+                            borderColor: colors.black15,
+                            borderRadius: moderateScale(10),
+                            width: layout.size.width / 3,
+                            height: moderateScale(40),
+                            shadowOffset: {
+                              width: 0,
+                              height: 1,
+                            },
+                            shadowOpacity: 0.4,
+                            elevation: 3,
+                          }}
+                          underlayColor={colors.green1}
+                          onPress={() => onButtonPressed(true)}
+                          // onPress={() => requestAns(1, item)}
+                        >
+                          <Text
+                            style={{
+                              color: colors.white1,
+                              fontFamily: fonts.bold,
+                              fontSize: moderateScale(16),
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              margin: moderateScale(10),
+                            }}>
+                            {strings.addfriend}
+                          </Text>
+                          {/* <Text
+                        style={{
+                          color: colors.black1,
+                          fontFamily: fonts.bold,
+                          fontSize: moderateScale(16),
+                          alignSelf: 'center',
+                          fontWeight: 'bold',
+                          margin: moderateScale(10),
+                        }}>
+                       requested
+                      </Text> */}
+                        </TouchableOpacity>
+                      ) : (
+                        <View
+                          style={{
+                            backgroundColor: colors.green1,
+                            borderColor: colors.black15,
+                            borderRadius: moderateScale(10),
+                            width: layout.size.width / 3,
+                            height: moderateScale(40),
+                            shadowOffset: {
+                              width: 0,
+                              height: 1,
+                            },
+                            shadowOpacity: 0.4,
+                            elevation: 3,
+                          }}
+                          underlayColor={colors.green1}>
+                          <Text
+                            style={{
+                              color: colors.black1,
+                              fontFamily: fonts.bold,
+                              fontSize: moderateScale(16),
+                              alignSelf: 'center',
+                              fontWeight: 'bold',
+                              margin: moderateScale(10),
+                            }}>
+                            Requested
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  ) : (
+                    <View
                       style={{
                         backgroundColor: colors.primary,
                         borderColor: colors.black15,
@@ -195,49 +263,7 @@ const setImages = () => {
                         shadowOpacity: 0.4,
                         elevation: 3,
                       }}
-                      underlayColor={colors.green1}
-                      onPress={() => onButtonPressed(true)}
-                    // onPress={() => requestAns(1, item)}
-                    >
-
-                      <Text
-                        style={{
-                          color: colors.white1,
-                          fontFamily: fonts.bold,
-                          fontSize: moderateScale(16),
-                          alignSelf: 'center',
-                          fontWeight: 'bold',
-                          margin: moderateScale(10),
-                        }}>
-                        {strings.addfriend}
-                      </Text>
-                      {/* <Text
-                        style={{
-                          color: colors.black1,
-                          fontFamily: fonts.bold,
-                          fontSize: moderateScale(16),
-                          alignSelf: 'center',
-                          fontWeight: 'bold',
-                          margin: moderateScale(10),
-                        }}>
-                       requested
-                      </Text> */}
-
-                    </TouchableOpacity>) : (<View
-                      style={{
-                        backgroundColor: colors.green1,
-                        borderColor: colors.black15,
-                        borderRadius: moderateScale(10),
-                        width: layout.size.width / 3,
-                        height: moderateScale(40),
-                        shadowOffset: {
-                          width: 0,
-                          height: 1,
-                        },
-                        shadowOpacity: 0.4,
-                        elevation: 3,
-                      }}
-                      underlayColor={colors.green1} >
+                      underlayColor={colors.green1}>
                       <Text
                         style={{
                           color: colors.black1,
@@ -247,41 +273,13 @@ const setImages = () => {
                           fontWeight: 'bold',
                           margin: moderateScale(10),
                         }}>
-                        Requested
+                        FRIENDS
                       </Text>
-                    </View>)}
-                  </View>) :
-                  <View
-                  style={{
-                    backgroundColor: colors.primary,
-                    borderColor: colors.black15,
-                    borderRadius: moderateScale(10),
-                    width: layout.size.width / 3,
-                    height: moderateScale(40),
-                    shadowOffset: {
-                      width: 0,
-                      height: 1,
-                    },
-                    shadowOpacity: 0.4,
-                    elevation: 3,
-                  }}
-                  underlayColor={colors.green1} >
-                  <Text
-                    style={{
-                      color: colors.black1,
-                      fontFamily: fonts.bold,
-                      fontSize: moderateScale(16),
-                      alignSelf: 'center',
-                      fontWeight: 'bold',
-                      margin: moderateScale(10),
-                    }}>
-                    FRIENDS
-                  </Text>
-                </View>}
-
-                </View>) : (
-                <View
-                  style={styles.buttonviewstyle}>
+                    </View>
+                  )}
+                </View>
+              ) : (
+                <View style={styles.buttonviewstyle}>
                   <TouchableOpacity
                     style={{
                       backgroundColor: colors.primary,
@@ -297,8 +295,7 @@ const setImages = () => {
                       elevation: 3,
                     }}
                     underlayColor={colors.green1}
-                    onPress={() => unblockuserreq()}
-                  >
+                    onPress={() => unblockuserreq()}>
                     <Text
                       style={{
                         color: colors.white1,
@@ -311,8 +308,8 @@ const setImages = () => {
                       Unblock
                     </Text>
                   </TouchableOpacity>
-                </View>)}
-
+                </View>
+              )}
             </View>
           </View>
         </ScrollView>
@@ -327,7 +324,7 @@ const setImages = () => {
               color: colors.white1,
               fontWeight: '700',
               shadowColor: colors.black1,
-              shadowOffset: { width: 1, height: 1 },
+              shadowOffset: {width: 1, height: 1},
               shadowOpacity: 1,
               shadowRadius: 0,
               textTransform: 'none',
@@ -337,7 +334,8 @@ const setImages = () => {
               backgroundColor: colors.white1,
             },
           }}>
-          <Tab.Screen name="Boat Info"
+          <Tab.Screen
+            name="Boat Info"
             children={() => (
               <FriendBoatInfo
                 //  lureMethods={app.methodarray[1]}
@@ -346,7 +344,8 @@ const setImages = () => {
               />
             )}
           />
-          <Tab.Screen name="Emergency Contact"
+          <Tab.Screen
+            name="Emergency Contact"
             children={() => (
               <FriendEmergencyContacts
                 item={item}
@@ -354,19 +353,16 @@ const setImages = () => {
               />
             )}
           />
-          <Tab.Screen name="LCR"
-            children={() => (
-              <FriendLCR
-                item={item}
-                lcrdata={item?.lcr}
-              />
-            )} />
+          <Tab.Screen
+            name="LCR"
+            children={() => <FriendLCR item={item} lcrdata={item?.lcr} />}
+          />
         </Tab.Navigator>
         <Modal
           animationType={'none'}
           transparent={true}
           visible={modalVisible1}
-          onRequestClose={() => { }}>
+          onRequestClose={() => {}}>
           <SafeAreaView>
             <View style={styles.modalcontent}>
               <View style={styles.modalcontainer}>
@@ -405,7 +401,7 @@ const setImages = () => {
           animationType={'none'}
           transparent={true}
           visible={modalVisible2}
-          onRequestClose={() => { }}>
+          onRequestClose={() => {}}>
           <SafeAreaView>
             <View style={styles.modalcontent}>
               <View style={styles.modalcontainer}>
@@ -440,12 +436,14 @@ const setImages = () => {
             </View>
           </SafeAreaView>
         </Modal>
-        {modal ? <ImgViewer
-                    setmodalFun={setmodalFun}
-                    modal={modal}
-                    images={images}
-                    setImages={setImages}
-                /> : null}
+        {modal ? (
+          <ImgViewer
+            setmodalFun={setmodalFun}
+            modal={modal}
+            images={images}
+            setImages={setImages}
+          />
+        ) : null}
       </SafeAreaView>
     </ImageBackground>
   );

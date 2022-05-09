@@ -15,6 +15,9 @@ import ic_done from './icons/ic_done.png';
 import ic_email from './icons/Message-icon.png';
 import ic_lock from './icons/lock-icon.png';
 import ic_male from './icons/inactive-male.png';
+import playbtn from './icons/playbtn.png';
+import pause from './icons/pause.png';
+
 import ic_female from './icons/inactive-female.png';
 import ic_signup_bg from './icons/signup_bg.png';
 import ic_signin_bg from './icons/signin_bg.png';
@@ -341,6 +344,8 @@ const icons = {
   ic_trophyicon,
   ic_videoTips,
   ic_male,
+  playbtn,
+  pause,
   ic_female,
   ic_lock,
   ic_email,

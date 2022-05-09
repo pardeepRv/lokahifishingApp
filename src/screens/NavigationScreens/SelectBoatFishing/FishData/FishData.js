@@ -743,7 +743,7 @@ const FishData = ({navigation, route}) => {
             <View style={styles.textSection}>
               <Text style={styles.title}>Location</Text>
             </View>
-            <View style={styles.mapContainer}>
+            <View style={styles.mapContainer} >
               {
                 Platform.OS === 'ios' ? (
                   <ApplmapNoaa

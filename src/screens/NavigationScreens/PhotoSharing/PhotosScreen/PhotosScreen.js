@@ -32,7 +32,9 @@ const PhotosScreen = ({navigation, route}) => {
   console.log(auth, 'auth>>>>>>>>>>>>', app, 'app>>>>>>>>>>>>>>>>');
   const dispatch = useDispatch();
   const [image, setImage] = useState(
-    route?.params?.data?.data?.LiveCatchReport?.image ? route?.params?.data?.data?.LiveCatchReport?.image : null ,
+    route?.params?.data?.data?.LiveCatchReport?.image
+      ? route?.params?.data?.data?.LiveCatchReport?.image
+      : null,
   );
   const [additionalimage, setadditionalimage] = useState('');
   const [Photopost1, setPhotopost1] = useState('');
@@ -40,7 +42,7 @@ const PhotosScreen = ({navigation, route}) => {
   const [Photopost3, setPhotopost3] = useState('');
   const [Photopost4, setPhotopost4] = useState('');
   const [Photopost5, setPhotopost5] = useState('');
-  
+
   // console.log(`http://admin.lokahifishing.com/LCR_images/user_fishes/${image}`,'dfhekqvv');
 
   useEffect(() => {
@@ -55,29 +57,31 @@ const PhotosScreen = ({navigation, route}) => {
       })
         .fetch(
           'GET',
-          `http://admin.lokahifishing.com/LCR_images/user_fishes/${image}`
-          ,
+          `http://admin.lokahifishing.com/LCR_images/user_fishes/${image}`,
         )
         // the image is now dowloaded to device's storage
         .then(resp => {
-          console.log('resp', resp)
+          console.log('resp', resp);
           // the image path you can use it directly with Image component
           imagePath = resp.path();
           return resp.readFile('base64');
         })
         .then(base64Data => {
           // here's base64 encoded image
-          console.log(base64Data , 'gdfgfdg');
-          console.log(`data:image/jpeg;base64,${base64Data}`,'`data:image/jpeg;base64,${base64Data}`');
-         setPhotopost1(`data:image/jpeg;base64,${base64Data}`)
-        //  if (!base64Data) {
-        //   setPhotopost1(`data:image/jpeg;base64,${base64Data}`)
-        // }else{setPhotopost1('')}
+          console.log(base64Data, 'gdfgfdg');
+          console.log(
+            `data:image/jpeg;base64,${base64Data}`,
+            '`data:image/jpeg;base64,${base64Data}`',
+          );
+          setPhotopost1(`data:image/jpeg;base64,${base64Data}`);
+          //  if (!base64Data) {
+          //   setPhotopost1(`data:image/jpeg;base64,${base64Data}`)
+          // }else{setPhotopost1('')}
           // remove the file from storage
           return fs.unlink(imagePath);
         });
     } else {
-      setPhotopost1()
+      setPhotopost1();
     }
   }, []);
 
@@ -106,19 +110,18 @@ const PhotosScreen = ({navigation, route}) => {
       // compressImageQuality: 0.8,
       includeBase64: true,
     }).then(res => {
-       console.log(`ress`, res);
-        if (indx == 1) {
-          setPhotopost1(`data:${res.mime};base64,${res.data}`);
-        } else if (indx == 2) {
-          setPhotopost2(`data:${res.mime};base64,${res.data}`);
-        } else if (indx == 3) {
-          setPhotopost3(`data:${res.mime};base64,${res.data}`);
-        } else if (indx == 4) {
-          setPhotopost4(`data:${res.mime};base64,${res.data}`);
-        } else {
-          setPhotopost5(`data:${res.mime};base64,${res.data}`);
-        }
-      
+      console.log(`ress`, res);
+      if (indx == 1) {
+        setPhotopost1(`data:${res.mime};base64,${res.data}`);
+      } else if (indx == 2) {
+        setPhotopost2(`data:${res.mime};base64,${res.data}`);
+      } else if (indx == 3) {
+        setPhotopost3(`data:${res.mime};base64,${res.data}`);
+      } else if (indx == 4) {
+        setPhotopost4(`data:${res.mime};base64,${res.data}`);
+      } else {
+        setPhotopost5(`data:${res.mime};base64,${res.data}`);
+      }
     });
   }
   function _doOpenGallery(index) {
@@ -130,21 +133,23 @@ const PhotosScreen = ({navigation, route}) => {
       includeBase64: true,
     }).then(res => {
       console.log(`ress`, res);
-      
-        if (index == 1) {
-          console.log(`data:${res.mime};base64,${res.data}`,'`data:${res.mime};base64,${res.data}`');
 
-          setPhotopost1(`data:${res.mime};base64,${res.data}`);
-        } else if (index == 2) {
-          setPhotopost2(`data:${res.mime};base64,${res.data}`);
-        } else if (index == 3) {
-          setPhotopost3(`data:${res.mime};base64,${res.data}`);
-        } else if (index == 4) {
-          setPhotopost4(`data:${res.mime};base64,${res.data}`);
-        } else {
-          setPhotopost5(`data:${res.mime};base64,${res.data}`);
-        }
-      
+      if (index == 1) {
+        console.log(
+          `data:${res.mime};base64,${res.data}`,
+          '`data:${res.mime};base64,${res.data}`',
+        );
+
+        setPhotopost1(`data:${res.mime};base64,${res.data}`);
+      } else if (index == 2) {
+        setPhotopost2(`data:${res.mime};base64,${res.data}`);
+      } else if (index == 3) {
+        setPhotopost3(`data:${res.mime};base64,${res.data}`);
+      } else if (index == 4) {
+        setPhotopost4(`data:${res.mime};base64,${res.data}`);
+      } else {
+        setPhotopost5(`data:${res.mime};base64,${res.data}`);
+      }
     });
   }
 
@@ -172,7 +177,7 @@ const PhotosScreen = ({navigation, route}) => {
       console.log('do nothing');
     }
     formData.append('title_img', additionalimage);
-     console.log(formData, 'sending to aApi');
+    console.log(formData, 'sending to aApi');
     dispatch(savephoto(formData, token));
   };
   return (
@@ -190,14 +195,17 @@ const PhotosScreen = ({navigation, route}) => {
           titleStyle={{fontFamily: fonts.bold}}
           leftIconSource={icons.ic_back_white}
           leftButtonStyle={{
-            tintColor: colors.white1
+            tintColor: colors.white1,
           }}
-          
           onLeftPress={() => {
-            if (route?.params?.data?.data?.LiveCatchReport?.is_private == "true"){navigation.navigate(screenNames.HomeStack)} else { navigation.goBack();}
-           
+            if (
+              route?.params?.data?.data?.LiveCatchReport?.is_private == 'true'
+            ) {
+              navigation.navigate(screenNames.HomeStack);
+            } else {
+              navigation.goBack();
+            }
           }}
-          
         />
         <KeyboardAwareScrollView
           enableOnAndroid={true}
@@ -218,7 +226,9 @@ const PhotosScreen = ({navigation, route}) => {
                   style={styles.uploadContainer}>
                   <Image
                     source={
-                      Photopost1 != '' ? {uri: Photopost1} : icons.no_image
+                      Photopost1 != '' && Photopost1 != undefined
+                        ? {uri: Photopost1}
+                        : icons.no_image
                     }
                     resizeMode="cover"
                     style={{

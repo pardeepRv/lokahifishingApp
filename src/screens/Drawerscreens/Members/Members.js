@@ -344,7 +344,7 @@ const Members = ({ navigation }) => {
           //   />
           // }
           onEndReached={LoadMoreRandomData}
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={0.5}
 
         />
 

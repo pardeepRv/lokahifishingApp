@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Button,
   FlatList,
   Image,
   ImageBackground,
@@ -59,6 +60,8 @@ let timeLineArr = [
 let images = [];
 
 const PhotoSharing = ({navigation}) => {
+  const videoPlayer = React.useRef();
+
   const [timeline, settimeline] = useState([]);
   let auth = useSelector(state => state.auth);
   let app = useSelector(state => state.app);
@@ -272,11 +275,13 @@ const PhotoSharing = ({navigation}) => {
             source={{
               uri: `http://admin.lokahifishing.com/photosharing/video/${item.media_name}`,
             }}
+            ref={ref => (videoPlayer.current = ref)}
             paused={paused}
             repeat={false}
-            controls={true}
+            controls={Platform.OS === 'ios' && true}
             resizeMode={'contain'}
             playInBackground={false}
+            renderToHardwareTextureAndroid
             playWhenInactive={false}
             style={
               Platform.OS === 'android'
@@ -285,6 +290,21 @@ const PhotoSharing = ({navigation}) => {
             }
             // style={{ width: layout.size.width -80, backgroundColor:'black', height: layout.size.height / 3.9, top:10 , marginVertical:10}}
           />
+          {Platform.OS === 'android' && (
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                bottom: 20,
+                left:20
+              }}
+              onPress={() => setpaused(p => !p)}>
+              {paused ? (
+                <Image source={icons.playbtn} />
+              ) : (
+                <Image source={icons.pause} />
+              )} 
+            </TouchableOpacity>
+          )}
         </View>
       )}
     </View>
@@ -598,7 +618,7 @@ const PhotoSharing = ({navigation}) => {
           removeClippedSubviews={true}
           initialNumToRender={5}
           onEndReached={LoadMoreRandomData}
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={0.5}
         />
 
         {modal ? (

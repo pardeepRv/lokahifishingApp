@@ -204,6 +204,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if (currentLat != 0.0 && currentLng != 0.0) {
             addMarker(new LatLng(currentLat, currentLng));
         }
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull LatLng latLng) {
@@ -235,7 +237,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 //                        .toString() + File.separator + Environment.DIRECTORY_DOWNLOADS + File.separator + FILE_PATH+File.separator + nameOfFile);
         if (file != null) {
             Log.i("TILES", "file is not null " + file);
-            TileProvider tile = new ExpandedMBTilesTileProvider(file, 256, 256);
+            TileProvider tile = new lokahi.com.lokahi.ExpandedMBTilesTileProvider(file, 256, 256);
             if (mMap != null) {
                 Log.i("TILES", "set tile called ");
                 mMap.addTileOverlay(new TileOverlayOptions().tileProvider(tile));

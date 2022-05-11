@@ -1,11 +1,12 @@
 // import { launchImageLibrary, launchCamera } from 'react-native-image-picker'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import React, {useState , useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Alert,
   Dimensions,
   Image,
   Keyboard,
+  PermissionsAndroid,
   Platform,
   ScrollView,
   StyleSheet,
@@ -19,9 +20,8 @@ import {moderateScale} from 'react-native-size-matters';
 import {fonts, icons} from '../../../../assets';
 import TimeAgo from 'react-native-timeago';
 import Circular from '../../../components/common/Circular';
-import CircularPicker from 'react-native-circular-picker'
-import { colors } from '../../../utilities/constants';
-
+import CircularPicker from 'react-native-circular-picker';
+import {colors} from '../../../utilities/constants';
 
 var moment = require('moment');
 
@@ -29,13 +29,13 @@ const LCRRequired = props => {
   console.log(props, 'consoling props in lcr requires');
   console.log(props.selectedFish, 'selectedFish is <<<<<<<');
 
-  const handleChange = (v) => {
-  setScrollEnabled(false)
-  setPrice((v * 0.24).toFixed(0));
-   setTimeout(() => {
-    setScrollEnabled(true)
-   }, 3000);
-  }
+  const handleChange = v => {
+    setScrollEnabled(false);
+    setPrice((v * 0.24).toFixed(0));
+    setTimeout(() => {
+      setScrollEnabled(true);
+    }, 3000);
+  };
 
   const [weight, setWeight] = useState(0);
   const [date, setDate] = useState(new Date());
@@ -58,13 +58,13 @@ const LCRRequired = props => {
     // let dateIs = moment(selectedDate).format('YYYY-MM-DD');
     // console.log(dateIs, '<>><><><><');
 
-    const currentDate = selectedDate || date
-    if (Platform.OS === 'android' ){
+    const currentDate = selectedDate || date;
+    if (Platform.OS === 'android') {
       setDate(currentDate);
       setDateStatus(false);
+    } else {
+      setDate(currentDate);
     }
-    else{ setDate(currentDate);}
-    
   };
 
   const getHrs = v => {
@@ -74,15 +74,15 @@ const LCRRequired = props => {
     }
   };
 
-setTimeout(() => {
-  getDate()
-  getTime()
-}, 100);
+  setTimeout(() => {
+    getDate();
+    getTime();
+  }, 100);
 
   const getDate = () => {
     let tempDate = date.toString().split(' ');
     console.log('object :>> ', date.toString().split(' '));
-   setdatetext(`${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`)
+    setdatetext(`${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`);
     return date !== ''
       ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
       : '';
@@ -90,23 +90,24 @@ setTimeout(() => {
 
   const getTime = () => {
     let tempDate = time.toString().split(' ');
-     console.log('time >>>>>>>>>>', time.toString().split(' '));
-   settimetext(`${tempDate[4]} `)
+    console.log('time >>>>>>>>>>', time.toString().split(' '));
+    settimetext(`${tempDate[4]} `);
     return time !== ''
       ? `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`
       : '';
   };
 
   const onTimeChange = (event, newTime) => {
-    console.log(event, newTime , "time hange");
+    console.log(event, newTime, 'time hange');
     // setTime(moment(newTime, 'MM/DD/YYYY h:mmA'));
     // console.log(time,'time>>>>>>>>>');
-    const currentDate = newTime || time
-    if (Platform.OS === 'android' ){
+    const currentDate = newTime || time;
+    if (Platform.OS === 'android') {
       setTime(currentDate);
       setTimeStatus(false);
+    } else {
+      setTime(currentDate);
     }
-    else{ setTime(currentDate);}
   };
 
   const [errors, setErrors] = useState({
@@ -179,6 +180,26 @@ setTimeout(() => {
   const onSubmit = () => {
     Keyboard.dismiss();
 
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      ]).then(result => {
+        console.log(result,'reslt of permission');
+        if (
+          result['android.permission.ACCESS_COARSE_LOCATION'] &&
+          result['android.permission.ACCESS_FINE_LOCATION'] &&
+          result['android.permission.READ_EXTERNAL_STORAGE'] &&
+          result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'granted'
+        ) {
+         console.log('aceesss');
+
+        }  
+      });
+    }
+
     let selectedDate = moment(date).format('YYYY-MM-DD');
     let selectedTime = new Date().toLocaleTimeString();
     let dataTobeSendOnNext = {};
@@ -189,7 +210,6 @@ setTimeout(() => {
     dataTobeSendOnNext.selectedTime = selectedTime;
     dataTobeSendOnNext.efforts = price;
 
-
     console.log(dataTobeSendOnNext, 'dataTobeSendOnNext');
 
     props.navigation.navigate('FishData', {previousScreen: dataTobeSendOnNext});
@@ -197,9 +217,7 @@ setTimeout(() => {
 
   return (
     <View style={styles.bg} blurRadius={4}>
-      <ScrollView
-       scrollEnabled={scrollEnabled}
-        style={styles.scrollView}>
+      <ScrollView scrollEnabled={scrollEnabled} style={styles.scrollView}>
         {props.fishType === 'Multiple' ? (
           <View style={{zIndex: 1, paddingHorizontal: 20, width: '100%'}}>
             <TextInput
@@ -273,25 +291,37 @@ setTimeout(() => {
           </TouchableOpacity>
         </View>
         <View style={styles.section} onPress={() => setScrollEnabled(true)}>
-					<View style={styles.effortTitle}>
-						<Text style={[styles.title, { marginBottom: 0 }]}>Effort</Text>
-						<Text style={styles.effortSubtext}>(fishing time only, not travel time)</Text>
-					</View>
-					<View style={styles.subsection} >
-          {/* <Circular/> */}
-          <CircularPicker
-					size={270}
-					strokeWidth={40}
-					steps={[4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100]}
-					gradients={{
-						0: ['#2c385e', '#2c385e'],
-					}}
-					onChange={handleChange}
-				>
-					<Text style={{ textAlign: 'center', fontSize: 24, fontWeight: '600', marginBottom: 8 }}>{price} hr(s)</Text>
-				</CircularPicker>
-					</View>
-				</View>
+          <View style={styles.effortTitle}>
+            <Text style={[styles.title, {marginBottom: 0}]}>Effort</Text>
+            <Text style={styles.effortSubtext}>
+              (fishing time only, not travel time)
+            </Text>
+          </View>
+          <View style={styles.subsection}>
+            {/* <Circular/> */}
+            <CircularPicker
+              size={270}
+              strokeWidth={40}
+              steps={[
+                4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64,
+                68, 72, 76, 80, 84, 88, 92, 96, 100,
+              ]}
+              gradients={{
+                0: ['#2c385e', '#2c385e'],
+              }}
+              onChange={handleChange}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 24,
+                  fontWeight: '600',
+                  marginBottom: 8,
+                }}>
+                {price} hr(s)
+              </Text>
+            </CircularPicker>
+          </View>
+        </View>
         {/* <View style={styles.textSection}>
               <Text
                 style={styles.title}
@@ -326,14 +356,12 @@ setTimeout(() => {
             }}>
             <TouchableOpacity
               onPress={() => {
-                setDateStatus(true);  
+                setDateStatus(true);
                 setTimeStatus(false);
               }}>
-                {Platform.OS == 'android' ?   <Text style={{fontFamily: fonts.bold}}>
-                {datetext}
-          
-                </Text>  : null }
-    
+              {Platform.OS == 'android' ? (
+                <Text style={{fontFamily: fonts.bold}}>{datetext}</Text>
+              ) : null}
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -341,7 +369,9 @@ setTimeout(() => {
                 setTimeStatus(true);
                 setDateStatus(false);
               }}>
-               {Platform.OS == 'android' ?   <Text style={{fontFamily: fonts.bold}}>{timetext}</Text>  : null }
+              {Platform.OS == 'android' ? (
+                <Text style={{fontFamily: fonts.bold}}>{timetext}</Text>
+              ) : null}
             </TouchableOpacity>
           </View>
 
@@ -427,14 +457,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textSection: {
-		borderTopWidth: 1,
-		borderColor: 'lightgray',
-		paddingVertical: 15,
-		paddingHorizontal: 10,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
+    borderTopWidth: 1,
+    borderColor: 'lightgray',
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   centeredView: {
     width: windowWidth,
     height: windowHeight,
@@ -471,8 +501,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   section: {
-   
-      marginVertical: 10,
+    marginVertical: 10,
   },
   title: {
     fontWeight: '700',
@@ -543,5 +572,4 @@ const styles = StyleSheet.create({
 
     elevation: 30,
   },
- 
 });

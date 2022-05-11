@@ -20,6 +20,7 @@ import {
   UIManager,
   findNodeHandle,
   PixelRatio,
+  TouchableHighlight,
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import GetLocation from 'react-native-get-location';
@@ -427,19 +428,15 @@ const FishData = ({navigation, route}) => {
           tintColor: colors.green1,
         }}
       />
+
       <SafeAreaView style={styles.safeAreaView}>
-        <ScrollView 
-        nestedScrollEnabled
-         style={{flex: 1}}>
-          {/* <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'padding'}
-          keyboardVerticalOffset={50}
-          style={styles.subContainer}
-          contentContainerStyle={styles.subContentContainer}
-          keyboardShouldPersistTaps={'always'}
-          showsVerticalScrollIndicator={false}> */}
+        <ScrollView
+          nestedScrollEnabled
+          style={{flex: 1}}
+          onScroll={e =>
+            console.log(e.nativeEvent.contentOffset.y, 'scroll pos')
+          }>
           <KeyboardAwareScrollView
-            // extraScrollHeight={10}
             nestedScrollEnabled
             enableOnAndroid={true}
             style={styles.subContainer}
@@ -743,176 +740,28 @@ const FishData = ({navigation, route}) => {
             <View style={styles.textSection}>
               <Text style={styles.title}>Location</Text>
             </View>
-            <View style={styles.mapContainer} >
-              {
-                Platform.OS === 'ios' ? (
-                  <ApplmapNoaa
-                    style={{
-                      height: 325,
-                      width: windowWidth,
-                      backgroundColor: 'black',
-                    }}
-                  />
-                ) : (
-                  <MyViewManager
-                    style={{
-                      // converts dpi to px, provide desired height
-                      height: PixelRatio.getPixelSizeForLayoutSize(390),
-                      // converts dpi to px, provide desired width
-                      width: PixelRatio.getPixelSizeForLayoutSize(430),
-                    }}
-                    ref={ref}
-                  />
-                )
-                //
-                // <MapView
-                //   provider={
-                //     Platform.OS == 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
-                //   } // remove if not using Google Maps
-                //   style={styles.map}
-                //   region={{
-                //     latitude:
-                //       location && location.latitude ? location.latitude : 31.9311,
-                //     longitude:
-                //       location && location.longitude
-                //         ? location.longitude
-                //         : 75.8941,
-                //     latitudeDelta: 0.015,
-                //     longitudeDelta: 0.0121,
-                //   }}>
-                //   <MapView.Marker
-                //     coordinate={{
-                //       latitude:
-                //         location && location.latitude
-                //           ? location.latitude
-                //           : 31.9311,
-                //       longitude:
-                //         location && location.longitude
-                //           ? location.longitude
-                //           : 75.8941,
-                //     }}
-                //   />
-                // </MapView>
-              }
+            <View style={styles.mapContainer}>
+              {Platform.OS === 'ios' ? (
+                <ApplmapNoaa
+                  style={{
+                    height: 325,
+                    width: windowWidth,
+                    backgroundColor: 'black',
+                  }}
+                />
+              ) : (
+                <MyViewManager
+                  style={{
+                    // converts dpi to px, provide desired height
+                    height: PixelRatio.getPixelSizeForLayoutSize(400),
+                    // converts dpi to px, provide desired width
+                    width: PixelRatio.getPixelSizeForLayoutSize(430),
+                  }}
+                  ref={ref}
+                />
+              )}
             </View>
-            {/* {Platform.OS === 'android' ?
-              <>{location ? (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'flex-end',
-                    paddingHorizontal: 10,
-                  }}>
-                  <TextInput
-                    returnKeyType="done"
-                    blurOnSubmit={true}
-                    onSubmitEditing={() => {
-                      Keyboard.dismiss();
-                    }}
-                    style={styles.locationTextInput}
-                    placeholder={location?.latitude?.toString()}
-                    onChangeText={text => onChangeLatitude(text)}
-                    keyboardType={
-                      Platform.OS === 'ios'
-                        ? 'numbers-and-punctuation'
-                        : 'default'
-                    }
-                  // value={location?.latitude?.toString()}
-                  />
-                  <Text style={{ fontSize: 16, marginRight: 10, paddingBottom: 2 }}>
-                    latitude
-                  </Text>
-                  <TextInput
-                    style={{ fontSize: 16 }}
-                    returnKeyType="done"
-                    blurOnSubmit={true}
-                    onSubmitEditing={() => {
-                      Keyboard.dismiss();
-                    }}
-                    style={styles.locationTextInput}
-                    placeholder={location?.longitude?.toString()}
-                    onChangeText={text => onChangeLongitude(text)}
-                    keyboardType={
-                      Platform.OS === 'ios'
-                        ? 'numbers-and-punctuation'
-                        : 'default'
-                    }
-                  // value={location?.longitude?.toString()}
-                  />
-                  <Text style={{ fontSize: 16, paddingBottom: 2 }}>longitude</Text>
-                </View>
-              ) : (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: 20,
-                    paddingHorizontal: 10,
-                  }}>
-                  <ActivityIndicator />
-                  <Text style={{ fontSize: 16, marginLeft: 10 }}>
-                    getting location...
-                  </Text>
-                </View>
-              )}</>
-              : null} */}
-            {/* {location ? (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'flex-end',
-                    paddingHorizontal: 10,
-                  }}>
-                  <TextInput
-                    returnKeyType="done"
-                    blurOnSubmit={true}
-                    onSubmitEditing={() => {
-                      Keyboard.dismiss();
-                    }}
-                    style={styles.locationTextInput}
-                    placeholder={location?.latitude?.toString()}
-                    onChangeText={text => onChangeLatitude(text)}
-                    keyboardType={
-                      Platform.OS === 'ios'
-                        ? 'numbers-and-punctuation'
-                        : 'default'
-                    }
-                    // value={location?.latitude?.toString()}
-                  />
-                  <Text style={{fontSize: 16, marginRight: 10, paddingBottom: 2}}>
-                    latitude
-                  </Text>
-                  <TextInput
-                    style={{fontSize: 16}}
-                    returnKeyType="done"
-                    blurOnSubmit={true}
-                    onSubmitEditing={() => {
-                      Keyboard.dismiss();
-                    }}
-                    style={styles.locationTextInput}
-                    placeholder={location?.longitude?.toString()}
-                    onChangeText={text => onChangeLongitude(text)}
-                    keyboardType={
-                      Platform.OS === 'ios'
-                        ? 'numbers-and-punctuation'
-                        : 'default'
-                    }
-                    // value={location?.longitude?.toString()}
-                  />
-                  <Text style={{fontSize: 16, paddingBottom: 2}}>longitude</Text>
-                </View>
-              ) : (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    marginTop: 20,
-                    paddingHorizontal: 10,
-                  }}>
-                  <ActivityIndicator />
-                  <Text style={{fontSize: 16, marginLeft: 10}}>
-                    getting location...
-                  </Text>
-                </View>
-              )} */}
+
             <Text style={styles.or}>OR</Text>
             <View style={{zIndex: 1, paddingHorizontal: 10}}>
               <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
@@ -951,12 +800,16 @@ const FishData = ({navigation, route}) => {
                 style={{
                   zIndex: 1,
                   height: open ? 300 : 100,
-                }} >
+                }}>
                 <DropDownPicker
                   // nestedScrollEnabled
                   style={{backgroundColor: '#fafafa'}}
                   theme="LIGHT"
-                  containerStyle={{width: '50%', marginVertical: 5, flex: 1}}
+                  containerStyle={{
+                    width: '50%',
+                    marginVertical: 5,
+                    flex: 1,
+                  }}
                   labelStyle={{
                     fontWeight: 'bold',
                     fontSize: 16,
@@ -983,7 +836,7 @@ const FishData = ({navigation, route}) => {
                   setValue={setHarbor}
                   setItems={setHarborItems}
                   placeholder={'Choose Harbor'}
-                  dropDownDirection='DEFAULT'
+                  dropDownDirection="DEFAULT"
                   listMode="SCROLLVIEW"
                 />
               </View>
@@ -1017,7 +870,6 @@ const FishData = ({navigation, route}) => {
                 onChangeText={text => setAdditionalNotes(text)}
               />
             </View>
-            {/* </KeyboardAvoidingView> */}
           </KeyboardAwareScrollView>
         </ScrollView>
 

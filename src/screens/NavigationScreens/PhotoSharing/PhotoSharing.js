@@ -170,7 +170,7 @@ const PhotoSharing = ({navigation}) => {
             updateArr[i].photo_share_like = item.photo_share_like === 1 ? 0 : 1;
 
             console.log('after updateArr', updateArr);
-            settimeline(updateArr);
+            settimeline([...updateArr]);
           }
         }
       }),

@@ -36,11 +36,11 @@
 	<key>NSDownloadsFolderUsageDescription</key>
 	<string>Lokahi Fishing wants to access your documents directory to save map overlay.</string>
 	<key>NSLocationAlwaysAndWhenInUsageDescription</key>
-	<string>Lokahi Fishing wants to access your location for saving your Lat and long in database.</string>
+	<string>Lokahi Fishing wants to access your location to help community that fishes are available at your location.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Lokahi Fishing wants to access your location for saving your Lat and long in database.</string>
+	<string>Lokahi Fishing wants to access your location to help community that fishes are available at your location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Lokahi Fishing wants to access your location for saving your Lat and long in database.</string>
+	<string>Lokahi Fishing wants to access your location to help community that fishes are available at your location.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Granting access will allow you to take photos from Gallery and add them to attachment fields.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

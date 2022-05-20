@@ -62,6 +62,7 @@ const FishData = ({navigation, route}) => {
   const ref = useRef(null);
   const {previousScreen} = route && route.params;
   const [modalVisible1, setModalVisible1] = useState(false);
+  const [modalVisibleLoc, setModalVisibleLoc] = useState(false);
   const [email, setEmail] = useState('');
   console.log('email :>> ', email);
   let auth = useSelector(state => state.auth);
@@ -428,7 +429,6 @@ const FishData = ({navigation, route}) => {
           tintColor: colors.green1,
         }}
       />
-
       <SafeAreaView style={styles.safeAreaView}>
         <ScrollView
           nestedScrollEnabled
@@ -737,9 +737,18 @@ const FishData = ({navigation, route}) => {
               )}
             </View> */}
 
-            <View style={styles.textSection}>
-              <Text style={styles.title}>Location</Text>
-            </View>
+            {Platform.OS == 'android' ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('AndroidMap')}
+                style={styles.textSection}>
+                <Text style={styles.title}>Location</Text>
+              </TouchableOpacity>
+            ) : (
+              <View style={styles.textSection}>
+                <Text style={styles.title}>Location</Text>
+              </View>
+            )}
+
             <View style={styles.mapContainer}>
               {Platform.OS === 'ios' ? (
                 <ApplmapNoaa
@@ -919,6 +928,59 @@ const FishData = ({navigation, route}) => {
               </View>
             </View>
           </SafeAreaView>
+        </Modal>
+      )}
+      {modalVisibleLoc && (
+        <Modal
+          animationType={'none'}
+          // transparent={true}
+          visible={modalVisibleLoc}
+          style={{
+            flex: 1,
+          }}
+          onRequestClose={() => {}}>
+          <View
+            style={{
+              flex: 1,
+            }}
+            // style={{
+            //   height: windowHeight * 0.4,
+            //   width: windowWidth,
+            //   justifyContent: 'flex-end',
+            //   alignItems: 'center',
+            //   borderColor: '#fafafa',
+            //   borderWidth: 2,
+            // }}
+          >
+            <Text
+              onPress={() => setModalVisibleLoc(false)}
+              style={{
+                fontSize: 18,
+              }}>
+              cancel
+            </Text>
+
+            <View
+              style={{
+                height: windowHeight * 0.4,
+                width: windowWidth,
+                // justifyContent: 'flex-end',
+                alignItems: 'center',
+                borderColor: '#fafafa',
+                borderWidth: 2,
+              }}>
+              <MyViewManager
+                style={{
+                  // converts dpi to px, provide desired height
+                  backgroundColor: 'red',
+                  height: PixelRatio.getPixelSizeForLayoutSize(400),
+                  // converts dpi to px, provide desired width
+                  width: PixelRatio.getPixelSizeForLayoutSize(430),
+                }}
+                ref={ref}
+              />
+            </View>
+          </View>
         </Modal>
       )}
     </ImageBackground>
